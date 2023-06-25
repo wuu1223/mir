@@ -1,0 +1,686 @@
+--- BLOCK #0 1-11, warpins: 1 ---
+local detail = import("..detail")
+local replaceAsk = import("..replaceAsk")
+local widgetDelegate = {}
+widgetDelegate.extend = function (target, console)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	local mask, rect, beganPos, beganTouchPos, hasMove, beganTime = nil
+	target._startEdit = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if mask then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		mask:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-36, warpins: 2 ---
+		mask = display.newNode():size(self.getContentSize(self)):addto(self, 999999999)
+
+		mask:setTouchEnabled(true)
+		mask:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if event.name == "began" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-37, warpins: 1 ---
+			beganPos = cc.p(self:getPosition())
+			beganTouchPos = cc.p(event.x, event.y)
+			beganTime = socket.gettime()
+			hasMove = false
+
+			self:setLocalZOrder(self:getLocalZOrder() + 1)
+			console:showRect(self)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+			--- BLOCK #2 38-40, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if event.name == "moved" then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #13
+			end
+
+
+			--- BLOCK #3 41-43, warpins: 1 ---
+			--- END OF BLOCK #3 ---
+
+			slot1 = if not hasMove then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #4 44-53, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			if 10 >= math.abs(beganTouchPos.x - event.x)
+			 then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #5 54-63, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			if 10 >= math.abs(beganTouchPos.y - event.y)
+			 then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 64-71, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			if 1 < socket.gettime()
+
+			 - beganTime then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #26
+			end
+
+
+			--- BLOCK #7 72-81, warpins: 4 ---
+			hasMove = true
+			local x = beganPos.x
+			local y = beganPos.y
+			--- END OF BLOCK #7 ---
+
+			slot3 = if not self.config.fixedX then
+			JUMP TO BLOCK #8
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #8 82-97, warpins: 1 ---
+			x = event.x - beganTouchPos.x + beganPos.x
+			x = self:_checkx(x)
+			self.data.x = x
+			--- END OF BLOCK #8 ---
+
+			FLOW; TARGET BLOCK #9
+
+
+			--- BLOCK #9 98-102, warpins: 2 ---
+			--- END OF BLOCK #9 ---
+
+			slot3 = if not self.config.fixedY then
+			JUMP TO BLOCK #10
+			else
+			JUMP TO BLOCK #11
+			end
+
+
+			--- BLOCK #10 103-118, warpins: 1 ---
+			y = event.y - beganTouchPos.y + beganPos.y
+			y = self:_checky(y)
+			self.data.y = y
+
+			--- END OF BLOCK #10 ---
+
+			FLOW; TARGET BLOCK #11
+
+
+			--- BLOCK #11 119-129, warpins: 2 ---
+			self:pos(x, y)
+			--- END OF BLOCK #11 ---
+
+			if self.config.class == "btnMove" then
+			JUMP TO BLOCK #12
+			else
+			JUMP TO BLOCK #26
+			end
+
+
+			--- BLOCK #12 130-139, warpins: 1 ---
+			console:checkBtnAreaShow(cc.p(x, y))
+			--- END OF BLOCK #12 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+			--- BLOCK #13 140-142, warpins: 1 ---
+			--- END OF BLOCK #13 ---
+
+			if event.name == "ended" then
+			JUMP TO BLOCK #14
+			else
+			JUMP TO BLOCK #26
+			end
+
+
+			--- BLOCK #14 143-154, warpins: 1 ---
+			self:setLocalZOrder(self:getLocalZOrder() - 1)
+			--- END OF BLOCK #14 ---
+
+			slot1 = if hasMove then
+			JUMP TO BLOCK #15
+			else
+			JUMP TO BLOCK #25
+			end
+
+
+			--- BLOCK #15 155-165, warpins: 1 ---
+			console:checkBtnAreaShow(nil, true)
+
+			--- END OF BLOCK #15 ---
+
+			if self.config.class == "btnMove" then
+			JUMP TO BLOCK #16
+			else
+			JUMP TO BLOCK #26
+			end
+
+
+			--- BLOCK #16 166-175, warpins: 1 ---
+			local btnpos = console:pos2btnpos(self:getPosition())
+			--- END OF BLOCK #16 ---
+
+			slot1 = if btnpos then
+			JUMP TO BLOCK #17
+			else
+			JUMP TO BLOCK #23
+			end
+
+
+			--- BLOCK #17 176-182, warpins: 1 ---
+			local existBtn = console:findWidgetWithBtnpos(btnpos)
+
+			--- END OF BLOCK #17 ---
+
+			slot2 = if existBtn then
+			JUMP TO BLOCK #18
+			else
+			JUMP TO BLOCK #21
+			end
+
+
+			--- BLOCK #18 183-185, warpins: 1 ---
+			--- END OF BLOCK #18 ---
+
+			if existBtn == self then
+			JUMP TO BLOCK #19
+			else
+			JUMP TO BLOCK #20
+			end
+
+
+			--- BLOCK #19 186-192, warpins: 1 ---
+			console:resetBtnAreaBtnPos(self, true)
+
+			return 
+
+			--- END OF BLOCK #19 ---
+
+			FLOW; TARGET BLOCK #20
+
+
+			--- BLOCK #20 193-199, warpins: 1 ---
+			replaceAsk.new(existBtn, function (operator)
+				--- BLOCK #0 1-2, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				if operator == "swap" then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #4
+				end
+
+
+				--- BLOCK #1 3-25, warpins: 1 ---
+				existBtn.data.btnpos = self.data.btnpos
+				self.data.btnpos = existBtn.data.btnpos
+
+				console:resetBtnAreaBtnPos(self, true)
+				--- END OF BLOCK #1 ---
+
+				slot1 = if not existBtn.data.btnpos then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #2 26-35, warpins: 1 ---
+				existBtn:moveTo(0.1, beganPos.x, beganPos.y)
+				--- END OF BLOCK #2 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+				--- BLOCK #3 36-42, warpins: 1 ---
+				console:resetBtnAreaBtnPos(existBtn, true)
+				--- END OF BLOCK #3 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+				--- BLOCK #4 43-44, warpins: 1 ---
+				--- END OF BLOCK #4 ---
+
+				if operator == "replace" then
+				JUMP TO BLOCK #5
+				else
+				JUMP TO BLOCK #6
+				end
+
+
+				--- BLOCK #5 45-62, warpins: 1 ---
+				console:removeWidget(existBtn.data.key)
+
+				self.data.btnpos = btnpos
+
+				console:resetBtnAreaBtnPos(self, true)
+				--- END OF BLOCK #5 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+				--- BLOCK #6 63-64, warpins: 1 ---
+				--- END OF BLOCK #6 ---
+
+				if operator == "cancel" then
+				JUMP TO BLOCK #7
+				else
+				JUMP TO BLOCK #10
+				end
+
+
+				--- BLOCK #7 65-69, warpins: 1 ---
+				--- END OF BLOCK #7 ---
+
+				slot1 = if not self.data.btnpos then
+				JUMP TO BLOCK #8
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #8 70-79, warpins: 1 ---
+				self:moveTo(0.1, beganPos.x, beganPos.y)
+				--- END OF BLOCK #8 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+				--- BLOCK #9 80-85, warpins: 1 ---
+				console:resetBtnAreaBtnPos(self, true)
+
+				--- END OF BLOCK #9 ---
+
+				FLOW; TARGET BLOCK #10
+
+
+				--- BLOCK #10 86-86, warpins: 6 ---
+				return 
+				--- END OF BLOCK #10 ---
+
+
+
+			end, "console")
+
+			--- END OF BLOCK #20 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+			--- BLOCK #21 200-208, warpins: 1 ---
+			self.data.btnpos = btnpos
+
+			console:resetBtnAreaBtnPos(self, true)
+
+			--- END OF BLOCK #21 ---
+
+			FLOW; TARGET BLOCK #22
+
+
+			--- BLOCK #22 209-209, warpins: 2 ---
+			--- END OF BLOCK #22 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+			--- BLOCK #23 210-213, warpins: 1 ---
+			self.data.btnpos = nil
+
+			--- END OF BLOCK #23 ---
+
+			FLOW; TARGET BLOCK #24
+
+
+			--- BLOCK #24 214-215, warpins: 2 ---
+			--- END OF BLOCK #24 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+			--- BLOCK #25 216-240, warpins: 1 ---
+			detail.new(self.config, self.data, self:getPositionX(), self:getPositionY(), self:getw(), self:geth(), "console", self)
+
+			--- END OF BLOCK #25 ---
+
+			FLOW; TARGET BLOCK #26
+
+
+			--- BLOCK #26 241-243, warpins: 8 ---
+			return true
+			--- END OF BLOCK #26 ---
+
+			FLOW; TARGET BLOCK #27
+
+
+			--- BLOCK #27 244-244, warpins: 2 ---
+			--- END OF BLOCK #27 ---
+
+
+
+		end)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	target._endEdit = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if mask then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-8, warpins: 1 ---
+		mask:removeSelf()
+
+		mask = nil
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-9, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	target._showRect = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not rect then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-32, warpins: 1 ---
+		rect = display.newRect(cc.rect(0, 0, self.getw(self), self.geth(self)), {
+			borderWidth = 1,
+			borderColor = cc.c4f(0, 1, 0, 1)
+		}):add2(self, 999999999)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 33-33, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	target._hideRect = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if rect then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-8, warpins: 1 ---
+		rect:removeSelf()
+
+		rect = nil
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-9, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	target._checkx = function (self, x)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if x < self.getw(self)
+		/2 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 7-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not (self.getw(self)
+
+		/2) then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-12, warpins: 1 ---
+		x = x
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 13-21, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		if display.width - self.getw(self)
+		/2 < x then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 22-30, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot1 = if not (display.width - self.getw(self)
+
+		/2) then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 30-30, warpins: 1 ---
+		x = x
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 31-31, warpins: 3 ---
+		return x
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+	target._checky = function (self, y)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if y < self.geth(self)
+		/2 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 7-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not (self.geth(self)
+
+		/2) then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-12, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 13-21, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		if display.height - self.geth(self)
+		/2 < y then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 22-30, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot1 = if not (display.height - self.geth(self)
+
+		/2) then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 30-30, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 31-31, warpins: 3 ---
+		return y
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+	target._checkPos = function (self, x, y)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		return self._checkx(self, x), self._checky(self, y)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	target._sizeChanged = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if mask then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-10, warpins: 1 ---
+		mask:size(self.getContentSize(self))
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 11-26, warpins: 2 ---
+		self._hideRect(self)
+		self._showRect(self)
+		self.pos(self, self._checkPos(self, self.getPosition(self)))
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	return target
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return widgetDelegate
+--- END OF BLOCK #0 ---
+
+
+

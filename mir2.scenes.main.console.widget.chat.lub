@@ -1,0 +1,2094 @@
+--- BLOCK #0 1-86, warpins: 1 ---
+local common = import("...common.common")
+local itemInfo = import("...common.itemInfo")
+local voiceBtn = import("...common.voiceBtn")
+local chatPos = import("...common.chatPos")
+local chatPic = import("...common.chatPic")
+local chatItem = import("...common.chatItem")
+local keyboardEx = import("...common.keyboardEx")
+local frameSize = 2
+local widthMax = display.width
+local widthMin = 100
+local heightMax = 300
+local heightMin = 50
+local fontSizeMax = 24
+local fontSizeMin = 10
+local chat = class("panelMainChat", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(chat, {
+	config,
+	data,
+	frame,
+	input,
+	scroll,
+	newMark,
+	sayerNode,
+	buf,
+	default = {
+		fontSize = 18,
+		h = 120,
+		enableInput = 1,
+		enableTouch = 1,
+		w = 300,
+		showFrame = 1
+	}
+})
+
+chat.ctor = function (self, config, data)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not data.w then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	slot3 = self.default.w
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-9, warpins: 2 ---
+	data.w = slot3
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not data.h then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-11, warpins: 1 ---
+	slot3 = self.default.h
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-15, warpins: 2 ---
+	data.h = slot3
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not data.fontSize then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 16-17, warpins: 1 ---
+	slot3 = self.default.fontSize
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 18-21, warpins: 2 ---
+	data.fontSize = slot3
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not data.enableTouch then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 22-23, warpins: 1 ---
+	slot3 = self.default.enableTouch
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 24-27, warpins: 2 ---
+	data.enableTouch = slot3
+	--- END OF BLOCK #8 ---
+
+	slot3 = if not data.enableInput then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 28-29, warpins: 1 ---
+	slot3 = self.default.enableInput
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 30-33, warpins: 2 ---
+	data.enableInput = slot3
+	--- END OF BLOCK #10 ---
+
+	slot3 = if not data.showFrame then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 34-35, warpins: 1 ---
+	slot3 = self.default.showFrame
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 36-62, warpins: 2 ---
+	data.showFrame = slot3
+	self.data = data
+
+	self.size(self, data.w, data.h):anchor(0.5, 0.5):pos(data.x, data.y)
+	self.loadFrame(self)
+	self.loadScroll(self)
+	self.loadInput(self)
+
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+chat.getEditNode = function (self)
+	--- BLOCK #0 1-51, warpins: 1 ---
+	local node = display.newNode():size(500, 170)
+	local cnt = 0
+	local space = 150
+	local begin = 20
+
+	local function addToggle(key, name, func)
+		--- BLOCK #0 1-51, warpins: 1 ---
+		local pos = cc.p(cnt*space + 30, node:geth() - 20)
+		local btn = an.newBtn(res.getuitex(2, 228), function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			slot0 = self.data
+			slot1 = key
+			--- END OF BLOCK #0 ---
+
+			if self.data[key] == 0 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-11, warpins: 1 ---
+			slot2 = 1
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 12-12, warpins: 1 ---
+			slot2 = 0
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 13-20, warpins: 2 ---
+			slot0[slot1] = slot2
+			slot0 = func
+			--- END OF BLOCK #3 ---
+
+			if self.data[key] ~= 1 then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 21-22, warpins: 1 ---
+			slot1 = false
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+			--- BLOCK #5 23-23, warpins: 1 ---
+			slot1 = true
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 24-25, warpins: 2 ---
+			slot0(slot1)
+
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end, {
+			scale = 2,
+			support = "easy",
+			select = {
+				res.getuitex(2, 229),
+				manual = externHandle
+			}
+		}):anchor(0, 0.5):pos(pos.x, pos.y):add2(node)
+
+		--- END OF BLOCK #0 ---
+
+		if self.data[key] == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 52-54, warpins: 1 ---
+		btn.select(btn)
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 55-88, warpins: 2 ---
+		an.newLabel(name, 20, 1, {
+			color = cc.c3b(0, 255, 255)
+		}):add2(node):pos(pos.x + 40, pos.y):anchor(0, 0.5)
+
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	addToggle("enableTouch", "可触摸", function (b)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:loadScroll()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	addToggle("enableInput", "可输入", function (b)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self:loadScroll()
+		self:loadInput()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	addToggle("showFrame", "显示外框", function (b)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:loadFrame()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	local cnt = 0
+	local space = 45
+	local begin = 60
+
+	local function addSlider(key, name, valueMax, valueMin)
+		--- BLOCK #0 1-95, warpins: 1 ---
+		local num = an.newLabel("", 16, 1, {
+			color = cc.c3b(0, 255, 255)
+		}):add2(node):anchor(0, 0.5):pos(420, node:geth() - begin - cnt*space)
+
+		local function upt(uptUI, from)
+			--- BLOCK #0 1-14, warpins: 1 ---
+			num:setString(name .. "(" .. self.data[key] .. ")")
+			--- END OF BLOCK #0 ---
+
+			slot0 = if uptUI then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #1 15-17, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if key ~= "w" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 18-20, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if key == "h" then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #3 21-38, warpins: 2 ---
+			self:size(self.data.w, self.data.h)
+			self:_sizeChanged()
+			--- END OF BLOCK #3 ---
+
+			slot2 = if self.frame then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 39-54, warpins: 1 ---
+			self.frame:size(self:getContentSize()):pos(self:centerPos())
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 55-56, warpins: 3 ---
+			--- END OF BLOCK #5 ---
+
+			if from == "end" then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 57-64, warpins: 1 ---
+			self:loadScroll()
+			self:loadInput()
+
+			--- END OF BLOCK #6 ---
+
+			FLOW; TARGET BLOCK #7
+
+
+			--- BLOCK #7 65-65, warpins: 3 ---
+			return 
+			--- END OF BLOCK #7 ---
+
+
+
+		end
+
+		upt()
+
+		local slider = an.newSlider(res.gettex2("pic/common/sliderBg.png"), res.gettex2("pic/common/sliderBar.png"), res.gettex2("pic/common/sliderBlock.png"), {
+			value = (self.data[key] - valueMin)/(valueMax - valueMin),
+			valueChange = function (value)
+				--- BLOCK #0 1-19, warpins: 1 ---
+				local num = (valueMax - valueMin)*value + valueMin
+				self.data[key] = math.modf(num)
+
+				upt(true, "change")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end,
+			valueChangeEnd = function (value)
+				--- BLOCK #0 1-19, warpins: 1 ---
+				local num = (valueMax - valueMin)*value + valueMin
+				self.data[key] = math.modf(num)
+
+				upt(true, "end")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}):add2(node):anchor(0, 0.5):pos(20, node:geth() - begin - cnt*space)
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	addSlider("w", "宽", widthMax, widthMin)
+	addSlider("h", "高", heightMax, heightMin)
+	addSlider("fontSize", "字号", fontSizeMax, fontSizeMin)
+
+	return node
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chat.loadFrame = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.frame then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.frame:removeSelf()
+
+	self.frame = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if self.data.showFrame == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-38, warpins: 1 ---
+	self.frame = display.newScale9Sprite(res.getframe2("pic/console/chat.png")):size(self.getContentSize(self)):pos(self.centerPos(self)):add2(self, 2)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 39-39, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+chat.loadScroll = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.scroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.scroll:removeSelf()
+
+	self.scroll = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if self.data.enableInput == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-15, warpins: 1 ---
+	slot1 = 18
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 16-16, warpins: 1 ---
+	local beginy = 0
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-45, warpins: 2 ---
+	local maxLine = 20
+	slot3 = an.newScroll
+	slot4 = frameSize
+	slot5 = frameSize + beginy
+	slot6 = self.getw(self) - frameSize*2
+	slot7 = self.geth(self) - beginy - frameSize
+	slot8 = {}
+	slot9 = {
+		self.data.fontSize,
+		1
+	}
+	slot10 = {
+		bufferChannel = 11,
+		maxLine = maxLine
+	}
+
+	--- END OF BLOCK #5 ---
+
+	if self.data.enableTouch == 1 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 46-47, warpins: 1 ---
+	function slot11(msg)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if msg then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-5, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if msg.target == "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 6-6, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 7-12, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		if g_data.chat.style.channel == "私聊" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 13-19, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if g_data.chat.style.target == msg.target then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 20-20, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 21-31, warpins: 3 ---
+		common.changeChatStyle({
+			{
+				"channel",
+				"私聊"
+			},
+			{
+				"target",
+				msg.target
+			}
+		})
+
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #7 48-49, warpins: 1 ---
+	slot11 = false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 50-50, warpins: 0 ---
+	slot11 = true
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 51-66, warpins: 3 ---
+	slot10.doubleClickLine_call = slot11
+	slot9.params = slot10
+	slot8.labelM = slot9
+	self.scroll = slot3(slot4, slot5, slot6, slot7, slot8):addTo(self)
+	slot4 = self.scroll
+	slot3 = self.scroll.enableTouch
+	--- END OF BLOCK #9 ---
+
+	if self.data.enableTouch ~= 1 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 67-68, warpins: 1 ---
+	slot5 = false
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 69-69, warpins: 1 ---
+	slot5 = true
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 70-91, warpins: 2 ---
+	slot3(slot4, slot5)
+	self.scroll:setListenner(function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 4-28, warpins: 1 ---
+		local x, y = self.scroll:getScrollOffset()
+
+		--- END OF BLOCK #1 ---
+
+		if self.scroll:getScrollSize()
+		.height - self.scroll:geth()
+		 < y + self.scroll.labelM.wordSize.height then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 29-32, warpins: 1 ---
+		self:hideNewMark()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 33-33, warpins: 3 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	self.buf = newList()
+	local msgs = g_data.chat:getMsgs(common.getAllOpenChatChannel(), maxLine)
+
+	--- END OF BLOCK #12 ---
+
+	for i, v in ipairs(msgs)
+
+	LOOP BLOCK #13
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #13 92-95, warpins: 1 ---
+	self.addMsg(self, v)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 96-97, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #15 98-99, warpins: 1 ---
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+chat.loadInput = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local oldstr = ""
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.input then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self.input.keyboard then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-14, warpins: 1 ---
+	oldstr = self.input.keyboard:getText()
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-17, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.input then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-23, warpins: 1 ---
+	self.input:removeSelf()
+
+	self.input = nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 24-27, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if self.data.enableInput == 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 28-28, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 29-82, warpins: 1 ---
+	self.input = display.newColorLayer(cc.c4b(0, 0, 0, 128)):pos(frameSize, frameSize):size(self.getw(self) - frameSize*2, 18):add2(self)
+
+	self.input:scalex((self.getw(self) - frameSize*2)/self.input:getw())
+
+	local channel = g_data.chat.style.channel
+	local filenames = {
+		私聊 = "single",
+		组队 = "group",
+		喊话 = "loudly",
+		战队 = "clan",
+		千里传音 = "far",
+		行会 = "guild",
+		附近 = "near"
+	}
+	slot4 = "pic/console/"
+	--- END OF BLOCK #7 ---
+
+	slot5 = if not filenames[channel] then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 83-83, warpins: 1 ---
+	slot5 = "far"
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 84-149, warpins: 2 ---
+	local filename = slot4 .. slot5 .. ".png"
+	local channelBtn = res.get2(filename):anchor(0, 0):pos(0, -3):add2(self.input)
+
+	channelBtn.scale(channelBtn, (self.input:geth() + 6)/channelBtn.geth(channelBtn)):enableClick(function ()
+		--- BLOCK #0 1-40, warpins: 1 ---
+		local p = channelBtn:convertToWorldSpace(cc.p(channelBtn:getw()/2, channelBtn:geth()))
+
+		common.chatChannelChoose(true):anchor(0.5, 0):pos(p.x, p.y):add2(main_scene.ui, main_scene.ui.z.chatChannel)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		size = cc.size(channelBtn.getw(channelBtn), 17),
+		anchor = cc.p(0, 1),
+		pos = cc.p(0, 0)
+	})
+
+	local labelw = channelBtn.getw(channelBtn)*channelBtn.getScale(channelBtn)
+	--- END OF BLOCK #9 ---
+
+	if channel == "私聊" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #10 150-156, warpins: 1 ---
+	local text = nil
+	--- END OF BLOCK #10 ---
+
+	if g_data.chat.style.target == "" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 157-158, warpins: 1 ---
+	text = "(点击设置)"
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 159-164, warpins: 1 ---
+	text = "" .. g_data.chat.style.target
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 165-216, warpins: 2 ---
+	local label = an.newLabel(text, 16, 1, {
+		color = cc.c3b(255, 255, 0)
+	}):pos(labelw, -1):add2(self.input)
+
+	label.enableClick(label, function ()
+		--- BLOCK #0 1-37, warpins: 1 ---
+		g_data.mark:addNear(main_scene.ground.map:getHeroNameList())
+
+		local msgbox = nil
+		msgbox = an.newMsgbox("\n请输入对方名字.\n", function ()
+			--- BLOCK #0 1-13, warpins: 1 ---
+			common.changeChatStyle({
+				{
+					"target",
+					msgbox.input:getString()
+				}
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			disableScroll = true,
+			input = 20,
+			inputList = {
+				"<猜你要选>",
+				g_data.mark:getNames()
+			}
+		})
+
+		msgbox.input:setString(g_data.chat.style.target)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		size = cc.size(label.getw(label), 17),
+		anchor = cc.p(0, 1),
+		pos = cc.p(0, 0)
+	})
+
+	labelw = labelw + label.getw(label)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 217-222, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	if g_data.chat.style.input == "keyboard" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #15 223-227, warpins: 1 ---
+	local mac_use_source_keyboard = true
+	--- END OF BLOCK #15 ---
+
+	if device.platform ~= "mac" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 228-231, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if device.platform == "windows" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #17 232-233, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	slot7 = if mac_use_source_keyboard then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 234-284, warpins: 1 ---
+	self.input.keyboard = cc.ui.UIInput.new({
+		UIInputType = 1,
+		image = "res/public/empty.png",
+		size = cc.size(self.input:getw() - labelw, 25),
+		listener = function (type)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if type == "changed" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 3-21, warpins: 1 ---
+			local text = self.input.keyboard:getText()
+
+			--- END OF BLOCK #1 ---
+
+			if string.byte(string.reverse(text))
+			 == string.byte("\\")
+			 then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #2 22-45, warpins: 1 ---
+			self.input.keyboard:setText(string.sub(text, 1, #text - 1))
+			self:say(self.input.keyboard:getText())
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #3 46-55, warpins: 1 ---
+			self:say(self.input.keyboard:getText())
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 56-56, warpins: 3 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end
+	}):anchor(0, 0):pos(labelw, -6):add2(self.input)
+
+	self.input.keyboard:setText(oldstr)
+	self.setKeypadEnabled(self, true)
+	self.addNodeEventListener(self, cc.KEYPAD_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.key == 32 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-13, warpins: 1 ---
+		self:say(self.input.keyboard:getText())
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 14-14, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #19 285-327, warpins: 2 ---
+	self.input.keyboard = an.newInput(labelw, -6, self.input:getw() - labelw - 2, 25, 50, {
+		label = {
+			oldstr,
+			16,
+			1
+		},
+		return_call = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:say()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		show_call = function (dur, y, worldY)
+			--- BLOCK #0 1-37, warpins: 1 ---
+			main_scene:stopAllActions()
+			main_scene:moveTo(dur, 0, y/2)
+			main_scene.ui:stopAllActions()
+			main_scene.ui:moveTo(dur, 0, y/2)
+			keyboardEx.create(self.input.keyboard):pos(0, y/2 + worldY)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		hide_call = function (dur)
+			--- BLOCK #0 1-25, warpins: 1 ---
+			main_scene:stopAllActions()
+			main_scene:moveTo(dur, 0, 0)
+			main_scene.ui:stopAllActions()
+			main_scene.ui:moveTo(dur, 0, 0)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		getWorldY_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			return self:getPositionY() - self:geth()*self:getAnchorPoint().y
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		keyboardEx = {
+			get = function ()
+				--- BLOCK #0 1-6, warpins: 1 ---
+				return keyboardEx.create(self.input.keyboard)
+				--- END OF BLOCK #0 ---
+
+
+
+			end,
+			remove = function ()
+				--- BLOCK #0 1-3, warpins: 1 ---
+				return keyboardEx.destory()
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}
+	}):anchor(0, 0):addto(self.input)
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 328-412, warpins: 1 ---
+	local size = cc.size(self.input:getw() - labelw, self.input:geth())
+	local rect = cc.rect(0, -20, size.width, 20)
+	self.input.voiceBtn = voiceBtn.new(res.gettex2("pic/voice/voiceBtn.png"), res.gettex2("pic/voice/voiceBtn2.png"), size, rect):anchor(0.5, 0.5):pos(labelw + size.width/2, self.input:geth()/2):add2(self.input)
+
+	an.newLabel("按住说话", 14, 1, {
+		color = cc.c3b(0, 255, 255)
+	}):anchor(0.5, 0.5):pos(self.input.voiceBtn:getPosition()):add2(self.input)
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 413-414, warpins: 3 ---
+	return 
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 415-415, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+
+
+end
+chat.hideSayer = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.sayerNode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.sayerNode:removeSelf()
+
+	self.sayerNode = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+chat.showSayer = function (self, msg)
+	--- BLOCK #0 1-93, warpins: 1 ---
+	self.hideSayer(self)
+
+	local size = cc.size(self.getw(self), self.data.fontSize + 2)
+	self.sayerNode = display.newClippingRegionNode(cc.rect(0, 0, size.width, size.height)):pos(0, self.geth(self) - frameSize - size.height + 1):add2(self, 1)
+	local c1, c2 = self.getColor(self, msg)
+
+	display.newColorLayer(cc.c4b(0, 255, 255, 188)):size(size):add2(self.sayerNode)
+
+	local user = an.newLabel(msg.user .. ":", self.data.fontSize, 1, {
+		color = c1,
+		sc = c2
+	}):anchor(0, 0.5):pos(5, size.height/2):add2(self.sayerNode)
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(msg.data)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #1 94-96, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.type == "voice" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #2 97-99, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if msg.channel == "私聊" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 100-102, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot11 = if msg.fromClient then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 103-104, warpins: 1 ---
+	slot11 = "私聊self"
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #5 105-106, warpins: 1 ---
+	slot11 = "私聊"
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 107-107, warpins: 1 ---
+	local bgkey = msg.channel
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 108-139, warpins: 3 ---
+	an.newVoiceBubble(size.height, bgkey, v.dur, v.msgID, v.state, true):anchor(0, 0.5):pos(user.getPositionX(user) + user.getw(user) + 3, size.height/2):add2(self.sayerNode)
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 140-141, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #9 142-142, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+chat.getColor = function (self, msg)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local color = msg.color
+	local bgColor = msg.bgColor
+	--- END OF BLOCK #0 ---
+
+	if msg.channel == "附近" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	bgColor = color
+	color = bgColor
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if color == 219 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 12-13, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if bgColor ~= 255 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 14-15, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if bgColor == 256 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 16-18, warpins: 2 ---
+	bgColor = 0
+	color = 250
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 19-24, warpins: 4 ---
+	local c1, c2 = nil
+
+	--- END OF BLOCK #6 ---
+
+	if type(color)
+
+	 == "number" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 25-31, warpins: 1 ---
+	c1 = def.colors.get(color)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 32-32, warpins: 1 ---
+	c1 = color
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 33-37, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	if type(bgColor)
+
+	 == "number" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 38-44, warpins: 1 ---
+	c2 = def.colors.get(bgColor)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 45-45, warpins: 1 ---
+	c2 = bgColor
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 46-48, warpins: 2 ---
+	return c1, c2
+	--- END OF BLOCK #12 ---
+
+
+
+end
+chat.addMsg = function (self, msg)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.buf.pushBack(msg)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chat.updateAddMsg = function (self, msg)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not common.getChatChannelIsOpen(msg.channel)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-32, warpins: 1 ---
+	local c1, c2 = self.getColor(self, msg)
+	local x, y = self.scroll:getScrollOffset()
+
+	--- END OF BLOCK #2 ---
+
+	if self.scroll:getScrollSize()
+	.height >= y + self.scroll:geth()
+
+	 + self.scroll.labelM.wordSize.height then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 33-34, warpins: 1 ---
+	slot6 = false
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 35-35, warpins: 1 ---
+	local isInEnd = true
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 36-45, warpins: 2 ---
+	self.scroll.labelM:nextLine(msg)
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(msg.data)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #39
+
+
+	--- BLOCK #6 46-48, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v.type == "emoji" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 49-61, warpins: 1 ---
+	self.scroll.labelM:addEmoji(res.gettex2("pic/emoji/" .. v.emoji .. ".png"))
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #8 62-64, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if v.type == "emojiConvert" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 65-71, warpins: 1 ---
+	self.scroll.labelM:addEmojiForConvert(v.emoji)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #10 72-74, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if v.type == "voice" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #11 75-77, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if msg.channel == "私聊" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #12 78-80, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot12 = if msg.fromClient then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 81-82, warpins: 1 ---
+	slot12 = "私聊self"
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #14 83-84, warpins: 1 ---
+	slot12 = "私聊"
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 85-85, warpins: 1 ---
+	local bgkey = msg.channel
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 86-98, warpins: 3 ---
+	slot14 = self.scroll.labelM
+	slot13 = self.scroll.labelM.addVoice
+	slot15 = bgkey
+	slot16 = v.dur
+	slot17 = v.msgID
+	slot18 = v.state
+	slot19 = v.readed
+
+	--- END OF BLOCK #16 ---
+
+	if self.data.enableTouch == 1 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 99-100, warpins: 1 ---
+	function slot20()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		voice.play(msg.user, v.msgID, msg.channel, v.url, v.dur)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #18 101-102, warpins: 1 ---
+	slot20 = false
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 103-103, warpins: 0 ---
+	slot20 = true
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 104-105, warpins: 3 ---
+	slot13(slot14, slot15, slot16, slot17, slot18, slot19, slot20)
+
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #21 106-108, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if v.type == "pic" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #22 109-124, warpins: 1 ---
+	slot13 = self.scroll.labelM
+	slot12 = self.scroll.labelM.addNode
+	slot14 = chatPic.new
+	slot15 = 2
+	slot16 = self.scroll.labelM
+	slot17 = v
+	slot18 = msg.user
+	slot19 = msg.channel
+	--- END OF BLOCK #22 ---
+
+	if self.data.enableTouch ~= 0 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 125-126, warpins: 1 ---
+	slot20 = false
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #24 127-127, warpins: 1 ---
+	slot20 = true
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 128-132, warpins: 2 ---
+	slot12(slot13, slot14(slot15, slot16, slot17, slot18, slot19, slot20), 2, v.msgID)
+
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #26 133-135, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if v.type == "pos" then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #27 136-150, warpins: 1 ---
+	slot13 = self.scroll.labelM
+	slot12 = self.scroll.labelM.addNode
+	slot14 = chatPos.new
+	slot15 = 2
+	slot16 = self.scroll.labelM
+	slot17 = v
+	slot18 = msg.user
+	--- END OF BLOCK #27 ---
+
+	if self.data.enableTouch ~= 0 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 151-152, warpins: 1 ---
+	slot19 = false
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #29 153-153, warpins: 1 ---
+	slot19 = true
+
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 154-157, warpins: 2 ---
+	slot12(slot13, slot14(slot15, slot16, slot17, slot18, slot19), 2)
+
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #31 158-160, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if v.type == "item" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #32 161-174, warpins: 1 ---
+	slot13 = self.scroll.labelM
+	slot12 = self.scroll.labelM.addNode
+	slot14 = chatItem.new
+	slot15 = 2
+	slot16 = self.scroll.labelM
+	slot17 = v
+	--- END OF BLOCK #32 ---
+
+	if self.data.enableTouch ~= 0 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 175-176, warpins: 1 ---
+	slot18 = false
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #34 177-177, warpins: 1 ---
+	slot18 = true
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 178-181, warpins: 2 ---
+	slot12(slot13, slot14(slot15, slot16, slot17, slot18), 2)
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #36 182-190, warpins: 1 ---
+	self.scroll.labelM:addLabel(v, c1, nil, c2)
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 191-191, warpins: 7 ---
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 192-193, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #39 194-195, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	slot6 = if isInEnd then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 196-211, warpins: 1 ---
+	self.scroll:setScrollOffset(0, self.scroll:getScrollSize().height - self.scroll:geth())
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #42
+
+
+	--- BLOCK #41 212-214, warpins: 1 ---
+	self.showNewMark(self)
+
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 215-216, warpins: 2 ---
+	return 
+	--- END OF BLOCK #42 ---
+
+	FLOW; TARGET BLOCK #43
+
+
+	--- BLOCK #43 217-217, warpins: 2 ---
+	--- END OF BLOCK #43 ---
+
+
+
+end
+chat.showNewMark = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.newMark then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-45, warpins: 1 ---
+	self.newMark = res.get2("pic/common/msgNew.png"):add2(self, 1):run(cc.RepeatForever:create(transition.sequence({
+		cc.ScaleTo:create(0.5, 0.7),
+		cc.ScaleTo:create(0.5, 1)
+	}))):enableClick(function ()
+		--- BLOCK #0 1-24, warpins: 1 ---
+		self.newMark:hide()
+		self.scroll:setScrollOffset(0, self.scroll:getScrollSize().height - self.scroll:geth())
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 46-60, warpins: 2 ---
+	slot2 = self.newMark:show()
+	slot1 = self.newMark.show().pos
+	slot3 = self.getw(self) - frameSize - 20
+
+	--- END OF BLOCK #2 ---
+
+	slot4 = if self.input then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 61-66, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if not self.input:geth()
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 67-67, warpins: 2 ---
+	slot4 = 0
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 68-73, warpins: 2 ---
+	slot1(slot2, slot3, slot4 + 24 + frameSize)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+chat.hideNewMark = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.newMark then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.newMark:hide()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+chat.say = function (self, text)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.input then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 2 ---
+	slot2 = common.say
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not text then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-13, warpins: 1 ---
+	slot3 = self.input.keyboard:getRichText()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-16, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if slot2(slot3)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-22, warpins: 1 ---
+	self.input.keyboard:setText("")
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+chat.update = function (self, dt)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.scroll.labelM.maxLine < self.buf.size()
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 9-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	self.buf.popFront()
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 14-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not self.buf.isEmpty()
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-24, warpins: 1 ---
+	self.updateAddMsg(self, self.buf.popFront())
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 25-25, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return chat
+--- END OF BLOCK #0 ---
+
+
+

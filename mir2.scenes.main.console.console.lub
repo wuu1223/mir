@@ -1,0 +1,1375 @@
+--- BLOCK #0 1-29, warpins: 1 ---
+local current = ...
+local common = import("..common.common")
+local replaceAsk = import(".replaceAsk")
+local widgetDef = import(".widget._def")
+local widgetDelegate = import(".widget._delegate")
+local console = class("console", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+slot6 = table.merge
+slot7 = console
+slot8 = {
+	widgets,
+	btnAreaMaxLine = 6,
+	saveList = "_list",
+	btnAreaBegin = 23,
+	btnAreaSpace = 75,
+	saveCurrent = "_current"
+}
+--- END OF BLOCK #0 ---
+
+if 80 < display.width - 960 then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #2
+end
+
+
+--- BLOCK #1 30-31, warpins: 1 ---
+slot9 = 4
+--- END OF BLOCK #1 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+--- BLOCK #2 32-32, warpins: 1 ---
+slot9 = 3
+--- END OF BLOCK #2 ---
+
+FLOW; TARGET BLOCK #3
+
+
+--- BLOCK #3 33-98, warpins: 2 ---
+slot8.btnAreaLineNum = slot9
+slot8[2] = editting
+slot8[3] = controller
+slot8[4] = skills
+slot8[5] = btnCallbacks
+slot8[6] = editBg
+slot8[7] = btnBg
+slot8.z = {
+	btnAreaBg = 2,
+	editBg = 1,
+	widget = 10
+}
+
+slot6(slot7, slot8)
+
+console.ctor = function (self)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	g_data.mark.playerName = common.getPlayerName()
+	local datas = cache.getDiy(common.getPlayerName(), self.saveCurrent)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not datas then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 16-20, warpins: 1 ---
+	datas = clone(widgetDef.default)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-23, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if WIN32_OPERATE then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #3 24-28, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for _, info in ipairs(widgetDef.default_pc)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #4 29-33, warpins: 1 ---
+	local exist = false
+
+	--- END OF BLOCK #4 ---
+
+	for _, v in ipairs(datas)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #5 34-37, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if info.key == v.key then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 38-38, warpins: 1 ---
+	exist = true
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 39-40, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #8 41-42, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot7 = if not exist then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 43-47, warpins: 1 ---
+	table.insert(datas, info)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 48-49, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #11 50-58, warpins: 1 ---
+	g_data.bag.customs = cache.getCustoms(common.getPlayerName())
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 59-64, warpins: 2 ---
+	self.widgets = {}
+
+	--- END OF BLOCK #12 ---
+
+	for i, v in ipairs(datas)
+
+
+	LOOP BLOCK #13
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #13 65-71, warpins: 1 ---
+	local config = widgetDef.getConfig(v)
+
+	--- END OF BLOCK #13 ---
+
+	if config.btntype == "custom" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 72-74, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot8 = if WIN32_OPERATE then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 75-78, warpins: 2 ---
+	self.addWidget(self, v)
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 79-80, warpins: 3 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #17 81-120, warpins: 1 ---
+	self.size(self, display.width, display.height)
+
+	self.controller = import(".controller", current).new(self)
+	self.skills = import(".skills", current).new(self)
+	self.btnCallbacks = import(".btnCallbacks", current).new(self)
+	self.autoRat = import(".autoRat", current).new(self)
+
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+console.resetAutoRat = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.autoRat = import(".autoRat", current).new(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+console.get = function (self, key)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return self.widgets[key]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+console.setWidgetSelect = function (self, key, select)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local wid = self.get(self, key)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if wid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if wid.btn.setIsSelect then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-15, warpins: 1 ---
+	wid.btn:setIsSelect(select)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-16, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+console.call = function (self, key, method, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local inst = self.get(self, key)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if inst then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if inst[method] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	inst[method](inst, ...)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-14, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+console.addWidget = function (self, data, ani)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local config = widgetDef.getConfig(data)
+	--- END OF BLOCK #0 ---
+
+	slot3 = if config then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if config.fixedX then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	data.x = config.fixedX
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if config.fixedY then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-16, warpins: 1 ---
+	data.y = config.fixedY
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-32, warpins: 2 ---
+	slot5 = import(".widget." .. config.class, current).new(config, data)
+	slot4 = import(".widget." .. config.class, current).new(config, data).add2
+	slot6 = self
+	--- END OF BLOCK #5 ---
+
+	slot7 = if not config.z then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 33-34, warpins: 1 ---
+	slot7 = self.z.widget
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 35-40, warpins: 2 ---
+	local node = slot4(slot5, slot6, slot7)
+	node.data = data
+	node.config = config
+	--- END OF BLOCK #7 ---
+
+	slot5 = if not node.btn then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 41-41, warpins: 1 ---
+	slot5 = node
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 42-45, warpins: 2 ---
+	btn = slot5
+
+	--- END OF BLOCK #9 ---
+
+	if config.key == "btnSkillTemp" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 46-53, warpins: 1 ---
+	btn:setName("diy_" .. data.key)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 54-60, warpins: 1 ---
+	btn:setName("diy_" .. config.name)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 61-76, warpins: 2 ---
+	self.widgets[data.key] = widgetDelegate.extend(node, self)
+
+	self.resetBtnAreaBtnPos(self, node, ani)
+	--- END OF BLOCK #12 ---
+
+	slot5 = if self.editting then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 77-79, warpins: 1 ---
+	node._startEdit(node)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 80-83, warpins: 3 ---
+	--- END OF BLOCK #14 ---
+
+	slot4 = if main_scene.ui then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 84-89, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot4 = if main_scene.ui.panels.diy then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 90-98, warpins: 1 ---
+	main_scene.ui.panels.diy:checkSelect(data.key, self)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 99-99, warpins: 3 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+console.addWidgetByPanel = function (self, data, form)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.get(self, data.key)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	return "exist"
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-14, warpins: 1 ---
+	local config = widgetDef.getConfig(data)
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not config then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if config.class == "btnMove" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #5 19-25, warpins: 1 ---
+	local btnpos = self.pos2btnpos(self, data.x, data.y)
+	--- END OF BLOCK #5 ---
+
+	slot4 = if btnpos then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 26-31, warpins: 1 ---
+	local existBtn = self.findWidgetWithBtnpos(self, btnpos)
+
+	--- END OF BLOCK #6 ---
+
+	slot5 = if existBtn then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 32-42, warpins: 1 ---
+	replaceAsk.new(existBtn, function (operator)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if operator == "replace" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-18, warpins: 1 ---
+		self:removeWidget(existBtn.data.key)
+
+		data.btnpos = btnpos
+
+		self:addWidget(data, true)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 19-19, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, form):setName("replaceAskNode")
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 43-48, warpins: 1 ---
+	data.btnpos = btnpos
+
+	self.addWidget(self, data, true)
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 49-49, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 50-53, warpins: 1 ---
+	self.addWidget(self, data)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 54-54, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 55-58, warpins: 1 ---
+	self.addWidget(self, data)
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 59-60, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 61-61, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 62-62, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+
+
+end
+console.removeWidget = function (self, key)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.widgets[key] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	self.widgets[key]:removeSelf()
+
+	self.widgets[key] = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-16, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if main_scene.ui then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 17-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if main_scene.ui.panels.diy then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-31, warpins: 1 ---
+	main_scene.ui.panels.diy:checkSelect(key, self)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 32-32, warpins: 3 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+console.btnpos2pos = function (self, pos)
+	--- BLOCK #0 1-24, warpins: 1 ---
+	pos = string.split(pos, "-")
+	local x = display.width - (pos[2] - 0.5)*self.btnAreaSpace - self.btnAreaBegin
+	local y = (pos[1] - 0.5)*self.btnAreaSpace + self.btnAreaBegin
+
+	return x, y
+	--- END OF BLOCK #0 ---
+
+
+
+end
+console.pos2btnpos = function (self, x, y)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	local rect = self.getBtnAreaRect(self)
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not cc.rectContainsPoint(rect, cc.p(x, y))
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 15-15, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-57, warpins: 2 ---
+	x = x - rect.x
+	x = self.btnAreaLineNum - math.modf(x/self.btnAreaSpace)
+	x = math.max(1, math.min(x, self.btnAreaLineNum))
+	y = y - self.btnAreaBegin
+	y = math.modf(y/self.btnAreaSpace) + 1
+	y = math.max(1, math.min(y, self.btnAreaMaxLine))
+
+	return y .. "-" .. x
+	--- END OF BLOCK #2 ---
+
+
+
+end
+console.findWidgetWithBtnpos = function (self, pos)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.__cname == "btnMove" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot7 = if v.data.btnpos then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 12-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.data.btnpos == pos then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-16, warpins: 1 ---
+	return v
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-18, warpins: 5 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 19-19, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+console.resetBtnAreaBtnPos = function (self, v, ani)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if v.__cname == "btnMove" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if v.data.btnpos then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 8-17, warpins: 1 ---
+	local x, y = self.btnpos2pos(self, v.data.btnpos)
+
+	--- END OF BLOCK #2 ---
+
+	if x == v.getPositionX(v)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if y ~= v.getPositionY(v)
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 23-24, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if ani then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 25-31, warpins: 1 ---
+	v.moveTo(v, 0.1, x, y)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 32-36, warpins: 1 ---
+	v.pos(v, x, y)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 37-37, warpins: 5 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+console.resetAllBtnAreaBtnPos = function (self, ani)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	self.resetBtnAreaBtnPos(self, v, ani)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+console.startEdit = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.call(self, "btnMode", "showModeSelect")
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 10-15, warpins: 1 ---
+	v._startEdit(v)
+	v.show(v)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-17, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 18-23, warpins: 1 ---
+	self.hidePet(self)
+
+	self.editting = true
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+console.endEdit = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	v._endEdit(v)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 10-15, warpins: 1 ---
+	self.editting = false
+
+	self.saveEdit(self)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+console.saveEdit = function (self, filename)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local datas = {}
+	local nodes = sortNodes(table.values(self.widgets))
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(nodes)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 12-17, warpins: 1 ---
+	table.insert(datas, 1, v.data)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-19, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 20-26, warpins: 1 ---
+	slot4 = cache.saveDiy
+	slot5 = common.getPlayerName()
+	--- END OF BLOCK #3 ---
+
+	slot6 = if not filename then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-27, warpins: 1 ---
+	slot6 = self.saveCurrent
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 28-30, warpins: 2 ---
+	slot4(slot5, slot6, datas)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+console.showRect = function (self, widget, key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.hideAllRect(self)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not widget then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	widget = self.get(self, key)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-12, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not widget then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-13, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-17, warpins: 2 ---
+	widget._showRect(widget)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+console.hideAllRect = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	v._hideRect(v)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+console.showEditBg = function (self, b)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.editBg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-47, warpins: 1 ---
+	self.editBg = cc.LayerColor:create(cc.c4b(0, 0, 0, 128)):size(display.width, display.height):add2(self, self.z.editBg)
+
+	display.newNode():size(self.editBg:getContentSize()):add2(self.editBg):enableClick(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:hideAllRect()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 48-54, warpins: 2 ---
+	self.editBg:setVisible(b)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+console.getBtnAreaRect = function (self)
+	--- BLOCK #0 1-22, warpins: 1 ---
+	return cc.rect(display.width - self.btnAreaSpace*self.btnAreaLineNum - self.btnAreaBegin, 0, self.btnAreaSpace*self.btnAreaLineNum + self.btnAreaBegin, self.btnAreaSpace*self.btnAreaMaxLine + self.btnAreaBegin)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+console.checkBtnAreaShow = function (self, p, isHide)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local rect = self.getBtnAreaRect(self)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if p then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not isHide then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	isHide = not cc.rectContainsPoint(rect, p)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-16, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if not self.btnBg then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 17-42, warpins: 1 ---
+	self.btnBg = display.newScale9Sprite(res.getframe2("pic/scale/scale6.png"), rect.x, rect.y, cc.size(rect.width, rect.height)):anchor(0, 0):add2(self, self.z.btnAreaBg)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 43-48, warpins: 2 ---
+	self.btnBg:setVisible(not isHide)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+console.fillPropTest = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.config.btntype == "prop" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	v.prop_fill_test(v)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if v.config.btntype == "custom" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	v.custom_fill_test(v)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-20, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 21-21, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+console.update = function (self, dt)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.update then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	v.update(v, dt)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-19, warpins: 1 ---
+	self.controller:update(dt)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+console.hidePet = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if g_data.player.job == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	self.widgets.btnPet:hide()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return console
+--- END OF BLOCK #3 ---
+
+
+

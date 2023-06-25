@@ -1,0 +1,527 @@
+--- BLOCK #0 1-24, warpins: 1 ---
+local common = import(".common")
+local voiceListenner = {}
+voiceListenner.onRecordEnd = function (ok, record)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not ok then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-9, warpins: 1 ---
+	main_scene.ui:tip(record)
+
+	return 
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+voiceListenner.onRecordTimeout = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if main_scene.ui.voiceTip then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	main_scene.ui.voiceTip:upt("ok")
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-21, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot0 = if main_scene.ui.console:get("chat")
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 22-32, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot0 = if main_scene.ui.console:get("chat")
+
+	.input.voiceBtn then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 33-43, warpins: 1 ---
+	main_scene.ui.console:get("chat").input.voiceBtn.recording = nil
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 44-49, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	slot0 = if main_scene.ui.panels.chat then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 50-57, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot0 = if main_scene.ui.panels.chat.input.voiceBtn then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 58-65, warpins: 1 ---
+	main_scene.ui.panels.chat.input.voiceBtn.recording = nil
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 66-66, warpins: 3 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+voiceListenner.onUploadEnd = function (result, errMsg, text, url, dur, msgID)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if result ~= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-9, warpins: 1 ---
+	main_scene.ui:tip(errMsg)
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-18, warpins: 2 ---
+	slot6 = common.say
+	slot7 = {}
+	slot8 = {}
+	slot9 = common.encodeRich
+	slot10 = {
+		type = "voice"
+	}
+	--- END OF BLOCK #2 ---
+
+	slot11 = if not text then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-19, warpins: 1 ---
+	slot11 = ""
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-22, warpins: 2 ---
+	slot10.text = slot11
+	--- END OF BLOCK #4 ---
+
+	slot11 = if not url then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-23, warpins: 1 ---
+	slot11 = ""
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 24-26, warpins: 2 ---
+	slot10.url = slot11
+	--- END OF BLOCK #6 ---
+
+	slot11 = if not dur then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 27-27, warpins: 1 ---
+	slot11 = 0
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 28-30, warpins: 2 ---
+	slot10.dur = slot11
+	--- END OF BLOCK #8 ---
+
+	slot11 = if not msgID then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 31-31, warpins: 1 ---
+	slot11 = ""
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 32-37, warpins: 2 ---
+	slot10.expand = slot11
+	slot8[MULTRES] = slot9(slot10)
+	slot7[1] = slot8
+
+	slot6(slot7)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+voiceListenner.onStartPlay = function (msgID, channel)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	common.uptVoiceMsgState(msgID, channel, "start")
+
+	local msg = g_data.chat:getMsgWithMsgID(msgID, "voice")
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if msg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 16-30, warpins: 1 ---
+	main_scene.ui.console:call("chat", "showSayer", msg)
+	--- END OF BLOCK #1 ---
+
+	slot3 = if main_scene.ui.panels.chat then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 31-38, warpins: 1 ---
+	main_scene.ui.panels.chat:showSayer(msg)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 39-39, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+voiceListenner.onStopPlay = function (msgID, channel)
+	--- BLOCK #0 1-21, warpins: 1 ---
+	common.uptVoiceMsgState(msgID, channel, "stop")
+	main_scene.ui.console:call("chat", "hideSayer", msg)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ui.panels.chat then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 22-28, warpins: 1 ---
+	main_scene.ui.panels.chat:hideSayer()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 29-36, warpins: 2 ---
+	local hasAuto = nil
+
+	--- END OF BLOCK #2 ---
+
+	for k, v in pairs(g_data.setting.chat.autoPlayVoice)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 37-38, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if v then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 39-40, warpins: 1 ---
+	hasAuto = true
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 41-42, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 43-44, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if not hasAuto then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 45-45, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 46-52, warpins: 2 ---
+	local finded = nil
+
+	--- END OF BLOCK #8 ---
+
+	for i, v in ipairs(g_data.chat.msgs)
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #9 53-56, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	for i2, v2 in ipairs(v.data)
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #19
+
+
+	--- BLOCK #10 57-59, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if v2.type == "voice" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #11 60-61, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot3 = if finded then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #12 62-64, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot14 = if not v2.readed then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #13 65-72, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot14 = if g_data.setting.chat.autoPlayVoice[v.channel] then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #14 73-81, warpins: 1 ---
+	voice.autoPlay(v.user, v2.msgID, v.channel, v2.url, v2.dur)
+
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #15 82-84, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if v2.msgID ~= msgID then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 85-86, warpins: 1 ---
+	finded = false
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 87-87, warpins: 1 ---
+	finded = true
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 88-89, warpins: 7 ---
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #19 90-91, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #20 92-92, warpins: 1 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+voiceListenner.onDownloading = function (msgID, channel)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	common.uptVoiceMsgState(msgID, channel, "loading")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voiceListenner.onDownloadEnd = function (msgID, channel, result)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	slot3 = common.uptVoiceMsgState
+	slot4 = msgID
+	slot5 = channel
+	--- END OF BLOCK #0 ---
+
+	slot2 = if result then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	slot6 = "loadOk"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-9, warpins: 1 ---
+	slot6 = "loadErr"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-11, warpins: 2 ---
+	slot3(slot4, slot5, slot6)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+voiceListenner.onPlayStartSound = function ()
+	--- BLOCK #0 1-10, warpins: 1 ---
+	audio.playSound(sound.root .. "104" .. sound.suffix)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voiceListenner.onPlayEndSound = function ()
+	--- BLOCK #0 1-10, warpins: 1 ---
+	audio.playSound(sound.root .. "104" .. sound.suffix)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return voiceListenner
+--- END OF BLOCK #0 ---
+
+
+

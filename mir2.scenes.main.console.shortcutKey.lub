@@ -1,0 +1,931 @@
+--- BLOCK #0 1-35, warpins: 1 ---
+local common = import("..common.common")
+local shortcutKey = {}
+shortcutKey.code = {}
+shortcutKey.keyEvent = {
+	["Alt+D"] = "lookfor",
+	["Alt+T"] = "kickPreRoom",
+	["Alt+S"] = "noSpeaking",
+	["Alt+F"] = "gmToolShow",
+	["Alt+A"] = "kickBlackHouse"
+}
+shortcutKey.pos = {
+	x = 0,
+	y = 0
+}
+local MOUSE_BUTTON_LEFT = 0
+local MOUSE_BUTTON_RIGHT = 1
+local MOUSE_BUTTON_MIDDLE = 2
+shortcutKey.init = function (scene)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "windows" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-38, warpins: 1 ---
+	local function onKeyPressed(keycode, event)
+		--- BLOCK #0 1-15, warpins: 1 ---
+		shortcutKey.code[#shortcutKey.code + 1] = shortcutKey.code2key(keycode)
+
+		shortcutKey.progress()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local function onKeyReleased(keycode, event)
+		--- BLOCK #0 1-11, warpins: 1 ---
+		table.removebyvalue(shortcutKey.code, shortcutKey.code2key(keycode), true)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local listener = cc.EventListenerKeyboard:create()
+
+	listener.registerScriptHandler(listener, onKeyPressed, cc.Handler.EVENT_KEYBOARD_PRESSED)
+	listener.registerScriptHandler(listener, onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED)
+	eventDispatcher.addEventListenerWithSceneGraphPriority(eventDispatcher, listener, scene)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 39-41, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if main_scene == scene then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 42-75, warpins: 1 ---
+	local function onMouseDown(event)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.getMouseButton(event)
+		 == MOUSE_BUTTON_RIGHT then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-31, warpins: 1 ---
+		main_scene.ui.console.controller:changeMouseMode("right")
+
+		local event = {
+			name = "began"
+		}
+		event.x = event.getCursorX(event)
+		event.y = event.getCursorY(event)
+
+		main_scene.ui.console.controller:handleTouch(event)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 32-32, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local function onMouseMove(event)
+		--- BLOCK #0 1-18, warpins: 1 ---
+		shortcutKey.pos.x = event.getCursorX(event)
+		shortcutKey.pos.y = event.getCursorY(event)
+
+		--- END OF BLOCK #0 ---
+
+		if event.getMouseButton(event)
+
+		 == MOUSE_BUTTON_RIGHT then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 19-35, warpins: 1 ---
+		local event = {
+			name = "moved"
+		}
+		event.x = event.getCursorX(event)
+		event.y = event.getCursorY(event)
+
+		main_scene.ui.console.controller:handleTouch(event)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 36-36, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local function onMouseUp(event)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.getMouseButton(event)
+
+		 == MOUSE_BUTTON_RIGHT then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-23, warpins: 1 ---
+		local event = {
+			name = "ended"
+		}
+		event.x = event.getCursorX(event)
+		event.y = event.getCursorY(event)
+
+		main_scene.ui.console.controller:handleTouch(event)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 24-24, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local listener = cc.EventListenerMouse:create()
+
+	listener.registerScriptHandler(listener, onMouseDown, cc.Handler.EVENT_MOUSE_DOWN)
+	listener.registerScriptHandler(listener, onMouseMove, cc.Handler.EVENT_MOUSE_MOVE)
+	listener.registerScriptHandler(listener, onMouseUp, cc.Handler.EVENT_MOUSE_UP)
+	eventDispatcher.addEventListenerWithSceneGraphPriority(eventDispatcher, listener, scene)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 76-76, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+shortcutKey.code2key = function (code)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local char = nil
+	--- END OF BLOCK #0 ---
+
+	if code == 16 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	char = "Alt"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if code == 124 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-9, warpins: 1 ---
+	char = "A"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #4 10-11, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if code == 127 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 12-13, warpins: 1 ---
+	char = "D"
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #6 14-15, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if code == 129 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 16-17, warpins: 1 ---
+	char = "F"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 18-19, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if code == 142 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 20-21, warpins: 1 ---
+	char = "S"
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 22-23, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if code == 143 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 24-24, warpins: 1 ---
+	char = "T"
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 25-25, warpins: 7 ---
+	return char
+	--- END OF BLOCK #12 ---
+
+
+
+end
+shortcutKey.progress = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(shortcutKey.keyEvent)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #1 6-15, warpins: 1 ---
+	local match = true
+	local keys = string.split(i, "+")
+
+	--- END OF BLOCK #1 ---
+
+	for _, k in ipairs(keys)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 16-23, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot12 = if not table.indexof(shortcutKey.code, k)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 24-25, warpins: 1 ---
+	match = false
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 26-27, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 28-29, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot5 = if match then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 30-33, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	for _, k in ipairs(keys)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 34-40, warpins: 1 ---
+	table.removebyvalue(shortcutKey.code, k, true)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 41-42, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 43-45, warpins: 1 ---
+	shortcutKey[v]()
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 46-47, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #11 48-48, warpins: 1 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+shortcutKey.gmToolShow = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	return 
+
+	gmTool:getInstance():showWindow()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+shortcutKey.kickBlackHouse = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return 
+
+	local name = shortcutKey.mousePlayerName()
+	--- END OF BLOCK #0 ---
+
+	slot0 = if name then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-19, warpins: 1 ---
+	local text = "请确认是否将角色: " .. name .. " 踢至小黑屋"
+	local cmd = "@KickOut " .. name .. " sd000"
+
+	shortcutKey.msgbox(text, cmd)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-20, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+shortcutKey.kickPreRoom = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return 
+
+	local name = shortcutKey.mousePlayerName()
+	--- END OF BLOCK #0 ---
+
+	slot0 = if name then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-19, warpins: 1 ---
+	local text = "请确认是否将角色: " .. name .. " 踢至准备室"
+	local cmd = "@KickOut " .. name .. " 0139~1"
+
+	shortcutKey.msgbox(text, cmd)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-20, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+shortcutKey.lookFor = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return 
+
+	local name = shortcutKey.mousePlayerName()
+
+	--- END OF BLOCK #0 ---
+
+	slot0 = if name then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-14, warpins: 1 ---
+	common.say("@lookfor " .. shortcutKey.mousePlayerName())
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-15, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+shortcutKey.noSpeaking = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return 
+
+	local name = shortcutKey.mousePlayerName()
+	--- END OF BLOCK #0 ---
+
+	slot0 = if name then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-19, warpins: 1 ---
+	local text = "请确认是否将角色: " .. name .. " 禁言1小时"
+	local cmd = "@OutSay " .. name .. " 3600"
+
+	shortcutKey.msgbox(text, cmd)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-20, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+shortcutKey.mousePlayerName = function ()
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 2-9, warpins: 0 ---
+	local map = main_scene.ground.map
+	local player = main_scene.ground.player
+
+	--- END OF BLOCK #1 ---
+
+	slot0 = if map then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not player then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-13, warpins: 2 ---
+	return false
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-37, warpins: 1 ---
+	local x, y = map.getMapPosWithScreenPos(map, shortcutKey.pos.x, shortcutKey.pos.y)
+	local roles = table.values(clone(map.heros))
+
+	table.sort(roles, function (a, b)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if a.getPositionY(a)
+		 >= b.getPositionY(b)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 11-11, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-12, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(roles)
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #5 38-50, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot10 = if cc.rectContainsPoint(v.getBoundingBox(v), cc.p(x, y))
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 51-53, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot10 = if not v.die then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 54-58, warpins: 1 ---
+	return v.info:getName()
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 59-60, warpins: 4 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #9 61-61, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 62-62, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 63-63, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+
+
+end
+shortcutKey.msgbox = function (text, cmd)
+	--- BLOCK #0 1-38, warpins: 1 ---
+	local reason = "疑似挂机"
+	local remark = ""
+	local _, bg = common.msgbox("", {
+		okFunc = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			common.say(cmd)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	an.newLabel(text, 20, 1):addTo(bg):pos(bg.getw(bg)/2, 225):anchor(0.5, 0.5)
+
+	local reasonCfg = {
+		"疑似挂机",
+		"工作室批量挂机",
+		"宣传或进行赌博",
+		"扰乱游戏秩序",
+		"骗子或恶意黑单",
+		"非法外挂"
+	}
+	local tog = {}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(reasonCfg)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #1 39-57, warpins: 1 ---
+	slot13 = #tog + 1
+	slot14 = an.newToggle
+	slot15 = res.gettex2("pic/common/toggle10.png")
+	slot16 = res.gettex2("pic/common/toggle11.png")
+
+	function slot17(b)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if b then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #1 3-8, warpins: 1 ---
+		reason = v
+
+		--- END OF BLOCK #1 ---
+
+		for _, k in ipairs(tog)
+
+		LOOP BLOCK #2
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #2 9-13, warpins: 1 ---
+		k.btn:setIsSelect(not b)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 14-15, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+		--- BLOCK #4 16-24, warpins: 1 ---
+		tog[i].btn:setIsSelect(b)
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 25-32, warpins: 1 ---
+		tog[i].btn:setIsSelect(not b)
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 33-33, warpins: 2 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	slot18 = {
+		label = {
+			v,
+			18,
+			1
+		}
+	}
+	--- END OF BLOCK #1 ---
+
+	if i ~= 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 58-59, warpins: 1 ---
+	slot19 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 60-60, warpins: 1 ---
+	slot19 = true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 61-71, warpins: 2 ---
+	slot18.default = slot19
+	slot15 = slot14(slot15, slot16, slot17, slot18):addTo(bg)
+	slot14 = slot14(slot15, slot16, slot17, slot18).addTo(bg).pos
+
+	--- END OF BLOCK #4 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 72-78, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot16 = if not (bg.getw(bg)
+
+	/2 + 30) then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 79-79, warpins: 2 ---
+	slot16 = 30
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 80-94, warpins: 2 ---
+	tog[slot13] = slot14(slot15, slot16, math.floor((i + 1)/2)*35 - 225):anchor(0, 0.5)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 95-96, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #9 97-147, warpins: 1 ---
+	an.newLabel("备注", 18, 1):addTo(bg):pos(75, 80):anchor(0, 0.5)
+
+	local input = nil
+	input = an.newInput(125, 80, 200, 30, 100, {
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png")
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not input:getText()
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 7-7, warpins: 1 ---
+			slot0 = ""
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 8-9, warpins: 2 ---
+			remark = slot0
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(bg):anchor(0, 0.5)
+
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+
+return shortcutKey
+--- END OF BLOCK #0 ---
+
+
+

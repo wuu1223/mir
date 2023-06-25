@@ -1,0 +1,235 @@
+--- BLOCK #0 1-13, warpins: 1 ---
+local replaceAsk = class("replaceAsk", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(replaceAsk, {})
+
+replaceAsk.ctor = function (self, btn, callback, form)
+	--- BLOCK #0 1-130, warpins: 1 ---
+	self.size(self, display.width, display.height):addto(main_scene.ui, main_scene.ui.z.replaceAsk)
+	self.setTouchEnabled(self, true)
+	self.addNodeEventListener(self, cc.NODE_TOUCH_EVENT, function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	local bg = res.get2("pic/common/msgbox.png"):center():add2(self):scale(0.01):runs({
+		cc.ScaleTo:create(0.1, 1.5),
+		cc.ScaleTo:create(0.1, 1)
+	})
+
+	an.newLabelM(200, 18, 1, {
+		manual = true
+	}):anchor(0, 1):pos(150, bg.geth(bg)*0.5 + 50):add2(bg):nextLine():addLabel("该位置已存在控件"):nextLine():addLabel("请选择操作.")
+
+	local btnbg = display.newSprite(btn.btn.bg:getTexture()):pos(140, bg.geth(bg)*0.5 + 50):anchor(1, 1):add2(bg)
+
+	--- END OF BLOCK #0 ---
+
+	slot6 = if btn.btn.sprite then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 131-148, warpins: 1 ---
+	display.newSprite(btn.btn.sprite:getTexture()):pos(btnbg.centerPos(btnbg)):add2(btnbg)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 149-152, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot6 = if btn.btn.text then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 153-170, warpins: 1 ---
+	display.newSprite(btn.btn.text:getTexture()):pos(btnbg.centerPos(btnbg)):add2(btnbg)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 171-172, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if form == "console" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 173-209, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		callback("swap")
+		self:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/charge.png")
+	}):anchor(0.5, 0):pos(bg.getw(bg)*0.5 - 120, 12):add2(bg)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 210-237, warpins: 2 ---
+	slot7 = an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		callback("replace")
+		self:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/fugai.png")
+	}):anchor(0.5, 0)
+	slot6 = an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		callback("replace")
+		self.removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/fugai.png")
+	}).anchor(0.5, 0).pos
+
+	--- END OF BLOCK #6 ---
+
+	if form == "console" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 238-243, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot8 = if not (bg.getw(bg)
+
+	*0.5) then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 244-247, warpins: 2 ---
+	slot8 = bg.getw(bg)*0.3
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 248-281, warpins: 2 ---
+	slot6(slot7, slot8, 12):add2(bg)
+
+	slot7 = an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		callback("cancel")
+		self:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/cancel.png")
+	}):anchor(0.5, 0)
+	slot6 = an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		callback("cancel")
+		self.removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/cancel.png")
+	}).anchor(0.5, 0).pos
+
+	--- END OF BLOCK #9 ---
+
+	if form == "console" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 282-288, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot8 = if not (bg.getw(bg)
+
+	*0.5 + 120) then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 289-292, warpins: 2 ---
+	slot8 = bg.getw(bg)*0.7
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 293-300, warpins: 2 ---
+	slot6(slot7, slot8, 12):add2(bg)
+
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+
+return replaceAsk
+--- END OF BLOCK #0 ---
+
+
+

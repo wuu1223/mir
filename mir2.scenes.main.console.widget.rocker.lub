@@ -1,0 +1,733 @@
+--- BLOCK #0 1-54, warpins: 1 ---
+local staticAlpha = 122
+local sizeMin = 200
+local sizeMax = 400
+local rocker = class("rocker", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(rocker, {
+	config,
+	data,
+	spr_walk,
+	spr_run,
+	sprBg,
+	beginPos,
+	use = {
+		beginPos,
+		originPos,
+		step,
+		spr,
+		len
+	},
+	default = {
+		size = 300,
+		type = 2
+	}
+})
+
+rocker.ctor = function (self, config, data)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not data.size then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	slot3 = self.default.size
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-30, warpins: 2 ---
+	data.size = slot3
+	data.type = self.default.type
+
+	self.size(self, data.size, data.size):anchor(0.5, 0.5):pos(data.x, data.y)
+
+	self.data = data
+	self.config = config
+
+	self.loadSpr(self)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+rocker.loadSpr = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.spr_walk then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.spr_walk:removeSelf()
+
+	self.spr_walk = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-12, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.spr_run then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-18, warpins: 1 ---
+	self.spr_run:removeSelf()
+
+	self.spr_run = nil
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-22, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if self.data.type == 2 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-43, warpins: 1 ---
+	self.spr_walk = res.get2("pic/console/rock1.png"):pos(self.walkSprPos(self)):add2(self, 1)
+
+	self.spr_walk:setName("rocker_walk")
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 44-65, warpins: 2 ---
+	self.spr_run = res.get2("pic/console/rock2.png"):pos(self.runSprPos(self)):add2(self, 1)
+
+	self.spr_run:setName("rocker_run")
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+rocker.getEditNode = function (self)
+	--- BLOCK #0 1-95, warpins: 1 ---
+	local node = display.newNode():size(400, 80)
+	local num = an.newLabel("", 16, 1, {
+		color = cc.c3b(0, 255, 255)
+	}):add2(node):anchor(0.5, 1):pos(node.getw(node)/2, node.geth(node))
+
+	local function upt(uptUI)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		num:setString("“°∏À¥Û–°(" .. self.data.size .. ")")
+		--- END OF BLOCK #0 ---
+
+		slot0 = if uptUI then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 13-26, warpins: 1 ---
+		self:size(self.data.size, self.data.size)
+		--- END OF BLOCK #1 ---
+
+		slot1 = if self.spr_walk then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 27-35, warpins: 1 ---
+		self.spr_walk:pos(self:walkSprPos())
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 36-48, warpins: 2 ---
+		self.spr_run:pos(self:runSprPos())
+		self:_sizeChanged()
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 49-49, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	upt()
+
+	local slider = an.newSlider(res.gettex2("pic/common/sliderBg.png"), res.gettex2("pic/common/sliderBar.png"), res.gettex2("pic/common/sliderBlock.png"), {
+		value = (self.data.size - sizeMin)/(sizeMax - sizeMin),
+		valueChange = function (value)
+			--- BLOCK #0 1-17, warpins: 1 ---
+			local size = (sizeMax - sizeMin)*value + sizeMin
+			self.data.size = math.modf(size)
+
+			upt(true)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		valueChangeEnd = function (value)
+			--- BLOCK #0 1-17, warpins: 1 ---
+			local size = (sizeMax - sizeMin)*value + sizeMin
+			self.data.size = math.modf(size)
+
+			upt(true)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):add2(node):anchor(0.5, 0.5):pos(node.getw(node)/2, node.geth(node) - 50)
+
+	return node
+	--- END OF BLOCK #0 ---
+
+
+
+end
+rocker.walkSprPos = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	return self.getw(self)*0.33, self.geth(self)*0.33
+	--- END OF BLOCK #0 ---
+
+
+
+end
+rocker.runSprPos = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.data.type == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-13, warpins: 1 ---
+	return self.getw(self)*0.5, self.geth(self)*0.5
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-22, warpins: 2 ---
+	return self.getw(self)*0.66, self.geth(self)*0.66
+	--- END OF BLOCK #2 ---
+
+
+
+end
+rocker.showbg = function (self, b, x, y)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if b then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 3-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not self.sprBg then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-14, warpins: 1 ---
+	self.sprBg = res.get2("pic/console/rockBg.png"):add2(self)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-24, warpins: 2 ---
+	self.sprBg:show():pos(x, y)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 25-27, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if self.sprBg then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 28-31, warpins: 1 ---
+	self.sprBg:hide()
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 32-32, warpins: 3 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+rocker.handleTouch = function (self, event)
+	--- BLOCK #0 1-28, warpins: 1 ---
+	local controller = main_scene.ui.console.controller
+	local maxDis = 100
+	local x = event.x - self.getPositionX(self) + self.getw(self)/2
+	local y = event.y - self.getPositionY(self) + self.geth(self)/2
+
+	--- END OF BLOCK #0 ---
+
+	if event.name == "began" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #1 29-54, warpins: 1 ---
+	controller.autoFindPath:multiMapPathStop()
+
+	self.use = {
+		beginRealPos = cc.p(event.x, event.y),
+		beginPos = cc.p(x, y),
+		beginTime = socket.gettime()
+	}
+	--- END OF BLOCK #1 ---
+
+	if self.data.type == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 55-72, warpins: 1 ---
+	self.use.spr = self.spr_run
+	self.use.originPos = cc.p(self.runSprPos(self))
+	self.use.len = 30
+	self.use.runLen = 80
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #3 73-78, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if x <= self.getw(self)
+	/2 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 79-84, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if y <= self.geth(self)
+
+	/2 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 85-102, warpins: 1 ---
+	self.use.spr = self.spr_walk
+	self.use.step = 1
+	self.use.originPos = cc.p(self.walkSprPos(self))
+	self.use.len = 30
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 103-119, warpins: 2 ---
+	self.use.spr = self.spr_run
+	self.use.step = 2
+	self.use.originPos = cc.p(self.runSprPos(self))
+	self.use.len = 40
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 120-139, warpins: 3 ---
+	self.use.spr:stopAllActions()
+	self.use.spr:pos(x, y)
+	self.showbg(self, true, x, y)
+
+	return true
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 140-140, warpins: 0 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #9 141-143, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if event.name == "moved" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #10 144-168, warpins: 1 ---
+	local angle = math.atan2(x - self.use.beginPos.x, y - self.use.beginPos.y)
+	local destx = x
+	local desty = y
+	local dis = cc.pGetDistance(self.use.beginPos, cc.p(destx, desty))
+	--- END OF BLOCK #10 ---
+
+	if maxDis < dis then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 169-186, warpins: 1 ---
+	destx = self.use.beginPos.x + math.sin(angle)*maxDis
+	desty = self.use.beginPos.y + math.cos(angle)*maxDis
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 187-197, warpins: 2 ---
+	self.use.spr:pos(destx, desty)
+
+	--- END OF BLOCK #12 ---
+
+	if self.use.len < dis then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #13 198-203, warpins: 1 ---
+	local pi = 3.14
+	angle = pi/180*angle
+	--- END OF BLOCK #13 ---
+
+	if angle < 0 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 204-204, warpins: 1 ---
+	angle = angle + 360
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 205-211, warpins: 2 ---
+	local dir = nil
+	local idx = math.ceil(angle/22.5)
+	--- END OF BLOCK #15 ---
+
+	if idx ~= 1 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 212-213, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if idx == 16 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 214-215, warpins: 2 ---
+	dir = 0
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #18 216-221, warpins: 1 ---
+	dir = math.ceil(idx/2 - 0.5)
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 222-234, warpins: 2 ---
+	controller.move.enable = "dir"
+	controller.move.dir = math.abs(dir)
+	--- END OF BLOCK #19 ---
+
+	if self.data.type == 1 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #20 235-239, warpins: 1 ---
+	slot13 = controller.move
+	--- END OF BLOCK #20 ---
+
+	if self.use.runLen <= dis then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 240-241, warpins: 1 ---
+	slot14 = 2
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #22 242-242, warpins: 1 ---
+	slot14 = 1
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 243-247, warpins: 2 ---
+	slot13.step = slot14
+
+	--- END OF BLOCK #23 ---
+
+	if controller.move.step == 1 then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #24 248-256, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if socket.gettime()
+
+	 - self.use.beginTime < 0.2 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #25 257-260, warpins: 1 ---
+	controller.move.enable = false
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+	--- BLOCK #26 261-264, warpins: 1 ---
+	controller.move.step = self.use.step
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 265-271, warpins: 4 ---
+	--- END OF BLOCK #27 ---
+
+	slot13 = if main_scene.ui.console.autoRat.enableRat then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #28 272-279, warpins: 1 ---
+	main_scene.ui.console.autoRat:stop()
+
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #29 280-283, warpins: 1 ---
+	controller.move.enable = false
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #30 284-286, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	if event.name == "ended" then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #31 287-387, warpins: 1 ---
+	local angle = math.atan2(self.use.spr:getPositionX() - self.use.originPos.x, self.use.spr:getPositionY() - self.use.originPos.y)
+	local dis = cc.pGetDistance(self.use.originPos, cc.p(self.use.spr:getPosition())) + 20
+	local destx = self.use.spr:getPositionX() - math.sin(angle)*dis
+	local desty = self.use.spr:getPositionY() - math.cos(angle)*dis
+
+	self.use.spr:runs({
+		cc.MoveTo:create(0.2, cc.p(destx, desty)),
+		cc.MoveTo:create(0.1, self.use.originPos)
+	})
+	self.showbg(self)
+
+	controller.move.enable = false
+
+	--- END OF BLOCK #31 ---
+
+	if math.abs(self.use.beginRealPos.x - event.x)
+	 < 10 then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #32 388-398, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if math.abs(self.use.beginRealPos.y - event.y)
+	 < 10 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #33 399-407, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if socket.gettime()
+	 - self.use.beginTime < 25 then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 408-424, warpins: 1 ---
+	main_scene.ui.console.controller:handleTouch({
+		name = "began",
+		x = event.x,
+		y = event.y
+	})
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-15, warpins: 1 ---
+		main_scene.ui.console.controller:handleTouch({
+			name = "ended",
+			x = event.x,
+			y = event.y
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0)
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 425-426, warpins: 9 ---
+	return 
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 427-427, warpins: 2 ---
+	--- END OF BLOCK #36 ---
+
+
+
+end
+
+return rocker
+--- END OF BLOCK #0 ---
+
+
+

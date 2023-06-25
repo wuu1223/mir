@@ -1,0 +1,277 @@
+--- BLOCK #0 1-25, warpins: 1 ---
+local current = ...
+local btnEx = import("..btnEx")
+local hp = class("widget_hp", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(hp, {
+	config,
+	data,
+	mpPercent = 0,
+	hpPercent = 0
+})
+
+hp.ctor = function (self, config, data)
+	--- BLOCK #0 1-198, warpins: 1 ---
+	self.size(self, 120, 120):anchor(0.5, 0.5):pos(data.x, data.y)
+
+	local hpbg = res.get2("pic/console/hp/hpbg.png"):anchor(0.5, 1):pos(self.getw(self)/2, self.geth(self) + 14):addto(self)
+	self.hpNull = res.get2("pic/console/hp/hp4.png"):anchor(0, 0):pos(70, 36):addto(hpbg)
+	self.hpSpr = res.get2("pic/console/hp/hp3.png"):anchor(0, 0):pos(70, 36):addto(hpbg)
+	self.mpSpr = res.get2("pic/console/hp/hp2.png"):anchor(0, 0):pos(70, 36):addto(hpbg):hide()
+	local hpvaluebg = res.get2("pic/console/hp/hpValueBg.png"):pos(hpbg.getw(hpbg)/2, 8):add2(hpbg)
+	self.hplabel = an.newLabel("0/0", 14, 1):anchor(0.5, 0.5):pos(37, hpvaluebg.geth(hpvaluebg)/2 + 1):add2(hpvaluebg)
+	self.mplabel = an.newLabel("0/0", 14, 1):anchor(0.5, 0.5):pos(108, hpvaluebg.geth(hpvaluebg)/2 + 1):add2(hpvaluebg)
+
+	display.newNode():size(self.getContentSize(self)):pos(self.centerPos(self)):anchor(0.5, 0.5):add2(self):enableClick(function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		btnEx.new()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end):setName("diyhp")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hp.update = function (self, dt)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local ability = g_data.player.ability
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.isDoublePost then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if g_data.player.job == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-18, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 28 > ability.get(ability, "level")
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 19-23, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if g_data.player.job == 1 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 24-30, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if 7 > ability.get(ability, "level")
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 31-35, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if g_data.player.job == 2 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 36-42, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if 7 <= ability.get(ability, "level")
+
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 43-62, warpins: 3 ---
+	self.isDoublePost = true
+
+	self.hpNull:removeSelf()
+
+	self.hpNull = nil
+
+	self.hpSpr:setTex(res.gettex2("pic/console/hp/hp1.png"))
+	self.mpSpr:show()
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 63-74, warpins: 4 ---
+	local hpPercent = ability.get(ability, "HP")/ability.get(ability, "maxHP")
+	--- END OF BLOCK #8 ---
+
+	if 1 < hpPercent then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 75-76, warpins: 1 ---
+	hpPercent = 1
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #10 77-79, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if hpPercent < 0 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 80-81, warpins: 1 ---
+	hpPercent = 0
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #12 82-84, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	if hpPercent ~= self.hpPercent then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 85-106, warpins: 1 ---
+	self.hpPercent = hpPercent
+	local size = self.hpSpr:getTexture():getContentSize()
+
+	self.hpSpr:setTextureRect(cc.rect(0, size.height*(hpPercent - 1), size.width, size.height*hpPercent))
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 107-118, warpins: 2 ---
+	local mpPercent = ability.get(ability, "MP")/ability.get(ability, "maxMP")
+	--- END OF BLOCK #14 ---
+
+	if 1 < mpPercent then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 119-120, warpins: 1 ---
+	mpPercent = 1
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #16 121-123, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	if mpPercent < 0 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 124-125, warpins: 1 ---
+	mpPercent = 0
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #18 126-128, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	if mpPercent ~= self.mpPercent then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 129-150, warpins: 1 ---
+	self.mpPercent = mpPercent
+	local size = self.mpSpr:getTexture():getContentSize()
+
+	self.mpSpr:setTextureRect(cc.rect(0, size.height*(mpPercent - 1), size.width, size.height*mpPercent))
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 151-179, warpins: 2 ---
+	self.hplabel:setString(ability.get(ability, "HP") .. "/" .. ability.get(ability, "maxHP"))
+	self.mplabel:setString(ability.get(ability, "MP") .. "/" .. ability.get(ability, "maxMP"))
+
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+hp.setEquipLockVisible = function (self, visible)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.security:setVisible(visible)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return hp
+--- END OF BLOCK #0 ---
+
+
+

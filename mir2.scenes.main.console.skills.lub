@@ -1,0 +1,492 @@
+--- BLOCK #0 1-31, warpins: 1 ---
+local iconFunc = import(".iconFunc")
+local widgetDef = import(".widget._def")
+local common = import("..common.common")
+local skills = class("skills")
+
+table.merge(skills, {
+	console,
+	max = 20
+})
+
+skills.ctor = function (self, console)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.console = console
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+skills.upt = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local function get(magicId)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(g_data.player.magicList)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 7-15, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v.get(v, "magicId")
+		 == tonumber(magicId)
+
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 16-16, warpins: 1 ---
+		return v
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 17-18, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 19-19, warpins: 1 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.console.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.__cname == "btnMove" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.config.btntype == "skill" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-20, warpins: 1 ---
+	v.skill_upt(v, get(v.data.magicId))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-22, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 23-23, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+skills.select = function (self, magicId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.console.widgets)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.__cname == "btnMove" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 9-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.config.btntype == "skill" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 13-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot1 = if magicId then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 15-21, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.data.magicId == tonumber(magicId)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 22-25, warpins: 1 ---
+	v.select(v)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 26-28, warpins: 2 ---
+	v.unselect(v)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 29-30, warpins: 5 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #8 31-31, warpins: 1 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+skills.defLayout = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(g_data.player.magicList)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 7-14, warpins: 1 ---
+	self.layout(self, v.get(v, "magicId"), true)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-16, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 17-17, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+skills.layout = function (self, magicId, hasLearn)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local config = def.magic.getMagicConfigByUid(magicId)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if config then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not config.btnpos then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-22, warpins: 1 ---
+	local exist = self.console:findWidgetWithBtnpos(config.btnpos)
+	local cover = false
+
+	--- END OF BLOCK #3 ---
+
+	for _, v in pairs(self.console.widgets)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #4 23-25, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.__cname == "btnMove" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 26-29, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if v.config.btntype == "skill" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 30-34, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v.data.btnpos == config.btnpos then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #7 35-44, warpins: 1 ---
+	local magicdata = def.magic.getMagicConfigByUid(v.data.magicId)
+
+	--- END OF BLOCK #7 ---
+
+	if config.btnpos == magicdata.btnpos then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 45-48, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if magicdata.priority < config.priority then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 49-56, warpins: 1 ---
+	self.console:removeWidget(v.data.key)
+
+	cover = true
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 57-58, warpins: 6 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #11 59-60, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot4 = if exist then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 61-62, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot4 = if exist then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #13 63-64, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot5 = if cover then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #14 65-67, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	slot6 = if not WIN32_OPERATE then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #15 68-89, warpins: 1 ---
+	local data = {
+		key2 = "btnSkillTemp"
+	}
+	data.btnpos = config.btnpos
+	data.key = "skill" .. config.uid
+	data.magicId = config.uid
+	data.priority = config.priority
+
+	self.console:addWidget(data)
+	self.console:saveEdit()
+	--- END OF BLOCK #15 ---
+
+	slot5 = if cover then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #16 90-98, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot7 = if not cache.getDiy(common.getPlayerName(), "diy_skill")
+
+	 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 99-155, warpins: 1 ---
+	local node = main_scene.ground.helper.runner.guide:showTipText("diy_skill" .. config.uid, {
+		"同类型更强技能自动覆盖",
+		22,
+		1,
+		align = "right"
+	}, cc.p(-30, 0))
+	local layer = display.newNode():size(display.width, display.height):addTo(display.getRunningScene())
+
+	layer.setTouchEnabled(layer, true)
+	layer.setTouchSwallowEnabled(layer, false)
+	layer.addNodeEventListener(layer, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-11, warpins: 1 ---
+		node:removeSelf()
+		layer:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-13, warpins: 2 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+	cache.saveDiy(common.getPlayerName(), "diy_skill", {
+		diy_skill = true
+	})
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #18 156-157, warpins: 3 ---
+	--- END OF BLOCK #18 ---
+
+	slot2 = if not hasLearn then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 158-163, warpins: 1 ---
+	main_scene.ui:tip("新技能学习成功")
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 164-164, warpins: 5 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 165-165, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+
+
+end
+
+return skills
+--- END OF BLOCK #0 ---
+
+
+

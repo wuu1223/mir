@@ -1,0 +1,618 @@
+--- BLOCK #0 1-31, warpins: 1 ---
+local btnFixed = class("btnFixed", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(btnFixed, {
+	data,
+	config,
+	modeChooseNode,
+	curModeChooseIsShow
+})
+
+btnFixed.ctor = function (self, config, data)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local bg = "pic/console/fixedBtn/btnbg10.png"
+	local bg2 = "pic/console/fixedBtn/btnbg11.png"
+	local text, text_offset = nil
+	--- END OF BLOCK #0 ---
+
+	if config.key == "btnMap" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-14, warpins: 1 ---
+	text = "pic/console/fixedBtn/text_map.png"
+	text_offset = cc.p(-3, 0)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #2 15-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if config.key == "btnExit" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-25, warpins: 1 ---
+	text = "pic/console/fixedBtn/text_exit.png"
+	text_offset = cc.p(-3, 0)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #4 26-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if config.key == "btnMode" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 29-36, warpins: 1 ---
+	text = "pic/console/modes/quanti.png"
+	text_offset = cc.p(-3, 0)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #6 37-39, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if config.key == "btnPet" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 40-47, warpins: 1 ---
+	text = "pic/console/fixedBtn/text_pet.png"
+	text_offset = cc.p(-3, 0)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 48-50, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if config.key == "btnDiy" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 51-57, warpins: 1 ---
+	text = "pic/console/fixedBtn/text_diy.png"
+	text_offset = cc.p(-3, 0)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 58-113, warpins: 6 ---
+	self.btn = an.newBtn(res.gettex2(bg), handler(self, self.click), {
+		pressImage = res.gettex2(bg2),
+		sprite = res.gettex2(text),
+		spriteOffset = text_offset
+	}):anchor(0, 0):add2(self)
+	self.data = data
+	self.config = config
+
+	self.size(self, self.btn:getContentSize()):anchor(0.5, 0.5):pos(data.x, data.y)
+	self.upt(self)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+btnFixed.click = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	sound.playSound("103")
+	--- END OF BLOCK #0 ---
+
+	if self.config.key == "btnExit" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 9-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if g_data.setting.base.quickexit then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-19, warpins: 1 ---
+	main_scene:smallExit()
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #3 20-26, warpins: 1 ---
+	an.newMsgbox("是否确定退出?", function (isOk)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if isOk == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-6, warpins: 1 ---
+		main_scene:smallExit()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-7, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		center = true,
+		hasCancel = true
+	})
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #4 27-30, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if self.config.key == "btnMap" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 31-36, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot1 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 37-43, warpins: 1 ---
+	main_scene.ui:hidePanel("minimap")
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #7 44-50, warpins: 1 ---
+	main_scene.ui:showPanel("minimap")
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #8 51-54, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if self.config.key == "btnMode" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 55-60, warpins: 1 ---
+	self.showModeSelect(self, not self.curModeChooseIsShow)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #10 61-64, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if self.config.key == "btnPet" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 65-72, warpins: 1 ---
+	net.send({
+		CM_SAY
+	}, {
+		"@rest"
+	})
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #12 73-76, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if self.config.key == "btnDiy" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 77-82, warpins: 1 ---
+	main_scene.ui:togglePanel("diy")
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 83-83, warpins: 8 ---
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+btnFixed.showModeSelect = function (self, b)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.curModeChooseIsShow == b then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-9, warpins: 1 ---
+	self.curModeChooseIsShow = b
+	local space = 40
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not self.modeChooseNode then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 10-63, warpins: 1 ---
+	local texts = {}
+	texts[1] = {
+		"quanti",
+		"全体"
+	}
+	texts[2] = {
+		"heping",
+		"和平"
+	}
+	texts[3] = {
+		"bianzu",
+		"编组"
+	}
+	texts[4] = {
+		"hanghui",
+		"行会"
+	}
+	texts[5] = {
+		"shane",
+		"善恶"
+	}
+	texts[6] = {
+		"shitu",
+		"战队"
+	}
+	self.modeChooseNode = res.get2("pic/console/modesBg.png"):anchor(1, 0):pos(self.data.x - self.getw(self)/2 + 2, self.data.y - self.geth(self)/2):add2(main_scene.ui.console, self.getLocalZOrder(self))
+
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(texts)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 64-102, warpins: 1 ---
+	res.get2("pic/console/modes/" .. v[1] .. ".png"):pos((i - 1)*space + space/2, self.modeChooseNode:geth()/2):add2(self.modeChooseNode, 9):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		net.send({
+			CM_ATTACKMODE,
+			tag = i - 1
+		})
+		self:showModeSelect()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		size = cc.size(space, self.modeChooseNode:geth())
+	})
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 103-104, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 105-113, warpins: 2 ---
+	self.modeChooseNode:stopAllActions()
+	self.stopAllActions(self)
+	--- END OF BLOCK #6 ---
+
+	slot1 = if b then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 114-219, warpins: 1 ---
+	self.modeChooseNode:runs({
+		cc.MoveTo:create(0.1, cc.p(self.data.x - self.getw(self)/2 + 2 + self.modeChooseNode:getw() + 20, self.modeChooseNode:getPositionY())),
+		cc.MoveTo:create(0.1, cc.p(self.data.x - self.getw(self)/2 + 2 + self.modeChooseNode:getw(), self.modeChooseNode:getPositionY()))
+	})
+	self.runs(self, {
+		cc.MoveTo:create(0.1, cc.p(self.data.x + self.modeChooseNode:getw() + 20, self.getPositionY(self))),
+		cc.MoveTo:create(0.1, cc.p(self.data.x + self.modeChooseNode:getw(), self.getPositionY(self)))
+	})
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 220-304, warpins: 1 ---
+	self.modeChooseNode:runs({
+		cc.MoveTo:create(0.1, cc.p((self.data.x - self.getw(self)/2 + 2) - 20, self.modeChooseNode:getPositionY())),
+		cc.MoveTo:create(0.1, cc.p(self.data.x - self.getw(self)/2 + 2, self.modeChooseNode:getPositionY()))
+	})
+	self.runs(self, {
+		cc.MoveTo:create(0.1, cc.p(self.data.x - 20, self.getPositionY(self))),
+		cc.MoveTo:create(0.1, cc.p(self.data.x, self.getPositionY(self)))
+	})
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 305-306, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 307-307, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+
+
+end
+btnFixed.mode2filename = function (self, mode)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local names = {
+		全体 = "quanti",
+		行会 = "hanghui",
+		和平 = "heping",
+		编组 = "bianzu",
+		战队 = "shitu",
+		敌对 = "shane"
+	}
+	local filename = nil
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(names)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 7-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot9 = if string.find(mode, k)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 14-15, warpins: 1 ---
+	filename = v
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 16-17, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 18-19, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not filename then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-20, warpins: 1 ---
+	slot4 = "heping"
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 21-21, warpins: 2 ---
+	return slot4
+	--- END OF BLOCK #6 ---
+
+
+
+end
+btnFixed.upt = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.config.key == "btnMode" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-21, warpins: 1 ---
+	self.btn.sprite:setTex(res.gettex2("pic/console/modes/" .. self.mode2filename(self, g_data.player.attackMode) .. ".png"))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 22-22, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnFixed.update = function (self, dt)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.config.key == "btnExit" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-19, warpins: 1 ---
+	self.pos(self, self.data.x, self.data.y - 50)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #3 20-27, warpins: 1 ---
+	self.pos(self, self.data.x, self.data.y)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #4 28-31, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if self.config.key == "btnMap" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 32-37, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 38-53, warpins: 1 ---
+	self.pos(self, self.data.x - main_scene.ui.panels.minimap:getw(), self.data.y)
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 54-60, warpins: 1 ---
+	self.pos(self, self.data.x, self.data.y)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 61-61, warpins: 5 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+
+return btnFixed
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,735 @@
+--- BLOCK #0 1-5, warpins: 1 ---
+local titleInfo = {}
+titleInfo.show = function (data, scenePos, params)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-18, warpins: 2 ---
+	slot4 = display.newNode():size(display.width, display.height)
+	slot3 = display.newNode().size(display.width, display.height).addto
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not params.parent then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-20, warpins: 1 ---
+	slot5 = main_scene.ui
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot6 = if not params.z then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-27, warpins: 1 ---
+	slot6 = main_scene.ui.z.textInfo
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-64, warpins: 2 ---
+	local layer = slot3(slot4, slot5, slot6)
+
+	layer.setTouchEnabled(layer, true)
+	layer.setTouchSwallowEnabled(layer, false)
+	layer.addNodeEventListener(layer, cc.NODE_TOUCH_CAPTURE_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		layer:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-9, warpins: 2 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+
+	local labels = {}
+
+	function add(text, color)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not text then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-3, warpins: 1 ---
+		text = ""
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 4-17, warpins: 2 ---
+		labels[#labels + 1] = an.newLabel(text, 20, 1, {
+			color = color
+		})
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	add(data.get(data, "TitleName"), cc.c3b(0, 255, 0))
+	--- END OF BLOCK #6 ---
+
+	if 0 < data.get(data, "Add_MaxHP")
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 65-72, warpins: 1 ---
+	add("体力上限+" .. data.get(data, "Add_MaxHP"))
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 73-79, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if 0 < data.get(data, "Add_MAC")
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 80-87, warpins: 1 ---
+	add("魔防+" .. data.get(data, "Add_MAC"))
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 88-94, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if 0 < data.get(data, "Add_AC")
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 95-102, warpins: 1 ---
+	add("防御+" .. data.get(data, "Add_AC"))
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 103-109, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	if 0 < data.get(data, "Add_DC")
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 110-117, warpins: 1 ---
+	add("攻击+" .. data.get(data, "Add_DC"))
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 118-124, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	if 0 < data.get(data, "Add_MC")
+	 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 125-132, warpins: 1 ---
+	add("魔法+" .. data.get(data, "Add_MC"))
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 133-139, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	if 0 < data.get(data, "Add_SC")
+	 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 140-147, warpins: 1 ---
+	add("道术+" .. data.get(data, "Add_SC"))
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 148-154, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	if 0 < data.get(data, "Add_MaxMAC")
+	 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 155-162, warpins: 1 ---
+	add("魔防上限+" .. data.get(data, "Add_MaxMAC"))
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 163-169, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	if 0 < data.get(data, "Add_MaxAC")
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 170-177, warpins: 1 ---
+	add("防御上限+" .. data.get(data, "Add_MaxAC"))
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 178-184, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	if 0 < data.get(data, "Add_MaxDC")
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 185-192, warpins: 1 ---
+	add("攻击上限+" .. data.get(data, "Add_MaxDC"))
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 193-199, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	if 0 < data.get(data, "Add_MaxMC")
+	 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 200-207, warpins: 1 ---
+	add("魔法上限+" .. data.get(data, "Add_MaxMC"))
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 208-214, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	if 0 < data.get(data, "Add_MaxSC")
+	 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 215-222, warpins: 1 ---
+	add("道术上限+" .. data.get(data, "Add_MaxSC"))
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 223-229, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	if 0 < data.get(data, "Add_QuickRate")
+	 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 230-237, warpins: 1 ---
+	add("敏捷+" .. data.get(data, "Add_QuickRate"))
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 238-244, warpins: 2 ---
+	--- END OF BLOCK #30 ---
+
+	if 0 < data.get(data, "Add_Union_Damage")
+	 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 245-252, warpins: 1 ---
+	add("合击伤害+" .. data.get(data, "Add_Union_Damage"))
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 253-259, warpins: 2 ---
+	--- END OF BLOCK #32 ---
+
+	if 0 < data.get(data, "Add_Union_Damage_Percent")
+	 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 260-267, warpins: 1 ---
+	add("合击伤害增成+" .. data.get(data, "Add_Union_Damage_Percent"))
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 268-274, warpins: 2 ---
+	--- END OF BLOCK #34 ---
+
+	if 0 < data.get(data, "Add_Exp")
+	 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 275-282, warpins: 1 ---
+	add("经验值+" .. data.get(data, "Add_Exp"))
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 283-289, warpins: 2 ---
+	--- END OF BLOCK #36 ---
+
+	if 0 < data.get(data, "Add_Exp_Percent")
+	 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 290-297, warpins: 1 ---
+	add("经验值增成+" .. data.get(data, "Add_Exp_Percent"))
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 298-304, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	if 0 < data.get(data, "Add_UnBreakValue")
+	 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 305-312, warpins: 1 ---
+	add("防爆+" .. data.get(data, "Add_UnBreakValue"))
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 313-319, warpins: 2 ---
+	--- END OF BLOCK #40 ---
+
+	if 0 < data.get(data, "Add_PerAddForceValue")
+	 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 320-327, warpins: 1 ---
+	add("内功恢复速度+" .. data.get(data, "Add_PerAddForceValue"))
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 328-334, warpins: 2 ---
+	--- END OF BLOCK #42 ---
+
+	if 0 < data.get(data, "Add_MaxMP")
+	 then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 335-342, warpins: 1 ---
+	add("魔力+" .. data.get(data, "Add_MaxMP"))
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 343-349, warpins: 2 ---
+	--- END OF BLOCK #44 ---
+
+	if 0 < data.get(data, "UseTimes")
+	 then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 350-358, warpins: 1 ---
+	add("有效次数+" .. data.get(data, "UseTimes") .. "次")
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 359-368, warpins: 2 ---
+	--- END OF BLOCK #46 ---
+
+	if math.floor(data.get(data, "LeftTime")/1440)
+	 ~= 0 then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 369-382, warpins: 1 ---
+	add("剩余时间:" .. math.floor(data.get(data, "LeftTime")/1440) .. "天")
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #51
+
+
+	--- BLOCK #48 383-393, warpins: 1 ---
+	--- END OF BLOCK #48 ---
+
+	if math.floor(data.get(data, "LeftTime")/60)
+	%24 ~= 0 then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #49 394-408, warpins: 1 ---
+	add("剩余时间:" .. math.floor(data.get(data, "LeftTime")/60)%24 .. "小时")
+	--- END OF BLOCK #49 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #51
+
+
+	--- BLOCK #50 409-421, warpins: 1 ---
+	add("剩余时间:" .. math.floor(data.get(data, "LeftTime")%60) .. "分")
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 422-424, warpins: 3 ---
+	--- END OF BLOCK #51 ---
+
+	slot5 = if not params.noshow then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #52 425-427, warpins: 1 ---
+	--- END OF BLOCK #52 ---
+
+	slot5 = if params.dwon then
+	JUMP TO BLOCK #53
+	else
+	JUMP TO BLOCK #54
+	end
+
+
+	--- BLOCK #53 428-431, warpins: 1 ---
+	add("(单击图标取消当前称号)")
+	--- END OF BLOCK #53 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #54 432-434, warpins: 1 ---
+	add("(单击图标设为当前称号)")
+
+	--- END OF BLOCK #54 ---
+
+	FLOW; TARGET BLOCK #55
+
+
+	--- BLOCK #55 435-457, warpins: 3 ---
+	local bg = display.newScale9Sprite(res.getframe2("pic/scale/scale4.png")):addto(layer):anchor(0, 1)
+	local w = 0
+	local h = 7
+	local space = -2
+	--- END OF BLOCK #55 ---
+
+	for i=#labels, 1, -1
+	LOOP BLOCK #56
+	GO OUT TO BLOCK #57
+
+	--- BLOCK #56 458-487, warpins: 2 ---
+	local v = labels[i]:addto(bg, 99):anchor(0, 0):pos(10, h)
+	w = math.max(w, v.getw(v))
+	h = h + v.geth(v) + space
+	--- END OF BLOCK #56 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #57 488-494, warpins: 1 ---
+	w = w + 20
+	h = h + 10
+	slot9 = cc.rect
+	--- END OF BLOCK #57 ---
+
+	slot10 = if not params.minx then
+	JUMP TO BLOCK #58
+	else
+	JUMP TO BLOCK #59
+	end
+
+
+	--- BLOCK #58 495-495, warpins: 1 ---
+	slot10 = 0
+	--- END OF BLOCK #58 ---
+
+	FLOW; TARGET BLOCK #59
+
+
+	--- BLOCK #59 496-498, warpins: 2 ---
+	--- END OF BLOCK #59 ---
+
+	slot11 = if not params.miny then
+	JUMP TO BLOCK #60
+	else
+	JUMP TO BLOCK #61
+	end
+
+
+	--- BLOCK #60 499-499, warpins: 1 ---
+	slot11 = 0
+	--- END OF BLOCK #60 ---
+
+	FLOW; TARGET BLOCK #61
+
+
+	--- BLOCK #61 500-502, warpins: 2 ---
+	--- END OF BLOCK #61 ---
+
+	slot12 = if not params.maxx then
+	JUMP TO BLOCK #62
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #62 503-504, warpins: 1 ---
+	slot12 = display.width
+	--- END OF BLOCK #62 ---
+
+	FLOW; TARGET BLOCK #63
+
+
+	--- BLOCK #63 505-507, warpins: 2 ---
+	--- END OF BLOCK #63 ---
+
+	slot13 = if not params.maxy then
+	JUMP TO BLOCK #64
+	else
+	JUMP TO BLOCK #65
+	end
+
+
+	--- BLOCK #64 508-509, warpins: 1 ---
+	slot13 = display.height
+	--- END OF BLOCK #64 ---
+
+	FLOW; TARGET BLOCK #65
+
+
+	--- BLOCK #65 510-515, warpins: 2 ---
+	local rect = slot9(slot10, slot11, slot12, slot13)
+	local p = scenePos
+	--- END OF BLOCK #65 ---
+
+	if p.x < rect.x then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #67
+	end
+
+
+	--- BLOCK #66 516-517, warpins: 1 ---
+	p.x = rect.x
+	--- END OF BLOCK #66 ---
+
+	FLOW; TARGET BLOCK #67
+
+
+	--- BLOCK #67 518-522, warpins: 2 ---
+	--- END OF BLOCK #67 ---
+
+	if rect.width < p.x + w then
+	JUMP TO BLOCK #68
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #68 523-525, warpins: 1 ---
+	p.x = rect.width - w
+	--- END OF BLOCK #68 ---
+
+	FLOW; TARGET BLOCK #69
+
+
+	--- BLOCK #69 526-529, warpins: 2 ---
+	--- END OF BLOCK #69 ---
+
+	if rect.height < p.y then
+	JUMP TO BLOCK #70
+	else
+	JUMP TO BLOCK #71
+	end
+
+
+	--- BLOCK #70 530-531, warpins: 1 ---
+	p.y = rect.height
+	--- END OF BLOCK #70 ---
+
+	FLOW; TARGET BLOCK #71
+
+
+	--- BLOCK #71 532-536, warpins: 2 ---
+	--- END OF BLOCK #71 ---
+
+	if p.y - h < rect.y then
+	JUMP TO BLOCK #72
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #72 537-539, warpins: 1 ---
+	p.y = h + rect.y
+
+	--- END OF BLOCK #72 ---
+
+	FLOW; TARGET BLOCK #73
+
+
+	--- BLOCK #73 540-551, warpins: 2 ---
+	bg.size(bg, w, h):pos(p.x, p.y)
+
+	return 
+	--- END OF BLOCK #73 ---
+
+
+
+end
+
+return titleInfo
+--- END OF BLOCK #0 ---
+
+
+

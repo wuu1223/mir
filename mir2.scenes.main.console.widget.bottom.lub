@@ -1,0 +1,187 @@
+--- BLOCK #0 1-31, warpins: 1 ---
+local bottom = class("bottom", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(bottom, {
+	config,
+	data,
+	progress,
+	mapTitle,
+	mapPos,
+	zoneInfo
+})
+
+bottom.ctor = function (self, config, data)
+	--- BLOCK #0 1-244, warpins: 1 ---
+	self.size(self, display.width, 28):anchor(0.5, 0.5):pos(data.x, data.y)
+
+	local bg1 = res.get2("pic/console/bottom/bg1.png"):anchor(0, 0):add2(self)
+	local bg2 = res.get2("pic/console/bottom/bg2.png"):anchor(0, 0):pos(bg1.getw(bg1), 0):add2(self)
+	local bg3 = res.get2("pic/console/bottom/bg3.png"):anchor(1, 0):pos(display.width, 0):add2(self)
+
+	bg2.scalex(bg2, (display.width - bg1.getw(bg1) - bg3.getw(bg3))/bg2.getw(bg2))
+
+	self.mapTitle = an.newLabel(g_data.map.mapTitle .. "", 16, 1):pos(2, 0):add2(self)
+	self.zoneInfo = an.newLabel("", 16, 1):pos(self.mapTitle:getw() + 4, 0):add2(self)
+	self.mapPos = an.newLabel("", 16, 1):pos(2, 20):add2(self)
+
+	res.get2("pic/console/bottom/w1.png"):anchor(1, 0):pos(display.width, 0):add2(self)
+	res.get2("pic/console/bottom/expFont.png"):anchor(1, 0.5):pos(display.width - 517, self.geth(self)/2):add2(self)
+
+	self.progress = an.newProgress(res.gettex2("pic/console/bottom/exp2.png"), res.gettex2("pic/console/bottom/expbg.png"), {
+		x = 1,
+		y = 5
+	}):anchor(1, 0):pos(display.width - 107, 6):add2(self)
+	self.text = an.newLabel("", 14, 1):anchor(0.5, 0.5):pos(self.progress:getw()/2, self.progress:geth()/2 + 3):add2(self.progress, 1)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bottom.upt = function (self)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	local ability = g_data.player.ability
+	local p = ability.get(ability, "Exp")/ability.get(ability, "maxExp")
+	--- END OF BLOCK #0 ---
+
+	if 1 < p then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 16-17, warpins: 1 ---
+	p = 1
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-20, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if p < 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-22, warpins: 1 ---
+	p = 0
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-47, warpins: 2 ---
+	self.progress:setp(p)
+	self.text:setString(string.format("%s / %s (%.2f£¥)", ability.get(ability, "Exp"), tostring(ability.get(ability, "maxExp")), p*100))
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bottom.update = function (self, dt)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local map = main_scene.ground.map
+	local player = main_scene.ground.player
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if not player then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-20, warpins: 2 ---
+	self.mapPos:setString(player.x .. ":" .. player.y)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bottom.uptMap = function (self)
+	--- BLOCK #0 1-36, warpins: 1 ---
+	self.mapTitle:setString(g_data.map.mapTitle .. "")
+	self.zoneInfo:setString(getMapStateStr(g_data.map.mapState))
+	self.zoneInfo:pos(self.mapTitle:getw() + 4, 0)
+
+	slot2 = self.zoneInfo
+	slot1 = self.zoneInfo.setColor
+	--- END OF BLOCK #0 ---
+
+	if g_data.map.mapState == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 37-40, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if not display.COLOR_RED then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 41-42, warpins: 2 ---
+	slot3 = display.COLOR_GREEN
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 43-44, warpins: 2 ---
+	slot1(slot2, slot3)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+return bottom
+--- END OF BLOCK #0 ---
+
+
+

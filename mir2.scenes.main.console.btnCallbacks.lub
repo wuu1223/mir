@@ -1,0 +1,4581 @@
+--- BLOCK #0 1-45, warpins: 1 ---
+local common = import("..common.common")
+local magic = import("..common.magic")
+local helper = import("..common.helper.helper")
+local btnCallbacks = class("btnCallbacks")
+
+table.merge(btnCallbacks, {
+	console
+})
+
+btnCallbacks.ctor = function (self, console)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.console = console
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnCallbacks.handle = function (self, btntype, ...)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self["handle_" .. btntype](self, ...)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnCallbacks.handle_normal = function (self, btn)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	sound.playSound("103")
+
+	local key = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(btn)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-12, warpins: 1 ---
+	key = btn
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 13-14, warpins: 1 ---
+	key = btn.config.key
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-16, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if key == "btnChat" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 17-23, warpins: 1 ---
+	main_scene.ui:togglePanel("chat")
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #5 24-25, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if key == "btnHide" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #6 26-33, warpins: 1 ---
+	local needHides = {
+		"rocker",
+		"hp",
+		"exp",
+		"chat",
+		"btnChat"
+	}
+
+	local function has(key)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(needHides)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v == key then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 7-8, warpins: 1 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 9-10, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 11-11, warpins: 1 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	btn.isHide = not btn.isHide
+
+	--- END OF BLOCK #6 ---
+
+	slot5 = if btn.isHide then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 34-57, warpins: 1 ---
+	btn.btn:setTex(res.gettex2("pic/console/btn_show.png"))
+	btn.run(btn, cc.MoveTo:create(0.1, cc.p(btn.data.x, 21)))
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 58-81, warpins: 1 ---
+	btn.btn:setTex(res.gettex2("pic/console/btn_hide.png"))
+	btn.run(btn, cc.MoveTo:create(0.1, cc.p(btn.data.x, btn.data.y)))
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 82-86, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	for k, v in pairs(self.console.widgets)
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #10 87-88, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if v ~= btn then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 89-92, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if v.config.class ~= "btnMove" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 93-97, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot10 = if has(k)
+
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #13 98-102, warpins: 2 ---
+	local x, y = nil
+	--- END OF BLOCK #13 ---
+
+	slot12 = if v.data.btnpos then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 103-111, warpins: 1 ---
+	x, y = self.console:btnpos2pos(v.data.btnpos)
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 112-116, warpins: 1 ---
+	y = v.data.y
+	x = v.data.x
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 117-119, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	slot12 = if btn.isHide then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 120-150, warpins: 1 ---
+	v.runs(v, {
+		cc.MoveTo:create(0.1, cc.p(x, y + 50)),
+		cc.MoveTo:create(0.1, cc.p(x, y - display.height))
+	})
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #18 151-164, warpins: 1 ---
+	v.run(v, cc.MoveTo:create(0.1, cc.p(x, y)))
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 165-166, warpins: 4 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #20 167-167, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 168-169, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if key == "btnGroup" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 170-182, warpins: 1 ---
+	self.console.controller:setQuickGroup()
+	btn.btn:setIsSelect(self.console.controller.quickGroup)
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #23 183-184, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	if key == "btnAutoRat" then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #24 185-189, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	slot3 = if self.console.autoRat.enableRat then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 190-195, warpins: 1 ---
+	self.console.autoRat:stop()
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+	--- BLOCK #26 196-200, warpins: 1 ---
+	self.console.autoRat:enable()
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 201-207, warpins: 2 ---
+	btn.btn:setIsSelect(self.console.autoRat.enableRat)
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 208-208, warpins: 5 ---
+	--- END OF BLOCK #28 ---
+
+
+
+end
+btnCallbacks.handle_base = function (self, btn)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local key = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(btn)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	key = btn
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	key = btn.config.btnid
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-12, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if key == "attack" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #4 13-19, warpins: 1 ---
+	local lock = self.console.controller.lock
+	--- END OF BLOCK #4 ---
+
+	slot4 = if lock.target.skill then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 20-29, warpins: 1 ---
+	local role = main_scene.ground.map:findRole(lock.target.skill)
+
+	--- END OF BLOCK #5 ---
+
+	slot4 = if role then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 30-37, warpins: 1 ---
+	lock.stop(lock)
+	lock.setAttackTarget(lock, role)
+
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 38-41, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot4 = if lock.target.select then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 42-51, warpins: 1 ---
+	local role = main_scene.ground.map:findRole(lock.target.select)
+
+	--- END OF BLOCK #8 ---
+
+	slot4 = if role then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 52-56, warpins: 1 ---
+	lock.setAttackTarget(lock, role)
+
+	return 
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 57-60, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot4 = if lock.target.attack then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #11 61-70, warpins: 1 ---
+	local role = main_scene.ground.map:findRole(lock.target.select)
+
+	--- END OF BLOCK #11 ---
+
+	slot4 = if role then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #12 71-73, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot5 = if not role.die then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #13 74-74, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 75-75, warpins: 0 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 76-78, warpins: 2 ---
+	lock.setAttackTarget(lock)
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 79-86, warpins: 3 ---
+	local role = main_scene.ground.map:findNearMon()
+
+	--- END OF BLOCK #16 ---
+
+	slot4 = if role then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 87-91, warpins: 1 ---
+	lock.setAttackTarget(lock, role)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #18 92-101, warpins: 1 ---
+	lock.setAttackTarget(lock)
+	main_scene.ui:tip("附近没有怪物.")
+
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #19 102-103, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if key == "lock" then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #20 104-106, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot3 = if not btn.looks then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 107-108, warpins: 1 ---
+	btn.looks = {}
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 109-116, warpins: 2 ---
+	local roles = {}
+
+	--- END OF BLOCK #22 ---
+
+	for k, v in pairs(main_scene.ground.map.heros)
+
+
+	LOOP BLOCK #23
+	GO OUT TO BLOCK #28
+
+
+	--- BLOCK #23 117-119, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	slot9 = if not v.die then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #24 120-122, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	slot9 = if not v.isPlayer then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #25 123-125, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	slot9 = if not v.isDummy then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 126-128, warpins: 1 ---
+	roles[#roles + 1] = v
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 129-130, warpins: 5 ---
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #28 131-137, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	for k, v in pairs(main_scene.ground.map.mons)
+
+	LOOP BLOCK #29
+	GO OUT TO BLOCK #34
+
+
+	--- BLOCK #29 138-140, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot9 = if not v.die then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #30 141-145, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot9 = if not v.isPolice(v)
+
+	 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #31 146-148, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	slot9 = if not v.isDummy then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 149-151, warpins: 1 ---
+	roles[#roles + 1] = v
+
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 152-153, warpins: 5 ---
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #34 154-163, warpins: 1 ---
+	table.sort(roles, function (a, b)
+		--- BLOCK #0 1-16, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if main_scene.ground.player:getDis(a)
+		 >= main_scene.ground.player:getDis(b)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 17-18, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 19-19, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 20-20, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	local choose = nil
+
+	--- END OF BLOCK #34 ---
+
+	for i, v in ipairs(roles)
+
+
+	LOOP BLOCK #35
+	GO OUT TO BLOCK #38
+
+
+	--- BLOCK #35 164-168, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot10 = if not btn.looks[v.roleid] then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 169-174, warpins: 1 ---
+	btn.looks[v.roleid] = true
+	choose = v
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #37 175-176, warpins: 2 ---
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #38 177-178, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	slot4 = if not choose then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #39 179-184, warpins: 1 ---
+	btn.looks = {}
+	--- END OF BLOCK #39 ---
+
+	if 0 < #roles then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 185-190, warpins: 1 ---
+	btn.looks[roles[1].roleid] = true
+	choose = roles[1]
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 191-198, warpins: 3 ---
+	local lock = self.console.controller.lock
+
+	lock.stop(lock)
+	--- END OF BLOCK #41 ---
+
+	slot4 = if choose then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #42 199-203, warpins: 1 ---
+	lock.setSelectTarget(lock, choose)
+	--- END OF BLOCK #42 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #43 204-210, warpins: 1 ---
+	main_scene.ui:tip("附近没有人物或怪物.")
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #44 211-212, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if key == "shift" then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #49
+	end
+
+
+	--- BLOCK #45 213-222, warpins: 1 ---
+	self.console.controller:toggleShift()
+	--- END OF BLOCK #45 ---
+
+	slot3 = if self.console.controller.openShift then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #46 223-233, warpins: 1 ---
+	self.console:call("lock", "stop")
+	--- END OF BLOCK #46 ---
+
+	slot3 = if self.console.controller.autoWa then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 234-242, warpins: 1 ---
+	self.handle(self, "base", self.console:get("btnWa"))
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 243-250, warpins: 3 ---
+	btn.btn:setIsSelect(self.console.controller.openShift)
+	--- END OF BLOCK #48 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #49 251-252, warpins: 1 ---
+	--- END OF BLOCK #49 ---
+
+	if key == "wa" then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #54
+	end
+
+
+	--- BLOCK #50 253-262, warpins: 1 ---
+	self.console.controller:toggleWa()
+	--- END OF BLOCK #50 ---
+
+	slot3 = if self.console.controller.autoWa then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #51 263-273, warpins: 1 ---
+	self.console:call("lock", "stop")
+	--- END OF BLOCK #51 ---
+
+	slot3 = if self.console.controller.openShift then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #52 274-282, warpins: 1 ---
+	self.handle(self, "base", self.console:get("btnShift"))
+	--- END OF BLOCK #52 ---
+
+	FLOW; TARGET BLOCK #53
+
+
+	--- BLOCK #53 283-290, warpins: 3 ---
+	btn.btn:setIsSelect(self.console.controller.autoWa)
+	--- END OF BLOCK #53 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #54 291-292, warpins: 1 ---
+	--- END OF BLOCK #54 ---
+
+	if key == "back" then
+	JUMP TO BLOCK #55
+	else
+	JUMP TO BLOCK #56
+	end
+
+
+	--- BLOCK #55 293-295, warpins: 1 ---
+	common.backHome()
+
+	--- END OF BLOCK #55 ---
+
+	FLOW; TARGET BLOCK #56
+
+
+	--- BLOCK #56 296-296, warpins: 8 ---
+	return 
+	--- END OF BLOCK #56 ---
+
+	FLOW; TARGET BLOCK #57
+
+
+	--- BLOCK #57 297-297, warpins: 2 ---
+	--- END OF BLOCK #57 ---
+
+	FLOW; TARGET BLOCK #58
+
+
+	--- BLOCK #58 298-298, warpins: 2 ---
+	--- END OF BLOCK #58 ---
+
+	FLOW; TARGET BLOCK #59
+
+
+	--- BLOCK #59 299-299, warpins: 2 ---
+	--- END OF BLOCK #59 ---
+
+
+
+end
+btnCallbacks.handle_setting = function (self, btn)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local key = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(btn)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	key = btn
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	key = btn.config.key
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-13, warpins: 2 ---
+	local enable, settingKey = nil
+	--- END OF BLOCK #3 ---
+
+	if key == "btnHeroName" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 14-34, warpins: 1 ---
+	g_data.setting.base.heroShowName = not g_data.setting.base.heroShowName
+	enable = g_data.setting.base.heroShowName
+	settingKey = "heroShowName"
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #4 ---
+
+	for k, v in pairs(map.heros)
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #5 35-42, warpins: 1 ---
+	v.info:setName(v.info.name.texts, true)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 43-44, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #7 45-45, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #8 46-47, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if key == "btnNPCShowName" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #9 48-68, warpins: 1 ---
+	g_data.setting.base.NPCShowName = not g_data.setting.base.NPCShowName
+	enable = g_data.setting.base.NPCShowName
+	settingKey = "NPCShowName"
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #9 ---
+
+	for k, v in pairs(map.npcs)
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #10 69-76, warpins: 1 ---
+	v.info:setName(v.info.name.texts, true)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 77-78, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #12 79-79, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #13 80-81, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if key == "btnPetShowName" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #14 82-102, warpins: 1 ---
+	g_data.setting.base.petShowName = not g_data.setting.base.petShowName
+	enable = g_data.setting.base.petShowName
+	settingKey = "petShowName"
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #14 ---
+
+	for k, v in pairs(map.heros)
+
+	LOOP BLOCK #15
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #15 103-110, warpins: 1 ---
+	v.info:setName(v.info.name.texts, true)
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 111-112, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #17 113-116, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	for k, v in pairs(map.mons)
+
+	LOOP BLOCK #18
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #18 117-124, warpins: 1 ---
+	v.info:setName(v.info.name.texts, true)
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 125-126, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #20 127-127, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #21 128-129, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if key == "btnMonShowName" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #22 130-150, warpins: 1 ---
+	g_data.setting.base.monShowName = not g_data.setting.base.monShowName
+	enable = g_data.setting.base.monShowName
+	settingKey = "monShowName"
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #22 ---
+
+	for k, v in pairs(map.mons)
+
+	LOOP BLOCK #23
+	GO OUT TO BLOCK #25
+
+
+	--- BLOCK #23 151-158, warpins: 1 ---
+	v.info:setName(v.info.name.texts, true)
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 159-160, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #25 161-161, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #26 162-163, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if key == "btnOnlyname" then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #27 164-184, warpins: 1 ---
+	g_data.setting.base.showNameOnly = not g_data.setting.base.showNameOnly
+	enable = g_data.setting.base.showNameOnly
+	settingKey = "showNameOnly"
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #27 ---
+
+	for k, v in pairs(map.heros)
+
+	LOOP BLOCK #28
+	GO OUT TO BLOCK #30
+
+
+	--- BLOCK #28 185-191, warpins: 1 ---
+	v.info:setName(v.info.name.texts)
+
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 192-193, warpins: 2 ---
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+	--- BLOCK #30 194-194, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #31 195-196, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if key == "hiBlood" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 197-211, warpins: 1 ---
+	g_data.setting.base.hiBlood = not g_data.setting.base.hiBlood
+	enable = g_data.setting.base.hiBlood
+	settingKey = "hiBlood"
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #33 212-213, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if key == "warningDura" then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 214-228, warpins: 1 ---
+	g_data.setting.base.warningDura = not g_data.setting.base.warningDura
+	enable = g_data.setting.base.warningDura
+	settingKey = "warningDura"
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #35 229-230, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	if key == "showExpEnable" then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 231-245, warpins: 1 ---
+	g_data.setting.base.showExpEnable = not g_data.setting.base.showExpEnable
+	enable = g_data.setting.base.showExpEnable
+	settingKey = "showExpEnable"
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #37 246-247, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	if key == "lockColor" then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 248-262, warpins: 1 ---
+	g_data.setting.base.lockColor = not g_data.setting.base.lockColor
+	enable = g_data.setting.base.lockColor
+	settingKey = "lockColor"
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #39 263-264, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if key == "btnTouchRun" then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 265-285, warpins: 1 ---
+	g_data.setting.base.touchRun = not g_data.setting.base.touchRun
+	enable = g_data.setting.base.touchRun
+	settingKey = "touchRun"
+
+	self.console.controller:setTouchRun(enable)
+
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #41 286-287, warpins: 1 ---
+	--- END OF BLOCK #41 ---
+
+	if key == "btnShowOutHP" then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #42 288-302, warpins: 1 ---
+	g_data.setting.base.showOutHP = not g_data.setting.base.showOutHP
+	enable = g_data.setting.base.showOutHP
+	settingKey = "showOutHP"
+	--- END OF BLOCK #42 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #43 303-304, warpins: 1 ---
+	--- END OF BLOCK #43 ---
+
+	if key == "btnSoundEnable" then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 305-323, warpins: 1 ---
+	g_data.setting.base.soundEnable = not g_data.setting.base.soundEnable
+	enable = g_data.setting.base.soundEnable
+	settingKey = "soundEnable"
+
+	sound.setEnable(enable)
+
+	--- END OF BLOCK #44 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #45 324-325, warpins: 1 ---
+	--- END OF BLOCK #45 ---
+
+	if key == "btnHideCorpse" then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #46 326-346, warpins: 1 ---
+	g_data.setting.base.hideCorpse = not g_data.setting.base.hideCorpse
+	enable = g_data.setting.base.hideCorpse
+	settingKey = "hideCorpse"
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #46 ---
+
+	for k, v in pairs(map.heros)
+
+	LOOP BLOCK #47
+	GO OUT TO BLOCK #49
+
+
+	--- BLOCK #47 347-349, warpins: 1 ---
+	v.uptSelfShow(v)
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 350-351, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #49 352-355, warpins: 1 ---
+	--- END OF BLOCK #49 ---
+
+	for k, v in pairs(map.mons)
+
+	LOOP BLOCK #50
+	GO OUT TO BLOCK #52
+
+
+	--- BLOCK #50 356-358, warpins: 1 ---
+	v.uptSelfShow(v)
+
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 359-360, warpins: 2 ---
+	--- END OF BLOCK #51 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #52 361-361, warpins: 1 ---
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #53 362-363, warpins: 1 ---
+	--- END OF BLOCK #53 ---
+
+	if key == "btnfirePeral" then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #54 364-378, warpins: 1 ---
+	g_data.setting.base.firePeral = not g_data.setting.base.firePeral
+	enable = g_data.setting.base.firePeral
+	settingKey = "firePeral"
+	--- END OF BLOCK #54 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #55 379-380, warpins: 1 ---
+	--- END OF BLOCK #55 ---
+
+	if key == "btnguild" then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #57
+	end
+
+
+	--- BLOCK #56 381-395, warpins: 1 ---
+	g_data.setting.base.guild = not g_data.setting.base.guild
+	enable = g_data.setting.base.guild
+	settingKey = "guild"
+	--- END OF BLOCK #56 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #57 396-397, warpins: 1 ---
+	--- END OF BLOCK #57 ---
+
+	if key == "btnquickexit" then
+	JUMP TO BLOCK #58
+	else
+	JUMP TO BLOCK #59
+	end
+
+
+	--- BLOCK #58 398-412, warpins: 1 ---
+	g_data.setting.base.quickexit = not g_data.setting.base.quickexit
+	enable = g_data.setting.base.quickexit
+	settingKey = "quickexit"
+	--- END OF BLOCK #58 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #59 413-414, warpins: 1 ---
+	--- END OF BLOCK #59 ---
+
+	if key == "btnautoUnpack" then
+	JUMP TO BLOCK #60
+	else
+	JUMP TO BLOCK #61
+	end
+
+
+	--- BLOCK #60 415-429, warpins: 1 ---
+	g_data.setting.base.autoUnpack = not g_data.setting.base.autoUnpack
+	enable = g_data.setting.base.autoUnpack
+	settingKey = "autoUnpack"
+	--- END OF BLOCK #60 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #61 430-431, warpins: 1 ---
+	--- END OF BLOCK #61 ---
+
+	if key == "btnAutoFire" then
+	JUMP TO BLOCK #62
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #62 432-446, warpins: 1 ---
+	g_data.setting.job.autoFire = not g_data.setting.job.autoFire
+	enable = g_data.setting.job.autoFire
+	settingKey = "autoFire"
+	--- END OF BLOCK #62 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #63 447-448, warpins: 1 ---
+	--- END OF BLOCK #63 ---
+
+	if key == "btnAutoWide" then
+	JUMP TO BLOCK #64
+	else
+	JUMP TO BLOCK #65
+	end
+
+
+	--- BLOCK #64 449-463, warpins: 1 ---
+	g_data.setting.job.autoWide = not g_data.setting.job.autoWide
+	enable = g_data.setting.job.autoWide
+	settingKey = "autoWide"
+	--- END OF BLOCK #64 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #65 464-465, warpins: 1 ---
+	--- END OF BLOCK #65 ---
+
+	if key == "btnAutoAllSpace" then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #67
+	end
+
+
+	--- BLOCK #66 466-480, warpins: 1 ---
+	g_data.setting.job.autoAllSpace = not g_data.setting.job.autoAllSpace
+	enable = g_data.setting.job.autoAllSpace
+	settingKey = "autoAllSpace"
+	--- END OF BLOCK #66 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #67 481-482, warpins: 1 ---
+	--- END OF BLOCK #67 ---
+
+	if key == "btnAutoSword" then
+	JUMP TO BLOCK #68
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #68 483-497, warpins: 1 ---
+	g_data.setting.job.autoSword = not g_data.setting.job.autoSword
+	enable = g_data.setting.job.autoSword
+	settingKey = "autoSword"
+	--- END OF BLOCK #68 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #69 498-499, warpins: 1 ---
+	--- END OF BLOCK #69 ---
+
+	if key == "btnAutoSpace" then
+	JUMP TO BLOCK #70
+	else
+	JUMP TO BLOCK #71
+	end
+
+
+	--- BLOCK #70 500-514, warpins: 1 ---
+	g_data.setting.job.autoSpace = not g_data.setting.job.autoSpace
+	enable = g_data.setting.job.autoSpace
+	settingKey = "autoSpace"
+	--- END OF BLOCK #70 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #71 515-516, warpins: 1 ---
+	--- END OF BLOCK #71 ---
+
+	if key == "btnAutoDun" then
+	JUMP TO BLOCK #72
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #72 517-531, warpins: 1 ---
+	g_data.setting.job.autoDun = not g_data.setting.job.autoDun
+	enable = g_data.setting.job.autoDun
+	settingKey = "autoDun"
+	--- END OF BLOCK #72 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #73 532-533, warpins: 1 ---
+	--- END OF BLOCK #73 ---
+
+	if key == "btnautoDunHero" then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #78
+	end
+
+
+	--- BLOCK #74 534-554, warpins: 1 ---
+	g_data.setting.job.autoDunHero = not g_data.setting.job.autoDunHero
+	enable = g_data.setting.job.autoDunHero
+	settingKey = "autoDunHero"
+	slot5 = net.send
+	slot6 = {
+		CM_HERO_CHGSTATE,
+		param = 1
+	}
+	--- END OF BLOCK #74 ---
+
+	slot3 = if enable then
+	JUMP TO BLOCK #75
+	else
+	JUMP TO BLOCK #76
+	end
+
+
+	--- BLOCK #75 555-556, warpins: 1 ---
+	slot7 = 1
+	--- END OF BLOCK #75 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #76 557-557, warpins: 1 ---
+	slot7 = 0
+	--- END OF BLOCK #76 ---
+
+	FLOW; TARGET BLOCK #77
+
+
+	--- BLOCK #77 558-560, warpins: 2 ---
+	slot6.recog = slot7
+
+	slot5(slot6)
+
+	--- END OF BLOCK #77 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #78 561-562, warpins: 1 ---
+	--- END OF BLOCK #78 ---
+
+	if key == "btnAutoInvisible" then
+	JUMP TO BLOCK #79
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #79 563-577, warpins: 1 ---
+	g_data.setting.job.autoInvisible = not g_data.setting.job.autoInvisible
+	enable = g_data.setting.job.autoInvisible
+	settingKey = "autoInvisible"
+	--- END OF BLOCK #79 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #80 578-579, warpins: 1 ---
+	--- END OF BLOCK #80 ---
+
+	if key == "btnAutoSkill" then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #82
+	end
+
+
+	--- BLOCK #81 580-597, warpins: 1 ---
+	g_data.setting.job.autoSkill.enable = not g_data.setting.job.autoSkill.enable
+	enable = g_data.setting.job.autoSkill.enable
+	settingKey = "autoSkill"
+	--- END OF BLOCK #81 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #82 598-599, warpins: 1 ---
+	--- END OF BLOCK #82 ---
+
+	if key == "btnAutoSpaceMove" then
+	JUMP TO BLOCK #83
+	else
+	JUMP TO BLOCK #84
+	end
+
+
+	--- BLOCK #83 600-617, warpins: 1 ---
+	g_data.setting.autoRat.autoSpaceMove.enable = not g_data.setting.autoRat.autoSpaceMove.enable
+	enable = g_data.setting.autoRat.autoSpaceMove.enable
+	settingKey = "autoSpaceMove"
+	--- END OF BLOCK #83 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #84 618-619, warpins: 1 ---
+	--- END OF BLOCK #84 ---
+
+	if key == "btnNoPickUpItem" then
+	JUMP TO BLOCK #85
+	else
+	JUMP TO BLOCK #86
+	end
+
+
+	--- BLOCK #85 620-634, warpins: 1 ---
+	g_data.setting.autoRat.noPickUpItem = not g_data.setting.autoRat.noPickUpItem
+	enable = g_data.setting.autoRat.noPickUpItem
+	settingKey = "btnNoPickUpItem"
+	--- END OF BLOCK #85 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #86 635-636, warpins: 1 ---
+	--- END OF BLOCK #86 ---
+
+	if key == "btnPickUpGood" then
+	JUMP TO BLOCK #87
+	else
+	JUMP TO BLOCK #88
+	end
+
+
+	--- BLOCK #87 637-651, warpins: 1 ---
+	g_data.setting.autoRat.pickUpRatting = not g_data.setting.autoRat.pickUpRatting
+	enable = g_data.setting.autoRat.pickUpRatting
+	settingKey = "btnPickUpGood"
+	--- END OF BLOCK #87 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #88 652-653, warpins: 1 ---
+	--- END OF BLOCK #88 ---
+
+	if key == "btnIgnoreCripple" then
+	JUMP TO BLOCK #89
+	else
+	JUMP TO BLOCK #90
+	end
+
+
+	--- BLOCK #89 654-668, warpins: 1 ---
+	g_data.setting.autoRat.ignoreCripple = not g_data.setting.autoRat.ignoreCripple
+	enable = g_data.setting.autoRat.ignoreCripple
+	settingKey = "btnIgnoreCripple"
+	--- END OF BLOCK #89 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #90 669-670, warpins: 1 ---
+	--- END OF BLOCK #90 ---
+
+	if key == "btnAutoRoar" then
+	JUMP TO BLOCK #91
+	else
+	JUMP TO BLOCK #92
+	end
+
+
+	--- BLOCK #91 671-688, warpins: 1 ---
+	g_data.setting.autoRat.autoRoar.enable = not g_data.setting.autoRat.autoRoar.enable
+	enable = g_data.setting.autoRat.autoRoar.enable
+	settingKey = "btnAutoRoar"
+	--- END OF BLOCK #91 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #92 689-690, warpins: 1 ---
+	--- END OF BLOCK #92 ---
+
+	if key == "btnAtkMagic" then
+	JUMP TO BLOCK #93
+	else
+	JUMP TO BLOCK #94
+	end
+
+
+	--- BLOCK #93 691-708, warpins: 1 ---
+	g_data.setting.autoRat.atkMagic.enable = not g_data.setting.autoRat.atkMagic.enable
+	enable = g_data.setting.autoRat.atkMagic.enable
+	settingKey = "btnAtkMagic"
+	--- END OF BLOCK #93 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #94 709-710, warpins: 1 ---
+	--- END OF BLOCK #94 ---
+
+	if key == "btnareaMagic" then
+	JUMP TO BLOCK #95
+	else
+	JUMP TO BLOCK #96
+	end
+
+
+	--- BLOCK #95 711-728, warpins: 1 ---
+	g_data.setting.autoRat.areaMagic.enable = not g_data.setting.autoRat.areaMagic.enable
+	enable = g_data.setting.autoRat.areaMagic.enable
+	settingKey = "btnareaMagic"
+	--- END OF BLOCK #95 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #96 729-730, warpins: 1 ---
+	--- END OF BLOCK #96 ---
+
+	if key == "btnAutoPoison" then
+	JUMP TO BLOCK #97
+	else
+	JUMP TO BLOCK #98
+	end
+
+
+	--- BLOCK #97 731-745, warpins: 1 ---
+	g_data.setting.autoRat.autoPoison = not g_data.setting.autoRat.autoPoison
+	enable = g_data.setting.autoRat.autoPoison
+	settingKey = "btnAutoPoison"
+	--- END OF BLOCK #97 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #98 746-747, warpins: 1 ---
+	--- END OF BLOCK #98 ---
+
+	if key == "btnAutoYoulingDun" then
+	JUMP TO BLOCK #99
+	else
+	JUMP TO BLOCK #100
+	end
+
+
+	--- BLOCK #99 748-762, warpins: 1 ---
+	g_data.setting.job.autoYoulingDun = not g_data.setting.job.autoYoulingDun
+	enable = g_data.setting.job.autoYoulingDun
+	settingKey = "btnAutoYoulingDun"
+	--- END OF BLOCK #99 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #100 763-764, warpins: 1 ---
+	--- END OF BLOCK #100 ---
+
+	if key == "btnAutoZhanjiashu" then
+	JUMP TO BLOCK #101
+	else
+	JUMP TO BLOCK #102
+	end
+
+
+	--- BLOCK #101 765-779, warpins: 1 ---
+	g_data.setting.job.autoZhanjiashu = not g_data.setting.job.autoZhanjiashu
+	enable = g_data.setting.job.autoZhanjiashu
+	settingKey = "btnAutoZhanjiashu"
+	--- END OF BLOCK #101 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #102 780-781, warpins: 1 ---
+	--- END OF BLOCK #102 ---
+
+	if key == "btnAutoPet" then
+	JUMP TO BLOCK #103
+	else
+	JUMP TO BLOCK #104
+	end
+
+
+	--- BLOCK #103 782-799, warpins: 1 ---
+	g_data.setting.autoRat.autoPet.enable = not g_data.setting.autoRat.autoPet.enable
+	enable = g_data.setting.autoRat.autoPet.enable
+	settingKey = "btnAutoPet"
+	--- END OF BLOCK #103 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #104 800-801, warpins: 1 ---
+	--- END OF BLOCK #104 ---
+
+	if key == "btnAutoCure" then
+	JUMP TO BLOCK #105
+	else
+	JUMP TO BLOCK #106
+	end
+
+
+	--- BLOCK #105 802-819, warpins: 1 ---
+	g_data.setting.autoRat.autoCure.enable = not g_data.setting.autoRat.autoCure.enable
+	enable = g_data.setting.autoRat.autoCure.enable
+	settingKey = "btnAutoCure"
+	--- END OF BLOCK #105 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #108
+
+
+	--- BLOCK #106 820-821, warpins: 1 ---
+	--- END OF BLOCK #106 ---
+
+	if key == "btnAutoCurePet" then
+	JUMP TO BLOCK #107
+	else
+	JUMP TO BLOCK #108
+	end
+
+
+	--- BLOCK #107 822-838, warpins: 1 ---
+	g_data.setting.autoRat.autoCurePet.enable = not g_data.setting.autoRat.autoCurePet.enable
+	enable = g_data.setting.autoRat.autoCurePet.enable
+	settingKey = "btnAutoCurePet"
+	--- END OF BLOCK #107 ---
+
+	FLOW; TARGET BLOCK #108
+
+
+	--- BLOCK #108 839-845, warpins: 40 ---
+	local btn = self.console:get(key)
+
+	--- END OF BLOCK #108 ---
+
+	slot5 = if btn then
+	JUMP TO BLOCK #109
+	else
+	JUMP TO BLOCK #110
+	end
+
+
+	--- BLOCK #109 846-850, warpins: 1 ---
+	btn.btn:setIsSelect(enable)
+	--- END OF BLOCK #109 ---
+
+	FLOW; TARGET BLOCK #110
+
+
+	--- BLOCK #110 851-856, warpins: 2 ---
+	--- END OF BLOCK #110 ---
+
+	slot6 = if main_scene.ui.panels.setting then
+	JUMP TO BLOCK #111
+	else
+	JUMP TO BLOCK #115
+	end
+
+
+	--- BLOCK #111 857-864, warpins: 1 ---
+	--- END OF BLOCK #111 ---
+
+	slot6 = if main_scene.ui.panels.setting.btns[settingKey] then
+	JUMP TO BLOCK #112
+	else
+	JUMP TO BLOCK #115
+	end
+
+
+	--- BLOCK #112 865-866, warpins: 1 ---
+	--- END OF BLOCK #112 ---
+
+	slot3 = if enable then
+	JUMP TO BLOCK #113
+	else
+	JUMP TO BLOCK #114
+	end
+
+
+	--- BLOCK #113 867-877, warpins: 1 ---
+	main_scene.ui.panels.setting.btns[settingKey].btn:select()
+	--- END OF BLOCK #113 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #115
+
+
+	--- BLOCK #114 878-887, warpins: 1 ---
+	main_scene.ui.panels.setting.btns[settingKey].btn:unselect()
+
+	--- END OF BLOCK #114 ---
+
+	FLOW; TARGET BLOCK #115
+
+
+	--- BLOCK #115 888-888, warpins: 4 ---
+	return 
+	--- END OF BLOCK #115 ---
+
+
+
+end
+btnCallbacks.handle_cmd = function (self, btn)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local function sendCmd(cmd)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if g_data.client:checkLastTime("sendCmd", 0.5)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 10-25, warpins: 1 ---
+		g_data.client:setLastTime("sendCmd", true)
+		net.send({
+			CM_SAY
+		}, {
+			cmd
+		})
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 26-31, warpins: 1 ---
+		main_scene.ui:tip("你操作太快了!!!")
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 32-32, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	if btn.config.btnid == "chuansong" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	local config = nil
+
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(def.cmds.all)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 13-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v[1] == "@传送" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-17, warpins: 1 ---
+	config = v
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 18-19, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 20-21, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot3 = if config then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-42, warpins: 1 ---
+	local msgbox = nil
+	msgbox = an.newMsgbox(config[1] .. "\n" .. config[4], function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if msgbox.input:getString()
+
+		 == "" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-8, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-17, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot0 = if g_data.client:checkLastTime("sendCmd", 0.5)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 18-42, warpins: 1 ---
+		g_data.client:setLastTime("sendCmd", true)
+		net.send({
+			CM_SAY
+		}, {
+			config[2] .. " " .. msgbox.input:getString()
+		})
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 43-48, warpins: 1 ---
+		main_scene.ui:tip("你操作太快了!!!")
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 49-49, warpins: 2 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end, {
+		disableScroll = true,
+		input = 20
+	})
+
+	msgbox.input:setString("d5071")
+	msgbox.input:startInput()
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 43-43, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 44-47, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if btn.config.btnid == "qianlichuanyin" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 48-48, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #10 49-52, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if btn.config.btnid == "shuaxinbeibao" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 53-53, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #12 54-57, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if btn.config.btnid == "jujuesiliao" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 58-65, warpins: 1 ---
+	sendCmd(def.cmds.get("@拒绝私聊"))
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #14 66-69, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if btn.config.btnid == "jinzhijiaoyi" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 70-77, warpins: 1 ---
+	sendCmd(def.cmds.get("@禁止交易"))
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #16 78-81, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if btn.config.btnid == "shituchuansong" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 82-89, warpins: 1 ---
+	sendCmd(def.cmds.get("@师徒传送"))
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #18 90-93, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if btn.config.btnid == "fuqichuansong" then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 94-100, warpins: 1 ---
+	sendCmd(def.cmds.get("@夫妻传送"))
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 101-101, warpins: 8 ---
+	--- END OF BLOCK #20 ---
+
+
+
+end
+btnCallbacks.handle_panel = function (self, btn)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local key = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(btn)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	key = btn
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	key = btn.config.btnid
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-12, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if key == "bag" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 13-19, warpins: 1 ---
+	main_scene.ui:togglePanel("bag")
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #5 20-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if key == "equip" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-28, warpins: 1 ---
+	main_scene.ui:togglePanel("equip")
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #7 29-30, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if key == "skill" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 31-38, warpins: 1 ---
+	main_scene.ui:togglePanel("equip", {
+		page = "skill"
+	})
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #9 39-40, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if key == "deal" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #10 41-49, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot3 = if g_data.client:checkLastTime("deal", 3)
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #11 50-64, warpins: 1 ---
+	g_data.client:setLastTime("deal", true)
+	net.send({
+		CM_DEALTRY
+	}, {
+		""
+	})
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #12 65-66, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if key == "group" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 67-73, warpins: 1 ---
+	main_scene.ui:togglePanel("group")
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #14 74-75, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if key == "relation" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 76-82, warpins: 1 ---
+	main_scene.ui:togglePanel("relation")
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #16 83-84, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if key == "guild" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 85-93, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot3 = if g_data.client:checkLastTime("guild", 2)
+	 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 94-108, warpins: 1 ---
+	g_data.client:setLastTime("guild", true)
+	main_scene.ui:showPanel("guild", "")
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #19 109-113, warpins: 1 ---
+	an.newMsgbox("你操作太快了, 请稍候再试.")
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #20 114-115, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	if key == "shop" then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 116-122, warpins: 1 ---
+	main_scene.ui:togglePanel("shop")
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #22 123-124, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if key == "top" then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 125-131, warpins: 1 ---
+	main_scene.ui:togglePanel("top")
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #24 132-133, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if key == "stall" then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #25 134-139, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	slot3 = if main_scene.ui.panels.stallOther then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 140-160, warpins: 1 ---
+	main_scene.ui:hidePanel("stallOther")
+	net.send({
+		CM_QUERY_STALL
+	}, nil, {
+		{
+			"ID",
+			g_data.stall.id
+		}
+	})
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #27 161-166, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	slot3 = if main_scene.ui.panels.stall then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 167-173, warpins: 1 ---
+	main_scene.ui:hidePanel("stall")
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #29 174-188, warpins: 1 ---
+	net.send({
+		CM_QUERY_STALL
+	}, nil, {
+		{
+			"ID",
+			g_data.stall.id
+		}
+	})
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #30 189-190, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	if key == "mail" then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 191-197, warpins: 1 ---
+	main_scene.ui:togglePanel("mail")
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #32 198-199, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if key == "voice" then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 200-206, warpins: 1 ---
+	main_scene.ui:togglePanel("voice")
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #34 207-208, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	if key == "setting" then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 209-215, warpins: 1 ---
+	main_scene.ui:togglePanel("setting")
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #36 216-217, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	if key == "link" then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 218-223, warpins: 1 ---
+	device.openURL(g_data.login.shopUrl)
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 224-224, warpins: 19 ---
+	return 
+	--- END OF BLOCK #38 ---
+
+
+
+end
+btnCallbacks.handle_custom = function (self, btn)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not btn.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-16, warpins: 1 ---
+	local _, data = g_data.bag:getItem(btn.makeIndex)
+	local bagData, equipData, eatMsg, takeonMsg = nil
+	local isPlayer = true
+	local source = nil
+	--- END OF BLOCK #2 ---
+
+	if btn.source == "bag" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-29, warpins: 1 ---
+	source = main_scene.ui.panels.bag
+	equipData = g_data.equip
+	bagData = g_data.bag
+	takeonMsg = CM_TAKEONITEM
+	eatMsg = CM_EAT
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 30-32, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if btn.source == "heroBag" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 33-44, warpins: 1 ---
+	source = main_scene.ui.panels.heroBag
+	equipData = g_data.heroEquip
+	bagData = g_data.heroBag
+	takeonMsg = CM_HERO_TAKEON
+	eatMsg = CM_HERO_EAT
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 45-51, warpins: 3 ---
+	local where = getTakeOnPosition(data.getVar("stdMode"))
+	--- END OF BLOCK #6 ---
+
+	slot10 = if where then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #7 52-54, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if U_RINGL ~= where then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 55-57, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if U_RINGR == where then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #9 58-60, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot11 = if equipIdx then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 61-62, warpins: 1 ---
+	where = equipIdx
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #11 63-67, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot11 = if not equipData.items[U_RINGL] then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 68-69, warpins: 1 ---
+	where = U_RINGL
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #13 70-74, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot11 = if not equipData.items[U_RINGR] then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 75-76, warpins: 1 ---
+	where = U_RINGR
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #15 77-79, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot11 = if equipData.lastTakeOnRingIsLeft then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 80-83, warpins: 1 ---
+	equipData.lastTakeOnRingIsLeft = false
+	where = U_RINGR
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #17 84-87, warpins: 1 ---
+	equipData.lastTakeOnRingIsLeft = true
+	where = U_RINGL
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #18 88-90, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if U_ARMRINGL ~= where then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 91-93, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if U_ARMRINGR == where then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #20 94-96, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	slot11 = if equipIdx then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 97-98, warpins: 1 ---
+	where = equipIdx
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #22 99-103, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot11 = if not equipData.items[U_ARMRINGL] then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 104-105, warpins: 1 ---
+	where = U_ARMRINGL
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #24 106-110, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	slot11 = if not equipData.items[U_ARMRINGR] then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 111-112, warpins: 1 ---
+	where = U_ARMRINGR
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #26 113-115, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	slot11 = if equipData.lastTakeOnBraceletIsLeft then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 116-119, warpins: 1 ---
+	equipData.lastTakeOnBraceletIsLeft = false
+	where = U_ARMRINGR
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #28 120-122, warpins: 1 ---
+	equipData.lastTakeOnBraceletIsLeft = true
+	where = U_ARMRINGL
+
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 123-130, warpins: 11 ---
+	--- END OF BLOCK #29 ---
+
+	slot11 = if self.canUseEquip(self, data, bagData, isPlayer)
+	 then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #30 131-142, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot11 = if bagData.use(bagData, "take", data.get(data, "makeIndex"), {
+		where = where
+	})
+	 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #31 143-160, warpins: 1 ---
+	net.send({
+		takeonMsg,
+		recog = data.get(data, "makeIndex"),
+		param = where
+	}, {
+		data.getVar("name")
+	})
+	--- END OF BLOCK #31 ---
+
+	slot9 = if source then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #32 161-168, warpins: 1 ---
+	source.delItem(source, data.get(data, "makeIndex"))
+
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #33 169-171, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	slot11 = if equipIdx then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 172-172, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 173-180, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot11 = if not self.canUseEquip(self, data, bagData, isPlayer)
+
+	 then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 181-181, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 182-187, warpins: 1 ---
+	local function use()
+		--- BLOCK #0 1-12, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if bagData:use("eat", data:get("makeIndex"))
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 13-27, warpins: 1 ---
+		net.send({
+			eatMsg,
+			recog = data:get("makeIndex")
+		})
+		--- END OF BLOCK #1 ---
+
+		slot0 = if source then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 28-36, warpins: 1 ---
+		source:delItem(data:get("makeIndex"))
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 37-37, warpins: 3 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	--- END OF BLOCK #37 ---
+
+	if data.getVar("stdMode")
+	 == 4 then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 188-204, warpins: 1 ---
+	an.newMsgbox(string.format("[%s] 你想要开始训练吗? ", data.getVar("name")), function (isOk)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if isOk == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		use()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-5, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		center = true,
+		hasCancel = true
+	}):setName("msgBoxLearnSkill")
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #39 205-209, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if data.getVar("stdMode")
+	 == 47 then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #40 210-214, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	if data.getVar("name")
+
+	 == "传情烟花" then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 215-225, warpins: 1 ---
+	local msgbox = nil
+	msgbox = an.newMsgbox("请输入传情烟花文字", function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 3-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if msgbox.input:getString()
+
+		 == "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-10, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-29, warpins: 2 ---
+		net.send({
+			CM_YANHUA_TEXT,
+			recog = data:get("makeIndex")
+		}, {
+			msgbox.input:getString()
+		})
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 30-30, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		disableScroll = true,
+		input = 20,
+		btnTexts = {
+			"关闭",
+			"确定"
+		}
+	})
+
+	--- END OF BLOCK #41 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #42 226-230, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	if data.getVar("name")
+	 == "金条" then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #43 231-237, warpins: 1 ---
+	an.newMsgbox("确定使用一根金条兑换998000金币吗？", function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if g_data.bag:use("eat", data:get("makeIndex"), {
+			quick = false
+		})
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 15-29, warpins: 1 ---
+		net.send({
+			eatMsg,
+			recog = data:get("makeIndex")
+		})
+		--- END OF BLOCK #1 ---
+
+		slot0 = if source then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 30-38, warpins: 1 ---
+		source:delItem(data:get("makeIndex"))
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 39-39, warpins: 3 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		center = true
+	})
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #44 238-239, warpins: 1 ---
+	use()
+
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 240-240, warpins: 5 ---
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 241-242, warpins: 5 ---
+	return 
+	--- END OF BLOCK #46 ---
+
+	FLOW; TARGET BLOCK #47
+
+
+	--- BLOCK #47 243-243, warpins: 2 ---
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 244-244, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 245-245, warpins: 2 ---
+	--- END OF BLOCK #49 ---
+
+
+
+end
+btnCallbacks.canUseEquip = function (self, item, dataFrom, isPlayer)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not item then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-6, warpins: 1 ---
+	local function chargeNeed(info, value)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if value then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-5, warpins: 1 ---
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 6-14, warpins: 1 ---
+		common.addMsg(info, display.COLOR_RED, display.COLOR_WHITE, true)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 15-15, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if isPlayer then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 7-10, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot5 = if not g_data.player then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 11-12, warpins: 2 ---
+	local playerData = g_data.hero
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 13-25, warpins: 2 ---
+	local need = item.getVar("need")
+	local needLevel = item.getVar("needLevel")
+	local where = getTakeOnPosition(item.getVar("stdMode"))
+	--- END OF BLOCK #5 ---
+
+	slot8 = if where then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #6 26-28, warpins: 1 ---
+	local ret = true
+	--- END OF BLOCK #6 ---
+
+	if need == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 29-37, warpins: 1 ---
+	slot10 = chargeNeed
+	slot11 = "等级不够"
+
+	--- END OF BLOCK #7 ---
+
+	if needLevel > playerData.ability:get("level")
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 38-39, warpins: 1 ---
+	slot12 = false
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 40-40, warpins: 1 ---
+	slot12 = true
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 41-43, warpins: 2 ---
+	ret = slot10(slot11, slot12)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #11 44-45, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if need == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #12 46-56, warpins: 1 ---
+	slot10 = chargeNeed
+	slot11 = "攻击力不足"
+
+	--- END OF BLOCK #12 ---
+
+	if needLevel > g_data.player.ability:get("maxDC")
+
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 57-58, warpins: 1 ---
+	slot12 = false
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 59-59, warpins: 1 ---
+	slot12 = true
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 60-62, warpins: 2 ---
+	ret = slot10(slot11, slot12)
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #16 63-64, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if need == 2 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #17 65-75, warpins: 1 ---
+	slot10 = chargeNeed
+	slot11 = "魔法力不足"
+
+	--- END OF BLOCK #17 ---
+
+	if needLevel > g_data.player.ability:get("maxMC")
+
+	 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 76-77, warpins: 1 ---
+	slot12 = false
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 78-78, warpins: 1 ---
+	slot12 = true
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 79-81, warpins: 2 ---
+	ret = slot10(slot11, slot12)
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #21 82-83, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if need == 3 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #22 84-94, warpins: 1 ---
+	slot10 = chargeNeed
+	slot11 = "精神力不足"
+
+	--- END OF BLOCK #22 ---
+
+	if needLevel > g_data.player.ability:get("maxSC")
+
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 95-96, warpins: 1 ---
+	slot12 = false
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #24 97-97, warpins: 1 ---
+	slot12 = true
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 98-100, warpins: 2 ---
+	ret = slot10(slot11, slot12)
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #26 101-102, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if need == 5 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #27 103-104, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	slot3 = if isPlayer then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #28 105-115, warpins: 1 ---
+	slot10 = chargeNeed
+	slot11 = "你的声望不足，不能佩戴"
+
+	--- END OF BLOCK #28 ---
+
+	if g_data.player.ability3:get("prestige")
+
+	 > needLevel then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 116-117, warpins: 1 ---
+	slot12 = false
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+	--- BLOCK #30 118-118, warpins: 1 ---
+	slot12 = true
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 119-120, warpins: 2 ---
+	ret = slot10(slot11, slot12)
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 121-122, warpins: 7 ---
+	--- END OF BLOCK #32 ---
+
+	slot9 = if not ret then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 123-124, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 125-134, warpins: 3 ---
+	--- END OF BLOCK #34 ---
+
+	if playerData.ability:get("maxHandWeight")
+	 < item.getVar("weight")
+	 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 135-146, warpins: 1 ---
+	common.addMsg("太重了", display.COLOR_RED, display.COLOR_WHITE, true)
+
+	return false
+
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 147-151, warpins: 2 ---
+	--- END OF BLOCK #36 ---
+
+	if item.getVar("stdMode")
+	 == 4 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #37 152-156, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	slot9 = if not item.getVar("shape")
+
+	 then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 157-157, warpins: 1 ---
+	local shape = 0
+
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 158-160, warpins: 2 ---
+	--- END OF BLOCK #39 ---
+
+	if shape ~= playerData.job then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 161-172, warpins: 1 ---
+	common.addMsg("不能学习其他职业技能书", display.COLOR_RED, display.COLOR_WHITE, true)
+
+	return false
+
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 173-187, warpins: 2 ---
+	local needLevel = math.modf(Word(item.getVar("duraMax")))
+
+	--- END OF BLOCK #41 ---
+
+	if playerData.ability:get("level")
+	 < needLevel then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #42 188-200, warpins: 1 ---
+	common.addMsg("等级不够", display.COLOR_RED, display.COLOR_WHITE, true)
+
+	return false
+
+	--- END OF BLOCK #42 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #47
+
+
+	--- BLOCK #43 201-205, warpins: 1 ---
+	--- END OF BLOCK #43 ---
+
+	if item.getVar("stdMode")
+	 ~= 5 then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #44 206-210, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if item.getVar("stdMode")
+	 ~= 6 then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #45 211-226, warpins: 1 ---
+	--- END OF BLOCK #45 ---
+
+	if playerData.ability:get("maxWearWeight")
+	 - playerData.ability:get("wearWeight")
+	 < item.getVar("weight")
+	 then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #46 227-238, warpins: 1 ---
+	common.addMsg("负重不够", display.COLOR_RED, display.COLOR_WHITE, true)
+
+	return false
+	--- END OF BLOCK #46 ---
+
+	FLOW; TARGET BLOCK #47
+
+
+	--- BLOCK #47 239-241, warpins: 6 ---
+	return true
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 242-242, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+
+
+end
+btnCallbacks.handle_prop = function (self, btn)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not btn.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-12, warpins: 2 ---
+	local _, data = g_data.bag:getItem(btn.makeIndex)
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not data then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-13, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-26, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if g_data.bag:use("eat", data.get(data, "makeIndex"), {
+		quick = true
+	})
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 27-32, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot4 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 33-43, warpins: 1 ---
+	main_scene.ui.panels.bag:delItem(data.get(data, "makeIndex"))
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 44-64, warpins: 2 ---
+	sound.play("item", data)
+	net.send({
+		CM_EAT,
+		recog = data.get(data, "makeIndex")
+	}, {
+		data.getVar("name")
+	})
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 65-65, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+btnCallbacks.handle_hero = function (self, btn)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local key = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(btn)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	key = btn
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	key = btn.config.btnid
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-12, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if key == "call" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 13-17, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if g_data.hero.roleid == 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-29, warpins: 1 ---
+	net.send({
+		CM_HERO_LOGON,
+		recog = main_scene.ground.player.roleid
+	})
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 30-39, warpins: 1 ---
+	net.send({
+		CM_HERO_LOGOUT,
+		recog = g_data.hero.roleid
+	})
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 40-40, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 41-45, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if g_data.hero.roleid == 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 46-52, warpins: 1 ---
+	main_scene.ui:tip("您还未召唤出英雄!")
+
+	return 
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 53-54, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if key == "bag" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 55-61, warpins: 1 ---
+	main_scene.ui:togglePanel("heroBag")
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #12 62-63, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if key == "equip" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 64-70, warpins: 1 ---
+	main_scene.ui:togglePanel("heroEquip")
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #14 71-72, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if key == "skill" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 73-79, warpins: 1 ---
+	net.send({
+		CM_HERO_POWERUP
+	})
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #16 80-81, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if key == "mode" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 82-89, warpins: 1 ---
+	net.send({
+		CM_SAY
+	}, {
+		"@RestHero"
+	})
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #18 90-91, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if key == "lock" then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #19 92-115, warpins: 1 ---
+	self.console.controller:closeHeroGuard()
+	self.console.controller:toggleHeroLock()
+	btn.btn:setIsSelect(self.console.controller.heroLock)
+
+	local lock = self.console.controller.lock
+
+	--- END OF BLOCK #19 ---
+
+	slot4 = if lock.target.skill then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #20 116-124, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot4 = if g_data.client:checkLastTime("heroLock", 1)
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 125-146, warpins: 1 ---
+	g_data.client:setLastTime("heroLock", true)
+	g_data.hero:setNoTarget(false)
+	net.send({
+		CM_HERO_APPTARG,
+		recog = lock.target.skill
+	})
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 147-147, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 148-151, warpins: 2 ---
+	--- END OF BLOCK #23 ---
+
+	slot4 = if lock.target.select then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #24 152-160, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	slot4 = if g_data.client:checkLastTime("heroLock", 1)
+	 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 161-182, warpins: 1 ---
+	g_data.client:setLastTime("heroLock", true)
+	g_data.hero:setNoTarget(false)
+	net.send({
+		CM_HERO_APPTARG,
+		recog = lock.target.select
+	})
+
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 183-183, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 184-187, warpins: 2 ---
+	--- END OF BLOCK #27 ---
+
+	slot4 = if lock.target.attack then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #28 188-196, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	slot4 = if g_data.client:checkLastTime("heroLock", 1)
+	 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 197-218, warpins: 1 ---
+	g_data.client:setLastTime("heroLock", true)
+	g_data.hero:setNoTarget(false)
+	net.send({
+		CM_HERO_APPTARG,
+		recog = lock.target.attack
+	})
+
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 219-219, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 220-226, warpins: 2 ---
+	g_data.hero:setNoTarget(true)
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #32 227-228, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if key == "guard" then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 229-246, warpins: 1 ---
+	self.console.controller:closeHeroLock()
+	self.console.controller:toggleHeroGuard(btn)
+	btn.btn:setIsSelect(self.console.controller.heroGuard)
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 247-247, warpins: 7 ---
+	return 
+	--- END OF BLOCK #34 ---
+
+
+
+end
+btnCallbacks.handle_skill = function (self, btn, skillData)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local player = main_scene.ground.map.player
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not player then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-15, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if def.role.stateHas(player.state, "stPoisonStone")
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-16, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-22, warpins: 2 ---
+	local magicID, data = nil
+
+	--- END OF BLOCK #4 ---
+
+	if type(btn)
+
+	 == "number" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-25, warpins: 1 ---
+	magicID = btn
+	data = skillData
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 26-28, warpins: 1 ---
+	magicID = btn.data.magicId
+	data = btn.skillData
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 29-34, warpins: 2 ---
+	magicID = tonumber(magicID)
+
+	--- END OF BLOCK #7 ---
+
+	slot4 = if magicID then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 35-36, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot5 = if not data then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 37-37, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 38-46, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot6 = if checkExist(magicID, 3, 4, 7, 67)
+
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 47-47, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 48-60, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	if g_data.player.ability:get("MP")
+	 < data.get(data, "needMp")
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 61-67, warpins: 1 ---
+	main_scene.ui:tip("没有足够的魔法点数!!")
+
+	return 
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 68-74, warpins: 2 ---
+	local config = def.magic.getMagicConfigByUid(magicID)
+
+	--- END OF BLOCK #14 ---
+
+	slot6 = if not config then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 75-75, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 76-78, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	if config.type == "immediate" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 79-99, warpins: 1 ---
+	local config = def.role.dir["_" .. player.dir]
+
+	self.console.controller:useMagic(player.x + config[1], player.y + config[2], player.dir, data)
+
+	return 
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 100-105, warpins: 2 ---
+	local effectType = data.get(data, "effectType")
+
+	--- END OF BLOCK #18 ---
+
+	if effectType == 0 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #19 106-107, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if magicID == 26 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #20 108-116, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot8 = if not g_data.client:checkLastTime("fire", 10)
+
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 117-117, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 118-119, warpins: 3 ---
+	--- END OF BLOCK #22 ---
+
+	if magicID == 27 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #23 120-128, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	slot8 = if not g_data.client:checkLastTime("rush", 3.1)
+
+	 then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 129-129, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 130-138, warpins: 3 ---
+	--- END OF BLOCK #25 ---
+
+	slot8 = if not g_data.client:checkLastTime("spell", 0.5)
+
+	 then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 139-139, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 140-143, warpins: 2 ---
+	local x = player.x
+	local y = player.y
+
+	--- END OF BLOCK #27 ---
+
+	if magicID == 27 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 144-153, warpins: 1 ---
+	g_data.client:setLastTime("rush", true)
+
+	y = 0
+	x = player.dir
+
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 154-174, warpins: 2 ---
+	g_data.client:setLastTime("spell", true)
+	net.send({
+		CM_SPELL,
+		param = x,
+		tag = y,
+		series = data.get(data, "magicId")
+	})
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #30 175-185, warpins: 1 ---
+	self.console.skills:select(tostring(magicID))
+	--- END OF BLOCK #30 ---
+
+	slot8 = if not WIN32_OPERATE then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 186-198, warpins: 1 ---
+	self.console:call("lock", "useSkill", data, config)
+	self.console.controller:useMagic()
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 199-199, warpins: 3 ---
+	return 
+	--- END OF BLOCK #32 ---
+
+
+
+end
+
+return btnCallbacks
+--- END OF BLOCK #0 ---
+
+
+

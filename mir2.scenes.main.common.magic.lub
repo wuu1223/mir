@@ -1,0 +1,1388 @@
+--- BLOCK #0 1-26, warpins: 1 ---
+local mapDef = import("..map.def")
+local magic = {
+	maxFrame = 10
+}
+magic.cache = {}
+magic.getEffect = function (id)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local __position = cc.Node.setPosition
+magic.showMagic = function (map, role, targetID, x, y, effectID)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	local config = def.magic.getMagicConfig(effectID)
+	local magicId = config.uid
+
+	sound.play("skillPlay", {
+		magicId = magicId
+	})
+
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not config.beatenFrame then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 16-18, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot8 = if not config.flyFrame then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 19-19, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 20-21, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if effectID == 8 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 22-64, warpins: 1 ---
+	local begin = config.beatenFrame.begin + role.dir*magic.maxFrame*2
+	local x, y = map.getMapPos(map, role.x, role.y)
+	local spr = m2spr.playAnimation(config.rsc, begin, config.beatenFrame.frame, config.beatenFrame.delay, true, true, true):addto(map.layers.obj, y + mapDef.tile.h)
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #39
+
+
+	--- BLOCK #5 65-66, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if effectID == 7 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 67-100, warpins: 1 ---
+	local power = 4
+	local info = def.role.dir["_" .. role.dir]
+	local destx = role.x + info[1]*power
+	local desty = role.y + info[2]*power
+	x, y = map.getMapPos(map, role.x, role.y)
+	destx, desty = map.getMapPos(map, destx, desty)
+	--- END OF BLOCK #6 ---
+
+	for i=1, power, 1
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #8
+
+	--- BLOCK #7 101-164, warpins: 2 ---
+	local spr = nil
+	spr, ani = m2spr.playAnimation(config.rsc, config.beatenFrame.begin, config.beatenFrame.frame, config.beatenFrame.delay, true)
+
+	spr.addto(spr, map.layers.obj, y + mapDef.tile.h):runs({
+		cca.hide(),
+		cca.delay((i - 1)*0.1),
+		cca.show(),
+		cca.moveTo(0.4, cc.p(destx, desty)),
+		cca.removeSelf()
+	})
+	__position(spr, x, y + mapDef.tile.h)
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #8 165-165, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #39
+
+
+	--- BLOCK #9 166-167, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if effectID ~= 11 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 168-169, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if effectID == 12 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #11 170-172, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot8 = if not config.flyFrame then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 173-173, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 174-248, warpins: 1 ---
+	local begin = config.flyFrame.begin + role.dir*magic.maxFrame*2
+	local destx, desty = map.getMapPos(map, x, y)
+	local x, y = map.getMapPos(map, role.x, role.y)
+	local delay_fly = 0.15
+	local spr = nil
+	spr = m2spr.playAnimation(config.rsc, begin, config.flyFrame.frame, config.flyFrame.delay, true):addto(map.layers.obj, y + mapDef.tile.h):runs({
+		cc.MoveTo:create(delay_fly, cc.p(destx, desty + mapDef.tile.h)),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-46, warpins: 1 ---
+			sound.play("skillPlay", {
+				idx = 3,
+				magicId = magicId
+			})
+			spr:removeSelf()
+
+			local spr, ani = m2spr.playAnimation(config.rsc, config.beatenFrame.begin, config.beatenFrame.frame, config.beatenFrame.delay, true, true, true)
+			local desty = desty + mapDef.tile.h
+
+			spr.addto(spr, map.layers.obj, desty)
+			__position(spr, destx, desty)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	return 
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 249-250, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if effectID ~= 1 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #15 251-252, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if effectID ~= 3 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #16 253-254, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if effectID ~= 10 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #17 255-256, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if effectID ~= 17 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #18 257-258, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if effectID ~= 39 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #19 259-260, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if effectID ~= 63 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #20 261-262, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	if effectID ~= 100 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 263-264, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if effectID == 101 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #22 265-267, warpins: 8 ---
+	--- END OF BLOCK #22 ---
+
+	slot8 = if not config.flyFrame then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 268-269, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 270-279, warpins: 2 ---
+	slot8 = config.flyFrame.begin
+	slot9 = role.dir*magic.maxFrame
+	--- END OF BLOCK #24 ---
+
+	slot10 = if not config.flyFrame.dir then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 280-280, warpins: 1 ---
+	slot10 = 2
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 281-285, warpins: 2 ---
+	local begin = slot8 + slot9*slot10
+	local target = nil
+	--- END OF BLOCK #26 ---
+
+	if effectID == 17 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 286-292, warpins: 1 ---
+	target = map.findRoelWithPos(map, x, y)
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #28 293-297, warpins: 1 ---
+	target = map.findRole(map, targetID)
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 298-300, warpins: 2 ---
+	local destx, desty, delay_fly, destMapX, destMapY = nil
+	--- END OF BLOCK #29 ---
+
+	slot9 = if target then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 301-313, warpins: 1 ---
+	destMapY = target.y
+	destMapX = target.x
+	destx, desty, delay_fly = map.getMapPos(map, destMapX, destMapY)
+	delay_fly = 0.3
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #31 314-337, warpins: 1 ---
+	local info = def.role.dir["_" .. role.dir]
+	destMapY = role.y + info[2]*12
+	destMapX = role.x + info[1]*12
+	destx, desty = map.getMapPos(map, destMapX, destMapY)
+	delay_fly = 1
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 338-395, warpins: 2 ---
+	local x, y = map.getMapPos(map, role.x, role.y)
+	local spr = nil
+	spr = m2spr.playAnimation(config.rsc, begin, config.flyFrame.frame, config.flyFrame.delay, true):addto(map.layers.obj, y + mapDef.tile.h):runs({
+		cc.MoveTo:create(delay_fly, cc.p(destx, desty)),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-7, warpins: 1 ---
+			spr:removeSelf()
+			--- END OF BLOCK #0 ---
+
+			slot0 = if target then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 8-14, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot0 = if checkMagicLastPlayTime(effectID, x, y)
+			 then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 15-58, warpins: 1 ---
+			sound.play("skillPlay", {
+				idx = 3,
+				magicId = magicId
+			})
+
+			local spr, ani = m2spr.playAnimation(config.rsc, config.beatenFrame.begin, config.beatenFrame.frame, config.beatenFrame.delay, true, true, true)
+
+			spr.addto(spr, map.layers.obj, desty + mapDef.tile.h)
+			__position(spr, destx, desty + mapDef.tile.h)
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 59-59, warpins: 3 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end)
+	})
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #39
+
+
+	--- BLOCK #33 396-397, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if effectID == 35 then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 398-400, warpins: 1 ---
+	y = role.y
+	x = role.x
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 401-407, warpins: 2 ---
+	--- END OF BLOCK #35 ---
+
+	slot8 = if checkMagicLastPlayTime(effectID, x, y)
+
+	 then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #36 408-447, warpins: 1 ---
+	local mx, my = map.getMapPos(map, x, y)
+	local spr, ani = m2spr.playAnimation(config.rsc, config.beatenFrame.begin, config.beatenFrame.frame, config.beatenFrame.delay, true, true, true)
+
+	spr.addto(spr, map.layers.obj, y + mapDef.tile.h)
+	__position(spr, mx, my + mapDef.tile.h)
+	--- END OF BLOCK #36 ---
+
+	if tonumber(magicId)
+	 == 6 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #37 448-453, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	slot12 = if map.findRole(map, targetID)
+	 then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 454-459, warpins: 1 ---
+	sound.play("skillPlay", {
+		idx = 3,
+		magicId = magicId
+	})
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 460-461, warpins: 8 ---
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 462-462, warpins: 2 ---
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 463-463, warpins: 2 ---
+	--- END OF BLOCK #41 ---
+
+
+
+end
+magic.showSpellEffect = function (effectID, params)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	effectID = effectID + 1
+	local map = getMap()
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-14, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for _, info in ipairs(def.magic.getConfig("skillMagic"))
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #18
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if effectID == info.effectID then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #4 18-20, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot8 = if not info.startFrame then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 21-21, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 22-26, warpins: 2 ---
+	local startInfo = nil
+	--- END OF BLOCK #6 ---
+
+	if #info.startFrame == 1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 27-29, warpins: 1 ---
+	startInfo = info.startFrame[1]
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #8 30-33, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	for _, v in ipairs(info.startFrame)
+
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #9 34-36, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot14 = if v.job then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 37-39, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot14 = if params.job then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 40-43, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if v.job == params.job then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 44-45, warpins: 1 ---
+	startInfo = v
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 46-47, warpins: 4 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #14 48-49, warpins: 3 ---
+	--- END OF BLOCK #14 ---
+
+	slot8 = if not startInfo then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 50-53, warpins: 1 ---
+	p2("error", "get start effect frame info error")
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 54-90, warpins: 2 ---
+	local x, y = map.getMapPos(map, params.x, params.y)
+	local spr, ani = m2spr.playAnimation(info.rsc, startInfo.begin, startInfo.frame, params.delay/startInfo.frame, true, true, true, nil, nil, params.asyncPriority)
+
+	spr.addto(spr, map.layers.obj, y + mapDef.tile.h)
+	__position(spr, x, y + mapDef.tile.h)
+
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 91-92, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #18 93-93, warpins: 2 ---
+	return 
+	--- END OF BLOCK #18 ---
+
+
+
+end
+magic.showHitEffect = function (imgid, params, hitConfig)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local map = getMap()
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not hitConfig then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #3 8-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for _, info in ipairs(def.magic.getConfig("skillMagic"))
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if info.uid == imgid then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #5 19-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot9 = if not info.hitFrame then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-22, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 23-26, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for _, v in ipairs(info.hitFrame)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #8 27-29, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot14 = if v.type then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 30-33, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if v.type == params.type then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #10 34-39, warpins: 1 ---
+	hitConfig = v
+	hitConfig.rsc = info.rsc
+	hitConfig.otherFrame = info.otherFrame
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 40-44, warpins: 1 ---
+	hitConfig = v
+	hitConfig.rsc = info.rsc
+	hitConfig.otherFrame = info.otherFrame
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 45-46, warpins: 4 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #13 47-47, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 48-49, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #15 50-51, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot2 = if not hitConfig then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 52-52, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 53-56, warpins: 2 ---
+	local begin = hitConfig.begin
+	--- END OF BLOCK #17 ---
+
+	slot5 = if not hitConfig.nodir then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #18 57-60, warpins: 1 ---
+	slot5 = params.dir
+	--- END OF BLOCK #18 ---
+
+	slot6 = if not hitConfig.skip then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 61-61, warpins: 1 ---
+	slot6 = 0
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 62-65, warpins: 2 ---
+	begin = begin + slot5*(slot6 + hitConfig.frame)
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 66-79, warpins: 2 ---
+	local x, y = map.getMapPos(map, params.x, params.y)
+	local spr = nil
+	slot8 = m2spr.playAnimation
+	slot9 = hitConfig.rsc
+	slot10 = begin
+	slot11 = hitConfig.frame
+	--- END OF BLOCK #21 ---
+
+	slot12 = if not hitConfig.delay then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 80-82, warpins: 1 ---
+	slot12 = params.delay/hitConfig.frame
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 83-109, warpins: 2 ---
+	spr = slot8(slot9, slot10, slot11, slot12, true, false, true, function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		spr:removeSelf()
+		--- END OF BLOCK #0 ---
+
+		slot0 = if hitConfig.next then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #1 9-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if not hitConfig.otherFrame then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 13-17, warpins: 1 ---
+		p2("error", "otherFrame is null next frame can not find")
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 18-22, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		for _, v in ipairs(info.otherFrame)
+
+
+		LOOP BLOCK #4
+		GO OUT TO BLOCK #7
+
+
+		--- BLOCK #4 23-27, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if v.name == hitConfig.next then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 28-40, warpins: 1 ---
+		v.rsc = hitConfig.rsc
+		v.otherFrame = hitConfig.otherFrame
+
+		magic.showHitEffect(imgid, params, v)
+
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 41-42, warpins: 2 ---
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #7 43-43, warpins: 3 ---
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end, nil, params.asyncPriority):addto(map.layers.obj, y + mapDef.tile.h)
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	return 
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 110-110, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 111-111, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 112-112, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+
+
+end
+magic.showWithName = function (map, name, params)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(def.magic.getConfig("mapMagic"))
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #24
+
+
+	--- BLOCK #1 9-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if info.name == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if info.byRace then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-21, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if info.byRace == params.role:getRace()
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #4 22-24, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot8 = if info.sound then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 25-30, warpins: 1 ---
+	sound.playSound(tostring(info.sound))
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 31-33, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if info.playType == 1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #7 34-39, warpins: 1 ---
+	local role = map.findRole(map, params.roleid)
+
+	--- END OF BLOCK #7 ---
+
+	slot8 = if not role then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 40-40, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 41-47, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot9 = if not checkMagicLastPlayTime(info.name, role.x, role.y)
+
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 48-48, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 49-53, warpins: 1 ---
+	params.y = role.y
+	params.x = role.x
+
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #12 54-56, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if info.playType == 2 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #13 57-59, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot8 = if not info.skip then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 60-65, warpins: 1 ---
+	p2("show map magic " .. info.name .. " not find key skip")
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 66-138, warpins: 2 ---
+	local begin = info.rscIdx + (info.frame + info.skip)*params.role.dir*2
+	local x, y = map.getMapPos(map, params.role.x, params.role.y)
+	local destx, desty = map.getMapPos(map, params.x, params.y)
+	local spr = nil
+	spr = m2spr.playAnimation(info.rsc, begin, info.frame, info.delay, not info.noBlend):addto(map.layers.obj, y + mapDef.tile.h):runs({
+		cc.MoveTo:create(0.2, cc.p(destx, desty + mapDef.tile.h)),
+		cca.removeSelf()
+	})
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	return 
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 139-139, warpins: 0 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #17 140-142, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if info.playType == 3 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #18 143-148, warpins: 1 ---
+	local role = map.findRole(map, params.roleid)
+
+	--- END OF BLOCK #18 ---
+
+	slot8 = if not role then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 149-149, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 150-192, warpins: 1 ---
+	local x, y = map.getMapPos(map, params.x, params.y)
+	local begin = info.rscIdx + role.dir*10
+	local spr = nil
+	spr = m2spr.playAnimation(info.rsc, begin, info.frame, info.delay, not info.noBlend, nil, true, function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		spr:removeSelf()
+		--- END OF BLOCK #0 ---
+
+		slot0 = if info.next then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-16, warpins: 1 ---
+		magic:showWithName(map, info.next, params)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 17-17, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end):addto(map.layers.obj, y + mapDef.tile.h)
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	return 
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 193-227, warpins: 4 ---
+	local x, y = map.getMapPos(map, params.x, params.y)
+	local spr = m2spr.playAnimation(info.rsc, info.rscIdx, info.frame, info.delay, not info.noBlend, true, true):addto(map.layers.obj, y + mapDef.tile.h)
+
+	__position(spr, x, y + mapDef.tile.h)
+
+	return 
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 228-228, warpins: 3 ---
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 229-230, warpins: 2 ---
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #24 231-232, warpins: 1 ---
+	return 
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 233-233, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 234-234, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 235-235, warpins: 2 ---
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 236-236, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+
+
+end
+local lastTimes = {}
+
+function checkMagicLastPlayTime(effectID, x, y)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	local key = effectID .. "-" .. x .. "-" .. y
+	local current = socket.gettime()
+	local last = lastTimes[key]
+	lastTimes[key] = current
+	--- END OF BLOCK #0 ---
+
+	slot5 = if last then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 16-19, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if 0.3 >= current - last then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 20-21, warpins: 1 ---
+	slot6 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 22-22, warpins: 2 ---
+	slot6 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-23, warpins: 2 ---
+	return slot6
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+function getMap()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not main_scene then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 2 ---
+	return main_scene.ground.map
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return magic
+--- END OF BLOCK #0 ---
+
+
+

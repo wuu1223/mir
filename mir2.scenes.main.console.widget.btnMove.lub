@@ -1,0 +1,1608 @@
+--- BLOCK #0 1-117, warpins: 1 ---
+local current = ...
+local item = import("...common.item")
+local iconFunc = import("..iconFunc")
+local common = import("...common.common")
+local btnMove = class("btnMove", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(btnMove, {
+	data,
+	config,
+	btn,
+	donotMutilTouch,
+	clickEffAni,
+	loopEffAni,
+	loopEffSpr,
+	progressTimer,
+	isHide,
+	looks,
+	skillData,
+	makeIndex
+})
+
+btnMove.onCleanup = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.clickEffAni then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.clickEffAni:release()
+
+	self.clickEffAni = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-16, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self["remove_" .. self.data.key] then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-23, warpins: 1 ---
+	self["remove_" .. self.data.key](self)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 24-30, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if self["remove_btntype_" .. self.config.btntype] then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 31-37, warpins: 1 ---
+	self["remove_btntype_" .. self.config.btntype](self)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 38-38, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+btnMove.ctor = function (self, config, data)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if config.btntype == "normal" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if config.key == "btnVoice" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-38, warpins: 1 ---
+	self.donotMutilTouch = true
+	self.btn = import("...common.voiceBtn", current).new(res.gettex2("pic/console/btn_voice.png"), res.gettex2("pic/console/btn_voice.png"), cc.size(53, 53)):anchor(0, 0):add2(self)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #3 39-41, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if config.btntype == "normal" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 42-44, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if config.key == "btnVoiceJIT" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 45-63, warpins: 1 ---
+	self.donotMutilTouch = true
+	self.btn = import(".voiceBtnJIT", current).new():anchor(0, 0):add2(self)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #6 64-73, warpins: 2 ---
+	local files = iconFunc:getFilenames(config, data, true)
+	--- END OF BLOCK #6 ---
+
+	slot4 = if files.select then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 74-80, warpins: 1 ---
+	files.select = {
+		res.gettex2(files.select),
+		manual = true
+	}
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 81-83, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if config.btntype ~= "prop" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 84-86, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if config.btntype == "custom" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 87-88, warpins: 2 ---
+	files.sprite = nil
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 89-92, warpins: 2 ---
+	local filter = nil
+	--- END OF BLOCK #11 ---
+
+	if config.btntype == "skill" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 93-104, warpins: 1 ---
+	self.skillData = g_data.player:getMagic(tonumber(data.magicId))
+	--- END OF BLOCK #12 ---
+
+	slot5 = if not self.skillData then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 105-109, warpins: 1 ---
+	filter = res.getFilter("gray")
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 110-120, warpins: 3 ---
+	slot5 = an.newBtn
+	slot6 = res.gettex2(files.bg)
+
+	function slot7()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if config.btntype ~= "skill" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if config.btntype == "base" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-12, warpins: 2 ---
+		self:playClickEffect()
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 13-23, warpins: 2 ---
+		main_scene.ui.console.btnCallbacks:handle(config.btntype, self)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	slot8 = {
+		pressBig = true,
+		externTouch = true
+	}
+	--- END OF BLOCK #14 ---
+
+	slot9 = if files.sprite then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 121-124, warpins: 1 ---
+	slot9 = res.gettex2(files.sprite)
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 125-130, warpins: 2 ---
+	slot8.sprite = slot9
+	slot8.select = files.select
+	slot8.filter = filter
+	--- END OF BLOCK #16 ---
+
+	if filter == nil then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 131-132, warpins: 1 ---
+	slot9 = false
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #18 133-133, warpins: 1 ---
+	slot9 = true
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 134-148, warpins: 2 ---
+	slot8.filterOpen = slot9
+	self.btn = slot5(slot6, slot7, slot8):anchor(0, 0):add2(self)
+
+	--- END OF BLOCK #19 ---
+
+	slot5 = if files.text then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 149-166, warpins: 1 ---
+	res.get2(files.text):pos(self.btn:getw()/2, 10):add2(self.btn, 1)
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 167-169, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+	if config.btntype == "custom" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 170-174, warpins: 1 ---
+	self.btn:setTouchEnabled(true)
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 175-193, warpins: 4 ---
+	self.data = data
+	self.config = config
+	slot4 = self.size(self, self.btn:getContentSize()):anchor(0.5, 0.5)
+	slot3 = self.size(self, self.btn.getContentSize()).anchor(0.5, 0.5).pos
+	--- END OF BLOCK #23 ---
+
+	slot5 = if not data.x then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 194-194, warpins: 1 ---
+	slot5 = 0
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 195-197, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	slot6 = if not data.y then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 198-198, warpins: 1 ---
+	slot6 = 0
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 199-204, warpins: 2 ---
+	slot3(slot4, slot5, slot6)
+
+	slot4 = self
+	slot3 = self.scale
+	--- END OF BLOCK #27 ---
+
+	if config.btntype == "panel" then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 205-206, warpins: 1 ---
+	slot5 = 0.8533333333333334
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #29 207-207, warpins: 1 ---
+	slot5 = 1
+
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 208-218, warpins: 2 ---
+	slot3(slot4, slot5)
+	self.setNodeEventEnabled(self, true)
+	--- END OF BLOCK #30 ---
+
+	slot3 = if self["init_" .. data.key] then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 219-224, warpins: 1 ---
+	self["init_" .. data.key](self)
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 225-230, warpins: 2 ---
+	--- END OF BLOCK #32 ---
+
+	slot3 = if self["init_btntype_" .. config.btntype] then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 231-236, warpins: 1 ---
+	self["init_btntype_" .. config.btntype](self)
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 237-238, warpins: 2 ---
+	return 
+	--- END OF BLOCK #34 ---
+
+
+
+end
+btnMove.onEnter = function (self, args)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.config.btntype == "custom" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-11, warpins: 1 ---
+	table.insert(main_scene.ui.customs, self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.getClickRect = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.data.btnpos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	local add = 0
+
+	--- END OF BLOCK #1 ---
+
+	if string.split(self.data.btnpos, "-")
+
+	[2] == "1" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-18, warpins: 1 ---
+	add = main_scene.ui.console.btnAreaBegin
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 19-38, warpins: 2 ---
+	local s = main_scene.ui.console.btnAreaSpace
+
+	return cc.rect(self.getPositionX(self) - s/2, self.getPositionY(self) - s/2, s + add, s)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 39-41, warpins: 1 ---
+	return self.getCascadeBoundingBox(self)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 42-42, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+btnMove.playClickEffect = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.clickEffAni then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-15, warpins: 1 ---
+	self.clickEffAni = res.getani2("pic/effect/btnclick/%d.png", 1, 5, 0.06)
+
+	self.clickEffAni:retain()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-55, warpins: 2 ---
+	local spr = nil
+	spr = res.get2("pic/effect/btnclick/1.png"):pos(self.centerPos(self)):add2(self):scale(0.55):runs({
+		cc.Animate:create(self.clickEffAni),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			spr:removeSelf()
+
+			spr = nil
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.playLoopEffect = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.loopEffAni then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-15, warpins: 1 ---
+	self.loopEffAni = res.getani2("pic/effect/btnselect/%d.png", 1, 15, 0.06)
+
+	self.loopEffAni:retain()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-18, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not self.loopEffSpr then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-42, warpins: 1 ---
+	self.loopEffSpr = res.get2("pic/effect/btnselect/1.png"):pos(self.centerPos(self)):add2(self):runForever(cc.Animate:create(self.loopEffAni))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 43-43, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+btnMove.stopLoopEffect = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.loopEffSpr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.loopEffSpr:removeSelf()
+
+	self.loopEffSpr = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.setProgress = function (self, p, filename)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.progressTimer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	slot3 = display.newSprite
+	slot4 = res.gettex2
+	--- END OF BLOCK #1 ---
+
+	slot5 = if not filename then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-10, warpins: 1 ---
+	slot5 = "pic/console/radial.png"
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-29, warpins: 2 ---
+	local spr = slot3(slot4(slot5))
+	self.progressTimer = display.newProgressTimer(spr, display.PROGRESS_TIMER_RADIAL):pos(self.centerPos(self)):add2(self)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 30-35, warpins: 2 ---
+	self.progressTimer:setPercentage(p)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+btnMove.select = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.btn:select()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnMove.unselect = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.btn:unselect()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnMove.init_btnFullname = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.base.heroShowName then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnOnlyname = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.base.showNameOnly then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnSoundEnable = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.base.soundEnable then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnTouchRun = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.base.touchRun then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnAutoSpace = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.job.autoSpace then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnAutoWide = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.job.autoWide then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnAutoFire = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.job.autoFire then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnAutoDun = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.job.autoDun then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnAutoInvisible = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.job.autoInvisible then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnAutoSkill = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.setting.job.autoSkill.enable then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-11, warpins: 1 ---
+	self.btn:select()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btntype_prop = function (self)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	g_data.bag:bindQuickItem(self.config.btnid, self.config.use, function (makeIndex)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self.makeIndex = makeIndex
+
+		self:prop_upt()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	self.prop_fill_test(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnMove.remove_btntype_prop = function (self, btnid)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-11, warpins: 1 ---
+	local _, data = g_data.bag:getItem(self.makeIndex)
+
+	--- END OF BLOCK #1 ---
+
+	slot3 = if data then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 12-23, warpins: 1 ---
+	g_data.bag:addItem(data)
+	--- END OF BLOCK #2 ---
+
+	slot4 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 24-31, warpins: 1 ---
+	main_scene.ui.panels.bag:addItem(self.makeIndex)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 32-33, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if not btnid then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 34-41, warpins: 1 ---
+	g_data.bag:unbindQuickItem(self.config.btnid)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 42-47, warpins: 1 ---
+	g_data.bag:fillQuickItemTest(btnid)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 48-48, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+btnMove.prop_fill_test = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-12, warpins: 2 ---
+	g_data.bag:fillQuickItemTest(self.config.btnid)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.prop_upt = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.btn.sprite then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-21, warpins: 1 ---
+	self.btn.sprite = display.newSprite("public/empty.png"):pos(self.btn:centerPos()):add2(self.btn)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 22-25, warpins: 2 ---
+	local btnid, data = nil
+	--- END OF BLOCK #2 ---
+
+	slot3 = if self.makeIndex then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-33, warpins: 1 ---
+	btnid, data = g_data.bag:getItem(self.makeIndex)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 34-35, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 36-52, warpins: 1 ---
+	self.btn.sprite:setTex(res.gettex("items", data.getVar("looks"))):scale(1.2)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 53-58, warpins: 1 ---
+	self.btn.sprite:setTex("public/empty.png")
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 59-59, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+btnMove.skill_upt = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	self.skillData = data
+
+	self.btn:closeFilter()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.init_btnHeroSkill = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.hero_upt_union(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnMove.hero_upt_union = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < g_data.hero.unionState then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	self.playLoopEffect(self)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	self.stopLoopEffect(self)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-32, warpins: 2 ---
+	local value = g_data.hero.unionProgress - 200
+	local p = math.min(100, math.max(0, value/2))
+
+	self.setProgress(self, p, "pic/console/heroUnion.png")
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+btnMove.voice_call = function (self, m, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.btn[m](self.btn, ...)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnMove.checkInButton = function (self, pos)
+	--- BLOCK #0 1-60, warpins: 1 ---
+	local p = self.convertToWorldSpace(self, cc.p(0, 0))
+	local rect = cc.rect(0, 0, self.btn:getContentSize().width, self.btn:getContentSize().height)
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if cc.rectContainsPoint(cc.rect(p.x + rect.x*self.btn:getScale(), p.y + rect.y*self.btn:getScale(), rect.width*self.btn:getScale(), rect.height*self.btn:getScale()), pos)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 61-62, warpins: 1 ---
+	return true
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 63-63, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.checkItemType = function (self, item)
+	--- BLOCK #0 1-20, warpins: 1 ---
+	local _, data = g_data.bag:getItem(item.get(item, "makeIndex"))
+	local where = getTakeOnPosition(item.getVar("stdMode"))
+	local stdMode = item.getVar("stdMode")
+	local canCustoms = {
+		0,
+		1,
+		2,
+		3
+	}
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not where then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 21-24, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for _, mode in ipairs(canCustoms)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 25-29, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if tonumber(stdMode)
+
+	 == mode then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 30-31, warpins: 1 ---
+	return true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 32-33, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 34-35, warpins: 2 ---
+	return false
+	--- END OF BLOCK #5 ---
+
+
+
+end
+btnMove.init_btntype_custom = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local custom = g_data.bag:getCustom(self.config.id)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if custom then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-23, warpins: 1 ---
+	self.source = custom.source
+
+	g_data.bag:bindCustomsItem(self.config.btnid, {
+		custom.name
+	}, custom.makeIndex, function (makeIndex)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self.makeIndex = makeIndex
+
+		self:custom_upt()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 24-25, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.custom_fill_test = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-12, warpins: 2 ---
+	g_data.bag:fillQuickItemTest(self.config.btnid)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.setCustomProps = function (self, item, source)
+	--- BLOCK #0 1-50, warpins: 1 ---
+	g_data.bag:unbindQuickItem(self.config.btnid)
+
+	self.makeIndex = nil
+	self.source = source
+
+	g_data.bag:bindCustomsItem(self.config.btnid, {
+		item.getVar("name")
+	}, item.get(item, "makeIndex"), function (makeIndex)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self.makeIndex = makeIndex
+
+		self:custom_upt()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	g_data.bag:addCustoms(self.config.id, item.get(item, "makeIndex"), item.getVar("name"), source)
+	cache.saveCustoms(common.getPlayerName())
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+btnMove.custom_addItem = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.btn.item then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	self.btn.item:removeSelf()
+
+	self.btn.item = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-70, warpins: 2 ---
+	local i, v = g_data.bag:getItem(makeIndex)
+	local center_x, center_y = self.btn:centerPos()
+	self.btn.item = item.new(v, self):pos(self.getPositionX(self), self.getPositionY(self)):addto(main_scene.ui)
+
+	self.btn.item:setLocalZOrder(main_scene.ui.z.focus)
+	self.btn.item:setName("custom_" .. v.getVar("name"))
+
+	self.btn.item.owner = self.source
+	self.btn.item.customNode = self
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+btnMove.custom_delItem = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-25, warpins: 1 ---
+	g_data.bag:unbindQuickItem(self.config.btnid)
+
+	self.makeIndex = nil
+
+	g_data.bag:delCustoms(self.config.id)
+	cache.saveCustoms(common.getPlayerName())
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 26-29, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.btn.item then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 30-37, warpins: 1 ---
+	self.btn.item:removeSelf()
+
+	self.btn.item = nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 38-38, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+btnMove.custom_upt = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local btnid, data = nil
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	btnid, data = g_data.bag:getItem(self.makeIndex)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-14, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-19, warpins: 1 ---
+	self.custom_addItem(self, self.makeIndex)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 20-22, warpins: 1 ---
+	self.custom_delItem(self)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 23-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return btnMove
+--- END OF BLOCK #0 ---
+
+
+

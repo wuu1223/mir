@@ -1,0 +1,1497 @@
+--- BLOCK #0 1-65, warpins: 1 ---
+local infoBar = class("infoBar", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(infoBar, {
+	bg,
+	info = {
+		player,
+		energy,
+		mobile
+	},
+	default = {
+		g = 0,
+		a = 255,
+		r = 0,
+		b = 0
+	}
+})
+
+infoBar.ctor = function (self, config, data)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not data.r then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	slot3 = self.default.r
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-9, warpins: 2 ---
+	data.r = slot3
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not data.g then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-11, warpins: 1 ---
+	slot3 = self.default.g
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-15, warpins: 2 ---
+	data.g = slot3
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not data.b then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 16-17, warpins: 1 ---
+	slot3 = self.default.b
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 18-21, warpins: 2 ---
+	data.b = slot3
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not data.a then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 22-23, warpins: 1 ---
+	slot3 = self.default.a
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 24-125, warpins: 2 ---
+	data.a = slot3
+	local bgH = 30
+	self.bg = display.newScale9Sprite(res.getframe2("pic/console/infobar/top.png"), display.cx, bgH/2, cc.size(display.width, bgH)):add2(self)
+
+	self.size(self, display.width, self.bg:geth()):anchor(0.5, 0.5):pos(data.x, data.y)
+
+	self.state = an.newBtn(res.gettex2("pic/common/state.png"), function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		self:switch()
+		self:showActiveType(nil, -1)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		size = cc.size(60, self.geth(self))
+	}):addTo(self):pos(30, self.geth(self)/2):anchor(0.5, 0.5)
+	local cfg = {}
+	cfg.player = {
+		level = {
+			type = "label"
+		}
+	}
+	cfg.energy = {}
+	cfg.mobile = {
+		webinfo = {
+			ancX = 1,
+			type = "label"
+		},
+		engine = {
+			ancX = 1,
+			type = "label"
+		},
+		signal = {
+			ancX = 1,
+			type = "sprite"
+		},
+		time = {
+			ancX = 1,
+			type = "label"
+		},
+		battery = {
+			p2 = "pic/console/infobar/empty.png",
+			ancX = 1,
+			p1 = "pic/console/infobar/full.png",
+			type = "progress",
+			offset = {
+				x = 4,
+				y = 4
+			}
+		}
+	}
+
+	--- END OF BLOCK #8 ---
+
+	for i, v in pairs(cfg)
+
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #36
+
+
+	--- BLOCK #9 126-147, warpins: 1 ---
+	self.info[i] = display.newNode():addTo(self):size(self.getw(self), self.geth(self))
+
+	--- END OF BLOCK #9 ---
+
+	for k, var in pairs(v)
+
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #34
+
+
+	--- BLOCK #10 148-150, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if var.type == "label" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #11 151-153, warpins: 1 ---
+	local labelColor = nil
+	--- END OF BLOCK #11 ---
+
+	if k == "engine" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 154-156, warpins: 1 ---
+	labelColor = display.COLOR_GREEN
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 157-158, warpins: 1 ---
+	labelColor = display.COLOR_WHITE
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 159-187, warpins: 2 ---
+	slot16 = self.info[i]
+	slot18 = an.newLabel("", 16, 1, {
+		color = labelColor
+	}):addTo(self.info[i], 1):pos(0, self.geth(self)/2)
+	slot17 = an.newLabel("", 16, 1, {
+		color = labelColor
+	}).addTo(self.info[i], 1).pos(0, self.geth(self)/2).anchor
+	--- END OF BLOCK #14 ---
+
+	slot19 = if not var.ancX then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 188-188, warpins: 1 ---
+	slot19 = 0
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 189-194, warpins: 2 ---
+	slot16[k] = slot17(slot18, slot19, 0.5)
+
+	--- END OF BLOCK #16 ---
+
+	slot16 = if var.value then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #17 195-202, warpins: 1 ---
+	self.info[i][k]:enableClick(function ()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		self:showActiveType(self.info[i][k], var.value)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #18 203-205, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if var.type == "sprite" then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #19 206-220, warpins: 1 ---
+	slot15 = self.info[i]
+	slot17 = display.newSprite():addTo(self.info[i])
+	slot16 = display.newSprite().addTo(self.info[i]).anchor
+	--- END OF BLOCK #19 ---
+
+	slot18 = if not var.ancX then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 221-221, warpins: 1 ---
+	slot18 = 0
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 222-233, warpins: 2 ---
+	slot15[k] = slot16(slot17, slot18, 0.5):pos(0, self.geth(self)/2)
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #22 234-236, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if var.type == "progress" then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #23 237-260, warpins: 1 ---
+	slot15 = self.info[i]
+	slot17 = an.newProgress(res.gettex2(var.p1), res.gettex2(var.p2), var.offset):addTo(self.info[i])
+	slot16 = an.newProgress(res.gettex2(var.p1), res.gettex2(var.p2), var.offset).addTo(self.info[i]).anchor
+	--- END OF BLOCK #23 ---
+
+	slot18 = if not var.ancX then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 261-261, warpins: 1 ---
+	slot18 = 0
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 262-264, warpins: 2 ---
+	slot15[k] = slot16(slot17, slot18, 0.5)
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 265-267, warpins: 5 ---
+	--- END OF BLOCK #26 ---
+
+	slot15 = if var.icon then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #27 268-295, warpins: 1 ---
+	slot15 = self.info[i][k]
+	slot17 = res.get2("pic/console/infobar/" .. k .. ".png"):addTo(self.info[i]):pos(0, self.geth(self)/2)
+	slot16 = res.get2("pic/console/infobar/" .. k .. ".png").addTo(self.info[i]).pos(0, self.geth(self)/2).anchor
+	--- END OF BLOCK #27 ---
+
+	slot18 = if not var.ancX then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 296-296, warpins: 1 ---
+	slot18 = 0
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 297-300, warpins: 2 ---
+	slot15.icon = slot16(slot17, slot18, 0.5)
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #30 301-303, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot15 = if var.bg then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 304-329, warpins: 1 ---
+	self.info[i][k].bg = res.get2("pic/console/infobar/btn.png"):addTo(self.info[i]):pos(0, self.geth(self)/2):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 330-330, warpins: 3 ---
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 331-332, warpins: 2 ---
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #34 333-333, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 334-335, warpins: 2 ---
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #36 336-360, warpins: 1 ---
+	self.switch(self)
+	self.uptAbility(self)
+	self.uptMobile(self)
+	self.uptVitality(self)
+	self.uptStamina(self)
+	self.uptExp(self)
+	self.uptBlood(self)
+	--- END OF BLOCK #36 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 361-380, warpins: 1 ---
+	self.getEventDispatcher(self):addEventListenerWithSceneGraphPriority(cc.EventListenerCustom:create("BATTERY_CHANGED", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:uptBattery()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end), self)
+	self.schedule(self, function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:uptTime()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 1)
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #39
+
+
+	--- BLOCK #38 381-385, warpins: 1 ---
+	self.schedule(self, function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self:uptTime()
+		self:uptBattery()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 10)
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 386-401, warpins: 2 ---
+	self.getEventDispatcher(self):addEventListenerWithSceneGraphPriority(cc.EventListenerCustom:create("CONNECTIVITY_ACTION", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:uptSignal()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end), self)
+
+	return 
+	--- END OF BLOCK #39 ---
+
+
+
+end
+infoBar.getEditNode = function (self)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	local node = display.newNode():size(540, 50)
+	local cnt = 0
+	local space = 45
+	local begin = 15
+
+	local function add(key, name)
+		--- BLOCK #0 1-94, warpins: 1 ---
+		local num = an.newLabel("", 16, 1, {
+			color = cc.c3b(0, 255, 255)
+		}):add2(node):anchor(0, 0.5):pos(420, node:geth() - begin - cnt*space)
+
+		local function upt(uptUI)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if key == "a" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-22, warpins: 1 ---
+			local p = math.modf(self.data[key]/255*100)
+
+			num:setString(name .. "(" .. p .. "％)")
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 23-34, warpins: 1 ---
+			num:setString(name .. "(" .. self.data[key] .. "/255)")
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 35-36, warpins: 2 ---
+			--- END OF BLOCK #3 ---
+
+			slot0 = if uptUI then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 37-44, warpins: 1 ---
+			self.bg:opacity(self.data.a)
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 45-45, warpins: 2 ---
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end
+
+		upt()
+
+		local slider = an.newSlider(res.gettex2("pic/common/sliderBg.png"), res.gettex2("pic/common/sliderBar.png"), res.gettex2("pic/common/sliderBlock.png"), {
+			value = (self.data[key] - 0)/255,
+			valueChange = function (value)
+				--- BLOCK #0 1-14, warpins: 1 ---
+				local color = value*255 + 0
+				self.data[key] = math.modf(color)
+
+				upt(true)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end,
+			valueChangeEnd = function (value)
+				--- BLOCK #0 1-14, warpins: 1 ---
+				local color = value*255 + 0
+				self.data[key] = math.modf(color)
+
+				upt(true)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}):add2(node):anchor(0, 0.5):pos(20, node:geth() - begin - cnt*space)
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	add("a", "不透明度")
+
+	return node
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.switch = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.switchVar = not self.switchVar
+	local var = self.switchVar
+	slot3 = self.state
+	slot2 = self.state.setScaleX
+	--- END OF BLOCK #0 ---
+
+	slot1 = if var then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-11, warpins: 1 ---
+	slot4 = 1
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 12-12, warpins: 1 ---
+	slot4 = -1
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-29, warpins: 2 ---
+	slot2(slot3, slot4)
+	self.info.player:setVisible(var)
+	self.info.energy:setVisible(not var)
+	self.uptPos(self)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+infoBar.uptPos = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local x = 60
+	local y = self.geth(self)/2
+
+	local function uptPos(obj, space)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		obj.pos(obj, x, y)
+
+		x = x + obj.getw(obj) + space
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.switchVar then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 10-14, warpins: 1 ---
+	local objs = {
+		"level"
+	}
+
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(objs)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 15-20, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot10 = if self.info.player[v].icon then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-27, warpins: 1 ---
+	uptPos(self.info.player[v].icon, 2)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-33, warpins: 2 ---
+	uptPos(self.info.player[v], 15)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 34-35, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 36-36, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #7 37-41, warpins: 1 ---
+	local objs = {
+		"active",
+		"stamina",
+		"exp",
+		"blood"
+	}
+
+	--- END OF BLOCK #7 ---
+
+	for i, v in ipairs(objs)
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #8 42-47, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot10 = if self.info.energy[v].bg then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 48-63, warpins: 1 ---
+	self.info.energy[v].bg:pos(x + self.info.energy[v]:getw()/2, y)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 64-69, warpins: 2 ---
+	uptPos(self.info.energy[v], 15)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 70-71, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #12 72-73, warpins: 2 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+infoBar.uptAbility = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs({
+		"level",
+		"gold",
+		"yb",
+		"bag",
+		"equip"
+	})
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-13, warpins: 1 ---
+	self["upt" .. string.ucfirst(v)](self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-15, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 16-16, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+infoBar.uptMobile = function (self)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	local x = display.width - 5
+	local y = self.geth(self)/2
+
+	local function uptPos(obj)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		obj.pos(obj, x, y)
+
+		x = x - obj.getw(obj) - 15
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs({
+		"battery",
+		"time",
+		"signal",
+		"engine",
+		"webinfo"
+	})
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 13-26, warpins: 1 ---
+	self["upt" .. string.ucfirst(v)](self)
+	uptPos(self.info.mobile[v])
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-28, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 29-30, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+infoBar.uptLevel = function (self)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	local ability = g_data.player.ability
+
+	self.info.player.level:setString("Lv: " .. ability.get(ability, "level"))
+	self.uptPos(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptGold = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptYb = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptBag = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptEquip = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptWebinfo = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	slot2 = self.info.mobile.webinfo
+	slot1 = self.info.mobile.webinfo.setString
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not def.serverinfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	slot3 = "serverinfo"
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-12, warpins: 2 ---
+	slot1(slot2, slot3)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+infoBar.uptEngine = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.info.mobile.engine:setString("by战神引擎")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptVitality = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptStamina = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptExp = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptBlood = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local function upt(text)
+		--- BLOCK #0 1-34, warpins: 1 ---
+		self.info.energy.blood:setString(text)
+
+		local w = self.info.energy.blood:getw() + 10
+
+		self.info.energy.blood.bg:setScaleX(w/self.info.energy.blood.bg:getw())
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if g_data.player.vitaliyitem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if 0 < g_data.player.vitaliyitem then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-46, warpins: 1 ---
+	upt("魔龙之血时间: " .. g_data.player.vitaliyitem .. "秒")
+	self.blood:stopAllActions()
+	self.blood:runForever(transition.sequence({
+		cc.DelayTime:create(1),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-13, warpins: 1 ---
+			g_data.player.vitaliyitem = g_data.player.vitaliyitem - 1
+
+			--- END OF BLOCK #0 ---
+
+			if g_data.player.vitaliyitem < 0 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 14-21, warpins: 1 ---
+			upt()
+			self.blood:stopAllActions()
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 22-33, warpins: 1 ---
+			upt("魔龙之血时间: " .. g_data.player.vitaliyitem .. " 秒")
+			self:uptPos()
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 34-34, warpins: 2 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end)
+	}))
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 47-48, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+infoBar.uptSignal = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local ok, ret = nil
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	local status = network.getInternetConnectionStatus()
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not ({
+		"wifi",
+		"mobile"
+	})[status] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-13, warpins: 1 ---
+	ret = "null"
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-15, warpins: 2 ---
+	ok = true
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 16-19, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-30, warpins: 1 ---
+	ok, ret = luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "DeviceUtil", "getCurrentNetType", {}, "()Ljava/lang/String;")
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 31-32, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	slot1 = if ok then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #7 33-34, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if ret then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #8 35-49, warpins: 1 ---
+	ret = string.lower(ret)
+	slot4 = self.info.mobile.signal
+	slot3 = self.info.mobile.signal.setTex
+	slot5 = res.gettex2
+	slot6 = "pic/console/infobar/"
+	--- END OF BLOCK #8 ---
+
+	if ret == "wifi" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 50-51, warpins: 1 ---
+	slot7 = "wifi"
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 52-52, warpins: 1 ---
+	slot7 = "3g"
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 53-56, warpins: 2 ---
+	slot3(slot4, slot5(slot6 .. slot7 .. ".png"))
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 57-57, warpins: 3 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+infoBar.uptTime = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.info.mobile.time:setString(os.date("%H:%M"))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+infoBar.uptBattery = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local ok, ret = nil
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-13, warpins: 1 ---
+	ok, ret = luaoc.callStaticMethod("iosFuncs", "getBattery")
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 14-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-28, warpins: 1 ---
+	ok, ret = luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "Mir2", "getBattery", {}, "()I")
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 29-30, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if ok then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #5 31-32, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if ret then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 33-36, warpins: 1 ---
+	local p = ret/100
+	--- END OF BLOCK #6 ---
+
+	if 1 < p then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 37-38, warpins: 1 ---
+	p = 1
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #8 39-41, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if p < 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 42-43, warpins: 1 ---
+	p = 0
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #10 44-50, warpins: 2 ---
+	self.info.mobile.battery:setp(p)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 51-51, warpins: 3 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+infoBar.showActiveType = function (self, src, type)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.Activecontent then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-13, warpins: 1 ---
+	local lastType = self.Activecontent.type
+
+	self.Activecontent:removeSelf()
+
+	self.Activecontent = nil
+
+	--- END OF BLOCK #1 ---
+
+	if lastType ~= type then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 14-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type == -1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-17, warpins: 0 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #5 18-19, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if type == -1 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 21-44, warpins: 3 ---
+	local info = {}
+	info[1] = {
+		"每天指定时间自动获得活力值",
+		"拥有活力值时打怪可获得多倍经验",
+		"详细介绍可至边界城水晶鉴定师查看"
+	}
+	info[2] = {
+		"精力值是由精力水晶鉴定后获得",
+		"必须达到25级才能鉴定精力水晶",
+		"拥有精力值打怪可获得大量多倍经验",
+		"详细介绍可至边界城水晶鉴定师查看"
+	}
+	info[3] = {
+		"当活力值、精力值都消耗完毕继续打怪的经验可增加储存经验",
+		"拥有储存经验值可在边界城水晶鉴定师处直接消耗储存经验来兑换多倍活力值、精力值经验",
+		"详细介绍可至边界城水晶鉴定师查看"
+	}
+	info[4] = {
+		"在魔龙之血使用后的有效时间内可快速通过打怪消耗活力值、精力值"
+	}
+	local content = an.newLabelM(320, 16, 1, {
+		manual = false
+	}):anchor(0, 0)
+	--- END OF BLOCK #7 ---
+
+	slot3 = if not info[type] then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 45-45, warpins: 1 ---
+	info = {}
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 46-49, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	for i, v in ipairs(info)
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #10 50-56, warpins: 1 ---
+	content.addLabel(content, v)
+	--- END OF BLOCK #10 ---
+
+	if i ~= #info then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 57-59, warpins: 1 ---
+	content.nextLine(content)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 60-61, warpins: 3 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #13 62-134, warpins: 1 ---
+	self.Activecontent = display.newNode():anchor(0, 1):pos(src.getPositionX(src), 0):size(content.getw(content) + 20, content.geth(content) + 20):add2(self)
+	self.Activecontent.type = type
+
+	self.Activecontent:enableClick(function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self.Activecontent:removeSelf()
+
+		self.Activecontent = nil
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale24.png")):anchor(0, 0):size(self.Activecontent:getContentSize()):add2(self.Activecontent)
+	content.pos(content, 10, 10):add2(self.Activecontent, 3)
+
+	return 
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 135-135, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 136-136, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+
+
+end
+
+return infoBar
+--- END OF BLOCK #0 ---
+
+
+

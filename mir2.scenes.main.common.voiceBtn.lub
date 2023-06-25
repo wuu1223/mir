@@ -1,0 +1,432 @@
+--- BLOCK #0 1-27, warpins: 1 ---
+local common = import(".common")
+local voiceTip = import(".voiceTip")
+local btn = class("voiceBtn", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(btn, {
+	tex1,
+	tex2,
+	recording
+})
+
+btn.ctor = function (self, tex1, tex2, size, otherTouchRect)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	tex1.retain(tex1)
+	tex2.retain(tex2)
+	self.setNodeEventEnabled(self, true)
+
+	self.onCleanup = function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		tex1:release()
+		tex2:release()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	self.tex1 = tex1
+	self.tex2 = tex2
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not size then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 17-21, warpins: 1 ---
+	size = self.tex1:getContentSize()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 22-62, warpins: 2 ---
+	self.size(self, size)
+
+	self.bg = display.newSprite(tex1):anchor(0, 0):add2(self)
+
+	self.bg:scalex(size.width/self.bg:getw())
+	self.bg:scaley(size.height/self.bg:geth())
+
+	local touchobject = self
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not otherTouchRect then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 63-71, warpins: 1 ---
+	otherTouchRect = {
+		x = 0,
+		y = 0,
+		width = size.width + 60,
+		height = size.height*2 + 30
+	}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 72-73, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if otherTouchRect then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 74-95, warpins: 1 ---
+	touchobject = display.newNode():pos(otherTouchRect.x - 30, otherTouchRect.y - size.height + 30):size(otherTouchRect.width, otherTouchRect.height):add2(self)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 96-107, warpins: 2 ---
+	touchobject.setTouchEnabled(touchobject, true)
+	touchobject.addNodeEventListener(touchobject, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if g_data.chat.style.channel == "私聊" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 10-15, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if g_data.chat.style.target == "" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 16-22, warpins: 1 ---
+		an.newMsgbox("未设置对方名字.", nil, {
+			center = true
+		})
+
+		return 
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 23-27, warpins: 3 ---
+		local ok, msg = voice.canRecord()
+
+		--- END OF BLOCK #4 ---
+
+		slot1 = if not ok then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 28-34, warpins: 1 ---
+		main_scene.ui:tip(msg)
+
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 35-44, warpins: 2 ---
+		self:setState("start")
+
+		self.recording = true
+
+		return true
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 45-48, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		slot1 = if not self.recording then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 49-49, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 50-57, warpins: 2 ---
+		local rect = self:getCascadeBoundingBox()
+		--- END OF BLOCK #9 ---
+
+		if rect.x <= event.x then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #10 58-63, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		if event.x <= rect.x + rect.width then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #11 64-67, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		if rect.y <= event.y then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 68-73, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if event.y > rect.y + rect.height then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 74-75, warpins: 4 ---
+		slot2 = false
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #14 76-76, warpins: 1 ---
+		local isInArea = true
+
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 77-79, warpins: 2 ---
+		--- END OF BLOCK #15 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #16 80-81, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		slot2 = if isInArea then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 82-87, warpins: 1 ---
+		self:setState("press")
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+		--- BLOCK #18 88-93, warpins: 1 ---
+		self:setState("release")
+		--- END OF BLOCK #18 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+		--- BLOCK #19 94-96, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #20 97-98, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		slot2 = if isInArea then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 99-104, warpins: 1 ---
+		self:setState("ok")
+		--- END OF BLOCK #21 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+		--- BLOCK #22 105-109, warpins: 1 ---
+		self:setState("cancel")
+
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 110-110, warpins: 5 ---
+		return 
+		--- END OF BLOCK #23 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+btn.setState = function (self, state)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not main_scene.ui.voiceTip then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-20, warpins: 1 ---
+	main_scene.ui.voiceTip = voiceTip.new():add2(main_scene.ui, main_scene.ui.z.voiceTip)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-29, warpins: 2 ---
+	main_scene.ui.voiceTip:upt(state)
+	--- END OF BLOCK #2 ---
+
+	if state == "start" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 30-41, warpins: 1 ---
+	self.bg:setTex(self.tex2)
+	voice.startRecord(common.getPlayerName())
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #4 42-43, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if state == "ok" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 44-54, warpins: 1 ---
+	self.bg:setTex(self.tex1)
+
+	self.recording = nil
+
+	voice.stopRecord()
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #6 55-56, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if state == "cancel" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 57-72, warpins: 1 ---
+	self.bg:setTex(self.tex1)
+
+	self.recording = nil
+
+	voice.cancelRecord()
+	main_scene.ui:tip("已取消发送！")
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 73-73, warpins: 4 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+
+return btn
+--- END OF BLOCK #0 ---
+
+
+

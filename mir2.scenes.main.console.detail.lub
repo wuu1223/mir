@@ -1,0 +1,2118 @@
+--- BLOCK #0 1-37, warpins: 1 ---
+local magic = import("..common.magic")
+local iconFunc = import(".iconFunc")
+local detail = class("detail", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(detail, {
+	lock,
+	content
+})
+
+detail.endLook = function (self, widgetx, widgety)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.lock then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-59, warpins: 1 ---
+	self.lock = true
+	local x, y = self.content:getPosition()
+
+	self.content:scaleTo(0.2, 0.01)
+	self.content:runs({
+		cc.MoveTo:create(0.1, cc.p(self.getMovePos(self, widgetx, widgety, x, y))),
+		cc.MoveTo:create(0.1, cc.p(widgetx, widgety)),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:removeSelf()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	return 
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 60-60, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+
+
+end
+detail.ctor = function (self, config, data, widgetx, widgety, widgetw, widgeth, from, widget)
+	--- BLOCK #0 1-40, warpins: 1 ---
+	self.size(self, display.width, display.height):addto(main_scene.ui, main_scene.ui.z.detail)
+	self.setTouchEnabled(self, true)
+	self.addNodeEventListener(self, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		self:endLook(widgetx, widgety)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-11, warpins: 2 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+
+	local space = 10
+	local count = space
+	local maxw = 200
+	self.content = display.newNode():add2(self)
+	local editNode = nil
+	--- END OF BLOCK #0 ---
+
+	slot8 = if widget then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 41-43, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot13 = if widget.getEditNode then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 44-57, warpins: 1 ---
+	editNode = widget.getEditNode(widget)
+	maxw = math.max(maxw, editNode.getw(editNode) + space*2)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 58-61, warpins: 3 ---
+	local function addLine()
+		--- BLOCK #0 1-38, warpins: 1 ---
+		local line = res.get2("pic/console/line.png"):anchor(0.5, 0):pos(maxw/2, count):add2(self.content)
+
+		line.scaleX(line, (maxw - space*2)/line.getw(line))
+
+		count = count + line.geth(line)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #3 ---
+
+	slot14 = if not config.banRemove then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 62-63, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if from ~= "console" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 64-65, warpins: 2 ---
+	slot14 = false
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 66-66, warpins: 1 ---
+	local hasRemove = true
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 67-68, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot14 = if hasRemove then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 69-129, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale10.png")):anchor(0.5, 0):pos(maxw/2, count - 3):size(maxw - space*2, 32):add2(self.content):enableClick(function ()
+		--- BLOCK #0 1-15, warpins: 1 ---
+		self:endLook(widgetx, widgety)
+		main_scene.ui.console:removeWidget(data.key)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	an.newLabel("移除", 24, 1, {
+		color = cc.c3b(255, 255, 0)
+	}):pos(maxw/2, count - 3):anchor(0.5, 0):add2(self.content)
+
+	count = count + 32 + 5
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 130-131, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot12 = if editNode then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 132-173, warpins: 1 ---
+	editNode.pos(editNode, space, count):add2(self.content)
+
+	count = count + editNode.geth(editNode)
+	local title = an.newLabel("设置:", 18, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):pos(space, count):add2(self.content)
+	count = count + title.geth(title)
+
+	addLine()
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 174-176, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot15 = if config.fixedX then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 177-177, warpins: 1 ---
+	local fixedXText = "限制X轴移动"
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 178-180, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot16 = if config.fixedY then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 181-181, warpins: 1 ---
+	local fixedYText = "限制Y轴移动"
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 182-184, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot17 = if config.banRemove then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 185-185, warpins: 1 ---
+	local removeText = "不可移除"
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 186-187, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	if from == "console" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #18 188-189, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	slot15 = if not fixedXText then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #19 190-191, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	slot16 = if not fixedYText then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 192-193, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot17 = if removeText then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #21 194-212, warpins: 3 ---
+	local label = an.newLabelM(maxw - space*2, 18, 1, {
+		manual = true
+	}):pos(space, count):add2(self.content)
+
+	--- END OF BLOCK #21 ---
+
+	slot15 = if fixedXText then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 213-225, warpins: 1 ---
+	label.nextLine(label):addLabel(fixedXText, cc.c3b(255, 0, 0))
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 226-227, warpins: 2 ---
+	--- END OF BLOCK #23 ---
+
+	slot16 = if fixedYText then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 228-240, warpins: 1 ---
+	label.nextLine(label):addLabel(fixedYText, cc.c3b(255, 0, 0))
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 241-242, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	slot17 = if removeText then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 243-255, warpins: 1 ---
+	label.nextLine(label):addLabel(removeText, cc.c3b(255, 0, 0))
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 256-261, warpins: 2 ---
+	count = count + label.geth(label)
+
+	addLine()
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 262-265, warpins: 3 ---
+	local desc = config.desc
+	--- END OF BLOCK #28 ---
+
+	if config.class == "btnMove" then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #29 266-268, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if config.btntype == "skill" then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 269-275, warpins: 1 ---
+	desc = self.processSkillExtend(self, config, data, from)
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 276-277, warpins: 3 ---
+	--- END OF BLOCK #31 ---
+
+	slot18 = if desc then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #32 278-280, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if config.class == "btnMove" then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #33 281-283, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if config.btntype == "skill" then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #34 284-313, warpins: 1 ---
+	local descLabel = an.newLabelM(maxw - space*2, 18, 1):pos(space, count):add2(self.content):addLabel("描述: ", cc.c3b(0, 255, 0))
+
+	--- END OF BLOCK #34 ---
+
+	for i, v in ipairs(desc)
+
+	LOOP BLOCK #35
+	GO OUT TO BLOCK #37
+
+
+	--- BLOCK #35 314-318, warpins: 1 ---
+	descLabel.addLabel(descLabel, v.text, v.color)
+
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 319-320, warpins: 2 ---
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #37 321-327, warpins: 1 ---
+	count = count + descLabel.geth(descLabel)
+
+	addLine()
+
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #39
+
+
+	--- BLOCK #38 328-363, warpins: 2 ---
+	local descLabel = an.newLabelM(maxw - space*2, 18, 1):pos(space, count):add2(self.content):addLabel("描述: ", cc.c3b(0, 255, 0)):addLabel(desc)
+	count = count + descLabel.geth(descLabel)
+
+	addLine()
+
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 364-385, warpins: 3 ---
+	local files = iconFunc:getFilenames(config, data)
+	local icon = res.get2(files.bg):pos(space + 40, count + 40):add2(self.content)
+
+	--- END OF BLOCK #39 ---
+
+	slot21 = if files.sprite then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 386-399, warpins: 1 ---
+	res.get2(files.sprite):pos(icon.centerPos(icon)):add2(icon)
+
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 400-403, warpins: 2 ---
+	local subtitle = nil
+	--- END OF BLOCK #41 ---
+
+	if config.class == "btnMove" then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #42 404-406, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	if config.btntype == "normal" then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 407-408, warpins: 1 ---
+	subtitle = "普通按钮"
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #44 409-411, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if config.btntype == "base" then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 412-413, warpins: 1 ---
+	subtitle = "基本技能"
+	--- END OF BLOCK #45 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #46 414-416, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if config.btntype == "setting" then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 417-418, warpins: 1 ---
+	subtitle = "设置快捷键"
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #48 419-421, warpins: 1 ---
+	--- END OF BLOCK #48 ---
+
+	if config.btntype == "skill" then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #49 422-428, warpins: 1 ---
+	local magicData = def.magic.getMagicConfigByUid(data.magicId)
+	--- END OF BLOCK #49 ---
+
+	slot22 = if magicData then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #50 429-430, warpins: 1 ---
+	--- END OF BLOCK #50 ---
+
+	if from == "skillHero" then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #52
+	end
+
+
+	--- BLOCK #51 431-432, warpins: 1 ---
+	subtitle = magicData.heroName
+	--- END OF BLOCK #51 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #52 433-434, warpins: 1 ---
+	subtitle = magicData.name
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #53 435-437, warpins: 1 ---
+	--- END OF BLOCK #53 ---
+
+	if config.btntype == "panel" then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #54 438-438, warpins: 1 ---
+	subtitle = "面板快捷键"
+	--- END OF BLOCK #54 ---
+
+	FLOW; TARGET BLOCK #55
+
+
+	--- BLOCK #55 439-443, warpins: 9 ---
+	slot22 = an.newLabel
+	--- END OF BLOCK #55 ---
+
+	slot23 = if not config.name then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #57
+	end
+
+
+	--- BLOCK #56 444-444, warpins: 1 ---
+	slot23 = ""
+	--- END OF BLOCK #56 ---
+
+	FLOW; TARGET BLOCK #57
+
+
+	--- BLOCK #57 445-460, warpins: 2 ---
+	slot23 = slot22(slot23, 18, 1, {
+		color = cc.c3b(0, 255, 0)
+	})
+	slot22 = slot22(slot23, 18, 1, {
+		color = cc.c3b(0, 255, 0)
+	}).pos
+	slot24 = space + 80
+	--- END OF BLOCK #57 ---
+
+	slot21 = if subtitle then
+	JUMP TO BLOCK #58
+	else
+	JUMP TO BLOCK #59
+	end
+
+
+	--- BLOCK #58 461-462, warpins: 1 ---
+	slot25 = 45
+	--- END OF BLOCK #58 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #60
+
+
+	--- BLOCK #59 463-463, warpins: 1 ---
+	slot25 = 30
+
+	--- END OF BLOCK #59 ---
+
+	FLOW; TARGET BLOCK #60
+
+
+	--- BLOCK #60 464-471, warpins: 2 ---
+	slot22(slot23, slot24, count + slot25):add2(self.content)
+	--- END OF BLOCK #60 ---
+
+	slot21 = if subtitle then
+	JUMP TO BLOCK #61
+	else
+	JUMP TO BLOCK #62
+	end
+
+
+	--- BLOCK #61 472-486, warpins: 1 ---
+	an.newLabel(subtitle, 18, 1):pos(space + 80, count + 15):add2(self.content)
+
+	--- END OF BLOCK #61 ---
+
+	FLOW; TARGET BLOCK #62
+
+
+	--- BLOCK #62 487-503, warpins: 2 ---
+	count = count + 80
+	count = count + space
+	local size = cc.size(maxw, count)
+	local x, y = nil
+
+	local function checkx(x)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if x - size.width/2 < 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 8-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if not (size.width/2) then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-12, warpins: 1 ---
+		x = x
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 13-20, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		if display.width < x + size.width/2 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 21-28, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot0 = if not (display.width - size.width/2) then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 28-28, warpins: 1 ---
+		x = x
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 29-29, warpins: 3 ---
+		return x
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local function checky(y)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if y - size.height/2 < 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 8-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if not (size.height/2) then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-12, warpins: 1 ---
+		y = y
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 13-20, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		if display.height < y + size.height/2 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 21-28, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot0 = if not (display.height - size.height/2) then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 28-28, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 29-29, warpins: 3 ---
+		return y
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	--- END OF BLOCK #62 ---
+
+	if 0 < widgetx - widgetw/2 - size.width then
+	JUMP TO BLOCK #63
+	else
+	JUMP TO BLOCK #64
+	end
+
+
+	--- BLOCK #63 504-512, warpins: 1 ---
+	x = widgetx - widgetw/2 - size.width/2
+	y = checky(widgety + 50)
+	--- END OF BLOCK #63 ---
+
+	FLOW; TARGET BLOCK #64
+
+
+	--- BLOCK #64 513-514, warpins: 2 ---
+	--- END OF BLOCK #64 ---
+
+	slot23 = if not x then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #67
+	end
+
+
+	--- BLOCK #65 515-522, warpins: 1 ---
+	--- END OF BLOCK #65 ---
+
+	if widgetx + widgetw/2 + size.width < display.width then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #67
+	end
+
+
+	--- BLOCK #66 523-531, warpins: 1 ---
+	x = widgetx + widgetw/2 + size.width/2
+	y = checky(widgety + 50)
+	--- END OF BLOCK #66 ---
+
+	FLOW; TARGET BLOCK #67
+
+
+	--- BLOCK #67 532-533, warpins: 3 ---
+	--- END OF BLOCK #67 ---
+
+	slot23 = if not x then
+	JUMP TO BLOCK #68
+	else
+	JUMP TO BLOCK #70
+	end
+
+
+	--- BLOCK #68 534-541, warpins: 1 ---
+	--- END OF BLOCK #68 ---
+
+	if widgety + widgeth/2 + size.height < display.height then
+	JUMP TO BLOCK #69
+	else
+	JUMP TO BLOCK #70
+	end
+
+
+	--- BLOCK #69 542-550, warpins: 1 ---
+	x = checkx(widgetx)
+	y = widgety + widgeth/2 + size.height/2
+	--- END OF BLOCK #69 ---
+
+	FLOW; TARGET BLOCK #70
+
+
+	--- BLOCK #70 551-552, warpins: 3 ---
+	--- END OF BLOCK #70 ---
+
+	slot23 = if not x then
+	JUMP TO BLOCK #71
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #71 553-559, warpins: 1 ---
+	--- END OF BLOCK #71 ---
+
+	if 0 < widgety - widgeth/2 - size.height then
+	JUMP TO BLOCK #72
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #72 560-568, warpins: 1 ---
+	x = checkx(widgetx)
+	y = widgety - widgeth/2 - size.height/2
+	--- END OF BLOCK #72 ---
+
+	FLOW; TARGET BLOCK #73
+
+
+	--- BLOCK #73 569-570, warpins: 3 ---
+	--- END OF BLOCK #73 ---
+
+	slot23 = if not x then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #75
+	end
+
+
+	--- BLOCK #74 571-578, warpins: 1 ---
+	y = checky(widgety)
+	x = checkx(widgetx)
+	--- END OF BLOCK #74 ---
+
+	FLOW; TARGET BLOCK #75
+
+
+	--- BLOCK #75 579-673, warpins: 2 ---
+	local beganPos, beganTouchPos = nil
+
+	self.content:setTouchEnabled(true)
+	self.content:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-21, warpins: 1 ---
+		beganPos = cc.p(self.content:getPosition())
+		beganTouchPos = cc.p(event.x, event.y)
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #2 22-24, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 25-43, warpins: 1 ---
+		self.content:pos(event.x - beganTouchPos.x + beganPos.x, event.y - beganTouchPos.y + beganPos.y)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 44-44, warpins: 3 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+	self.content:anchor(0.5, 0.5):size(size):scale(0.01):scaleTo(0.2, 1)
+	self.content:pos(widgetx, widgety)
+	self.content:runs({
+		cc.MoveTo:create(0.1, cc.p(self.getMovePos(self, widgetx, widgety, x, y))),
+		cc.MoveTo:create(0.1, cc.p(x, y))
+	})
+	display.newScale9Sprite(res.getframe2("pic/scale/scale5.png")):size(size):anchor(0, 0):add2(self.content, -1)
+
+	return 
+	--- END OF BLOCK #75 ---
+
+
+
+end
+detail.getMovePos = function (self, sx, sy, dx, dy)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local retx, rety = nil
+	--- END OF BLOCK #0 ---
+
+	if sx < dx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	retx = sx + 50
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if dx < sx then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-8, warpins: 1 ---
+	retx = sx - 50
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 9-10, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	if sy < dy then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 11-12, warpins: 1 ---
+	rety = sy - 50
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #6 13-14, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if dy < sy then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 15-15, warpins: 1 ---
+	rety = sy + 50
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 16-17, warpins: 3 ---
+	--- END OF BLOCK #8 ---
+
+	slot7 = if not retx then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 18-18, warpins: 1 ---
+	slot7 = sx
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 19-20, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot8 = if not rety then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 21-21, warpins: 1 ---
+	slot8 = sy - 50
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 22-22, warpins: 2 ---
+	return slot7, slot8
+	--- END OF BLOCK #12 ---
+
+
+
+end
+detail.expressionIsFront = function (self, from, magicId)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if from == "skillHero" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 5-5, warpins: 1 ---
+	local isFront = true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-7, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not isFront then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 8-15, warpins: 1 ---
+	local isUnion = checkIn(tonumber(magicId), {
+		50,
+		55
+	})
+	--- END OF BLOCK #4 ---
+
+	slot4 = if isUnion then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 16-23, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if g_data.player.job > g_data.hero.job then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 24-25, warpins: 1 ---
+	isFront = false
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 26-26, warpins: 1 ---
+	isFront = true
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 27-27, warpins: 4 ---
+	return isFront
+	--- END OF BLOCK #8 ---
+
+
+
+end
+detail.processSkillExtend = function (self, config, data, from)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local desc = {}
+	local magicData = def.magic.getMagicConfigByUid(data.magicId)
+	--- END OF BLOCK #0 ---
+
+	slot5 = if magicData then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #1 9-15, warpins: 1 ---
+	local isFront = self.expressionIsFront(self, from, data.magicId)
+	--- END OF BLOCK #1 ---
+
+	if from == "skillHero" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 16-18, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot7 = if not magicData.heroName then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-19, warpins: 2 ---
+	local name = magicData.name
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-25, warpins: 2 ---
+	local descData = def.skill[name]
+	--- END OF BLOCK #4 ---
+
+	slot9 = if config.SkillLv then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #5 26-27, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot9 = if descData then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 28-28, warpins: 1 ---
+	local descString = descData[4]
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 29-30, warpins: 2 ---
+	local pos_start = 1
+	local pos_end = nil
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 31-31, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 32-46, warpins: 1 ---
+	local s1, e1 = string.find(descString, "%u~%u", pos_start)
+	local s2, e2 = string.find(descString, "%u", pos_start)
+	local s, e = nil
+	--- END OF BLOCK #9 ---
+
+	slot12 = if not s1 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 47-48, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot14 = if not s2 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 49-49, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #12 50-50, warpins: 0 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #13 51-52, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot14 = if not s2 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 53-56, warpins: 1 ---
+	e = e1
+	s = s1
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #15 57-58, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot12 = if not s1 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 59-62, warpins: 1 ---
+	e = e2
+	s = s2
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #17 63-64, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if s1 <= s2 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 65-68, warpins: 1 ---
+	e = e1
+	s = s1
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 69-71, warpins: 1 ---
+	e = e2
+	s = s2
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 72-111, warpins: 5 ---
+	desc[#desc + 1] = {
+		text = string.sub(descString, pos_start, s - 1)
+	}
+	local expression = string.sub(descString, s, e)
+	local valueString = self.calcExpression(self, expression, descData, config.SkillLv, isFront)
+	desc[#desc + 1] = {
+		text = valueString,
+		color = display.COLOR_RED
+	}
+	pos_start = e + 1
+	pos_end = e
+
+	--- END OF BLOCK #20 ---
+
+	if pos_end == string.len(descString)
+
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #21 112-113, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+	slot11 = if not pos_end then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 114-119, warpins: 1 ---
+	desc[#desc + 1] = {
+		text = descString
+	}
+
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #23 120-121, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	slot11 = if pos_end then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #24 122-127, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if pos_end < string.len(descString)
+
+	 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #25 128-138, warpins: 1 ---
+	desc[#desc + 1] = {
+		text = string.sub(descString, pos_end + 1)
+	}
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #26 139-143, warpins: 1 ---
+	local str = ""
+	slot10 = string.gmatch
+	--- END OF BLOCK #26 ---
+
+	slot11 = if descData then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 144-144, warpins: 1 ---
+	slot11 = descData[4]
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 145-147, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	for sub in slot10(slot11, "[^(A-DN)~]")
+
+
+	LOOP BLOCK #29
+	GO OUT TO BLOCK #31
+
+
+	--- BLOCK #29 148-150, warpins: 1 ---
+	str = str .. sub
+
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 151-152, warpins: 2 ---
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #31 153-158, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	for i, v in ipairs(self.wordFilter(self))
+
+
+	LOOP BLOCK #32
+	GO OUT TO BLOCK #34
+
+
+	--- BLOCK #32 159-165, warpins: 1 ---
+	str = string.gsub(str, v, "")
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 166-167, warpins: 2 ---
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+	--- BLOCK #34 168-172, warpins: 1 ---
+	desc[#desc + 1] = {
+		text = str
+	}
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 173-173, warpins: 6 ---
+	return desc
+	--- END OF BLOCK #35 ---
+
+
+
+end
+detail.calcExpression = function (self, express, data, lv, front)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	local result = nil
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 2-2, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 3-6, warpins: 1 ---
+	local cfg = {
+		nil,
+		nil,
+		nil,
+		nil,
+		"N",
+		"A",
+		"B",
+		"C",
+		"D",
+		"A",
+		"B",
+		"C",
+		"D"
+	}
+
+	local function dataError(index)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if data[index] == "" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #1 5-10, warpins: 1 ---
+		slot1 = p2
+		slot2 = "error"
+		slot3 = "[skilldesc cofig is error] : Name:"
+		--- END OF BLOCK #1 ---
+
+		slot4 = if front then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-14, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not data[2] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 15-16, warpins: 2 ---
+		slot4 = data[3]
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 17-24, warpins: 2 ---
+		slot1(slot2, slot3, slot4, cfg[index] .. " express is nil, index: ", index)
+
+		return true
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 25-25, warpins: 2 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	if express == "N" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 7-11, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot8 = if dataError(5)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 12-12, warpins: 1 ---
+	return result
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 13-20, warpins: 1 ---
+	result = self.calcField(self, data[5], lv) .. ""
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #6 21-22, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if express == "A" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #7 23-24, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot4 = if front then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 25-29, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot8 = if dataError(6)
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 30-30, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #10 31-41, warpins: 1 ---
+	result = math.floor(self.calcField(self, data[6], lv)) .. ""
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #11 42-46, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot8 = if dataError(10)
+
+	 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 47-47, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #13 48-58, warpins: 1 ---
+	result = math.floor(self.calcField(self, data[10], lv)) .. ""
+
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #14 59-60, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if express == "A~B" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #15 61-62, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot4 = if front then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #16 63-67, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot8 = if not dataError(6)
+	 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 68-72, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot8 = if dataError(7)
+
+	 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 73-73, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #19 74-92, warpins: 1 ---
+	result = math.floor(self.calcField(self, data[6], lv)) .. "~" .. math.ceil(self.calcField(self, data[7], lv))
+
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #20 93-97, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot8 = if not dataError(10)
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 98-102, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot8 = if dataError(11)
+
+	 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 103-103, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #23 104-122, warpins: 1 ---
+	result = math.floor(self.calcField(self, data[10], lv)) .. "~" .. math.ceil(self.calcField(self, data[11], lv))
+
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #24 123-124, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if express == "C~D" then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #25 125-126, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	slot4 = if front then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #26 127-131, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	slot8 = if not dataError(8)
+	 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 132-136, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	slot8 = if dataError(9)
+
+	 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 137-137, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #29 138-156, warpins: 1 ---
+	result = math.floor(self.calcField(self, data[8], lv)) .. "~" .. math.ceil(self.calcField(self, data[9], lv))
+
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #30 157-161, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot8 = if not dataError(12)
+	 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 162-166, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	slot8 = if dataError(13)
+
+	 then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 167-167, warpins: 2 ---
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #33 168-185, warpins: 1 ---
+	result = math.floor(self.calcField(self, data[12], lv)) .. "~" .. math.ceil(self.calcField(self, data[13], lv))
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 186-186, warpins: 8 ---
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #35 187-187, warpins: 0 ---
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #36 188-189, warpins: 8 ---
+	--- END OF BLOCK #36 ---
+
+
+
+end
+detail.calcField = function (self, express, lv)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	local function getExpress(str)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		local express = nil
+
+		xpcall(function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			express = loadstring("return " .. str)()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, function ()
+			--- BLOCK #0 1-3, warpins: 1 ---
+			express = str
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+		--- END OF BLOCK #0 ---
+
+		if type(express)
+
+		 == "table" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #1 11-14, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot2 = if express[lv] then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 15-18, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if not express[lv] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 19-19, warpins: 2 ---
+		slot2 = express[0]
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 20-22, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 23-24, warpins: 1 ---
+		return str
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 25-26, warpins: 2 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local newExpress = getExpress(express)
+	newExpress = string.gsub(newExpress, "<SkillLv>", "lv")
+	local cfg = {
+		"DC",
+		"MC",
+		"SC",
+		"maxDC",
+		"maxMC",
+		"maxSC"
+	}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(cfg)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 17-44, warpins: 1 ---
+	newExpress = string.gsub(newExpress, "<" .. v .. ">", string.format("g_data.player.ability:get(\"%s\")", v))
+	newExpress = string.gsub(newExpress, "<hero" .. v .. ">", string.format("g_data.hero.ability:get(\"%s\")", v))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 45-46, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 47-55, warpins: 1 ---
+	local fun = loadstring("local lv = ... return " .. newExpress)
+
+	return fun(lv)
+	--- END OF BLOCK #3 ---
+
+
+
+end
+detail.wordFilter = function (self)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	return {
+		"点",
+		"(骷髅等级最高可提升至级)",
+		"(神兽等级最高可提升至级)",
+		"(月灵等级最高可提升至级)"
+	}
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return detail
+--- END OF BLOCK #0 ---
+
+
+

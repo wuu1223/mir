@@ -1,0 +1,890 @@
+--- BLOCK #0 1-53, warpins: 1 ---
+local cx = 62
+local cy = 45
+local labelx = 23
+local labely = 96
+local lock = class("widget.lock", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(lock, {
+	roleNameLabel,
+	isSelect,
+	target,
+	skill
+})
+
+lock.ctor = function (self, config, data)
+	--- BLOCK #0 1-153, warpins: 1 ---
+	self.bgSpr = res.get2("pic/console/lock_bg.png"):pos(cx, cy):add2(self)
+
+	self.bgSpr:anchor(cx/self.bgSpr:getw(), cy/self.bgSpr:geth()):enableClick(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		local b = self:isEnable()
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if b then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-11, warpins: 1 ---
+		self:stop()
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 12-15, warpins: 1 ---
+		self:startSelect()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 16-16, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	self.anchor(self, 0.5, 0.5):pos(data.x, data.y):size(self.bgSpr:getContentSize())
+
+	self.lockSpr = res.get2("pic/console/lock.png"):pos(cx + 1, cy + 1):add2(self)
+	self.lockSkillText = res.get2("pic/console/lock-single.png"):pos(cx, cy - 20):add2(self):hide()
+	self.roleNameLabel = an.newLabel("", 18, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(0, 0.5):pos(labelx, labely):add2(self)
+
+	display.newNode():anchor(0, 0.5):pos(self.roleNameLabel:getPosition()):size(self.bgSpr:getw(), 42):add2(self):enableClick(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not self.roleNameLabel.roleid then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-6, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-17, warpins: 2 ---
+		local role = main_scene.ground.map:findRole(self.roleNameLabel.roleid)
+
+		--- END OF BLOCK #2 ---
+
+		slot0 = if not role then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 18-18, warpins: 1 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 19-21, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		if role.__cname ~= "hero" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 22-22, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 23-58, warpins: 2 ---
+		self.roleNameLabel:stopAllActions()
+		self.roleNameLabel:runs({
+			cc.ScaleTo:create(0.1, 1.5),
+			cc.ScaleTo:create(0.1, 1)
+		})
+		--- END OF BLOCK #6 ---
+
+		slot1 = if g_data.client:checkLastTime("queryOther", 1)
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 59-90, warpins: 1 ---
+		g_data.client:setLastTime("queryOther", true)
+		net.send({
+			CM_QUERYUSERSTATE,
+			recog = role.roleid,
+			param = role.x,
+			tag = role.y
+		})
+		net.send({
+			CM_QUERY_TITLE,
+			0,
+			recog = role.roleid,
+			param = role.x,
+			tag = role.y
+		})
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #8 91-96, warpins: 1 ---
+		main_scene.ui:tip("你查看太快了!!!")
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 97-97, warpins: 2 ---
+		return 
+		--- END OF BLOCK #9 ---
+
+
+
+	end)
+
+	self.exLabels = {}
+	self.target = {}
+	self.skill = {}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+lock.stop = function (self)
+	--- BLOCK #0 1-23, warpins: 1 ---
+	self.skill = {}
+	self.target = {}
+	self.isSelect = nil
+
+	self.setActionType(self)
+	self.setRoleName(self)
+	main_scene.ui.console.skills:select()
+	self.uptEnable(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+lock.startSelect = function (self)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	self.isSelect = true
+
+	self.setActionType(self, "lock")
+	self.setRoleName(self, "<请选择锁定目标>")
+	self.uptEnable(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+lock.cancelSelect = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.target.select = nil
+	self.isSelect = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+lock.setSelectTarget = function (self, role)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.target.select == role.roleid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	main_scene.ui:tip("目标已锁定，请选择攻击方式")
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #2 13-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not self.isSelect then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-18, warpins: 1 ---
+	self.startSelect(self)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-29, warpins: 2 ---
+	self.target.select = role.roleid
+
+	self.setRoleName(self, self.getRoleName(self, role), role.roleid)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 30-36, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if main_scene.ui.console.controller.quickGroup then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 37-39, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if role.__cname == "hero" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 40-55, warpins: 1 ---
+	g_data.client:setLastTime("group", true)
+
+	slot2 = net.send
+	slot3 = {}
+	--- END OF BLOCK #7 ---
+
+	if #g_data.player.groupMembers == 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 56-58, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot4 = if not CM_CREATEGROUP then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 59-59, warpins: 2 ---
+	slot4 = CM_ADDGROUPMEMBER
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 60-67, warpins: 2 ---
+	slot3[1] = slot4
+
+	slot2(slot3, {
+		role.info:getName()
+	})
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 68-68, warpins: 3 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+lock.setAttackTarget = function (self, role)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	slot2 = self.target
+	--- END OF BLOCK #0 ---
+
+	slot3 = if role then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	slot3 = role.roleid
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-9, warpins: 2 ---
+	slot2.attack = slot3
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if self.target.attack then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #3 10-26, warpins: 1 ---
+	self.setActionType(self, "attack")
+	self.setRoleName(self, self.getRoleName(self, role), role.roleid)
+	--- END OF BLOCK #3 ---
+
+	if role.getRace(role)
+	 == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #4 27-33, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if g_data.player:getHasGuild()
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #5 34-39, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if g_data.setting.base.guild then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 40-48, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if g_data.client:checkLastTime("guild", 10)
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 49-82, warpins: 1 ---
+	g_data.client:setLastTime("guild", true)
+
+	local player = main_scene.ground.player
+	local str = "!~我正在[" .. g_data.map.mapTitle .. "]坐标:[" .. player.x .. "," .. player.y .. "]与[" .. self.getRoleName(self, role) .. "]进行战斗"
+
+	net.send({
+		CM_SAY
+	}, {
+		str
+	})
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #8 83-86, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if not self.skill.enable then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 87-89, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot2 = if not self.isSelect then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 90-95, warpins: 1 ---
+	self.setActionType(self)
+	self.setRoleName(self)
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 96-99, warpins: 8 ---
+	self.uptEnable(self)
+
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+lock.setSkillTarget = function (self, role)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.target.skill = role.roleid
+
+	self.setRoleName(self, self.getRoleName(self, role), role.roleid)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+lock.useSkill = function (self, data, config)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	self.skill.enable = true
+	self.skill.data = data
+	self.skill.config = config
+	local skillID = data.get(data, "magicId")
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if checkExist("area", config.type)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 18-19, warpins: 1 ---
+	slot4 = "mutil"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 20-20, warpins: 1 ---
+	local skilltype = "single"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 21-31, warpins: 2 ---
+	self.setActionType(self, "skill", skillID, skilltype)
+
+	slot5 = self.target
+	--- END OF BLOCK #3 ---
+
+	slot6 = if not self.target.skill then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 32-35, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot6 = if not self.target.select then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 36-37, warpins: 1 ---
+	slot6 = self.target.attack
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 38-42, warpins: 3 ---
+	slot5.skill = slot6
+	--- END OF BLOCK #6 ---
+
+	slot5 = if self.target.skill then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #7 43-52, warpins: 1 ---
+	local role = main_scene.ground.map:findRole(self.target.skill)
+
+	--- END OF BLOCK #7 ---
+
+	slot5 = if role then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 53-61, warpins: 1 ---
+	self.setRoleName(self, self.getRoleName(self, role), role.roleid)
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #9 62-66, warpins: 1 ---
+	self.setRoleName(self, "<目标失去>")
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 67-70, warpins: 1 ---
+	self.setRoleName(self, "<请选择技能目标>")
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 71-74, warpins: 3 ---
+	self.uptEnable(self)
+
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+lock.skillTargetDie = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.target.skill = nil
+
+	self.setRoleName(self, "<请选择技能目标>")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+lock.isEnable = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.target.attack then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not self.skill.enable then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 1 ---
+	slot1 = self.isSelect
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-10, warpins: 3 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+lock.uptEnable = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local b = self.isEnable(self)
+
+	self.bgSpr:stopAllActions()
+	--- END OF BLOCK #0 ---
+
+	slot1 = if b then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	self.bgSpr:rotateTo(0.15, 90)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 17-22, warpins: 1 ---
+	self.bgSpr:rotateTo(0.15, 0)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 23-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+lock.setActionType = function (self, type, skillid, skilltype)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not type then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-15, warpins: 1 ---
+	self.lockSkillText:hide()
+	self.lockSpr:setTex(res.gettex2("pic/console/lock.png"))
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #2 16-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type == "attack" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-30, warpins: 1 ---
+	self.lockSkillText:hide()
+	self.lockSpr:setTex(res.gettex2("pic/console/skill_base-icons/attack.png"))
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #4 31-32, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if type == "lock" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 33-45, warpins: 1 ---
+	self.lockSkillText:hide()
+	self.lockSpr:setTex(res.gettex2("pic/console/skill_base-icons/lock.png"))
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #6 46-47, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if type == "skill" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 48-73, warpins: 1 ---
+	self.lockSkillText:show()
+	self.lockSkillText:setTex(res.gettex2("pic/console/lock-" .. skilltype .. ".png"))
+	self.lockSpr:setTex(res.gettex2("pic/console/skill-icons/" .. skillid .. ".png"))
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 74-74, warpins: 5 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+lock.setRoleName = function (self, t, roleid)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.roleNameLabel.roleid = roleid
+	slot4 = self
+	slot3 = self.setLabelText
+	slot5 = self.roleNameLabel
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not t then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	slot6 = ""
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-10, warpins: 2 ---
+	slot3(slot4, slot5, slot6)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+lock.getRoleName = function (self, role)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if role.info:getName()
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	return role.info:getName()
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if role.__cname == "hero" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	return "[人物]"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 18-19, warpins: 1 ---
+	return "[怪物]"
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 20-20, warpins: 3 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+lock.setLabelText = function (self, label, text)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	label.setString(label, text)
+	--- END OF BLOCK #0 ---
+
+	if label.getw(label)
+	 < 80 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-24, warpins: 1 ---
+	label.pos(label, labelx + (label.getw(label) - 80)/2, label.getPositionY(label))
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 25-31, warpins: 1 ---
+	label.pos(label, labelx, label.getPositionY(label))
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 32-32, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+return lock
+--- END OF BLOCK #0 ---
+
+
+
