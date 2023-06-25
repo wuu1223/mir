@@ -1,0 +1,97 @@
+--- BLOCK #0 1-29, warpins: 1 ---
+local cmds = {}
+cmds.all = {
+	{
+		"@千里传音",
+		"@传"
+	},
+	{
+		"@传送",
+		"@sdgo",
+		true,
+		"请输入坐标, 注意中间有空格, 例如:333 333"
+	},
+	{
+		"@天地合一",
+		"@天地合一"
+	},
+	{
+		"@允许天地合一",
+		"@允许天地合一"
+	},
+	{
+		"@允许求婚",
+		"@允许求婚"
+	},
+	{
+		"@拒绝求婚",
+		"@拒绝求婚"
+	},
+	{
+		"@允许收徒",
+		"@允许收徒"
+	},
+	{
+		"@拒绝收徒",
+		"@拒绝收徒"
+	},
+	{
+		"@加入门派",
+		"@加入门派"
+	},
+	{
+		"@退出门派",
+		"@退出门派"
+	}
+}
+cmds.custom = {
+	卡位恢复 = "@resetpoint",
+	回城复活 = "@relive"
+}
+cmds.get = function (key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(cmds.all)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v[1] == key then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	return v[2]
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-12, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 13-13, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return cmds
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,92 @@
+--- BLOCK #0 1-12, warpins: 1 ---
+local stall = import(".stall")
+local stallOther = clone(stall)
+stallOther.isOther = true
+stallOther.uptDelItem = function (self, msg)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.info:get("makeIndex")
+	 == tonumber(msg.recog)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 15-21, warpins: 1 ---
+	v.cnt = msg.param
+
+	--- END OF BLOCK #2 ---
+
+	slot7 = if v.info.isPileUp()
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 22-27, warpins: 1 ---
+	v.info:set("dura", msg.param)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-30, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if msg.param == 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 31-33, warpins: 1 ---
+	self.items[k] = nil
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 34-36, warpins: 2 ---
+	return k, v
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 37-38, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #8 39-39, warpins: 1 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+
+return stallOther
+--- END OF BLOCK #0 ---
+
+
+

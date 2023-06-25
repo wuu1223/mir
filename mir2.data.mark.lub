@@ -1,0 +1,417 @@
+--- BLOCK #0 1-25, warpins: 1 ---
+local mark = {
+	playerName = "",
+	group = 2,
+	chat = 4,
+	near = 1,
+	maxCount = 30,
+	friend = 3,
+	guild = 5
+}
+mark.memList = {}
+mark.check = function (self, name, priority, reset)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if name == self.playerName then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	return true
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for key, value in pairs(self.memList)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #3 10-12, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if value.tar == name then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 13-14, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot3 = if reset then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 15-17, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if priority <= value.pri then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 18-20, warpins: 1 ---
+	return true
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #7 21-28, warpins: 1 ---
+	table.remove(self.memList, key)
+
+	return false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 29-30, warpins: 1 ---
+	return true
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 31-32, warpins: 5 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #10 33-34, warpins: 1 ---
+	return false
+	--- END OF BLOCK #10 ---
+
+
+
+end
+mark.removeWithType = function (self, type)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i=#self.memList, 1, -1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 6-10, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	if self.memList[i].src == type then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-15, warpins: 1 ---
+	table.remove(self.memList, i)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-16, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 17-17, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+mark.reorder = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local function _sort(a, b)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if b.pri >= a.pri then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 7-7, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 8-8, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	table.sort(self.memList, _sort)
+	--- END OF BLOCK #0 ---
+
+	if self.maxCount < #self.memList then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 12-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i=#self.memList, self.maxCount, -1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #3
+
+	--- BLOCK #2 17-22, warpins: 2 ---
+	table.remove(self.memList, i)
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #3 23-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+mark.getNames = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local data = {}
+
+	--- END OF BLOCK #0 ---
+
+	for key, value in pairs(self.memList)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	data[#data + 1] = value.tar
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	return data
+	--- END OF BLOCK #3 ---
+
+
+
+end
+mark.addMem = function (self, name, priority, source, reset)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(name)
+	 == "table" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(name)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 10-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type(v)
+	 == "string" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 15-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot10 = if not self.check(self, v, priority, reset)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-31, warpins: 1 ---
+	self.memList[#self.memList + 1] = {
+		tar = v,
+		pri = priority,
+		src = source
+	}
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 32-33, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 34-34, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #7 35-39, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if type(name)
+	 == "string" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 40-47, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot5 = if not self.check(self, name, priority, reset)
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 48-56, warpins: 1 ---
+	self.memList[#self.memList + 1] = {
+		tar = name,
+		pri = priority,
+		src = source
+	}
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 57-60, warpins: 4 ---
+	self.reorder(self)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+mark.addNear = function (self, name)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.removeWithType(self, "near")
+	self.addMem(self, name, self.near, "near", true)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mark.addGroup = function (self, name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.addMem(self, name, self.group, "group", true)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mark.addFriend = function (self, name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.addMem(self, name, self.friend, "friend", true)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mark.addChat = function (self, name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.addMem(self, name, self.chat, "chat", true)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mark.addGuild = function (self, name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.addMem(self, name, self.guild, "guild", true)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return mark
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,361 @@
+--- BLOCK #0 1-19, warpins: 1 ---
+local map = {
+	mapTitle = "",
+	mapState = 0
+}
+map.mapReplace = {}
+map.safezones = {}
+map.setSafeZone = function (self, count, buf, bufLen)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.safezones = {}
+	--- END OF BLOCK #0 ---
+
+	for i=1, count, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #1 7-24, warpins: 2 ---
+	local point = nil
+	point, buf, bufLen = net.record("TStartPoint", buf, bufLen)
+	local points = self.safezones[point.get(point, "startMap")]
+	--- END OF BLOCK #1 ---
+
+	slot9 = if not points then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 25-31, warpins: 1 ---
+	points = {}
+	self.safezones[point.get(point, "startMap")] = points
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 32-50, warpins: 2 ---
+	slot10 = #points + 1
+	slot11 = {
+		x = point.get(point, "x"),
+		y = point.get(point, "y")
+	}
+
+	--- END OF BLOCK #3 ---
+
+	if point.get(point, "rang")
+
+	 == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 51-52, warpins: 1 ---
+	slot12 = 9
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 53-56, warpins: 1 ---
+	slot12 = point.get(point, "rang")
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 57-59, warpins: 2 ---
+	slot11.rang = slot12
+	points[slot10] = slot11
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 60-60, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+map.isInSafeZone = function (self, mapid, x, y)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if ycFunction:band(cAreaStateSafe, self.mapState)
+
+	 ~= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-10, warpins: 1 ---
+	return true
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-14, warpins: 2 ---
+	local points = self.safezones[mapid]
+
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not points then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-19, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(points)
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #5 20-27, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if math.abs(v.x - x)
+	 <= v.rang then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 28-35, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if math.abs(v.y - y)
+
+	 <= v.rang then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 36-37, warpins: 1 ---
+	return true
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 38-39, warpins: 4 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #9 40-40, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+map.isSeeSafeZoneEdge = function (self, mapid, x, y, w, h)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local points = self.safezones[mapid]
+
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not points then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-10, warpins: 2 ---
+	local ret = nil
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(points)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #3 11-19, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if math.abs(v.x - x)
+	 <= v.rang + w then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 20-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if math.abs(v.y - y)
+
+	 <= v.rang + h then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 29-30, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot7 = if not ret then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 31-31, warpins: 1 ---
+	ret = {}
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 32-34, warpins: 2 ---
+	ret[#ret + 1] = v
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 35-36, warpins: 4 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #9 37-37, warpins: 1 ---
+	return ret
+	--- END OF BLOCK #9 ---
+
+
+
+end
+map.setMapState = function (self, state)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.mapState = state
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+map.setMapTitle = function (self, title)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.mapTitle = title
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+map.setMapReplaceTable = function (self, buf, bufLen)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.mapReplace = {}
+	slot3 = net.strs
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not buf then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	slot4 = ""
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-13, warpins: 2 ---
+	local strs = slot3(slot4, ";")
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(strs)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 14-21, warpins: 1 ---
+	local arr = string.split(v, ",")
+	--- END OF BLOCK #3 ---
+
+	if #arr == 2 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 22-31, warpins: 1 ---
+	self.mapReplace[string.trim(arr[1])] = string.trim(arr[2])
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 32-33, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 34-34, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+return map
+--- END OF BLOCK #0 ---
+
+
+

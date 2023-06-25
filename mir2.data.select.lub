@@ -1,0 +1,134 @@
+--- BLOCK #0 1-11, warpins: 1 ---
+local selectRole = {
+	selectIndex = 1
+}
+selectRole.roles = {}
+selectRole.getCurName = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.selectIndex <= #self.roles then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	return self.roles[self.selectIndex].name
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-12, warpins: 2 ---
+	return ""
+	--- END OF BLOCK #2 ---
+
+
+
+end
+selectRole.setSelectIndex = function (self, idx)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.selectIndex = idx
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+selectRole.receiveChrs = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	self.roles = {}
+	local count = msg.param
+	local info = getRecord("TMirCharInfo")
+	local infoEx = getRecord("TMirCharinfoEx")
+
+	--- END OF BLOCK #0 ---
+
+	if infoEx.size(infoEx)
+
+	*count <= bufLen then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 16-17, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if not infoEx then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 18-18, warpins: 2 ---
+	local temp = info
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 19-22, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	for i=1, count, 1
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #4 23-41, warpins: 2 ---
+	_, buf, bufLen = net.record(temp, buf, bufLen)
+	local level = temp.get(temp, "level")
+
+	--- END OF BLOCK #4 ---
+
+	if temp.get(temp, "hair")
+
+	 ~= 1 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 42-57, warpins: 1 ---
+	level = ycFunction:bor(level, ycFunction:lshift(temp.get(temp, "hair") - 1, 8))
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 58-85, warpins: 2 ---
+	self.roles[#self.roles + 1] = {
+		name = temp.get(temp, "name"),
+		job = temp.get(temp, "job"),
+		hair = temp.get(temp, "hair"),
+		level = level,
+		sex = temp.get(temp, "sex")
+	}
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 86-95, warpins: 1 ---
+	self.selectIndex = msg.tag + 1
+
+	cache.saveLastPlayerName(self.getCurName(self))
+
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+
+return selectRole
+--- END OF BLOCK #0 ---
+
+
+

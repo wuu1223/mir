@@ -1,0 +1,1007 @@
+--- BLOCK #0 1-42, warpins: 1 ---
+local mail = {}
+mail.sys = {}
+mail.sell = {}
+mail.offtm = {}
+mail.msg = {}
+mail.infos = {
+	sys = {},
+	sell = {}
+}
+mail[1] = unreadCnt
+mail[2] = handler
+
+local function sort(a, b)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local ret = true
+	--- END OF BLOCK #0 ---
+
+	if a.mailState ~= b.mailState then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if a.mailState >= b.mailState then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	ret = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	ret = true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-13, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #5 14-17, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if a.attachState ~= b.attachState then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 18-21, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if a.attachState >= b.attachState then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 22-23, warpins: 1 ---
+	ret = false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 24-24, warpins: 1 ---
+	ret = true
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 25-25, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #10 26-29, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if a.time ~= b.time then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #11 30-33, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if b.time >= a.time then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 34-35, warpins: 1 ---
+	ret = false
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 36-36, warpins: 1 ---
+	ret = true
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 37-37, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 38-38, warpins: 1 ---
+	ret = false
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 39-39, warpins: 4 ---
+	return ret
+	--- END OF BLOCK #16 ---
+
+
+
+end
+
+mail.cfg = function (self)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	return {
+		sell = 4,
+		sys = 1,
+		offtm = 5,
+		msg = 6
+	}
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mail.tag2Var = function (self, key)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not key then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	key = 1
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for k, v in pairs(self.cfg(self))
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #3 10-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if type(key)
+
+	 == "string" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 15-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if key == k then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-18, warpins: 1 ---
+	return v
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #6 19-23, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if type(key)
+
+	 == "number" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 24-25, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if key == v then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 26-26, warpins: 1 ---
+	return key
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 27-28, warpins: 5 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #10 29-33, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if type(key)
+	 ~= "string" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 34-38, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if type(key)
+
+	 ~= "number" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 39-41, warpins: 1 ---
+	return tags.sys
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 42-42, warpins: 3 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+mail.set = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local cfg = self.cfg(self)
+	local cnt = msg.param
+	--- END OF BLOCK #0 ---
+
+	if cfg.sys == msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 9-15, warpins: 1 ---
+	self.sys = {}
+	local data = nil
+	--- END OF BLOCK #1 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #3
+
+	--- BLOCK #2 16-34, warpins: 2 ---
+	data, buf, bufLen = net.record("TMailListInfo", buf, bufLen)
+	data.time = TDateTimeToUnixDate(data.time)
+	self.sys[#self.sys + 1] = data
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #3 35-40, warpins: 1 ---
+	table.sort(self.sys, sort)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #4 41-44, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if cfg.sell == msg.tag then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 45-51, warpins: 1 ---
+	self.sell = {}
+	local data = nil
+	--- END OF BLOCK #5 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #6 52-70, warpins: 2 ---
+	data, buf, bufLen = net.record("TMailListInfo", buf, bufLen)
+	data.time = TDateTimeToUnixDate(data.time)
+	self.sell[#self.sell + 1] = data
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #7 71-74, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #9
+
+	--- BLOCK #8 75-86, warpins: 2 ---
+	self.sell[i].itemEx, buf, bufLen = net.record("TClientItem", buf, bufLen)
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #9 87-92, warpins: 1 ---
+	table.sort(self.sell, sort)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #10 93-96, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if cfg.offtm == msg.tag then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #11 97-103, warpins: 1 ---
+	self.offtm = {}
+	local data = nil
+	--- END OF BLOCK #11 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #17
+
+	--- BLOCK #12 104-119, warpins: 2 ---
+	data, buf, bufLen = net.record("TMailInfo", buf, bufLen)
+	data.items = {}
+	local item = nil
+	--- END OF BLOCK #12 ---
+
+	for i=1, data.cnt, 1
+	LOOP BLOCK #13
+	GO OUT TO BLOCK #14
+
+	--- BLOCK #13 120-134, warpins: 2 ---
+	item, buf, bufLen = net.record("TClientItem", buf, bufLen)
+	data.items[#data.items + 1] = item
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #14 135-138, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if 0 < data.cnt then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 139-143, warpins: 1 ---
+	self.offtm[#self.offtm + 1] = data
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 144-144, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #17 145-145, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #18 146-152, warpins: 1 ---
+	self.msg = {}
+	local data = nil
+	--- END OF BLOCK #18 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #19
+	GO OUT TO BLOCK #20
+
+	--- BLOCK #19 153-167, warpins: 2 ---
+	data, buf, bufLen = net.record("TMailMsg", buf, bufLen)
+	self.msg[#self.msg + 1] = data
+
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #20 168-168, warpins: 4 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+mail.parseMail = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	local data = nil
+	data, buf, bufLen = net.record("TMailInfo", buf, bufLen)
+	data.items = {}
+	--- END OF BLOCK #0 ---
+
+	for i=1, data.cnt, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 17-32, warpins: 2 ---
+	item, buf, bufLen = net.record("TClientItem", buf, bufLen)
+	data.items[#data.items + 1] = item
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 33-37, warpins: 1 ---
+	local from = nil
+
+	--- END OF BLOCK #2 ---
+
+	for _, v in ipairs(self.sys)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 38-41, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if data.id == v.id then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 42-43, warpins: 1 ---
+	from = "sys"
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 44-45, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 46-47, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot5 = if not from then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 48-51, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for _, v in ipairs(self.sell)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #8 52-55, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if data.id == v.id then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 56-57, warpins: 1 ---
+	from = "sell"
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 58-59, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #11 60-61, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	slot5 = if from then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 62-65, warpins: 1 ---
+	self.infos[from][data.id] = data
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 66-68, warpins: 2 ---
+	return data.id, from
+	--- END OF BLOCK #13 ---
+
+
+
+end
+mail.attach = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not g_data.client.mailId then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-14, warpins: 2 ---
+	local id = g_data.client.mailId
+	local from = nil
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.sys)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if id == v.id then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-21, warpins: 1 ---
+	v.attachState = 2
+	from = "sys"
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 22-23, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 24-28, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if self.infos.sys[id] then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 29-33, warpins: 1 ---
+	self.infos.sys[id].attachState = 2
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 34-35, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if not from then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #9 36-39, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	for i, v in ipairs(self.sell)
+
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #10 40-42, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if id == v.id then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 43-46, warpins: 1 ---
+	v.attachState = 2
+	from = "sell"
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 47-48, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #13 49-53, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot3 = if self.infos.sell[id] then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 54-58, warpins: 1 ---
+	self.infos.sell[id].attachState = 2
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 59-61, warpins: 3 ---
+	return id, from
+	--- END OF BLOCK #15 ---
+
+
+
+end
+mail.del = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not g_data.client.mailId then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-14, warpins: 2 ---
+	local id = g_data.client.mailId
+	local next, from = nil
+	--- END OF BLOCK #2 ---
+
+	slot4 = if self.infos.sys then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #3 15-19, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if self.infos.sys[id] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #4 20-28, warpins: 1 ---
+	self.infos.sys[id] = nil
+	from = "sys"
+
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(self.sys)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #5 29-31, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if id == v.id then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 32-35, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if i <= #self.sys then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 36-40, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot9 = if self.sys[i + 1] then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 41-46, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if not self.sys[i + 1].id then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 47-47, warpins: 3 ---
+	next = nil
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 48-53, warpins: 2 ---
+	table.remove(self.sys, i)
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 54-55, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #12 56-57, warpins: 4 ---
+	--- END OF BLOCK #12 ---
+
+	slot3 = if not from then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #13 58-61, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot4 = if self.infos.sell then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #14 62-66, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot4 = if self.infos.sell[id] then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #15 67-75, warpins: 1 ---
+	self.infos.sell[id] = nil
+	from = "sell"
+
+	--- END OF BLOCK #15 ---
+
+	for i, v in ipairs(self.sell)
+
+	LOOP BLOCK #16
+	GO OUT TO BLOCK #19
+
+
+	--- BLOCK #16 76-78, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if id == v.id then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 79-84, warpins: 1 ---
+	table.remove(self.sell, i)
+
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #18 85-86, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #19 87-90, warpins: 5 ---
+	return id, next, from
+	--- END OF BLOCK #19 ---
+
+
+
+end
+mail.attachOfftm = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.offtm = {}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mail.setUnreadMailCnt = function (self, cnt)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.unreadCnt = cnt
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mail.cleanup = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.handler then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.handler)
+
+	self.handler = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+mail.startSchedule = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.handler = scheduler.scheduleGlobal(function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		net.send({
+			CM_SYSTEM_NEWMAIL
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 1800)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return mail
+--- END OF BLOCK #0 ---
+
+
+

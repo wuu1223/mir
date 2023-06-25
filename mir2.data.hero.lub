@@ -1,0 +1,474 @@
+--- BLOCK #0 1-49, warpins: 1 ---
+local hero = {
+	fealty = 0,
+	unionState = 0,
+	name = "",
+	heroType = 0,
+	bNoTarget = false,
+	roleid = 0,
+	unionProgress = 0,
+	glory = 0,
+	bagSize = 0,
+	sex = 0,
+	heroRank = 0
+}
+hero.ability = getRecord("TAbility")
+hero.ability2 = getRecord("TSub2Ability")
+hero.ability3 = getRecord("TSub3Ability")
+hero.magicList = {}
+hero.setRoleID = function (self, roleid)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.roleid = roleid
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setNoTarget = function (self, b)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.bNoTarget = b
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setName = function (self, name, heroType, heroRank)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.name = name
+	self.heroType = heroType
+	self.heroRank = heroRank
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setSex = function (self, sex)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.sex = sex
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setWineExp = function (self, cur, next)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.wineCurExp = cur
+	self.wineNextExp = next
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setdrinkDrugStatus = function (self, cur, next)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.drinkDrugStatusValue = cur
+	self.drinkDrugStatusValueNext = next
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setdrinkStatus = function (self, cur, next)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.drinkStatusValue = cur
+	self.drinkStatusMaxValue = next
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setAbility = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	self.job = Byte(msg.param)
+	local tmpAll = getRecord("TAllAbility")
+
+	net.record(tmpAll, buf, bufLen)
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.ability)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 18-26, warpins: 1 ---
+	self.ability:set(k, tmpAll.get(tmpAll, k))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-28, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 29-32, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(self.ability2)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 33-41, warpins: 1 ---
+	self.ability2:set(k, tmpAll.get(tmpAll, k))
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 42-43, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 44-47, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(self.ability3)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 48-56, warpins: 1 ---
+	self.ability3:set(k, tmpAll.get(tmpAll, k))
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 57-58, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 59-59, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+hero.setBagSize = function (self, bagSize)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.bagSize = bagSize
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.setGloryFealty = function (self, glory, fealty)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.glory = glory
+	self.fealty = fealty
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.getJobStr = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.job == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	return "战士"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #2 7-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if self.job == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-12, warpins: 1 ---
+	return "法师"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 13-15, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if self.job == 2 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 16-17, warpins: 1 ---
+	return "道士"
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 18-19, warpins: 4 ---
+	return "刺客"
+	--- END OF BLOCK #6 ---
+
+
+
+end
+hero.setMagicList = function (self, buf, bufLen)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.magicList = {}
+	local size = getRecordSize("TNewClientMagic")
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 6-7, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	if size <= bufLen then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-22, warpins: 1 ---
+	self.magicList[#self.magicList + 1], buf, bufLen = net.record("TNewClientMagic", buf, bufLen)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 23-23, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+hero.addMagic = function (self, buf, bufLen)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if getRecordSize("TNewClientMagic")
+
+	 <= bufLen then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-16, warpins: 1 ---
+	self.magicList[#self.magicList + 1] = net.record("TNewClientMagic", buf, bufLen)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+hero.setMagicExp = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local magic = nil
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.magicList)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "magicId")
+
+	 == msg.recog then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-14, warpins: 1 ---
+	magic = v
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 15-16, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 17-18, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not magic then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-19, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 20-24, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if bufLen < getRecordSize("TClientSkillExp")
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 25-38, warpins: 1 ---
+	magic.set(magic, "level", msg.param)
+	magic.set(magic, "curTrain", MakeLong(msg.tag, msg.series))
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 39-67, warpins: 1 ---
+	local record = getRecord("TClientSkillExp", buf, bufLen)
+
+	magic.set(magic, "level", record.get(record, "skillLv"))
+	magic.set(magic, "curTrain", record.get(record, "curExp"))
+	magic.set(magic, "maxTrain", record.get(record, "nextExp"))
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 68-68, warpins: 2 ---
+	return magic
+	--- END OF BLOCK #9 ---
+
+
+
+end
+hero.getMagic = function (self, magicID)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.magicList)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "magicId")
+
+	 == magicID then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 1 ---
+	return v
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+hero.setUnionState = function (self, progress, state)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.unionProgress = progress
+	self.unionState = state
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return hero
+--- END OF BLOCK #0 ---
+
+
+

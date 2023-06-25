@@ -1,0 +1,1158 @@
+--- BLOCK #0 1-33, warpins: 1 ---
+local chat = {}
+chat.msgs = {}
+chat.style = {
+	channel = "附近",
+	target = "",
+	input = "keyboard"
+}
+chat.addMsg = function (self, data, color, bgColor, fromClient, user, ident)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	local msg = {}
+	msg.data = data
+	msg.color = color
+	msg.bgColor = bgColor
+	msg.fromClient = fromClient
+	msg.ident = ident
+	msg.channel = self.getChannel(self, msg)
+	msg.target = self.getUser(self, msg.data, msg.channel)
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not user then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 20-20, warpins: 1 ---
+	slot8 = msg.target
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-31, warpins: 2 ---
+	msg.user = slot8
+	self.msgs[#self.msgs + 1] = msg
+
+	--- END OF BLOCK #2 ---
+
+	if 50 < #self.msgs then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 32-36, warpins: 1 ---
+	table.remove(self.msgs, 1)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 37-37, warpins: 2 ---
+	return msg
+	--- END OF BLOCK #4 ---
+
+
+
+end
+chat.getUser = function (self, data, channel)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local text = data[1]
+	--- END OF BLOCK #0 ---
+
+	if channel ~= "附近" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if channel ~= "行会" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if channel == "千里传音" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 8-14, warpins: 3 ---
+	local pos = string.find(text, ":")
+	--- END OF BLOCK #3 ---
+
+	slot4 = if pos then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #4 15-28, warpins: 1 ---
+	local name = string.sub(text, 1, pos - 1)
+
+	g_data.mark:addChat(name)
+
+	return name
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #5 29-30, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if channel == "私聊" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 31-40, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if string.byte(text)
+	 == string.byte("/")
+
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 41-47, warpins: 1 ---
+	local pos = string.find(text, " ")
+	--- END OF BLOCK #7 ---
+
+	slot4 = if pos then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #8 48-61, warpins: 1 ---
+	local name = string.sub(text, 2, pos - 1)
+
+	g_data.mark:addChat(name)
+
+	return name
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #9 62-68, warpins: 1 ---
+	local pos = string.find(text, "%[")
+
+	--- END OF BLOCK #9 ---
+
+	slot4 = if pos then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #10 69-75, warpins: 1 ---
+	return string.sub(text, 1, pos - 1)
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #11 76-77, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if channel == "喊话" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #12 78-88, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if string.byte(text, 1)
+	 == string.byte("(")
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #13 89-99, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if string.byte(text, 2)
+	 == string.byte("!")
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #14 100-110, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if string.byte(text, 3)
+	 == string.byte(")")
+
+	 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #15 111-117, warpins: 1 ---
+	local pos = string.find(text, ":")
+	--- END OF BLOCK #15 ---
+
+	slot4 = if pos then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #16 118-131, warpins: 1 ---
+	local name = string.sub(text, 4, pos - 1)
+
+	g_data.mark:addChat(name)
+
+	return name
+
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #17 132-133, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if channel == "组队" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #18 134-145, warpins: 1 ---
+	local pos1 = string.find(text, "-")
+	local pos2 = string.find(text, ":")
+	--- END OF BLOCK #18 ---
+
+	slot4 = if pos1 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #19 146-147, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	slot5 = if pos2 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #20 148-149, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	if pos1 < pos2 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #21 150-163, warpins: 1 ---
+	local name = string.sub(text, pos1 + 1, pos2 - 1)
+
+	g_data.mark:addChat(name)
+
+	return name
+
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #22 164-165, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if channel == "系统" then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #23 166-172, warpins: 1 ---
+	local pos = string.find(text, ":")
+
+	--- END OF BLOCK #23 ---
+
+	slot4 = if pos then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 173-178, warpins: 1 ---
+	return string.sub(text, 1, pos - 1)
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 179-180, warpins: 18 ---
+	return ""
+	--- END OF BLOCK #25 ---
+
+
+
+end
+chat.getChannel = function (self, msg)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if SM_HEAR == msg.ident then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	return "附近"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if SM_WHISPER == msg.ident then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	return "私聊"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #4 15-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if SM_CRY == msg.ident then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-21, warpins: 1 ---
+	return "喊话"
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #6 22-25, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if SM_GUILDMESSAGE == msg.ident then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 26-28, warpins: 1 ---
+	return "行会"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 29-32, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if SM_CORPSMESSAGE == msg.ident then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 33-34, warpins: 1 ---
+	return "战队"
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 35-39, warpins: 6 ---
+	local text = msg.data[1]
+
+	--- END OF BLOCK #10 ---
+
+	if msg.color == 180 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #11 40-42, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if msg.bgColor == 255 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 43-53, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if string.byte(text, 1)
+	 == string.byte("/")
+
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #13 54-56, warpins: 1 ---
+	return "私聊"
+
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #14 57-59, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	if msg.color == 196 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #15 60-62, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if msg.bgColor == 255 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #16 63-73, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if string.byte(text, 1)
+	 == string.byte("-")
+
+	 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 74-75, warpins: 1 ---
+	return "组队"
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 76-77, warpins: 6 ---
+	return "系统"
+	--- END OF BLOCK #18 ---
+
+
+
+end
+chat.getMsgs = function (self, name, maxLine)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local ret = {}
+	--- END OF BLOCK #0 ---
+
+	for i=#self.msgs, 1, -1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #12
+
+	--- BLOCK #1 7-13, warpins: 2 ---
+	local msg = self.msgs[i]
+
+	--- END OF BLOCK #1 ---
+
+	if type(name)
+	 == "string" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 14-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if name ~= "全部" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if msg.channel == name then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 19-25, warpins: 2 ---
+	table.insert(ret, 1, msg)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #5 26-33, warpins: 1 ---
+	local channel = self.getChannel(self, msg)
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(name)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #6 34-35, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v == channel then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 36-42, warpins: 1 ---
+	table.insert(ret, 1, msg)
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 43-44, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #9 45-47, warpins: 4 ---
+	--- END OF BLOCK #9 ---
+
+	if maxLine <= #ret then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 48-48, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 49-49, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #12 50-50, warpins: 2 ---
+	return ret
+	--- END OF BLOCK #12 ---
+
+
+
+end
+chat.getMsgWithMsgID = function (self, msgID, type)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.msgs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i2, v2 in ipairs(v.data)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v2.type == type then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v2.msgID == msgID then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-15, warpins: 1 ---
+	return v
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 16-17, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 18-19, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 20-20, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+chat.uptVoiceMsgState = function (self, msgID, state, readed)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.msgs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i2, v2 in ipairs(v.data)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v2.type == "voice" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v2.msgID == msgID then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 15-18, warpins: 1 ---
+	v2.state = state
+	--- END OF BLOCK #4 ---
+
+	slot14 = if not v2.readed then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-19, warpins: 1 ---
+	slot14 = readed
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 20-21, warpins: 2 ---
+	v2.readed = slot14
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 22-23, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #8 24-25, warpins: 3 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #9 26-26, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+chat.setVoiceReaded = function (self, msg)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(msg.data)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.type == "voice" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	v.readed = true
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 11-12, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+chat.setPicLoaded = function (self, msg)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(msg.data)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.type == "pic" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	v.state = "loadOk"
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 11-12, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+chat.uptPicMsgState = function (self, msgID, state)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.msgs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i2, v2 in ipairs(v.data)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v2.type == "pic" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v2.msgID == msgID then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-16, warpins: 1 ---
+	v2.state = state
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 17-18, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 19-20, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 21-21, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+chat.uptItemMsgData = function (self, data)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.msgs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i2, v2 in ipairs(v.data)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v2.type == "item" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 12-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v2.makeIndex == data.get(data, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-21, warpins: 1 ---
+	v2.itemData = data
+
+	return true
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 22-23, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 24-25, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 26-26, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+chat.setStyle = function (self, key, value)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.style[key] = value
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chat.getSayText = function (self, str)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.style.channel == "附近" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	return str
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #2 7-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if self.style.channel == "喊话" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-15, warpins: 1 ---
+	return "!" .. str
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #4 16-19, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if self.style.channel == "私聊" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-27, warpins: 1 ---
+	return "/" .. self.style.target .. " " .. str
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #6 28-31, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if self.style.channel == "组队" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 32-36, warpins: 1 ---
+	return "!!" .. str
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #8 37-40, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if self.style.channel == "战队" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 41-45, warpins: 1 ---
+	return "!#" .. str
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #10 46-49, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if self.style.channel == "行会" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 50-54, warpins: 1 ---
+	return "!~" .. str
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #12 55-58, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if self.style.channel == "千里传音" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 59-67, warpins: 1 ---
+	return def.cmds.get("@千里传音") .. " " .. str
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 68-68, warpins: 8 ---
+	return str
+	--- END OF BLOCK #14 ---
+
+
+
+end
+chat.setShieldMask = function (self, s)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.shieldMask = s
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return chat
+--- END OF BLOCK #0 ---
+
+
+

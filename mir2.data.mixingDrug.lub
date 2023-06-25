@@ -1,0 +1,304 @@
+--- BLOCK #0 1-13, warpins: 1 ---
+local mixingDrug = {}
+mixingDrug.saveConfig = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.cfg = {}
+	local cnt = bufLen/getRecordSize("TMixingDrugConfig")
+	local item = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 12-26, warpins: 2 ---
+	item, buf, bufLen = net.record("TMixingDrugConfig", buf, bufLen)
+	self.cfg[#self.cfg + 1] = item
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 27-30, warpins: 1 ---
+	dump(self.cfg)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+mixingDrug.getConfig = function (self, id)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.cfg)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.id then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.id == tonumber(id)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-14, warpins: 1 ---
+	return v
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-16, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 17-17, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mixingDrug.set = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.lst = {}
+	local cnt = bufLen/getRecordSize("TMixingDrugListInfo")
+	local item = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 12-26, warpins: 2 ---
+	item, buf, bufLen = net.record("TMixingDrugListInfo", buf, bufLen)
+	self.lst[#self.lst + 1] = item
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 27-27, warpins: 1 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+mixingDrug.update = function (self, id, state)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.lst then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for _, v in ipairs(self.lst)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.id == id then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-13, warpins: 1 ---
+	v.state = state
+
+	return true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-15, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mixingDrug.query = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local find, state = nil
+
+	--- END OF BLOCK #0 ---
+
+	for _, v in ipairs(self.lst)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.id == msg.recog then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	find = true
+	v.state = msg.tag
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 14-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 16-17, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not find then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-22, warpins: 1 ---
+	assert(false, "[mixingDrug system] : query the id is not exist !")
+
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-29, warpins: 2 ---
+	local act = ({
+		"begin",
+		"during",
+		"ended"
+	})[msg.tag]
+	local data = {}
+	--- END OF BLOCK #6 ---
+
+	if msg.tag == 1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 30-39, warpins: 1 ---
+	data, buf, bufLen = net.record("TMixingDrugBegin", buf, bufLen)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #8 40-42, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if msg.tag == 2 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 43-52, warpins: 1 ---
+	data, buf, bufLen = net.record("TMixingDrugDuring", buf, bufLen)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #10 53-55, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if msg.tag == 3 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 56-61, warpins: 1 ---
+	data.items = {}
+	--- END OF BLOCK #11 ---
+
+	for i=1, msg.param, 1
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #13
+
+	--- BLOCK #12 62-77, warpins: 2 ---
+	local item = nil
+	item, buf, bufLen = net.record("TClientItem", buf, bufLen)
+	data.items[#data.items + 1] = item
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #13 78-90, warpins: 4 ---
+	table.merge(data, net.record("TMixingDrugLevelInfo", buf, bufLen))
+
+	return act, data
+	--- END OF BLOCK #13 ---
+
+
+
+end
+
+return mixingDrug
+--- END OF BLOCK #0 ---
+
+
+

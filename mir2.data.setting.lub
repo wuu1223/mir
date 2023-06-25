@@ -1,0 +1,600 @@
+--- BLOCK #0 1-174, warpins: 1 ---
+local setting = {}
+setting.base = {
+	touchRun = true,
+	guild = false,
+	firePeral = false,
+	lockColor = true,
+	showNameOnly = false,
+	showExpValue = 20000,
+	autoUnpack = true,
+	showExpEnable = false,
+	soundEnable = true,
+	hiBlood = false,
+	showOutHP = false,
+	levelShow = true,
+	heroShowName = true,
+	hideCorpse = false,
+	NPCShowName = true,
+	petShowName = true,
+	monShowName = true,
+	quickexit = false,
+	warningDura = true
+}
+setting.protected = {
+	role = {
+		hp = {
+			isPercent = false,
+			space = 10000,
+			value = 0,
+			uses = "随机传送卷",
+			lastTime = 0,
+			enable = false
+		},
+		mp = {
+			isPercent = false,
+			space = 10000,
+			value = 0,
+			uses = "随机传送卷",
+			lastTime = 0,
+			enable = false
+		},
+		jiu = {
+			value = 10,
+			space = 500,
+			isPercent = true,
+			lastTime = 0,
+			enable = false
+		},
+		yaojiu = {
+			value = 10,
+			space = 9000,
+			isPercent = false,
+			lastTime = 0,
+			enable = false
+		}
+	},
+	hero = {
+		hp = {
+			isPercent = false,
+			space = 10000,
+			value = 0,
+			uses = "随机传送卷",
+			lastTime = 0,
+			enable = false
+		},
+		mp = {
+			isPercent = false,
+			space = 10000,
+			value = 0,
+			uses = "随机传送卷",
+			lastTime = 0,
+			enable = false
+		},
+		jiu = {
+			value = 10,
+			space = 500,
+			isPercent = true,
+			lastTime = 0,
+			enable = false
+		},
+		yaojiu = {
+			value = 10,
+			space = 9000,
+			isPercent = false,
+			lastTime = 0,
+			enable = false
+		},
+		miss = {
+			value = 40,
+			space = 9000,
+			isPercent = false,
+			lastTime = 0,
+			enable = true
+		}
+	}
+}
+setting.drugs = {
+	roleSetting = {
+		withNumber = false,
+		withPercent = true
+	},
+	heroSetting = {
+		withNumber = false,
+		withPercent = true
+	},
+	role = {
+		percentDrug = {
+			normalHP = {
+				lastTime = 0,
+				space = 2000,
+				isPercent = true,
+				value = 0.75,
+				enable = true
+			},
+			normalMP = {
+				lastTime = 0,
+				space = 2000,
+				isPercent = true,
+				value = 0.75,
+				enable = true
+			},
+			quickHP = {
+				lastTime = 0,
+				space = 500,
+				isPercent = true,
+				value = 0.5,
+				enable = true
+			},
+			quickMP = {
+				lastTime = 0,
+				space = 500,
+				isPercent = true,
+				value = 0.25,
+				enable = true
+			}
+		},
+		numberDrug = {
+			normalHP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			},
+			normalMP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			},
+			quickHP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			},
+			quickMP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			}
+		}
+	},
+	hero = {
+		percentDrug = {
+			normalHP = {
+				lastTime = 0,
+				space = 500,
+				isPercent = true,
+				value = 0.75,
+				enable = true
+			},
+			normalMP = {
+				lastTime = 0,
+				space = 500,
+				isPercent = true,
+				value = 0.75,
+				enable = true
+			},
+			quickHP = {
+				lastTime = 0,
+				space = 500,
+				isPercent = true,
+				value = 0.5,
+				enable = true
+			},
+			quickMP = {
+				lastTime = 0,
+				space = 500,
+				isPercent = true,
+				value = 0.25,
+				enable = true
+			}
+		},
+		numberDrug = {
+			normalHP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			},
+			normalMP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			},
+			quickHP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			},
+			quickMP = {
+				value = 10,
+				space = 4000,
+				lastTime = 0,
+				enable = false
+			}
+		}
+	}
+}
+setting.autoUnpack = {
+	newbee = {
+		pack = "新手金创药包",
+		name = "新手金创药",
+		min = 0,
+		enable = true
+	},
+	hpMid = {
+		pack = "金创药（中）包",
+		name = "金创药(中量)",
+		min = 0,
+		enable = true
+	},
+	hpSmall = {
+		pack = "金创药(小)包",
+		name = "金创药(小量)",
+		min = 0,
+		enable = true
+	},
+	hpMid = {
+		pack = "金创药(中)包",
+		name = "金创药(中量)",
+		min = 0,
+		enable = true
+	},
+	hpBig = {
+		pack = "超级金创药",
+		name = "强效金创药",
+		min = 0,
+		enable = true
+	},
+	hpMidz = {
+		pack = "金创药中包(赠)",
+		name = "金创药中量(赠)",
+		min = 0,
+		enable = true
+	},
+	hpBigz = {
+		pack = "超级金创药(赠)",
+		name = "强效金创药(赠)",
+		min = 0,
+		enable = true
+	},
+	mpSmall = {
+		pack = "魔法药(小)包",
+		name = "魔法药(小量)",
+		min = 0,
+		enable = true
+	},
+	mpMid = {
+		pack = "魔法药(中)包",
+		name = "魔法药(中量)",
+		min = 0,
+		enable = true
+	},
+	mpBig = {
+		pack = "超级魔法药",
+		name = "强效魔法药",
+		min = 0,
+		enable = true
+	},
+	mpMidz = {
+		pack = "魔法药中包(赠)",
+		name = "魔法药中量(赠)",
+		min = 0,
+		enable = true
+	},
+	mpBigz = {
+		pack = "超级魔法药(赠)",
+		name = "强效魔法药(赠)",
+		min = 0,
+		enable = true
+	},
+	quick1 = {
+		pack = "强效太阳包",
+		name = "强效太阳水",
+		min = 0,
+		enable = true
+	},
+	quick2 = {
+		pack = "雪霜包",
+		name = "万年雪霜",
+		min = 0,
+		enable = true
+	},
+	quick3 = {
+		pack = "疗伤药包",
+		name = "疗伤药",
+		min = 0,
+		enable = true
+	},
+	quick4 = {
+		pack = "疗伤药包(任务)",
+		name = "疗伤药(任务)",
+		min = 0,
+		enable = true
+	},
+	reel1 = {
+		pack = "随机传送卷包",
+		name = "随机传送卷",
+		min = 0,
+		enable = true
+	},
+	reel2 = {
+		pack = "地牢逃脱卷包",
+		name = "地牢逃脱卷",
+		min = 0,
+		enable = true
+	},
+	reel3 = {
+		pack = "回城卷包",
+		name = "回城卷",
+		min = 0,
+		enable = true
+	},
+	reel4 = {
+		pack = "行会回城卷包",
+		name = "行会回城卷",
+		min = 0,
+		enable = true
+	}
+}
+setting.job = {
+	autoDun = false,
+	autoFire = false,
+	autoZhanjiashu = false,
+	autoAllSpace = false,
+	autoSword = false,
+	autoWide = true,
+	autoInvisible = false,
+	autoSpace = false,
+	autoDunHero = false,
+	autoYoulingDun = false,
+	autoSkill = {
+		enable = false,
+		space = 10
+	}
+}
+setting.autoRat = {
+	noPickUpItem = false,
+	autoPoison = false,
+	pickUpRatting = true,
+	ignoreCripple = true,
+	autoSpaceMove = {
+		space = 10,
+		use = "随机传送卷",
+		enable = false
+	},
+	autoRoar = {
+		space = 10,
+		cnt = 5,
+		enable = false
+	},
+	atkMagic = {},
+	areaMagic = {
+		cnt = 5,
+		enable = false
+	},
+	autoPet = {
+		enable = false
+	},
+	autoCure = {
+		percent = 70,
+		enable = false
+	},
+	autoCurePet = {
+		percent = 60,
+		enable = false
+	}
+}
+setting.display = {
+	showHeroOutHP = false,
+	showMonOutHP = true,
+	mapScale = 1.5
+}
+setting.cpu = {
+	speedMode = false,
+	loadMons = false,
+	normalFont = false
+}
+setting.help = {
+	count = 7,
+	looked = 0
+}
+setting.chat = {
+	alwaysTranslate = false,
+	whisperLimit = 1,
+	opens = {
+		组队 = true,
+		战队 = true
+	},
+	autoLoadVoice = {
+		enable = false
+	},
+	autoPlayVoice = {
+		私聊 = false,
+		组队 = false,
+		喊话 = false,
+		战队 = false,
+		行会 = false,
+		附近 = false
+	}
+}
+setting.item = {
+	pickUp = false,
+	hindGood = false,
+	showName = true,
+	pickOnRatting = false,
+	filt = {}
+}
+setting.other = {
+	buyNotTip = false
+}
+setting.initEnd = function ()
+	--- BLOCK #0 1-18, warpins: 1 ---
+	sound.setEnable(setting.base.soundEnable)
+
+	an.label.normal = setting.cpu.normalFont
+	local filt = setting.item.filt
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not filt.极品属性道具 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 19-20, warpins: 1 ---
+	filt.极品属性道具 = {
+		hintName = true,
+		pickUp = true,
+		isGood = true,
+		pickOnRatting = true
+	}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-30, warpins: 2 ---
+	setmetatable(filt, {
+		__index = _G.def.items.filt
+	})
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+setting.getGoodAttItemSetting = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return setting.item.filt.极品属性道具
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.resetItemFilt = function ()
+	--- BLOCK #0 1-16, warpins: 1 ---
+	setting.item.filt = {}
+
+	setmetatable(setting.item.filt, {
+		__index = _G.def.items.filt
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local default = clone(setting)
+setting.reset = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(default)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	setting[k] = clone(v)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 12-15, warpins: 1 ---
+	setting.initEnd()
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+setting.init = function (playerName)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	setting.reset()
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(setting)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 8-14, warpins: 1 ---
+	local saved = cache.getSetting(playerName, k)
+
+	--- END OF BLOCK #1 ---
+
+	slot6 = if saved then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 15-18, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for k2, v2 in pairs(saved)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 19-19, warpins: 1 ---
+	v[k2] = v2
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-21, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 22-23, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 24-27, warpins: 1 ---
+	setting.initEnd()
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+return setting
+--- END OF BLOCK #0 ---
+
+
+

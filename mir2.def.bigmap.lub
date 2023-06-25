@@ -1,0 +1,100 @@
+--- BLOCK #0 1-8, warpins: 1 ---
+local bigmap = {}
+
+scheduler.performWithDelayGlobal(function ()
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local file = res.getfile("config/bigmap.txt")
+	local datas = string.split(file, "\r\n")
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(datas)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #1 14-15, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v ~= "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #2 16-23, warpins: 1 ---
+	local data = string.split(v, ";")
+	--- END OF BLOCK #2 ---
+
+	if data[1] ~= "" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #3 24-28, warpins: 1 ---
+	local id = data[1]
+	--- END OF BLOCK #3 ---
+
+	slot9 = if not bigmap[id] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 29-31, warpins: 1 ---
+	bigmap[id] = {}
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 32-34, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if data[2] ~= "" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 35-41, warpins: 1 ---
+	data[2] = string.gsub(data[2], "/L", "\n")
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 42-48, warpins: 2 ---
+	bigmap[id][#bigmap[id] + 1] = data
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 49-50, warpins: 4 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #9 51-51, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end, 0)
+
+return bigmap
+--- END OF BLOCK #0 ---
+
+
+

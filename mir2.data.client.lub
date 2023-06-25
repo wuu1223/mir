@@ -1,0 +1,310 @@
+--- BLOCK #0 1-47, warpins: 1 ---
+local client = {
+	dealGold = 0
+}
+client.lastTime = {}
+client.dealItems = {}
+client.fusionItems = {}
+client.lastScale = {
+	heroBag = 1,
+	storage = 1,
+	bag = 1.1,
+	npc = 1
+}
+client.setLastTime = function (self, key, time)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	slot3 = self.lastTime
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if time then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not socket.gettime()
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	slot4 = nil
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-11, warpins: 2 ---
+	slot3[key] = slot4
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+client.checkLastTime = function (self, key, time)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.lastTime[key] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if time >= socket.gettime()
+
+	 - self.lastTime[key] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-14, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 15-15, warpins: 2 ---
+	slot3 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-16, warpins: 2 ---
+	return slot3
+	--- END OF BLOCK #4 ---
+
+
+
+end
+client.setLastSellItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.lastSellItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setStorageItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.storageItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setStorageGetBackItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.storageGetBackItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setHeroPutInItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.heroPutInItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setHeroGetBackItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.heroGetBackItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setNowDealItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.dealItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.addDealItem = function (self, data)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.dealItems[#self.dealItems + 1] = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.clearDealItem = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.dealItems = {}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setNowFusionItem = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.fusionItem = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.addfusionItem = function (self, data)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.fusionItems[#self.fusionItems + 1] = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.clearfusionItem = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.fusionItems = {}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setDealGold = function (self, gold)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not gold then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	slot2 = 0
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-5, warpins: 2 ---
+	self.dealGold = slot2
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+client.setLastScale = function (self, key, scale)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.lastScale[key] = scale
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setLastQueryChatItem = function (self, makeIndex, name, x, y)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if makeIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-9, warpins: 1 ---
+	self.lastQueryChatItem = {
+		makeIndex = makeIndex,
+		name = name,
+		x = x,
+		y = y
+	}
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	self.lastQueryChatItem = nil
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+client.setLastNpcMap = function (self, data)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.npcMap = data
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+client.setLastMail = function (self, id)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.mailId = id
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return client
+--- END OF BLOCK #0 ---
+
+
+

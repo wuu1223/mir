@@ -1,0 +1,546 @@
+--- BLOCK #0 1-37, warpins: 1 ---
+local voice = {}
+voice.members = {}
+voice.logs = {}
+voice.reset = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.roomData = nil
+	self.channelType = nil
+	self.members = {}
+	self.logs = {}
+	self.playerData = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voice.setMembers = function (self, msg, buf, bufLen, channelType, playerName)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	self.reset(self)
+
+	self.roomData, buf, bufLen = getRecord("TClientChannelHeadInfo"):decode(buf, bufLen, true)
+	--- END OF BLOCK #0 ---
+
+	for i=1, msg.param, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 20-36, warpins: 2 ---
+	self.members[#self.members + 1], buf, bufLen = getRecord("TClientMemberInfo"):decode(buf, bufLen, true)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 37-41, warpins: 1 ---
+	self.channelType = channelType
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.members)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 42-47, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.get(v, "name")
+
+	 == playerName then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 48-49, warpins: 1 ---
+	self.playerData = v
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 50-51, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 52-65, warpins: 2 ---
+	self.logs = {}
+
+	self.addModeLog(self, self.roomData:get("mode"))
+	--- END OF BLOCK #6 ---
+
+	for i, v in ipairs(self.members)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 66-72, warpins: 1 ---
+	self.addEnterLog(self, v.get(v, "name"))
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 73-74, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 75-75, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+voice.getMember = function (self, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.members)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "name")
+
+	 == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 1 ---
+	return v
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+voice.setMode = function (self, mode)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.roomData then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-16, warpins: 2 ---
+	self.roomData:set("mode", mode)
+
+	return true, self.addModeLog(self, mode)
+	--- END OF BLOCK #2 ---
+
+
+
+end
+voice.memberJoin = function (self, isAdmin, name, isMute)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	local data = getRecord("TClientMemberInfo", {
+		isAdmin = isAdmin,
+		name = name,
+		isMute = isMute
+	})
+	self.members[#self.members + 1] = data
+
+	return data, self.addEnterLog(self, name)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voice.memberExit = function (self, name, exitType, playerName)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if name == playerName then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	self.reset(self)
+
+	return true
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.members)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 12-17, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.get(v, "name")
+	 == name then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-32, warpins: 1 ---
+	table.remove(self.members, i)
+
+	return false, self.addExitLog(self, v.get(v, "name"), exitType)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 33-34, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 35-35, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+voice.setIsMute = function (self, isMute, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.members)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "name")
+	 == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-25, warpins: 1 ---
+	v.set(v, "isMute", isMute)
+
+	return v, self.addMuteLog(self, v.get(v, "name"), isMute)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 26-27, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 28-28, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+voice.setIsAdmin = function (self, isAdmin, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.members)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "name")
+	 == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-25, warpins: 1 ---
+	v.set(v, "isAdmin", isAdmin)
+
+	return v, self.addAdminLog(self, v.get(v, "name"), isAdmin)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 26-27, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 28-28, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+voice.addModeLog = function (self, mode)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	slot3 = self
+	slot2 = self.addLog
+	slot4 = "当前频道为: "
+	--- END OF BLOCK #0 ---
+
+	if mode == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	slot5 = "自由模式"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	slot5 = "指挥模式"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-10, warpins: 2 ---
+	return slot2(slot3, slot4 .. slot5)
+	--- END OF BLOCK #3 ---
+
+
+
+end
+voice.addEnterLog = function (self, name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	return self.addLog(self, string.format("%s 加入了频道", name))
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voice.addExitLog = function (self, name, exitType)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if exitType == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-8, warpins: 1 ---
+	return self.addLog(self, name .. " 被管理员踢出了频道")
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-14, warpins: 2 ---
+	return self.addLog(self, name .. " 退出了频道")
+	--- END OF BLOCK #2 ---
+
+
+
+end
+voice.addMuteLog = function (self, name, isMute)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if isMute == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-9, warpins: 1 ---
+	return self.addLog(self, name .. " 被管理员禁言")
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 10-15, warpins: 1 ---
+	return self.addLog(self, name .. " 被管理员解禁")
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+voice.addAdminLog = function (self, name, isAdmin)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if isAdmin == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-9, warpins: 1 ---
+	return self.addLog(self, name .. " 成为管理员")
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 10-15, warpins: 1 ---
+	return self.addLog(self, name .. " 管理员被取消")
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+voice.addLog = function (self, text)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.logs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-10, warpins: 2 ---
+	self.logs[#self.logs + 1] = text
+
+	return text
+	--- END OF BLOCK #2 ---
+
+
+
+end
+voice.getLastLog = function (self, num)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local ret = {}
+	--- END OF BLOCK #0 ---
+
+	for i=#self.logs, 1, -1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 7-14, warpins: 2 ---
+	ret[#ret + 1] = self.logs[i]
+
+	--- END OF BLOCK #1 ---
+
+	if num <= #ret then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 16-16, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 17-17, warpins: 2 ---
+	return ret
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return voice
+--- END OF BLOCK #0 ---
+
+
+

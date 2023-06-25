@@ -1,0 +1,143 @@
+--- BLOCK #0 1-26, warpins: 1 ---
+local mir2 = class("mir2", cc.mvc.AppBase)
+mir2.ctor = function (self)
+	--- BLOCK #0 1-29, warpins: 1 ---
+	mir2.super.ctor(self)
+
+	local listener = cc.EventListenerCustom:create("event_renderer_recreated", handler(self, self.reCreate))
+
+	cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mir2.run = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	sound.init()
+	game.init()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mir2.onEnterBackground = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mir2.onEnterForeground = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mir2.call = function (self, str)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local dic = json.decode(str)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if dic then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	local scene = display.getRunningScene()
+
+	--- END OF BLOCK #1 ---
+
+	slot3 = if scene then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if scene.phone_listenner then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-19, warpins: 1 ---
+	scene.phone_listenner(scene, dic.state, dic.number)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-20, warpins: 4 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+mir2.memoryWarning = function (self)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	cc.Director:getInstance():purgeCachedData()
+	res.purgeCachedData()
+	p2("error", "memoryWarning!!!!!!!!!!!!")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mir2.reCreate = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	res.reloadAllTex()
+	an.label.reloadAll()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+function app_phone_call(...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	app:call(...)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+function app_memory_warning(...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	app:memoryWarning(...)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return mir2
+--- END OF BLOCK #0 ---
+
+
+

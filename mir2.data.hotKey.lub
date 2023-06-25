@@ -1,0 +1,1227 @@
+--- BLOCK #0 1-31, warpins: 1 ---
+local hotKey = {}
+hotKey.setKeyInfos = function (self, info)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.keyInfos = info
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hotKey.getKeyInfos = function (self)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	return self.keyInfos
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hotKey.getHotKeySet = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.hotKeySet then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if #self.hotKeySet == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #2 8-16, warpins: 2 ---
+	self.hotKeySet = {}
+	local index = 1
+
+	--- END OF BLOCK #2 ---
+
+	for _, v in ipairs(def.operate.hotKeySet)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #3 17-20, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for _, version in ipairs(v.version)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #4 21-29, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if tostring(version)
+	 == tostring(def.gameVersionType)
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 30-37, warpins: 1 ---
+	v.id = index
+
+	table.insert(self.hotKeySet, v)
+
+	index = index + 1
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 38-39, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 40-41, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #8 42-43, warpins: 2 ---
+	return self.hotKeySet
+	--- END OF BLOCK #8 ---
+
+
+
+end
+hotKey.resetKey = function (self, id, key)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local i_type = self.getType(self, id)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not i_type then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	return false
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-12, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for _, v in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #3 13-16, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.keyType == i_type.keyType then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 17-19, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot9 = if i_type.name then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 20-22, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot9 = if v.params then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 23-27, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v.params.name == i_type.name then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 28-31, warpins: 2 ---
+	v.keyType = nil
+	v.params = nil
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 32-33, warpins: 5 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #9 34-37, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	for _, v in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #22
+
+
+	--- BLOCK #10 38-42, warpins: 1 ---
+	local isIn = true
+
+	--- END OF BLOCK #10 ---
+
+	for _, v2 in ipairs(key)
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #11 43-49, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot15 = if not self.iskeyInList(self, v2, v.pressKey)
+
+	 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 50-50, warpins: 1 ---
+	isIn = false
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 51-52, warpins: 3 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #14 53-57, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if #v.pressKey == #key then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #15 58-59, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot9 = if isIn then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #16 60-62, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot10 = if v.canSet then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 63-67, warpins: 1 ---
+	v.keyType = i_type.keyType
+	--- END OF BLOCK #17 ---
+
+	slot10 = if i_type.name then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 68-72, warpins: 1 ---
+	v.params = {}
+	v.params.name = i_type.name
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 73-75, warpins: 2 ---
+	return true
+
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 76-79, warpins: 1 ---
+	local errorMsg = "该键不可以自定义设置"
+
+	return false, errorMsg
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 80-81, warpins: 5 ---
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #22 82-87, warpins: 1 ---
+	local newInfo = {}
+	local keyName = {}
+
+	--- END OF BLOCK #22 ---
+
+	for _, k in ipairs(key)
+
+	LOOP BLOCK #23
+	GO OUT TO BLOCK #29
+
+
+	--- BLOCK #23 88-91, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	for _, v in ipairs(self.keyInfos)
+
+	LOOP BLOCK #24
+	GO OUT TO BLOCK #28
+
+
+	--- BLOCK #24 92-95, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if #v.pressKey == 1 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #25 96-99, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if v.pressKey[1] == k then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 100-104, warpins: 1 ---
+	table.insert(keyName, v.keyName)
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 105-106, warpins: 4 ---
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #28 107-108, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #29 109-112, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if 0 < #keyName then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #30 113-120, warpins: 1 ---
+	newInfo.id = #self.keyInfos + 1
+	--- END OF BLOCK #30 ---
+
+	for i=1, #keyName, 1
+	LOOP BLOCK #31
+	GO OUT TO BLOCK #35
+
+	--- BLOCK #31 121-122, warpins: 2 ---
+	--- END OF BLOCK #31 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 123-125, warpins: 1 ---
+	newInfo.keyName = keyName[i]
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #33 126-130, warpins: 1 ---
+	newInfo.keyName = newInfo.keyName .. "+" .. keyName[i]
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 131-131, warpins: 2 ---
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #35 132-148, warpins: 1 ---
+	print("newInfo.keyName", newInfo.keyName)
+
+	newInfo.pressKey = clone(key)
+	newInfo.isKeybord = true
+	newInfo.canSet = true
+	newInfo.keyType = i_type.keyType
+	--- END OF BLOCK #35 ---
+
+	slot6 = if i_type.name then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 149-153, warpins: 1 ---
+	newInfo.params = {}
+	newInfo.params.name = i_type.name
+
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 154-160, warpins: 2 ---
+	table.insert(self.keyInfos, newInfo)
+
+	return true
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 161-163, warpins: 2 ---
+	local errorMsg = "该键不可以自定义设置"
+
+	return false
+	--- END OF BLOCK #38 ---
+
+
+
+end
+hotKey.isCanSet = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local isIn = true
+
+	--- END OF BLOCK #0 ---
+
+	for _, v2 in ipairs(key)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if not self.iskeyInList(self, v2, v.pressKey)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 14-14, warpins: 1 ---
+	isIn = false
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-16, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 17-17, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+hotKey.getInfo = function (self, id)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local i_type = self.getType(self, id)
+
+	--- END OF BLOCK #0 ---
+
+	for _, v in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #1 9-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.keyType == i_type.keyType then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #2 13-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if i_type.name then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 16-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot8 = if v.params then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 19-23, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.params.name == i_type.name then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-24, warpins: 2 ---
+	return v
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 25-26, warpins: 5 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 27-27, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+hotKey.getType = function (self, id)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.getHotKeySet(self))
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if i == id then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 1 ---
+	return v
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-11, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 12-12, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+hotKey.isTrigger = function (self, keyCode, pressed)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local key_count = 0
+	local triggerInfo = nil
+
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(self.keyInfos)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #1 7-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot10 = if self.iskeyInList(self, keyCode, info.pressKey)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #2 14-19, warpins: 1 ---
+	local isFixed = true
+	local i_count = 0
+
+	--- END OF BLOCK #2 ---
+
+	for _, v in ipairs(info.pressKey)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #3 20-26, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot17 = if not self.iskeyInList(self, v, pressed)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-28, warpins: 1 ---
+	isFixed = false
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #5 29-29, warpins: 1 ---
+	i_count = i_count + 1
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 30-31, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #7 32-33, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot10 = if isFixed then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 34-35, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if key_count < i_count then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 36-36, warpins: 1 ---
+	triggerInfo = info
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 37-37, warpins: 2 ---
+	key_count = i_count
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 38-39, warpins: 4 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #12 40-40, warpins: 1 ---
+	return triggerInfo
+	--- END OF BLOCK #12 ---
+
+
+
+end
+hotKey.iskeyInList = function (self, keyCode, pressed)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, v in ipairs(pressed)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == keyCode then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-8, warpins: 1 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-10, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 11-12, warpins: 1 ---
+	return false
+	--- END OF BLOCK #4 ---
+
+
+
+end
+hotKey.loadMagicHotKey = function (self, playerName)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, magic in pairs(g_data.player.magicList)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if magic.key then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for _, v in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #3 14-18, warpins: 1 ---
+	local key_id = nil
+	--- END OF BLOCK #3 ---
+
+	if 48 < magic.key then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 19-22, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if magic.key < 57 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-26, warpins: 1 ---
+	key_id = magic.key - 49 + 6
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #6 27-30, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if 64 < magic.key then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 31-34, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if magic.key < 73 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 35-37, warpins: 1 ---
+	key_id = magic.key - 65 + 18
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 38-40, warpins: 4 ---
+	--- END OF BLOCK #9 ---
+
+	if v.id == key_id then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 41-45, warpins: 1 ---
+	self.setMagicHotKey(self, key_id, magic.magicId)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 46-47, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #12 48-49, warpins: 3 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #13 50-50, warpins: 1 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+hotKey.setMagicHotKey = function (self, keyid, magicId)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot8 = if info.params then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if info.params.magicId == magicId then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-22, warpins: 1 ---
+	info.keyType = nil
+	info.params = nil
+
+	net.send({
+		CM_MAGICKEYCHANGE,
+		param = 0,
+		recog = magicId
+	})
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-24, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 25-28, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	for _, info in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #6 29-31, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if info.id == keyid then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #7 32-40, warpins: 1 ---
+	info.keyType = "skill"
+	info.params = {
+		magicId = magicId
+	}
+	local keyCode = nil
+	--- END OF BLOCK #7 ---
+
+	if 6 <= keyid then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 41-43, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if keyid <= 13 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 44-46, warpins: 1 ---
+	keyCode = keyid - 6 + 49
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #10 47-49, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if 18 <= keyid then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 50-52, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if keyid <= 25 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 53-54, warpins: 1 ---
+	keyCode = keyid - 18 + 65
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 55-63, warpins: 4 ---
+	net.send({
+		CM_MAGICKEYCHANGE,
+		recog = magicId,
+		param = keyCode
+	})
+
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 64-65, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #15 66-66, warpins: 2 ---
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+hotKey.magicIsHotKey = function (self, magicId)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if info.params then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if info.params.magicId == magicId then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	return true, info.id
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-16, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 17-18, warpins: 1 ---
+	return false
+	--- END OF BLOCK #5 ---
+
+
+
+end
+hotKey.getMagicOfKey = function (self, keyid)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(self.keyInfos)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if info.id == keyid then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if info.keyType == "skill" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 11-13, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if info.params then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 14-16, warpins: 1 ---
+	return info.params.magicId
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-18, warpins: 5 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 19-19, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+hotKey.getSkillHotKey = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local magicHotKeys = {}
+	--- END OF BLOCK #0 ---
+
+	for i=6, 13, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 6-18, warpins: 2 ---
+	local temp = {}
+	temp.keyId = i
+	temp.magicId = self.getMagicOfKey(self, i)
+
+	table.insert(magicHotKeys, temp)
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 19-22, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for i=18, 25, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 23-35, warpins: 2 ---
+	local temp = {}
+	temp.keyId = i
+	temp.magicId = self.getMagicOfKey(self, i)
+
+	table.insert(magicHotKeys, temp)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 36-36, warpins: 1 ---
+	return magicHotKeys
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return hotKey
+--- END OF BLOCK #0 ---
+
+
+

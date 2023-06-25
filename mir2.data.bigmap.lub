@@ -1,0 +1,590 @@
+--- BLOCK #0 1-31, warpins: 1 ---
+local bigmap = {}
+bigmap.maps = {}
+bigmap.group = {}
+bigmap.scriptPath = {}
+bigmap.loadLike = function (self, map)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	slot2 = self.maps
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.maps[map] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	slot3 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-14, warpins: 2 ---
+	slot2[map] = slot3
+	local mapCache = cache.getBigmap(map)
+	local likes = {}
+	--- END OF BLOCK #2 ---
+
+	slot2 = if mapCache then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if mapCache.likes then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-18, warpins: 1 ---
+	likes = mapCache.likes
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-23, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	slot4 = if not self.maps[map].likes then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 24-26, warpins: 1 ---
+	self.maps[map].likes = likes
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 27-27, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+bigmap.isExistLike = function (self, map, x, y)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if map == "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-15, warpins: 2 ---
+	self.loadLike(self, map)
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.maps[map].likes)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.x == x then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if v.y == y then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-23, warpins: 1 ---
+	return true
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 24-25, warpins: 4 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #8 26-26, warpins: 1 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+bigmap.addLike = function (self, map, name, x, y)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if map == "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-15, warpins: 2 ---
+	self.loadLike(self, map)
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.maps[map].likes)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.x == x then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if v.y == y then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-22, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 23-24, warpins: 4 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #8 25-42, warpins: 1 ---
+	self.maps[map].likes[#self.maps[map].likes + 1] = {
+		name = name,
+		x = x,
+		y = y
+	}
+
+	cache.saveBigmap(map)
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+bigmap.removeLike = function (self, map, x, y)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if map == "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-15, warpins: 2 ---
+	self.loadLike(self, map)
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.maps[map].likes)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.x == x then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if v.y == y then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-38, warpins: 1 ---
+	table.remove(self.maps[map].likes, i)
+	self.removeLike(self, map, x, y)
+	cache.saveBigmap(map)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 39-40, warpins: 4 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #8 41-41, warpins: 1 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+bigmap.getLikes = function (self, map)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.loadLike(self, map)
+
+	return self.maps[map].likes
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.loadNpcs = function (self, map)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	slot2 = self.maps
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.maps[map] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 6-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if not cache.getBigmap(map)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-12, warpins: 1 ---
+	slot3 = {}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-20, warpins: 3 ---
+	slot2[map] = slot3
+	slot2 = self.maps[map]
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not self.maps[map].npcs then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 21-21, warpins: 1 ---
+	slot3 = {}
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 22-23, warpins: 2 ---
+	slot2.npcs = slot3
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+bigmap.addNpcs = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local title = g_data.client.npcMap.title
+	slot5 = self.maps
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not self.maps[title] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	slot6 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-20, warpins: 2 ---
+	slot5[title] = slot6
+	self.maps[title].npcs = {}
+	local npc = nil
+	--- END OF BLOCK #2 ---
+
+	for i=1, msg.tag, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 21-39, warpins: 2 ---
+	npc, buf, bufLen = net.record("TNpcDesc", buf, bufLen)
+	npc.destMapid = g_data.client.npcMap.id
+	self.maps[title].npcs[i] = npc
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 40-40, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bigmap.getNpcs = function (self, map)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.maps[map] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	return nil
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	return self.maps[map].npcs
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.getGroupInfo = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.group = {}
+	local mem = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, msg.param, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 8-22, warpins: 2 ---
+	mem, buf, bufLen = net.record("TGroupMemPosition", buf, bufLen)
+	self.group[#self.group + 1] = mem
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 23-23, warpins: 1 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.scriptAutoPath = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.scriptPath = {}
+	local tmp = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, msg.recog, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 8-22, warpins: 2 ---
+	tmp, buf, bufLen = net.record("TMapPathNode", buf, bufLen)
+	self.scriptPath[#self.scriptPath + 1] = tmp
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 23-23, warpins: 1 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.getScriptPath = function (self, mapid)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < #self.scriptPath then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	local tmp = nil
+
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(self.scriptPath)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.name == mapid then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-14, warpins: 1 ---
+	return v
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-16, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return bigmap
+--- END OF BLOCK #0 ---
+
+
+

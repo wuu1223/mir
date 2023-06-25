@@ -1,0 +1,1570 @@
+--- BLOCK #0 1-87, warpins: 1 ---
+local guild = {
+	serach = false,
+	guildNotice = "",
+	clanNotice = "",
+	hasGuild = true,
+	hasClan = true,
+	page = 0
+}
+guild.corpsList = {}
+guild.guildList = {}
+guild.config = {
+	clanmain = {
+		needreset = true,
+		receive = false
+	},
+	clanmem = {
+		needreset = true,
+		receive = false
+	},
+	clanjobs = {
+		needreset = true,
+		receive = false
+	},
+	clanlog = {
+		needreset = true,
+		receive = false
+	},
+	guildmain = {
+		needreset = true,
+		receive = false
+	},
+	mem = {
+		needreset = true,
+		receive = false
+	},
+	claninfo = {
+		needreset = true,
+		receive = false
+	},
+	clanrecruit = {
+		needreset = true,
+		receive = false
+	},
+	diplomatic = {
+		needreset = true,
+		receive = false
+	},
+	log = {
+		needreset = true,
+		receive = false
+	}
+}
+guild.getClanName = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.clanInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not self.clanInfo:get("corpsName")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	slot1 = ""
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-12, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guild.getGuildName = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.guildInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not self.guildInfo:get("gildName")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	slot1 = ""
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-12, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guild.decodeArray_ = function (self, num, recordName, buf, bufLen)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local list = {}
+	--- END OF BLOCK #0 ---
+
+	for k=1, num, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 6-17, warpins: 2 ---
+	local record = nil
+	record, buf, bufLen = net.record(recordName, buf, bufLen)
+	list[k] = record
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 18-18, warpins: 1 ---
+	return list
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.initGuildInfo = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if bufLen == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	self.guildInfo = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if bufLen ~= getRecordSize("TGuildDesc")
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-34, warpins: 2 ---
+	self.guildInfo = getRecord("TGuildDesc")
+
+	net.record(self.guildInfo, buf, bufLen)
+
+	self.guildInfo.allMemCount = msg.tag
+
+	g_data.mark:addGuild(self.guildInfo:get("presidentName"))
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+guild.isPresident = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.posInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.posInfo ~= 4 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-8, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 9-9, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-10, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 11-12, warpins: 2 ---
+	return false
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.isVicePresident = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.posInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.posInfo ~= 3 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-8, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 9-9, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-10, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 11-12, warpins: 2 ---
+	return false
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.isLeader = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.posInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.posInfo ~= 2 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 7-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if self.posInfo ~= 4 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 10-12, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if self.posInfo ~= 3 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 13-14, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 15-15, warpins: 3 ---
+	slot1 = true
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 16-16, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 17-18, warpins: 2 ---
+	return false
+	--- END OF BLOCK #7 ---
+
+
+
+end
+guild.isViceLeader = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.posInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.posInfo ~= 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-8, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 9-9, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-10, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 11-12, warpins: 2 ---
+	return false
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.initClanInfo = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if bufLen == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	self.clanInfo = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if bufLen ~= getRecordSize("TCorpsDesc")
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-31, warpins: 2 ---
+	self.clanInfo = getRecord("TCorpsDesc")
+
+	net.record(self.clanInfo, buf, bufLen)
+	g_data.mark:addGuild(self.clanInfo:get("captainName"))
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+guild.initClanList = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.corpsList = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TCorpsDesc")
+
+	*msg.series then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-19, warpins: 2 ---
+	self.corpsList = self.decodeArray_(self, msg.series, "TCorpsDesc", buf, bufLen)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.initGuildList = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildList = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGuildDesc")
+
+	*msg.series then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-19, warpins: 2 ---
+	self.guildList = self.decodeArray_(self, msg.series, "TGuildDesc", buf, bufLen)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.getCorpsMem = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.corpsMem = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TCorpsMemDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-25, warpins: 2 ---
+	self.corpsMem = self.decodeArray_(self, msg.tag, "TCorpsMemDesc", buf, bufLen)
+
+	print("获取战队成员列表 职业数据")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.corpsMem)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #3 26-31, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.get(v, "status")
+	 == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 32-37, warpins: 1 ---
+	v.set(v, "status", 1)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 38-42, warpins: 1 ---
+	v.set(v, "status", 0)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 43-62, warpins: 2 ---
+	print(v.get(v, "name"), g_data.player:getOtherJobStr(v.get(v, "job")), " job 数值 ", v.get(v, "job"))
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 63-64, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #8 65-65, warpins: 1 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+guild.getCorpsQueryRequests = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.corpsQueryMem = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TCorpsRequests")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-25, warpins: 2 ---
+	self.corpsQueryMem = self.decodeArray_(self, msg.tag, "TCorpsRequests", buf, bufLen)
+
+	print("获取申请加入战队的玩家列表 职业数据")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.corpsQueryMem)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 26-45, warpins: 1 ---
+	print(v.get(v, "name"), g_data.player:getOtherJobStr(v.get(v, "job")), " job 数值 ", v.get(v, "job"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 46-47, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 48-48, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.acceptCorpsQueryRequests = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.corpsQueryMem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if #self.corpsQueryMem == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-18, warpins: 2 ---
+	local id, _, _ = net.record("TGuildID", buf, bufLen)
+
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.corpsQueryMem)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #4 19-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.get(v, "ID")
+	 == id.get(id, "ID")
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 29-34, warpins: 1 ---
+	table.remove(self.corpsQueryMem, i)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 35-36, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 37-37, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+guild.refuseCorpsQueryRequests = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.corpsQueryMem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if #self.corpsQueryMem == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-18, warpins: 2 ---
+	local id, _, _ = net.record("TGuildID", buf, bufLen)
+
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.corpsQueryMem)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #4 19-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.get(v, "ID")
+	 == id.get(id, "ID")
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 29-34, warpins: 1 ---
+	table.remove(self.corpsQueryMem, i)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 35-36, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 37-37, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+guild.refushCurClan = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if bufLen == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-32, warpins: 2 ---
+	local id = getRecord("TGuildID")
+
+	print("id ", id.get(id, "ID"))
+	net.record(id, buf, bufLen)
+	print("id ", id.get(id, "ID"))
+	--- END OF BLOCK #2 ---
+
+	if id.get(id, "ID")
+
+	 ~= 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 33-42, warpins: 1 ---
+	self.curApplyclan = id.get(id, "ID")
+
+	print("refushCurClan ", self.curApplyclan)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 43-44, warpins: 1 ---
+	self.curApplyclan = nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 45-45, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.refushCurGuild = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if bufLen == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-32, warpins: 2 ---
+	local id = getRecord("TGuildID")
+
+	print("id ", id.get(id, "ID"))
+	net.record(id, buf, bufLen)
+	print("id ", id.get(id, "ID"))
+	--- END OF BLOCK #2 ---
+
+	if id.get(id, "ID")
+
+	 ~= 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 33-42, warpins: 1 ---
+	self.curApplyguild = id.get(id, "ID")
+
+	print("refushCurGuild ", self.curApplyguild)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 43-44, warpins: 1 ---
+	self.curApplyguild = nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 45-45, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.getCorpsLog = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.corpsLog = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen < getRecordSize("TLogDesc")
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-20, warpins: 2 ---
+	self.corpsLog = self.decodeArray_(self, bufLen/getRecordSize("TLogDesc"), "TLogDesc", buf, bufLen)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.getguildcorpsList = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildcorpsList = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TCorpsDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-19, warpins: 2 ---
+	self.guildcorpsList = self.decodeArray_(self, msg.tag, "TCorpsDesc", buf, bufLen)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.getguildMem = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	dump(msg)
+	print(getRecordSize("TGuildMember"), msg.tag)
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGuildMember")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 17-17, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-32, warpins: 2 ---
+	self.guildMems = self.decodeArray_(self, msg.tag, "TGuildMember", buf, bufLen)
+
+	print("获取行会成员列表 职业数据")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.guildMems)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 33-52, warpins: 1 ---
+	print(v.get(v, "name"), g_data.player:getOtherJobStr(v.get(v, "job")), " job 数值 ", v.get(v, "job"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 53-54, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 55-55, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.getGuildQueryRequests = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildQueryMem = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGuildRequestJoinDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-19, warpins: 2 ---
+	self.guildQueryMem = self.decodeArray_(self, msg.tag, "TGuildRequestJoinDesc", buf, bufLen)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.acceptGuildQueryRequests = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.guildQueryMem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if #self.guildQueryMem == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-18, warpins: 2 ---
+	local id, _, _ = net.record("TGuildID", buf, bufLen)
+
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.guildQueryMem)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #4 19-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.get(v, "ID")
+	 == id.get(id, "ID")
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 29-34, warpins: 1 ---
+	table.remove(self.guildQueryMem, i)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 35-36, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 37-37, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+guild.refuseGuildQueryRequests = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.guildQueryMem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if #self.guildQueryMem == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-18, warpins: 2 ---
+	local id, _, _ = net.record("TGuildID", buf, bufLen)
+
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(self.guildQueryMem)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #4 19-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v.get(v, "ID")
+	 == id.get(id, "ID")
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 29-34, warpins: 1 ---
+	table.remove(self.guildQueryMem, i)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 35-36, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 37-37, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+guild.getGuildLog = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.guildLog = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen < getRecordSize("TLogDesc")
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-20, warpins: 2 ---
+	self.guildLog = self.decodeArray_(self, bufLen/getRecordSize("TLogDesc"), "TLogDesc", buf, bufLen)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guild.getGuildCorpsMem = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildcorpsMem = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TCorpsMemDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-25, warpins: 2 ---
+	self.guildcorpsMem = self.decodeArray_(self, msg.tag, "TCorpsMemDesc", buf, bufLen)
+
+	print("获取战队成员列表 职业数据")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.guildcorpsMem)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 26-45, warpins: 1 ---
+	print(v.get(v, "name"), g_data.player:getOtherJobStr(v.get(v, "job")), " job 数值 ", v.get(v, "job"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 46-47, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 48-48, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.getRequestUnion = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildRequestUnion = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGuildRequestJoinDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-25, warpins: 2 ---
+	self.guildRequestUnion = self.decodeArray_(self, msg.tag, "TGuildRequestJoinDesc", buf, bufLen)
+
+	print("查询申请联盟行会请求")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.guildRequestUnion)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 26-39, warpins: 1 ---
+	print(v.get(v, "corpsName"), v.get(v, "captainName"), v.get(v, "memberCount"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 40-41, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 42-42, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.getUnion = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	self.guildUnion = {}
+
+	print(getRecordSize("TGuildSimpleDesc"), msg.tag)
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGuildSimpleDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 16-16, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-31, warpins: 2 ---
+	self.guildUnion = self.decodeArray_(self, msg.tag, "TGuildSimpleDesc", buf, bufLen)
+
+	print("查询联盟行会请求")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.guildUnion)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 32-37, warpins: 1 ---
+	print(v.get(v, "name"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 38-39, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 40-40, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.getConcern = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildConcern = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGildRelation")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-25, warpins: 2 ---
+	self.guildConcern = self.decodeArray_(self, msg.tag, "TGildRelation", buf, bufLen)
+
+	print("查询关注行会请求")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.guildConcern)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 26-31, warpins: 1 ---
+	print(v.get(v, "name"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 32-33, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 34-34, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guild.getHostile = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.guildHostile = {}
+
+	--- END OF BLOCK #0 ---
+
+	if bufLen ~= getRecordSize("TGuildSimpleDesc")
+
+	*msg.tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-25, warpins: 2 ---
+	self.guildHostile = self.decodeArray_(self, msg.tag, "TGuildSimpleDesc", buf, bufLen)
+
+	print("查询宣战行会请求")
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.guildHostile)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 26-31, warpins: 1 ---
+	print(v.get(v, "name"))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 32-33, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 34-34, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return guild
+--- END OF BLOCK #0 ---
+
+
+

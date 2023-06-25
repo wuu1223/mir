@@ -1,0 +1,10 @@
+--- BLOCK #0 1-9, warpins: 1 ---
+local equip = import(".equip")
+local heroEquip = clone(equip)
+heroEquip.isHero = true
+
+return heroEquip
+--- END OF BLOCK #0 ---
+
+
+

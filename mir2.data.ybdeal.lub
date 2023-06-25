@@ -1,0 +1,294 @@
+--- BLOCK #0 1-39, warpins: 1 ---
+local ybdeal = {
+	level = 1
+}
+ybdeal.list_buy = {}
+ybdeal.list_buyHis = {}
+ybdeal.list_sell = {}
+ybdeal.list_sellHis = {}
+ybdeal.sign = {
+	[SM_YBDEAL_REFER_ITEMS1] = false,
+	[SM_YBDEAL_REFER_ITEMS2] = false
+}
+ybdeal.getName = function (self, ident)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	return ({
+		[SM_YBDEAL_QUERY_BUY] = "list_buy",
+		[SM_YBDEAL_QUERY_SELL] = "list_sell",
+		[SM_YBDEAL_HISTROY_BUY] = "list_buyHis",
+		[SM_YBDEAL_HISTROY_SELL] = "list_sellHis"
+	})[ident]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.getTag = function (self, ident)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	return ({
+		[SM_YBDEAL_QUERY_BUY] = 1,
+		[SM_YBDEAL_QUERY_SELL] = 2,
+		[SM_YBDEAL_HISTROY_BUY] = 4,
+		[SM_YBDEAL_HISTROY_SELL] = 5,
+		[SM_DISPLAY_YBDEAL_SET] = 6
+	})[ident]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.parseMsg = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local name = self.getName(self, msg.ident)
+
+	self.clearList(self, name)
+
+	local unit = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, msg.param, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 14-28, warpins: 2 ---
+	unit, buf, bufLen = net.record("TYBDealClientItems", buf, bufLen)
+	unit.items = {}
+	--- END OF BLOCK #1 ---
+
+	for i=1, unit.cnt, 1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #3
+
+	--- BLOCK #2 29-47, warpins: 2 ---
+	local item = nil
+	item, buf, bufLen = net.record("TClientItem", buf, bufLen)
+	item.isPileUp = function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if 150 >= item.getVar("stdMode")
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-9, warpins: 1 ---
+		slot0 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 10-10, warpins: 1 ---
+		slot0 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-11, warpins: 2 ---
+		return slot0
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	unit.items[#unit.items + 1] = item
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #3 48-53, warpins: 1 ---
+	self.addUnit(self, name, unit)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 54-58, warpins: 1 ---
+	return self.getTag(self, msg.ident)
+	--- END OF BLOCK #4 ---
+
+
+
+end
+ybdeal.clearList = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self[name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	self[name] = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-6, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+ybdeal.addUnit = function (self, name, item)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self[name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	self[name][#self[name] + 1] = item
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+ybdeal.resetSign = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.sign = {
+		[SM_YBDEAL_REFER_ITEMS1] = false,
+		[SM_YBDEAL_REFER_ITEMS2] = false
+	}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.setSign = function (self, msg)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.sign[msg.ident] = true
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.removeBuyUnit = function (self, id)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(self.list_buy)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if id == v.id then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	table.remove(self.list_buy, k)
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 14-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+ybdeal.removeSellUnit = function (self, id)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(self.list_sell)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if id == v.id then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	table.remove(self.list_sell, k)
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 14-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+ybdeal.parseSetting = function (self, msg)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.level = msg.recog
+
+	return self.getTag(self, msg.ident)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return ybdeal
+--- END OF BLOCK #0 ---
+
+
+

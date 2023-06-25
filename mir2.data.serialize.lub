@@ -1,0 +1,832 @@
+--- BLOCK #0 1-22, warpins: 1 ---
+module(..., package.seeall)
+
+local serialize = class("serialize")
+serialize.open = function (self, filename, clear)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	self.saved = {}
+	self.key = "v"
+	self.filename = filename
+	local filename = cc.FileUtils:getInstance():fullPathForFilename(filename)
+	local dataModule, err = loadfile(filename)
+	self.file, fileErr = io.open(filename, "w")
+
+	--- END OF BLOCK #0 ---
+
+	slot6 = if fileErr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 28-30, warpins: 1 ---
+	error(fileErr)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 31-33, warpins: 2 ---
+	local data = nil
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not err then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 34-41, warpins: 1 ---
+	data = {}
+
+	setfenv(dataModule, data)
+	dataModule()
+
+	data = data.v
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 42-43, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot6 = if not data then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 44-44, warpins: 1 ---
+	data = {}
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 45-46, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if clear then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 47-61, warpins: 1 ---
+	self.file:write("v = {}\n")
+	self.serialize_(self, self.key, data, self.saved)
+	self.file:flush()
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 62-74, warpins: 2 ---
+	self.saved = {}
+	local traAndCatchAll = nil
+
+	local function catchChange(name, tbl)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		local caughtTbl = {}
+		caughtTbl.__serialize_tbl = tbl
+
+		setmetatable(caughtTbl, {
+			__index = tbl,
+			__newindex = function (_, nk, nv)
+				--- BLOCK #0 1-17, warpins: 1 ---
+				local nname = string.format("%s[%s]", name, serialize.basicSerialize(type(nk), nk))
+				local t = type(nv)
+				--- END OF BLOCK #0 ---
+
+				if nv ~= nil then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #1 18-22, warpins: 1 ---
+				--- END OF BLOCK #1 ---
+
+				slot5 = if not self.saved[nv] then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #2 23-26, warpins: 1 ---
+				--- END OF BLOCK #2 ---
+
+				if tbl[nk] ~= nv then
+				JUMP TO BLOCK #3
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #3 27-29, warpins: 1 ---
+				local value = nv
+				--- END OF BLOCK #3 ---
+
+				if t == "table" then
+				JUMP TO BLOCK #4
+				else
+				JUMP TO BLOCK #8
+				end
+
+
+				--- BLOCK #4 30-32, warpins: 1 ---
+				--- END OF BLOCK #4 ---
+
+				slot6 = if nv.__serialize_tbl then
+				JUMP TO BLOCK #5
+				else
+				JUMP TO BLOCK #7
+				end
+
+
+				--- BLOCK #5 33-38, warpins: 1 ---
+				--- END OF BLOCK #5 ---
+
+				slot6 = if self.saved[nv.__serialize_tbl] then
+				JUMP TO BLOCK #6
+				else
+				JUMP TO BLOCK #7
+				end
+
+
+				--- BLOCK #6 39-40, warpins: 1 ---
+				value = nv.__serialize_tbl
+				--- END OF BLOCK #6 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+				--- BLOCK #7 41-45, warpins: 2 ---
+				nv = traAndCatchAll(nname, nv)
+
+				--- END OF BLOCK #7 ---
+
+				FLOW; TARGET BLOCK #8
+
+
+				--- BLOCK #8 46-58, warpins: 3 ---
+				self:serialize_(nname, value, self.saved)
+				self.file:flush()
+				--- END OF BLOCK #8 ---
+
+				FLOW; TARGET BLOCK #9
+
+
+				--- BLOCK #9 59-60, warpins: 4 ---
+				--- END OF BLOCK #9 ---
+
+				if t == "nil" then
+				JUMP TO BLOCK #10
+				else
+				JUMP TO BLOCK #12
+				end
+
+
+				--- BLOCK #10 61-64, warpins: 1 ---
+				--- END OF BLOCK #10 ---
+
+				slot5 = if tbl[nk] then
+				JUMP TO BLOCK #11
+				else
+				JUMP TO BLOCK #12
+				end
+
+
+				--- BLOCK #11 65-73, warpins: 1 ---
+				self:removeData_(name, nk, self.saved[nv])
+				--- END OF BLOCK #11 ---
+
+				FLOW; TARGET BLOCK #12
+
+
+				--- BLOCK #12 74-79, warpins: 3 ---
+				rawset(tbl, nk, nv)
+
+				return 
+				--- END OF BLOCK #12 ---
+
+
+
+			end,
+			__len = function ()
+				--- BLOCK #0 1-3, warpins: 1 ---
+				return #tbl
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+
+		return caughtTbl
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	function traAndCatchAll(key, data)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for kName, v in pairs(data)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if type(v)
+
+		 == "table" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 10-14, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot7 = if not self.saved[v] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 15-34, warpins: 1 ---
+		local nname = string.format("%s[%s]", key, serialize.basicSerialize(type(kName), kName))
+		self.saved[v] = nname
+		data[kName] = traAndCatchAll(nname, v)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 35-36, warpins: 4 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 37-40, warpins: 1 ---
+		return catchChange(key, data)
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	self.data = traAndCatchAll(self.key, data)
+
+	return self.data
+	--- END OF BLOCK #8 ---
+
+
+
+end
+serialize.basicSerialize = function (t, o)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if t == "number" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-6, warpins: 1 ---
+	return tostring(o)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #2 7-8, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if t == "string" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-14, warpins: 1 ---
+	return string.format("%q", o)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #4 15-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if t == "boolean" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 17-18, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot1 = if o then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 19-20, warpins: 1 ---
+	slot2 = "true"
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 21-21, warpins: 1 ---
+	slot2 = "false"
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 22-22, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 23-23, warpins: 4 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+serialize.serialize_ = function (self, name, value, saved)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local f = self.file
+
+	f.write(f, name, " = ")
+
+	local t = type(value)
+
+	--- END OF BLOCK #0 ---
+
+	if t == "table" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #1 12-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot6 = if saved[value] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-20, warpins: 1 ---
+	f.write(f, saved[value], "\n")
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #3 21-29, warpins: 1 ---
+	saved[value] = name
+
+	f.write(f, "{}\n")
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(value)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #4 30-31, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if k ~= "__serialize_tbl" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 32-42, warpins: 1 ---
+	local fieldname = nil
+	local tkey = type(k)
+	local strKey = serialize.basicSerialize(tkey, k)
+	--- END OF BLOCK #5 ---
+
+	slot13 = if strKey then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 43-50, warpins: 1 ---
+	fieldname = string.format("%s[%s]", name, strKey)
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 51-58, warpins: 1 ---
+	error(string.format("unsupport key type. typeis %s, value:", tkey), k)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 59-64, warpins: 2 ---
+	self.serialize_(self, fieldname, v, saved)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 65-66, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #10 67-67, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #11 68-74, warpins: 1 ---
+	local strValue = serialize.basicSerialize(t, value)
+
+	--- END OF BLOCK #11 ---
+
+	slot6 = if strValue then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 75-80, warpins: 1 ---
+	f.write(f, strValue, "\n")
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 81-88, warpins: 1 ---
+	error(string.format("unsupport value type. typeis %s, value:", t), value)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 89-89, warpins: 4 ---
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+serialize.removeData_ = function (self, name, key, tbl)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local name = string.format("%s[%q]", name, key)
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(tbl)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 11-15, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if type(v)
+
+	 == "table" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 16-25, warpins: 1 ---
+	local nname = string.format("%s[%q]", name, key)
+	--- END OF BLOCK #2 ---
+
+	if self.saved[v] == nname then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-28, warpins: 1 ---
+	self.saved[v] = nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 29-30, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 31-38, warpins: 1 ---
+	self.file:write(name .. " = nil\n")
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+serialize.close = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.data = nil
+
+	self.file:close()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+--- END OF BLOCK #0 ---
+
+if 0 < DEBUG then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #22
+end
+
+
+--- BLOCK #1 23-23, warpins: 1 ---
+--- END OF BLOCK #1 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+--- BLOCK #2 24-24, warpins: 1 ---
+--- END OF BLOCK #2 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+--- BLOCK #3 25-64, warpins: 0 ---
+local s = serialize.new()
+local data = s.open(s, "../../testing.lua")
+data.testNumber = 0
+data.string = "string"
+data.testingNil = nil
+data.testingBoolean = true
+data.testingBoolean = false
+data.testtable = {}
+data.testtable.test = "¶à²ã"
+data.testremove = {}
+data.testremove = nil
+data.testref = data.testtable
+
+s.close(s)
+
+local s = serialize.new()
+local data = s.open(s, "../../testing.lua")
+slot5 = assert
+--- END OF BLOCK #3 ---
+
+if data.testNumber ~= 0 then
+JUMP TO BLOCK #4
+else
+JUMP TO BLOCK #5
+end
+
+
+--- BLOCK #4 65-66, warpins: 1 ---
+slot6 = false
+--- END OF BLOCK #4 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+--- BLOCK #5 67-67, warpins: 1 ---
+slot6 = true
+
+--- END OF BLOCK #5 ---
+
+FLOW; TARGET BLOCK #6
+
+
+--- BLOCK #6 68-73, warpins: 2 ---
+slot5(slot6, "should be number")
+
+slot5 = assert
+--- END OF BLOCK #6 ---
+
+if data.string ~= "string" then
+JUMP TO BLOCK #7
+else
+JUMP TO BLOCK #8
+end
+
+
+--- BLOCK #7 74-75, warpins: 1 ---
+slot6 = false
+--- END OF BLOCK #7 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+--- BLOCK #8 76-76, warpins: 1 ---
+slot6 = true
+
+--- END OF BLOCK #8 ---
+
+FLOW; TARGET BLOCK #9
+
+
+--- BLOCK #9 77-82, warpins: 2 ---
+slot5(slot6, "should be number")
+
+slot5 = assert
+--- END OF BLOCK #9 ---
+
+if data.testingNil ~= nil then
+JUMP TO BLOCK #10
+else
+JUMP TO BLOCK #11
+end
+
+
+--- BLOCK #10 83-84, warpins: 1 ---
+slot6 = false
+--- END OF BLOCK #10 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+--- BLOCK #11 85-85, warpins: 1 ---
+slot6 = true
+
+--- END OF BLOCK #11 ---
+
+FLOW; TARGET BLOCK #12
+
+
+--- BLOCK #12 86-91, warpins: 2 ---
+slot5(slot6, "should be nil")
+
+slot5 = assert
+--- END OF BLOCK #12 ---
+
+if data.testingBoolean ~= false then
+JUMP TO BLOCK #13
+else
+JUMP TO BLOCK #14
+end
+
+
+--- BLOCK #13 92-93, warpins: 1 ---
+slot6 = false
+--- END OF BLOCK #13 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+--- BLOCK #14 94-94, warpins: 1 ---
+slot6 = true
+
+--- END OF BLOCK #14 ---
+
+FLOW; TARGET BLOCK #15
+
+
+--- BLOCK #15 95-102, warpins: 2 ---
+slot5(slot6, "should be false")
+
+slot5 = assert
+
+--- END OF BLOCK #15 ---
+
+if type(data.testtable)
+
+ ~= "table" then
+JUMP TO BLOCK #16
+else
+JUMP TO BLOCK #17
+end
+
+
+--- BLOCK #16 103-104, warpins: 1 ---
+slot6 = false
+--- END OF BLOCK #16 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+--- BLOCK #17 105-105, warpins: 1 ---
+slot6 = true
+
+--- END OF BLOCK #17 ---
+
+FLOW; TARGET BLOCK #18
+
+
+--- BLOCK #18 106-111, warpins: 2 ---
+slot5(slot6, "should be table")
+
+slot5 = assert
+--- END OF BLOCK #18 ---
+
+if data.testremove ~= nil then
+JUMP TO BLOCK #19
+else
+JUMP TO BLOCK #20
+end
+
+
+--- BLOCK #19 112-113, warpins: 1 ---
+slot6 = false
+--- END OF BLOCK #19 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+--- BLOCK #20 114-114, warpins: 1 ---
+slot6 = true
+
+--- END OF BLOCK #20 ---
+
+FLOW; TARGET BLOCK #21
+
+
+--- BLOCK #21 115-136, warpins: 2 ---
+slot5(slot6, "should be nil")
+
+data.testtable.test2 = "should be exist"
+
+s.close(s)
+
+local s = serialize.new()
+local data = s.open(s, "../../testing.lua")
+
+assert(data.testtable.test2)
+s.file:close()
+
+--- END OF BLOCK #21 ---
+
+FLOW; TARGET BLOCK #22
+
+
+--- BLOCK #22 137-138, warpins: 3 ---
+return serialize
+--- END OF BLOCK #22 ---
+
+
+

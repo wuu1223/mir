@@ -1,0 +1,50 @@
+--- BLOCK #0 1-12, warpins: 1 ---
+local bag = import(".bag")
+local heroBag = clone(bag)
+heroBag.isHero = true
+heroBag.getFreeCount = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local cnt = 0
+	--- END OF BLOCK #0 ---
+
+	for i=1, g_data.hero.bagSize, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 8-11, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	slot6 = if not self.items[i] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-12, warpins: 1 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-13, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return cnt
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return heroBag
+--- END OF BLOCK #0 ---
+
+
+

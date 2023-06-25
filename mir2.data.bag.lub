@@ -1,0 +1,2680 @@
+--- BLOCK #0 1-99, warpins: 1 ---
+local bag = {
+	max = 48,
+	isHero = false
+}
+bag.items = {}
+bag.quickItems = {}
+bag.customs = {}
+bag.throwing = {}
+bag.eat = {}
+bag.take = {}
+bag.split = {}
+bag.fusion = {}
+bag.strengthen = {}
+bag.set = function (self, buf, bufLen)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.items = {}
+	self.throwing = {}
+	self.eat = {}
+	self.take = {}
+
+	self.delAllQuickItem(self)
+
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 12-14, warpins: 4 ---
+	--- END OF BLOCK #1 ---
+
+	if 0 < bufLen then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #2 15-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-33, warpins: 1 ---
+	local item = getRecord("TClientItem")
+	_, buf, bufLen = net.record(item, buf, bufLen)
+
+	--- END OF BLOCK #3 ---
+
+	slot4 = if not self.isInFusion(self, item)
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #1
+	end
+
+
+	--- BLOCK #4 34-39, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not self.isInStrengthen(self, item)
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #1
+	end
+
+
+	--- BLOCK #5 40-45, warpins: 1 ---
+	self.items[#self.items + 1] = item
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 46-49, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	for i, v in pairs(self.quickItems)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 50-53, warpins: 1 ---
+	self.fillQuickItemTest(self, i)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 54-55, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 56-56, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+bag.isInFusion = function (self, item)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(self.fusion)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if item.get(item, "makeIndex")
+	 == v.get(v, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-16, warpins: 1 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-18, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 19-20, warpins: 1 ---
+	return false
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.isInStrengthen = function (self, item)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(self.strengthen)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if item.get(item, "makeIndex")
+	 == v.get(v, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-16, warpins: 1 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-18, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 19-20, warpins: 1 ---
+	return false
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.equipAmulet = function (self, force)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local amuletNames = {
+		"»¤Éí·û"
+	}
+	local item, where = nil
+
+	--- END OF BLOCK #0 ---
+
+	for k, am in ipairs(amuletNames)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 11-19, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot15 = if string.find(v.getVar("name"), am)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-27, warpins: 1 ---
+	item = v
+	where = getTakeOnPosition(item.getVar("stdMode"))
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 28-29, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 30-31, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot3 = if item then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 32-32, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #7 33-36, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #8 37-39, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot15 = if v.item then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 40-45, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if am == v.item.getVar("name")
+
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 46-53, warpins: 1 ---
+	item = v
+	where = getTakeOnPosition(item.getVar("stdMode"))
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 54-55, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #12 56-57, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot3 = if item then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 58-58, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 59-60, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #15 61-62, warpins: 3 ---
+	--- END OF BLOCK #15 ---
+
+	slot3 = if item then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #16 63-75, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot5 = if self.use(self, "take", item.get(item, "makeIndex"), {
+		where = where,
+		force = force
+	})
+	 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 76-98, warpins: 1 ---
+	net.send({
+		CM_TAKEONITEM,
+		recog = item.get(item, "makeIndex"),
+		param = where
+	}, {
+		item.getVar("name")
+	})
+
+	local bagPanel = main_scene.ui.panels.bag
+
+	--- END OF BLOCK #17 ---
+
+	slot5 = if bagPanel then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 99-105, warpins: 1 ---
+	bagPanel.delItem(bagPanel, item.get(item, "makeIndex"))
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 106-107, warpins: 2 ---
+	return true
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 108-109, warpins: 3 ---
+	return false
+	--- END OF BLOCK #20 ---
+
+
+
+end
+bag.add = function (self, buf, bufLen)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	local ret = {}
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 2-4, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	if 0 < bufLen then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-27, warpins: 1 ---
+	local item = getRecord("TClientItem")
+	_, buf, bufLen = net.record(item, buf, bufLen)
+
+	self.addItem(self, item)
+
+	ret[#ret + 1] = {
+		where = "bag",
+		data = item
+	}
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 28-28, warpins: 1 ---
+	return ret
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.upt = function (self, buf, bufLen)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	local data = getRecord("TClientItem")
+
+	net.record(data, buf, bufLen)
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.isInStrengthen(self, data)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 16-19, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(self.strengthen)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 20-29, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.get(v, "makeIndex")
+	 == data.get(data, "makeIndex")
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 30-37, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.getVar("name")
+	 == data.getVar("name")
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 38-43, warpins: 1 ---
+	self.strengthen[k] = data
+
+	return data.get(data, "makeIndex")
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 44-45, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 46-46, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #7 47-50, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #8 51-60, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if v.get(v, "makeIndex")
+	 == data.get(data, "makeIndex")
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 61-68, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if v.getVar("name")
+	 == data.getVar("name")
+
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 69-74, warpins: 1 ---
+	self.items[k] = data
+
+	return data.get(data, "makeIndex")
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 75-76, warpins: 4 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #12 77-77, warpins: 2 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+bag.bindQuickItem = function (self, btnid, use, callback)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.quickItems[btnid] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-11, warpins: 2 ---
+	self.quickItems[btnid] = {
+		use = use,
+		callback = callback
+	}
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bag.bindCustomsItem = function (self, btnid, use, makeIndex, callback)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	self.bindQuickItem(self, btnid, use, callback)
+
+	local quick = self.quickItems[btnid]
+	quick.custom = true
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(quick.use)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #1 15-18, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i, v2 in pairs(self.items)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #2 19-27, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v2.get(v2, "makeIndex")
+	 == tonumber(makeIndex)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #3 28-42, warpins: 1 ---
+	quick.item = v2
+
+	quick.callback(v2.get(v2, "makeIndex"))
+
+	quick.itemName = v2.getVar("name")
+
+	--- END OF BLOCK #3 ---
+
+	for id, i_quick in pairs(self.quickItems)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #4 43-44, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if id ~= btnid then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 45-47, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot21 = if i_quick.item then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 48-54, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if i_quick.item:get("makeIndex")
+	 == makeIndex then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 55-62, warpins: 1 ---
+	i_quick.callback()
+
+	i_quick.item = nil
+
+	self.fillQuickItemTest(self, id)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 63-64, warpins: 5 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #9 65-66, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #10 67-68, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #11 69-69, warpins: 1 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+bag.isInQuicks = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.custom then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot7 = if v.item then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 11-20, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.item:get("makeIndex")
+	 == tonumber(makeIndex)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 21-22, warpins: 1 ---
+	return true
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 23-24, warpins: 5 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 25-26, warpins: 1 ---
+	return false
+	--- END OF BLOCK #6 ---
+
+
+
+end
+bag.unbindQuickItem = function (self, btnid)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.quickItems[btnid] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	self.quickItems[btnid] = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bag.addItemForQuickBtn = function (self, data)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if not v.item then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for i, v2 in ipairs(v.use)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #3 12-16, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if data.getVar("name")
+	 == v2 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 17-25, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot12 = if not self.isInQuicks(self, data.get(data, "makeIndex"))
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 26-32, warpins: 1 ---
+	v.item = data
+
+	v.callback(data.get(data, "makeIndex"))
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 33-34, warpins: 4 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #7 35-36, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #8 37-37, warpins: 1 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+bag.fillQuickItemTest = function (self, btnid)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local quick = self.quickItems[btnid]
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not quick then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-8, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if quick.item then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-9, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-12, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot3 = if quick.itemName then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 13-16, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #6 17-22, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v.getVar("name")
+	 == quick.itemName then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 23-31, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot8 = if not self.isInQuicks(self, v.get(v, "makeIndex"))
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 32-42, warpins: 1 ---
+	quick.item = v
+
+	quick.callback(v.get(v, "makeIndex"))
+
+	quick.item.fill = true
+
+	return 
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 43-44, warpins: 4 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #10 45-48, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	for k, v in ipairs(quick.use)
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #11 49-52, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	for i, v2 in pairs(self.items)
+
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #12 53-57, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if v2.getVar("name")
+	 == v then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #13 58-66, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot13 = if not self.isInQuicks(self, v2.get(v2, "makeIndex"))
+
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 67-81, warpins: 1 ---
+	quick.item = v2
+
+	quick.callback(v2.get(v2, "makeIndex"))
+
+	quick.itemName = v2.getVar("name")
+	quick.item.fill = true
+
+	return 
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 82-83, warpins: 4 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #16 84-85, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #17 86-86, warpins: 1 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+bag.delQuickItem = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.item then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.item:get("makeIndex")
+	 == tonumber(makeIndex)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-22, warpins: 1 ---
+	v.callback()
+
+	v.item = nil
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 23-24, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 25-25, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+bag.delAllQuickItem = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot6 = if v.item then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	v.callback()
+
+	v.item = nil
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.getQuickItemCount = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local cnt = 0
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.quickItems)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.item then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 1 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-11, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 12-12, warpins: 1 ---
+	return cnt
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.getItem = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if makeIndex == v.get(v, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	return k, v
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-15, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 16-16, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.getItemStrengthen = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.strengthen)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if makeIndex == v.get(v, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 1 ---
+	return v
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.getItemWithTable = function (self, names)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(names)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v2 in pairs(self.items)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 9-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v == v2.getVar("name")
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-16, warpins: 1 ---
+	return v2, "bag"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-18, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 19-20, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 21-21, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+bag.getItemWithName = function (self, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if name == v.getVar("name")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-12, warpins: 1 ---
+	return v, "bag"
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-14, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 15-15, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.getItemWithShortName = function (self, name)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local function getItem(sName)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(self.items)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 6-15, warpins: 1 ---
+		local itemName = v.getVar("name")
+
+		--- END OF BLOCK #1 ---
+
+		slot7 = if string.find(itemName, sName)
+
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 16-16, warpins: 1 ---
+		return v
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 17-18, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 19-19, warpins: 1 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	local tarItem = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(name)
+	 == "table" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 8-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(name)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 12-16, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type(v)
+
+	 == "string" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 17-22, warpins: 1 ---
+	tarItem = getItem(v)
+
+	--- END OF BLOCK #3 ---
+
+	slot3 = if tarItem then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-26, warpins: 1 ---
+	return tarItem, "bag"
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 27-28, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 29-29, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #7 30-34, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if type(name)
+
+	 == "string" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 35-40, warpins: 1 ---
+	tarItem = getItem(name)
+
+	--- END OF BLOCK #8 ---
+
+	slot3 = if tarItem then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 41-44, warpins: 1 ---
+	return tarItem, "bag"
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 45-46, warpins: 4 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+bag.getItemWithNameAndDura = function (self, name, dura)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local function getItem(sName, dura)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(self.items)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 6-15, warpins: 1 ---
+		local itemName = v.getVar("name")
+
+		--- END OF BLOCK #1 ---
+
+		slot8 = if string.find(itemName, sName)
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 16-21, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if dura <= v.get(v, "dura")
+
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 22-22, warpins: 1 ---
+		return v
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 23-24, warpins: 4 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 25-25, warpins: 1 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	return getItem(name, dura)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bag.getItemCount = function (self, name)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local cnt = 0
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if name == v.getVar("name")
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 11-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if v.isPileUp()
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-20, warpins: 1 ---
+	cnt = cnt + v.get(v, "dura")
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 21-21, warpins: 1 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 22-23, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 24-24, warpins: 1 ---
+	return cnt
+	--- END OF BLOCK #6 ---
+
+
+
+end
+bag.getFreeCount = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local cnt = 0
+	--- END OF BLOCK #0 ---
+
+	for i=1, self.max, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 6-9, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	slot6 = if not self.items[i] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-10, warpins: 1 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-11, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 12-12, warpins: 1 ---
+	return cnt
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.addItem = function (self, data)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i=1, self.max, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 5-8, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	slot6 = if not self.items[i] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-15, warpins: 1 ---
+	self.items[i] = data
+
+	self.addItemForQuickBtn(self, data)
+
+	return i
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-16, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 17-17, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.delItem = function (self, makeIndex)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.delQuickItem(self, makeIndex)
+
+	local isSuccess = nil
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 10-18, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "makeIndex")
+	 == tonumber(makeIndex)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 19-22, warpins: 1 ---
+	self.items[k] = nil
+	isSuccess = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 23-24, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 25-26, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if isSuccess then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 27-30, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #6 31-33, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot8 = if v.item then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 34-43, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if v.item:get("makeIndex")
+	 == tonumber(makeIndex)
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 44-48, warpins: 1 ---
+	v.callback()
+
+	v.item = nil
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 49-50, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #10 51-51, warpins: 3 ---
+	return isSuccess
+	--- END OF BLOCK #10 ---
+
+
+
+end
+bag.delStrengthenItem = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.strengthen)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "makeIndex")
+	 == tonumber(makeIndex)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 14-16, warpins: 1 ---
+	self.strengthen[k] = nil
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-18, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 19-19, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.changePos = function (self, idx1, idx2)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.items[idx2] = self.items[idx1]
+	self.items[idx1] = self.items[idx2]
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bag.isAallCanPileUp = function (self, idx1, idx2)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local item1 = self.items[idx1]
+	local item2 = self.items[idx2]
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if item1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if item2 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 9-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot5 = if item1.isCanPileUp(item2)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-15, warpins: 1 ---
+	return true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-17, warpins: 4 ---
+	return false
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.throw = function (self, makeIndex)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local isSuccess = nil
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if makeIndex == v.get(v, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-18, warpins: 1 ---
+	self.throwing[makeIndex] = v
+	self.items[k] = nil
+	isSuccess = true
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 19-20, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 21-22, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if isSuccess then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 23-26, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #6 27-29, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot8 = if v.item then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 30-39, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if v.item:get("makeIndex")
+	 == tonumber(makeIndex)
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 40-44, warpins: 1 ---
+	v.callback()
+
+	v.item = nil
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 45-46, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #10 47-47, warpins: 3 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+bag.throwEnd = function (self, makeIndex, isSuccess)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not isSuccess then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 3-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if self.throwing[makeIndex] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-11, warpins: 1 ---
+	self.addItem(self, self.throwing[makeIndex])
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-15, warpins: 3 ---
+	self.throwing[makeIndex] = nil
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bag.use = function (self, action, makeIndex, params)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local limit = 5
+	--- END OF BLOCK #0 ---
+
+	slot3 = if params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot5 = if params.force then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-7, warpins: 1 ---
+	limit = 0.2
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-11, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot5 = if self[action].item then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 12-19, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if socket.gettime()
+
+	 - self[action].time < limit then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 21-25, warpins: 3 ---
+	local isSuccess = nil
+
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #7 26-31, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if makeIndex == v.get(v, "makeIndex")
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 32-45, warpins: 1 ---
+	self[action].item = v
+	self[action].time = socket.gettime()
+	self[action].params = params
+	self.items[k] = nil
+	isSuccess = true
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 46-47, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #10 48-49, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot5 = if isSuccess then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #11 50-53, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	for k, v in pairs(self.quickItems)
+
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #12 54-56, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot11 = if v.item then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #13 57-63, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if v.item:get("makeIndex")
+	 == makeIndex then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 64-67, warpins: 1 ---
+	v.callback()
+
+	v.item = nil
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 68-69, warpins: 4 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #16 70-70, warpins: 2 ---
+	return isSuccess
+	--- END OF BLOCK #16 ---
+
+
+
+end
+bag.useEnd = function (self, action, isSuccess)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local ret, item, isQuick, where = nil
+	--- END OF BLOCK #0 ---
+
+	slot7 = if self[action].item then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #1 6-18, warpins: 1 ---
+	item = self[action].item
+	ret = self[action].item:get("makeIndex")
+	--- END OF BLOCK #1 ---
+
+	slot5 = if self[action].params then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 19-21, warpins: 1 ---
+	isQuick = self[action].params.quick
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 22-23, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if isSuccess then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 24-25, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if action == "take" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 26-28, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot7 = if self.isHero then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 29-39, warpins: 1 ---
+	g_data.heroEquip:setItem(self[action].params.where, self[action].item)
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #7 40-50, warpins: 1 ---
+	g_data.equip:setItem(self[action].params.where, self[action].item)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 51-55, warpins: 1 ---
+	self.addItem(self, self[action].item)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 56-62, warpins: 5 ---
+	self[action] = {}
+
+	return ret, item, isQuick, where
+	--- END OF BLOCK #9 ---
+
+
+
+end
+bag.duraChange = function (self, makeindex, dura, duraMax, price)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if makeindex == v.get(v, "makeIndex")
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-21, warpins: 1 ---
+	v.set(v, "dura", dura)
+	v.set(v, "duraMax", duraMax)
+
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 22-23, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 24-27, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot5 = if self.eat.item then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 28-35, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if makeindex == self.eat.item:get("makeIndex")
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 36-49, warpins: 1 ---
+	self.eat.item:set("dura", dura)
+	self.eat.item:set("duraMax", duraMax)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 50-53, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	for k, v in pairs(self.strengthen)
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #8 54-59, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if makeindex == v.get(v, "makeIndex")
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 60-70, warpins: 1 ---
+	v.set(v, "dura", dura)
+	v.set(v, "duraMax", duraMax)
+
+	return 
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 71-72, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #11 73-73, warpins: 1 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+bag.PileUpNext = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.player.inPileUping then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	return false
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for i, v in pairs(self.items)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 12-17, warpins: 1 ---
+	local ret = self.AutoItemAdd(self, v)
+
+	--- END OF BLOCK #3 ---
+
+	slot6 = if ret then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-18, warpins: 1 ---
+	return ret
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-20, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 21-21, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+bag.AutoItemAdd = function (self, item)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.isCanPileUp(item)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	return {
+		v,
+		item
+	}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-15, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 16-16, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bag.tmpPrintItem = function (self, str)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-21, warpins: 1 ---
+	print(i, v.getVar("name"), v.get(v, "makeIndex"), v.getVar("stdMode"), v.get(v, "dura"))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 22-23, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 24-24, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bag.addCustoms = function (self, custom_id, makeIndex, name, source)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not self.customs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	self.customs = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-12, warpins: 2 ---
+	self.customs[custom_id] = {
+		makeIndex = makeIndex,
+		name = name,
+		source = source
+	}
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bag.delCustoms = function (self, custom_id)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.customs[custom_id] = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bag.getCustom = function (self, custom_id)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.customs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	self.customs = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-8, warpins: 2 ---
+	return self.customs[custom_id]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return bag
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,1825 @@
+--- BLOCK #0 1-90, warpins: 1 ---
+local relation = {}
+relation.listeners_ = {}
+relation.chatRecords = {}
+local notifier = {}
+notifier.addNotifyListener = function (self, func)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.listeners_ then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	slot2 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-11, warpins: 2 ---
+	self.listeners_ = slot2
+	self.listeners_[#self.listeners_ + 1] = func
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+notifier.removeNotifyListener = function (self, func)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(self.listeners_)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == func then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-11, warpins: 1 ---
+	table.remove(self.listeners_, k)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+notifier.notify = function (self, t, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	slot2 = ipairs
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.listeners_ then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	slot3 = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for k, v in slot2(slot3)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 8-12, warpins: 1 ---
+	v("relation", t, ...)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-14, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 15-15, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+table.merge(relation, notifier)
+
+relation.decodeArray_ = function (self, num, recordName, buf, bufLen)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local list = {}
+	--- END OF BLOCK #0 ---
+
+	for k=1, num, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 6-17, warpins: 2 ---
+	local record = nil
+	record, buf, bufLen = net.record(recordName, buf, bufLen)
+	list[k] = record
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 18-18, warpins: 1 ---
+	return list
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.sort_ = function (self, list)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if list.sorted__ then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return list
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-14, warpins: 1 ---
+	local function compare(l, r)
+		--- BLOCK #0 1-18, warpins: 1 ---
+		local lonline = l.get(l, "isonline")
+		local ronline = r.get(r, "isonline")
+		local llevel = l.get(l, "level")
+		local rlevel = r.get(r, "level")
+
+		--- END OF BLOCK #0 ---
+
+		if ronline < lonline then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 19-21, warpins: 1 ---
+		return true
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #2 22-23, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if lonline == ronline then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 24-25, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if rlevel < llevel then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 26-28, warpins: 1 ---
+		return true
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 29-30, warpins: 2 ---
+		return false
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 31-31, warpins: 3 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	table.sort(list, compare)
+
+	list.sorted__ = true
+
+	return list
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.setFriends = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local num = msg.param
+	self.friends = self.decodeArray_(self, num, "TClientFriendRelation", buf, bufLen)
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.friends)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 14-29, warpins: 1 ---
+	print("relation:setFriends", v.get(v, "name"))
+	g_data.mark:addFriend(v.get(v, "name"))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 30-31, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 32-36, warpins: 1 ---
+	self.notify(self, "friend")
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.setAttentions = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local num = msg.param
+	self.attentions = self.decodeArray_(self, num, "TClientAttentionRelation", buf, bufLen)
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.attentions)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 14-29, warpins: 1 ---
+	print("relation:setAttentions", v.get(v, "name"))
+	g_data.mark:addFriend(v.get(v, "name"))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 30-31, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 32-36, warpins: 1 ---
+	self.notify(self, "attention")
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.setBlackList = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local num = msg.param
+	self.blackList = self.decodeArray_(self, num, "TClientNormalBlackRelation", buf, bufLen)
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.blackList)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 14-29, warpins: 1 ---
+	print("relation:setBlackList", v.get(v, "name"))
+	g_data.mark:addFriend(v.get(v, "name"))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 30-31, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 32-36, warpins: 1 ---
+	self.notify(self, "blackList")
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.update_ = function (self, act, arr, recordName, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if act == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-15, warpins: 1 ---
+	arr.sorted__ = false
+	local record, buf, bufLen = net.record(recordName, buf, bufLen)
+	arr[#arr + 1] = record
+
+	return record
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #2 16-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if act == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 18-27, warpins: 1 ---
+	local item, idx = self.getItemByName(self, arr, net.str(buf))
+
+	--- END OF BLOCK #3 ---
+
+	slot7 = if idx then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 28-32, warpins: 1 ---
+	table.remove(arr, idx)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 33-34, warpins: 2 ---
+	return item
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #6 35-36, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if act == 2 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #7 37-54, warpins: 1 ---
+	arr.sorted__ = false
+	local record, buf, bufLen = net.record(recordName, buf, bufLen)
+	local item, index = self.getItemByName(self, arr, record.get(record, "name"))
+	--- END OF BLOCK #7 ---
+
+	slot10 = if index then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 55-55, warpins: 1 ---
+	arr[index] = record
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 56-58, warpins: 2 ---
+	return item, record
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 59-59, warpins: 4 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+relation.updateFriend = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not self.friends then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-16, warpins: 2 ---
+	self.update_(self, msg.param, self.friends, "TClientFriendRelation", buf, bufLen)
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.friends)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 17-32, warpins: 1 ---
+	print("relation:updateFriend", v.get(v, "name"))
+	g_data.mark:addFriend(v.get(v, "name"))
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 33-34, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 35-39, warpins: 1 ---
+	self.notify(self, "friend")
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+relation.updateAttention = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not self.attentions then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-16, warpins: 2 ---
+	local ole, new = self.update_(self, msg.param, self.attentions, "TClientAttentionRelation", buf, bufLen)
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.attentions)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 17-32, warpins: 1 ---
+	print("relation:updateAttention", v.get(v, "name"))
+	g_data.mark:addFriend(v.get(v, "name"))
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 33-34, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 35-41, warpins: 1 ---
+	self.notify(self, "attention", ole, new)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+relation.updateBlackList = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not self.blackList then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-16, warpins: 2 ---
+	self.update_(self, msg.param, self.blackList, "TClientNormalBlackRelation", buf, bufLen)
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.blackList)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 17-32, warpins: 1 ---
+	print("relation:updateBlackList", v.get(v, "name"))
+	g_data.mark:addFriend(v.get(v, "name"))
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 33-34, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 35-39, warpins: 1 ---
+	self.notify(self, "blackList")
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+relation.getItemByName = function (self, arr, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(arr)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.get(v, "name")
+
+	 == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	return v, k
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-15, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 16-16, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+relation.setOnline_ = function (self, msg, isonline, buf, bufLen)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local name = net.str(buf)
+	local list, typeName = nil
+	--- END OF BLOCK #0 ---
+
+	if msg.param == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-11, warpins: 1 ---
+	list = self.friends
+	typeName = "friend"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if msg.param == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	list = self.attentions
+	typeName = "attention"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 18-20, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if msg.param == 2 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 21-22, warpins: 1 ---
+	list = self.blackList
+	typeName = "blackList"
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-24, warpins: 4 ---
+	--- END OF BLOCK #6 ---
+
+	slot6 = if not list then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 25-25, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 26-42, warpins: 2 ---
+	list.sorted__ = false
+	local item = self.getItemByName(self, list, name)
+
+	item.set(item, "isonline", isonline)
+	self.notify(self, typeName)
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+relation.online = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.setOnline_(self, msg, 1, buf, bufLen)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.offline = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.setOnline_(self, msg, 0, buf, bufLen)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.getFriends = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.friends then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	self.sort_(self, self.friends)
+
+	return self.friends
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 11-12, warpins: 1 ---
+	return {}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.getAttentions = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.attentions then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	self.sort_(self, self.attentions)
+
+	return self.attentions
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 11-12, warpins: 1 ---
+	return {}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.getBlackList = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.blackList then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	self.sort_(self, self.blackList)
+
+	return self.blackList
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 11-12, warpins: 1 ---
+	return {}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.decodeNearPlayerBuf = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local num = msg.param
+	local arr = self.decodeArray_(self, num, "TClientNearbyPlayerInfo", buf, bufLen)
+
+	return arr
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.getNearList = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local list = {}
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ground.map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-13, warpins: 1 ---
+	list = main_scene.ground.map:getHeroNameList()
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-18, warpins: 2 ---
+	local data = {}
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(list)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 19-23, warpins: 1 ---
+	data[#data + 1] = {
+		"string",
+		v,
+		15
+	}
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 24-25, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 26-37, warpins: 1 ---
+	net.send({
+		CM_QUERY_NEARBYPLAYER,
+		param = #list
+	}, nil, data)
+
+	self.nearList = list
+
+	return list
+	--- END OF BLOCK #5 ---
+
+
+
+end
+relation.setAttentionColor = function (self, playername, coloridx)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local att = self.getAttention(self, playername)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if att then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-26, warpins: 1 ---
+	net.send({
+		CM_UPDATE_ATTENTION_COLOR,
+		param = coloridx
+	}, {
+		playername
+	})
+	att.set(att, "color", coloridx)
+	self.notify(self, "attentionColor", att, att)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-27, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.getRelationShip = function (self, name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local r = {}
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.getItemByName(self, self.friends, name)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-10, warpins: 1 ---
+	r.isFriend = true
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-17, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if self.getItemByName(self, self.attentions, name)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-19, warpins: 1 ---
+	r.isAttention = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-26, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot3 = if self.getItemByName(self, self.blackList, name)
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 27-28, warpins: 1 ---
+	r.isBlack = true
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 29-29, warpins: 2 ---
+	return r
+	--- END OF BLOCK #6 ---
+
+
+
+end
+relation.getFriend = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.friends then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	slot2 = self.getItemByName(self, self.friends, name)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.getAttention = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.attentions then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	slot2 = self.getItemByName(self, self.attentions, name)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.getBlack = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.blackList then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	slot2 = self.getItemByName(self, self.blackList, name)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #2 ---
+
+
+
+end
+local chatRecord = class("relation.chatRecord", notifier)
+chatRecord.ctor = function (self, player, target, size)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.data = cache.getFriendChatRecord(player, target)
+	slot4 = self.data
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not self.data.pos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-12, warpins: 1 ---
+	slot5 = 1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-18, warpins: 2 ---
+	slot4.pos = slot5
+	slot4 = self.data
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not self.data.maxSize then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-19, warpins: 1 ---
+	slot5 = size
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-25, warpins: 2 ---
+	slot4.maxSize = slot5
+	slot4 = self.data
+	--- END OF BLOCK #4 ---
+
+	slot5 = if not self.data.curSize then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 26-26, warpins: 1 ---
+	slot5 = 0
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 27-32, warpins: 2 ---
+	slot4.curSize = slot5
+	slot4 = self.data
+	--- END OF BLOCK #6 ---
+
+	slot5 = if not self.data.record then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 33-33, warpins: 1 ---
+	slot5 = {}
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 34-39, warpins: 2 ---
+	slot4.record = slot5
+	slot4 = self.data
+	--- END OF BLOCK #8 ---
+
+	slot5 = if not self.data.unread then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 40-40, warpins: 1 ---
+	slot5 = 0
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 41-42, warpins: 2 ---
+	slot4.unread = slot5
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+chatRecord.add = function (self, content)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local data = self.data
+	data.record[data.pos] = content
+	--- END OF BLOCK #0 ---
+
+	if data.maxSize <= data.pos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-11, warpins: 1 ---
+	data.pos = 1
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 12-18, warpins: 1 ---
+	data.pos = data.pos + 1
+	--- END OF BLOCK #2 ---
+
+	if data.curSize < data.maxSize then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-21, warpins: 1 ---
+	data.curSize = data.curSize + 1
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-27, warpins: 3 ---
+	self.notify(self, "newItem", content)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+chatRecord.readed = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.data.unread = 0
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chatRecord.getUnreadCnt = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return self.data.unread
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chatRecord.get = function (self, pos)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local data = self.data
+	--- END OF BLOCK #0 ---
+
+	if data.maxSize <= data.curSize then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	pos = (data.pos + pos) - 1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if data.maxSize < pos then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-13, warpins: 1 ---
+	pos = pos - data.maxSize
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-16, warpins: 2 ---
+	return data.record[pos]
+	--- END OF BLOCK #4 ---
+
+
+
+end
+chatRecord.iterator = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local pos = 1
+
+	return function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if self.data.curSize < pos then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-8, warpins: 1 ---
+		return nil
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-17, warpins: 2 ---
+		local re = self:get(pos)
+		pos = pos + 1
+
+		return re
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chatRecord.rIterator = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local pos = self.data.pos - 1
+
+	return function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if self.data.curSize < pos then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-8, warpins: 1 ---
+		return nil
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-17, warpins: 2 ---
+		local re = self:get(pos)
+		pos = pos - 1
+
+		return re
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+local function testChatRecord()
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local r1 = chatRecord.new(10)
+
+	--- END OF BLOCK #0 ---
+
+	for k=1, 5, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 9-13, warpins: 2 ---
+	r1.add(r1, k)
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 14-18, warpins: 1 ---
+	local exp = 1
+
+	--- END OF BLOCK #2 ---
+
+	for v in r1.iterator(r1)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #3 19-21, warpins: 1 ---
+	slot6 = assert
+	--- END OF BLOCK #3 ---
+
+	if v ~= exp then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 22-23, warpins: 1 ---
+	slot7 = false
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 24-24, warpins: 1 ---
+	slot7 = true
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 25-27, warpins: 2 ---
+	slot6(slot7, "should be equal")
+
+	exp = exp + 1
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 28-29, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #8 30-37, warpins: 1 ---
+	local r2 = chatRecord.new(10)
+
+	--- END OF BLOCK #8 ---
+
+	for k=1, 10, 1
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #10
+
+	--- BLOCK #9 38-42, warpins: 2 ---
+	r2.add(r2, k)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #10 43-47, warpins: 1 ---
+	local exp = 1
+
+	--- END OF BLOCK #10 ---
+
+	for v in r2.iterator(r2)
+
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #11 48-50, warpins: 1 ---
+	slot8 = assert
+	--- END OF BLOCK #11 ---
+
+	if v ~= exp then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 51-52, warpins: 1 ---
+	slot9 = false
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 53-53, warpins: 1 ---
+	slot9 = true
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 54-56, warpins: 2 ---
+	slot8(slot9, "should be equal")
+
+	exp = exp + 1
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 57-58, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #16 59-66, warpins: 1 ---
+	local r3 = chatRecord.new(10)
+
+	--- END OF BLOCK #16 ---
+
+	for k=1, 20, 1
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #18
+
+	--- BLOCK #17 67-71, warpins: 2 ---
+	r3.add(r3, k)
+
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #18 72-76, warpins: 1 ---
+	local exp = 11
+
+	--- END OF BLOCK #18 ---
+
+	for v, k in r3.iterator(r3)
+
+
+	LOOP BLOCK #19
+	GO OUT TO BLOCK #24
+
+
+	--- BLOCK #19 77-79, warpins: 1 ---
+	slot11 = assert
+	--- END OF BLOCK #19 ---
+
+	if v ~= exp then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 80-81, warpins: 1 ---
+	slot12 = false
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #21 82-82, warpins: 1 ---
+	slot12 = true
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 83-85, warpins: 2 ---
+	slot11(slot12, "should be equal")
+
+	exp = exp + 1
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 86-87, warpins: 2 ---
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #24 88-88, warpins: 1 ---
+	return 
+	--- END OF BLOCK #24 ---
+
+
+
+end
+
+relation.recordChat = function (self, target, text, playerName)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	self.getRecords(self, playerName, target):add({
+		isOther = false,
+		name = playerName,
+		text = text,
+		time = os.time()
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.getRecords = function (self, playerName, target)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.chatRecords[target] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	self.chatRecords[target] = chatRecord.new(playerName, target, 1000)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-15, warpins: 2 ---
+	return self.chatRecords[target]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.filterChat = function (self, playername, text, ident, msg)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local name = nil
+	--- END OF BLOCK #0 ---
+
+	if SM_WHISPER == ident then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-17, warpins: 1 ---
+	name = string.sub(text, 0, string.find(text, "=> ") - 1)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #2 18-20, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if SM_CRY == ident then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-33, warpins: 1 ---
+	name = string.sub(text, 4, string.find(text, ":") - 1)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #4 34-40, warpins: 1 ---
+	local idx = string.find(text, ":")
+
+	--- END OF BLOCK #4 ---
+
+	slot6 = if not idx then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 41-42, warpins: 1 ---
+	return true
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 43-49, warpins: 2 ---
+	name = string.sub(text, 0, idx - 1)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 50-55, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	slot6 = if self.getBlack(self, name)
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 56-57, warpins: 1 ---
+	return false
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 58-60, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	if SM_WHISPER == ident then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #10 61-66, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot6 = if self.getFriend(self, name)
+
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 67-98, warpins: 1 ---
+	local record = self.getRecords(self, playername, name)
+	record.data.unread = record.data.unread + 1
+
+	record.add(record, {
+		isOther = true,
+		name = name,
+		text = string.sub(text, string.find(text, "=> ") + 3),
+		user = msg.recog,
+		time = os.time()
+	})
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 99-100, warpins: 3 ---
+	return true
+	--- END OF BLOCK #12 ---
+
+
+
+end
+
+return relation
+--- END OF BLOCK #0 ---
+
+
+

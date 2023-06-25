@@ -1,0 +1,21 @@
+--- BLOCK #0 1-5, warpins: 1 ---
+local sconfig = {
+	deathColor = 0,
+	allowMaxLevel = 999
+}
+sconfig.set = function (self, msg, body)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.deathColor = math.min(Lobyte(msg.param), 8)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return sconfig
+--- END OF BLOCK #0 ---
+
+
+
