@@ -1,0 +1,1789 @@
+--- BLOCK #0 1-155, warpins: 1 ---
+local current = ...
+local cache = {
+	verifyKey = "mir2VersionCheck",
+	safeKey = "HOwKaN^7{?!a2v"
+}
+cache.serializeCaches = {}
+local map_version = "0.1"
+local minimap_version = "0.1"
+local bigmap_version = "0.1.2"
+local setting_version = "0.1.6"
+local diy_version = "0.1.3"
+local debug_version = "0.1.1"
+local helper_version = "0.1"
+local cg_version = "0.1"
+local relation_version = "0.1"
+local serialize = require("mir2.data.serialize")
+cache.checkAll = function ()
+	--- BLOCK #0 1-12, warpins: 1 ---
+	print("checkAll")
+
+	local tasks = {
+		"cache",
+		"verify",
+		"history",
+		"res",
+		"data",
+		"setting",
+		"map",
+		"minimap",
+		"bigmap",
+		"chat",
+		"diy",
+		"debug",
+		"helper",
+		"relation",
+		"iap"
+	}
+
+	local function check()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if 0 < #tasks then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-13, warpins: 1 ---
+		cache["check_" .. tasks[1]](function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			table.remove(tasks, 1)
+			check()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 14-14, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	check()
+	cache.init_launch()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_uuid = function (temp)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local path = device.writablePath .. "cache/lg"
+	local t = io.readfile(path)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not t then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-22, warpins: 1 ---
+	io.writefile(path, crypto.encryptXXTEA(temp, cache.safeKey))
+
+	return temp
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 23-29, warpins: 1 ---
+	t = crypto.decryptXXTEA(t, cache.safeKey)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 30-30, warpins: 2 ---
+	return t
+	--- END OF BLOCK #3 ---
+
+
+
+end
+cache.check_verify = function (func)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	func()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_history = function (func)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	func()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_res = function (func)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "res")
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-17, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "res")
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-20, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.check_data = function (func)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	func()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_cache = function (func)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "cache")
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-17, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "cache")
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-20, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getSerialize = function (filename)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local ser = cache.serializeCaches[filename]
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not ser then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-17, warpins: 1 ---
+	ser = serialize.new()
+
+	ser.open(ser, filename, true)
+
+	cache.serializeCaches[filename] = ser
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-19, warpins: 2 ---
+	local data = ser.data
+
+	return data
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getAccount = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/ac")
+
+	--- END OF BLOCK #0 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-18, warpins: 1 ---
+	return json.decode(crypto.decryptXXTEA(data, cache.safeKey))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 19-19, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveAccount = function (ac, pw)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not pw then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	local account = cache.getAccount()
+	--- END OF BLOCK #1 ---
+
+	slot2 = if account then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if account.ac == ac then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-11, warpins: 1 ---
+	pw = account.pw
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-13, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if not pw then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 14-14, warpins: 1 ---
+	pw = ""
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 15-33, warpins: 3 ---
+	io.writefile(device.writablePath .. "cache/ac", crypto.encryptXXTEA(json.encode({
+		ac = ac,
+		pw = pw
+	}), cache.safeKey))
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+cache.saveLastPlayerName = function (name)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not name then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	name = ""
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-16, warpins: 2 ---
+	io.writefile(device.writablePath .. "cache/lastPlayer", json.encode({
+		lastPlayer = name
+	}))
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getLastPlayerName = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/lastPlayer")
+	--- END OF BLOCK #0 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	data = json.decode(data)
+
+	--- END OF BLOCK #1 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-18, warpins: 1 ---
+	return data.lastPlayer
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 19-19, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+cache.check_setting = function (func)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "cache/setting" .. setting_version)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-19, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "cache/setting" .. setting_version)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-22, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.genSettingPath = function (playerName, key)
+	--- BLOCK #0 1-33, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	key = crypto.encodeBase64(key)
+	local dirPath = device.writablePath .. "cache/setting" .. setting_version
+
+	return string.format("%s/%s/%s", dirPath, playerName, key), playerName, key, dirPath
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getSetting = function (playerName, key)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local data = io.readfile(cache.genSettingPath(playerName, key))
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-14, warpins: 1 ---
+	return json.decode(data)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-15, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveSetting = function (playerName, key)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	local settingPath, playerName, _, dirPath = cache.genSettingPath(playerName, key)
+	local path = string.format("%s/%s", dirPath, playerName)
+
+	--- END OF BLOCK #0 ---
+
+	slot7 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 18-22, warpins: 1 ---
+	ycFunction:mkdir(path)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 23-33, warpins: 2 ---
+	io.writefile(settingPath, json.encode(g_data.setting[key]))
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.removeSetting = function (playerName, key)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	os.remove(cache.genSettingPath(playerName, key))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getCustoms = function (playerName)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	local dirPath = device.writablePath .. "cache/customItem"
+	local data = io.readfile(string.format("%s/%s", dirPath, playerName))
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 28-31, warpins: 1 ---
+	return json.decode(data)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 32-32, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveCustoms = function (playerName)
+	--- BLOCK #0 1-22, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	local dirPath = device.writablePath .. "cache/customItem"
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not io.exists(dirPath)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 23-27, warpins: 1 ---
+	ycFunction:mkdir(dirPath)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 28-44, warpins: 2 ---
+	local path = string.format("%s/%s", dirPath, playerName)
+
+	io.writefile(path, json.encode(g_data.bag.customs))
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getHotKey = function (playerName)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	local dirPath = device.writablePath .. "cache/hotKey"
+	local data = io.readfile(string.format("%s/%s", dirPath, playerName))
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 28-31, warpins: 1 ---
+	return json.decode(data)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 32-32, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveHotKey = function (playerName)
+	--- BLOCK #0 1-22, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	local dirPath = device.writablePath .. "cache/hotKey"
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not io.exists(dirPath)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 23-27, warpins: 1 ---
+	ycFunction:mkdir(dirPath)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 28-44, warpins: 2 ---
+	local path = string.format("%s/%s", dirPath, playerName)
+
+	io.writefile(path, json.encode(g_data.hotKey.keyInfos))
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.copy_map = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #1 5-20, warpins: 1 ---
+	local mapVersionPath = device.writablePath .. "res/map" .. map_version .. "/version"
+	local mapZipPath = device.writablePath .. "res/map.zip"
+
+	--- END OF BLOCK #1 ---
+
+	slot2 = if io.exists(mapVersionPath)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 21-26, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if io.exists(mapZipPath)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 27-27, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-35, warpins: 3 ---
+	local data, md5 = ycFunction:getFileData("map.zip", true)
+
+	--- END OF BLOCK #4 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 36-37, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot3 = if md5 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 38-48, warpins: 1 ---
+	io.writefile(mapZipPath, data)
+	--- END OF BLOCK #6 ---
+
+	if crypto.md5file(mapZipPath)
+	 == md5 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 49-53, warpins: 1 ---
+	io.writefile(mapVersionPath, "")
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 54-61, warpins: 4 ---
+	cc.FileUtils:getInstance():purgeCachedEntries()
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 62-62, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+cache.check_map = function (func)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "res/map" .. map_version)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-19, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "res/map" .. map_version)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-25, warpins: 2 ---
+	cache.copy_map()
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getMapFilePath = function (mapid)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	return device.writablePath .. "res/map" .. map_version .. "/" .. string.lower(mapid) .. ".map"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.unzipMapFile = function (mapid)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local path = cache.getMapFilePath(mapid)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if io.exists(path)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-11, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-36, warpins: 2 ---
+	cache.copy_map()
+
+	local zipPath = cc.FileUtils:getInstance():fullPathForFilename("map.zip")
+
+	return ycFunction:unzipWithFilename(zipPath, string.lower(mapid) .. ".map", path, true)
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.minimapPath = function ()
+	--- BLOCK #0 1-7, warpins: 1 ---
+	return device.writablePath .. "cache/minimap" .. minimap_version .. "/"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_minimap = function (func)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local path = cache.minimapPath()
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-14, warpins: 1 ---
+	ycFunction:mkdir(path)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-17, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.minimapFullPath = function (minimapID)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	print(cache.minimapPath() .. minimapID .. ".png")
+
+	return cache.minimapPath() .. minimapID .. ".png"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getMinimap = function (minimapID)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local path = cache.minimapFullPath(minimapID)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if io.exists(path)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-22, warpins: 1 ---
+	return cc.Director:getInstance():getTextureCache():addImage(path)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 23-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.check_bigmap = function (func)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "cache/bigmap" .. bigmap_version)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-19, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "cache/bigmap" .. bigmap_version)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-22, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getBigmap = function (key)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/bigmap" .. bigmap_version .. "/" .. key)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-16, warpins: 1 ---
+	return json.decode(data)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveBigmap = function (key)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	io.writefile(device.writablePath .. "cache/bigmap" .. bigmap_version .. "/" .. key, json.encode(g_data.bigmap.maps[key]))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_chat = function (func)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local path = device.writablePath .. "cache/chat/"
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-13, warpins: 1 ---
+	rmdir(path)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-42, warpins: 2 ---
+	ycFunction:mkdir(path)
+	ycFunction:mkdir(path .. "wav")
+	ycFunction:mkdir(path .. "amr")
+	ycFunction:mkdir(path .. "pic")
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getVoiceWav = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return device.writablePath .. "cache/chat/wav/"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getVoiceAmr = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return device.writablePath .. "cache/chat/amr/"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getPicPathFull = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return device.writablePath .. "cache/chat/pic/"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.removePicTmp = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local path = cache.getPicTmp()
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-13, warpins: 1 ---
+	os.remove(path)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-14, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getPicTmp = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return device.writablePath .. "cache/chat/pic/tmp.png"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.diyPath = function ()
+	--- BLOCK #0 1-7, warpins: 1 ---
+	return device.writablePath .. "cache/diy" .. diy_version .. "/"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_diy = function (func)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local path = cache.diyPath()
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-14, warpins: 1 ---
+	ycFunction:mkdir(path)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-17, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.removeDiy = function (playerName, key)
+	--- BLOCK #0 1-32, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	key = crypto.encodeBase64(key)
+	local path = string.format("%s/%s/%s", cache.diyPath(), playerName, key)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 33-36, warpins: 1 ---
+	os.remove(path)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 37-37, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getDiy = function (playerName, key)
+	--- BLOCK #0 1-32, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	key = crypto.encodeBase64(key)
+	local path = string.format("%s/%s/%s", cache.diyPath(), playerName, key)
+	local data = io.readfile(path)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 33-39, warpins: 1 ---
+	return json.decode(crypto.decodeBase64(data))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 40-40, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveDiy = function (playerName, key, value)
+	--- BLOCK #0 1-31, warpins: 1 ---
+	playerName = crypto.encodeBase64(playerName)
+	playerName = string.gsub(playerName, "/", "#")
+	key = crypto.encodeBase64(key)
+	local path = string.format("%s/%s", cache.diyPath(), playerName)
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 32-36, warpins: 1 ---
+	ycFunction:mkdir(path)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 37-55, warpins: 2 ---
+	path = string.format("%s/%s", path, key)
+
+	io.writefile(path, crypto.encodeBase64(json.encode(value)))
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.check_helper = function (func)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "cache/helper" .. helper_version)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-19, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "cache/helper" .. helper_version)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-22, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getHelper = function (key)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/helper" .. helper_version .. "/" .. key)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-16, warpins: 1 ---
+	return json.decode(data)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getHelperSerialize = function (key)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local filename = device.writablePath .. "cache/helper" .. helper_version .. "/" .. key
+
+	return cache.getSerialize(filename)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.saveHelper = function (key, data)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	io.writefile(device.writablePath .. "cache/helper" .. helper_version .. "/" .. key, json.encode(data))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.removeHelper = function (key)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	os.remove(device.writablePath .. "cache/helper" .. helper_version .. "/" .. key)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.debugPath = function ()
+	--- BLOCK #0 1-7, warpins: 1 ---
+	return device.writablePath .. "cache/debug" .. debug_version .. "/"
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.check_debug = function (func)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local path = cache.debugPath()
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-14, warpins: 1 ---
+	ycFunction:mkdir(path)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-17, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getDebug = function (key)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local path = cache.debugPath()
+	local data = io.readfile(path .. key)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-15, warpins: 1 ---
+	return json.decode(data)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.saveDebug = function (key, value)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	local path = cache.debugPath()
+
+	io.writefile(path .. key, json.encode(value))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.saveDebugLog = function (folder, key, value)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	local path = cache.debugPath() .. folder .. "/"
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-17, warpins: 1 ---
+	ycFunction:mkdir(path)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-28, warpins: 2 ---
+	local file = io.open(path .. key, "w+b")
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(value)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 29-34, warpins: 1 ---
+	file.write(file, v .. "\r\n")
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 35-36, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 37-41, warpins: 1 ---
+	io.close(file)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+cache.cgPath = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return device.writablePath .. "cache/cg" .. cg_version
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.cgCheckFirstIn = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return false
+	--- END OF BLOCK #0 ---
+
+	if device.platform ~= "windows" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if device.platform == "mac" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-28, warpins: 2 ---
+	local path = cache.cgPath()
+
+	print("cache.cgCheckFirstIn", path, io.exists(path))
+	--- END OF BLOCK #3 ---
+
+	slot1 = if not io.exists(path)
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 29-35, warpins: 1 ---
+	io.writefile(path, cg_version)
+
+	return true
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 36-36, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+cache.cgClear = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-11, warpins: 1 ---
+	local path = cache.cgPath()
+
+	os.remove(path)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.check_relation = function (func)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not io.exists(device.writablePath .. "cache/relation" .. relation_version)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-19, warpins: 1 ---
+	ycFunction:mkdir(device.writablePath .. "cache/relation" .. relation_version)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-22, warpins: 2 ---
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.getFriendChatRecord = function (playerName, target)
+	--- BLOCK #0 1-29, warpins: 1 ---
+	print(playerName, target, "123")
+
+	local f = crypto.encodeBase64(playerName .. target)
+	f = string.gsub(f, "/", "#")
+	local filename = device.writablePath .. "cache/relation" .. relation_version .. "/" .. f
+
+	return cache.getSerialize(filename)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local verifieds_ = {}
+local iap_cache_path = device.writablePath .. "cache/verifieds"
+cache.check_iap = function (func)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if io.exists(iap_cache_path)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-14, warpins: 1 ---
+	verifieds_ = json.decode(io.readfile(iap_cache_path))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-20, warpins: 2 ---
+	dump(verifieds_)
+	func()
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.storage_verifiedTransaction = function (id, roleid)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not verifieds_[id] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-15, warpins: 1 ---
+	verifieds_[id] = roleid
+	local data = json.encode(verifieds_)
+
+	io.writefile(iap_cache_path, data)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.check_verifiedTransaction = function (id)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return verifieds_[id]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.init_launch = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not io.exists(device.writablePath .. "cache/launch.json")
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-20, warpins: 1 ---
+	io.writefile(device.writablePath .. "cache/launch.json", json.encode({
+		init = "success"
+	}))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-21, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+cache.setIsFirstLaunchGame = function (b)
+	--- BLOCK #0 1-24, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/launch.json")
+	local jsonData = json.decode(data)
+	jsonData.bIsFirstLaunch = b
+
+	io.writefile(device.writablePath .. "cache/launch.json", json.encode(jsonData))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getIsFirstLaunchGame = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/launch.json")
+	--- END OF BLOCK #0 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	local jsonData = json.decode(data)
+
+	--- END OF BLOCK #1 ---
+
+	if jsonData.bIsFirstLaunch == nil then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-19, warpins: 1 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 20-21, warpins: 1 ---
+	return jsonData.bIsFirstLaunch
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-22, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+cache.setLastSfServer = function (name)
+	--- BLOCK #0 1-28, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/launch.json")
+	local jsonData = json.decode(data)
+	name = utf8strs(name)
+	jsonData.lastSfServer = name
+
+	io.writefile(device.writablePath .. "cache/launch.json", json.encode(jsonData))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+cache.getLastSfServer = function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local data = io.readfile(device.writablePath .. "cache/launch.json")
+	--- END OF BLOCK #0 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 10-17, warpins: 1 ---
+	local jsonData = json.decode(data)
+	local name = ""
+
+	--- END OF BLOCK #1 ---
+
+	slot3 = if jsonData.lastSfServer then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 18-21, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(jsonData.lastSfServer)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 22-24, warpins: 1 ---
+	name = name .. v
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 25-26, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 27-27, warpins: 2 ---
+	return name
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-29, warpins: 2 ---
+	return nil
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+return cache
+--- END OF BLOCK #0 ---
+
+
+

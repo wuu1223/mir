@@ -1,0 +1,30 @@
+--- BLOCK #0 1-7, warpins: 1 ---
+local current = ...
+
+xpcall(function ()
+	--- BLOCK #0 1-61, warpins: 1 ---
+	game = import(".game", current)
+	res = import(".res", current)
+	net = import(".net", current)
+	sound = import(".sound", current)
+	cache = import(".cache", current)
+	voice = import(".voice", current)
+	pic = import(".pic", current)
+	m2debug = import(".m2debug", current)
+	m2spr = import(".m2spr", current)
+	gameEvent = import(".gameEvent", current)
+	jpush = import(".jpush", current)
+	IAP = import(".iap", current)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end, __G__TRACKBACK__)
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

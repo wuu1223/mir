@@ -1,0 +1,666 @@
+--- BLOCK #0 1-67, warpins: 1 ---
+local dynamicTileAtlas = class("dynamicTileAtlas")
+
+require("socket")
+table.merge(dynamicTileAtlas, {})
+
+local tileAtlas = {}
+tileAtlas.cntTex = 0
+tileAtlas.getCntTex = function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return tileAtlas.cntTex
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dynamicTileAtlas.ctor = function (self, w, h, pixelFormat, depthStencilFormat, initZOrder)
+	--- BLOCK #0 1-32, warpins: 1 ---
+	self.w = w
+	self.h = h
+	self.pixelFormat = pixelFormat
+	self.depthStencilFormat = depthStencilFormat
+	self.curMaxWidth = 0
+	self.curY = 0
+	self.curX = 0
+	self.tileInfos = {}
+	self.count = 0
+	self.curOrder_ = initZOrder
+	self.notDraw = {}
+	self.frame = 0
+	self.oleTextures = {}
+
+	self.createTexture(self)
+
+	self.scheduleHandler = scheduler.scheduleGlobal(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:drawForNotDraw(true)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0.1)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dynamicTileAtlas.drawForNotDraw = function (self, force)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local hasNotDraw = false
+	local notDraw = self.notDraw
+	local rest = #notDraw
+	--- END OF BLOCK #0 ---
+
+	if rest ~= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if 5 >= rest then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if force then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #3 11-18, warpins: 2 ---
+	local r = {}
+	local st = socket.gettime()
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in ipairs(notDraw)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #4 19-23, warpins: 1 ---
+	slot12 = v.renderTexture
+	--- END OF BLOCK #4 ---
+
+	slot13 = if not r[v.renderTexture] then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-24, warpins: 1 ---
+	slot13 = {}
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 25-30, warpins: 2 ---
+	r[slot12] = slot13
+	local lst = r[v.renderTexture]
+	lst[#lst + 1] = v
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 31-32, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #8 33-36, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	for renderTexture, lst in pairs(r)
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #9 37-43, warpins: 1 ---
+	renderTexture.begin(renderTexture)
+	--- END OF BLOCK #9 ---
+
+	for k, v in ipairs(lst)
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #10 44-51, warpins: 1 ---
+	self.drawFrame(self, v)
+	v.originTexture:release()
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 52-53, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #12 54-56, warpins: 1 ---
+	renderTexture.endToLua(renderTexture)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 57-58, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #14 59-61, warpins: 1 ---
+	self.notDraw = {}
+
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #15 62-66, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if 1 <= #self.oleTextures then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #16 67-70, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	for k, v in ipairs(self.oleTextures)
+
+
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #24
+
+
+	--- BLOCK #17 71-81, warpins: 1 ---
+	local refCnt = v.getSprite(v):getTexture():getReferenceCount()
+
+	--- END OF BLOCK #17 ---
+
+	if refCnt == 1 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #18 82-85, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	for id, info in pairs(self.tileInfos)
+
+
+	LOOP BLOCK #19
+	GO OUT TO BLOCK #22
+
+
+	--- BLOCK #19 86-88, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if info.renderTexture == v then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 89-91, warpins: 1 ---
+	self.tileInfos[id] = nil
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 92-93, warpins: 3 ---
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #22 94-99, warpins: 1 ---
+	v.release(v)
+
+	self.oleTextures[k] = nil
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 100-101, warpins: 3 ---
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #24 102-102, warpins: 4 ---
+	return 
+	--- END OF BLOCK #24 ---
+
+
+
+end
+dynamicTileAtlas.releaseAll = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(self.oleTextures)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-13, warpins: 1 ---
+	v.renderTexture:release()
+
+	tileAtlas.cntTex = tileAtlas.cntTex - 1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-15, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 16-40, warpins: 1 ---
+	self.tileInfos = {}
+	self.count = 0
+	self.curOrder_ = 0
+	self.notDraw = {}
+	self.frame = 0
+	self.oleTextures = {}
+
+	self.renderTexture:beginWithClear(0, 0, 0, 0)
+	self.renderTexture:endToLua()
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+dynamicTileAtlas.createTexture = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not tolua.isnull(self.renderTexture)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-16, warpins: 1 ---
+	self.oleTextures[#self.oleTextures + 1] = {
+		renderTexture = self.renderTexture,
+		zOrder = self.curOrder_
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-44, warpins: 2 ---
+	self.renderTexture = cc.RenderTexture:create(self.w, self.h, self.pixelFormat, self.depthStencilFormat)
+
+	self.renderTexture:retain()
+
+	self.texture = self.renderTexture:getSprite():getTexture()
+	tileAtlas.cntTex = tileAtlas.cntTex + 1
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+dynamicTileAtlas.addAndCreate = function (self, originTexture, name, ex, spriteClass)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local tileInfos = self.tileInfos
+	local info = tileInfos[name]
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not info then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-33, warpins: 1 ---
+	tileInfos[name] = {
+		name = name,
+		originTexture = originTexture,
+		ex = ex
+	}
+	info = tileInfos[name]
+
+	originTexture.retain(originTexture)
+
+	info.y = self.curY
+	info.x = self.curX
+	self.curX, self.curY, self.curMaxWidth = self.put(self, info, self.curX, self.curY, self.curMaxWidth)
+
+	--- END OF BLOCK #1 ---
+
+	if self.w < info.x + self.curMaxWidth then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 34-50, warpins: 1 ---
+	self.createTexture(self)
+
+	info.y = 0
+	info.x = 0
+	self.curX, self.curY, self.curMaxWidth = self.put(self, info, 0, 0, 0)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 51-62, warpins: 2 ---
+	local notDraw = self.notDraw
+	notDraw[#notDraw + 1] = info
+	info.texture = self.texture
+	info.renderTexture = self.renderTexture
+	info.gZOrder = self.curOrder_
+	info.relations = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 63-73, warpins: 2 ---
+	local sprite = spriteClass.createWithTexture(spriteClass, info.texture, info.rect)
+	info.relations[#info.relations + 1] = sprite
+
+	return sprite
+	--- END OF BLOCK #4 ---
+
+
+
+end
+dynamicTileAtlas.addAndCreateAsync = function (self, name, ex, spriteClass)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local tileInfos = self.tileInfos
+	local info = tileInfos[name]
+	local async = nil
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not info then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 6-31, warpins: 1 ---
+	tileInfos[name] = {
+		name = name,
+		ex = ex
+	}
+	info = tileInfos[name]
+
+	function async(originTexture)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		info.originTexture = originTexture
+
+		originTexture.retain(originTexture)
+
+		local notDraw = self.notDraw
+		notDraw[#notDraw + 1] = info
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	info.y = self.curY
+	info.x = self.curX
+	self.curX, self.curY, self.curMaxWidth = self.put(self, info, self.curX, self.curY, self.curMaxWidth)
+
+	--- END OF BLOCK #1 ---
+
+	if self.w < info.x + self.curMaxWidth then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 32-48, warpins: 1 ---
+	self.createTexture(self)
+
+	info.y = 0
+	info.x = 0
+	self.curX, self.curY, self.curMaxWidth = self.put(self, info, 0, 0, 0)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 49-56, warpins: 2 ---
+	info.texture = self.texture
+	info.renderTexture = self.renderTexture
+	info.gZOrder = self.curOrder_
+	info.relations = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 57-70, warpins: 2 ---
+	local sprite = spriteClass.createWithTexture(spriteClass, info.texture, info.rect)
+	info.relations[#info.relations + 1] = sprite
+
+	return sprite, async
+	--- END OF BLOCK #4 ---
+
+
+
+end
+dynamicTileAtlas.check = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return self.tileInfos[name]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dynamicTileAtlas.remove = function (self, name)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local tileInfos = self.tileInfos
+
+	tileInfos[name].originTexture:release()
+	--- END OF BLOCK #0 ---
+
+	slot3 = if tileInfos[name].frame then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-15, warpins: 1 ---
+	tileInfos[name].frame:release()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-18, warpins: 2 ---
+	tileInfos[name] = nil
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+dynamicTileAtlas.removeAllFrame = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local tileInfos = self.tileInfos
+
+	--- END OF BLOCK #0 ---
+
+	for name, v in pairs(self.titleInfos)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	tileInfos[name].originTexture:release()
+	--- END OF BLOCK #1 ---
+
+	slot7 = if tileInfos[name].frame then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-19, warpins: 1 ---
+	tileInfos[name].frame:release()
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 20-21, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 22-24, warpins: 1 ---
+	self.tileInfos = {}
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+dynamicTileAtlas.put = function (self, info, x, y, maxWidth)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.h < y + info.ex.h then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	x = x + maxWidth + 1
+	y = 0
+	maxWidth = 0
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-31, warpins: 2 ---
+	self.count = self.count + 1
+	local rect = cc.rect(x, y, info.ex.w, info.ex.h)
+	info.rect = rect
+	y = y + info.ex.h + 1
+	--- END OF BLOCK #2 ---
+
+	if maxWidth < info.ex.w then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 32-33, warpins: 1 ---
+	maxWidth = info.ex.w
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 34-37, warpins: 2 ---
+	return x, y, maxWidth
+	--- END OF BLOCK #4 ---
+
+
+
+end
+dynamicTileAtlas.drawFrame = function (self, info)
+	--- BLOCK #0 1-28, warpins: 1 ---
+	info.originTexture:setAliasTexParameters()
+
+	local sprite = display.newSprite(info.originTexture):pos(info.rect.x, info.rect.y):anchor(0, 0)
+
+	sprite.flipY(sprite, true)
+	sprite.visit(sprite)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local tile = dynamicTileAtlas.new(2048, 2048, cc.TEXTURE2D_PIXEL_FORMAT_RGBA4444, 0, -2)
+local smtile = dynamicTileAtlas.new(2048, 2048, cc.TEXTURE2D_PIXEL_FORMAT_RGBA4444, 0, -3)
+local mapobj = dynamicTileAtlas.new(2048, 2048, cc.TEXTURE2D_PIXEL_FORMAT_RGBA4444, 0, -1)
+tileAtlas.tile = tile
+tileAtlas.smtile = smtile
+tileAtlas.mapobj = mapobj
+
+return tileAtlas
+--- END OF BLOCK #0 ---
+
+
+

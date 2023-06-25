@@ -1,0 +1,349 @@
+--- BLOCK #0 1-17, warpins: 1 ---
+local sdnaPassport = {
+	appid = "4"
+}
+sdnaPassport.setListenner = function (listenner)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	sdnaPassport.listenner = listenner
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+sdnaPassport.removeListenner = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	sdnaPassport.listenner = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+sdnaPassport.call = function (key, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if sdnaPassport.listenner then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if sdnaPassport.listenner[key] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-16, warpins: 1 ---
+	sdnaPassport.listenner[key](sdnaPassport.listenner, ...)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-17, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+sdnaPassport.init = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-16, warpins: 1 ---
+	slot0, slot1 = luaoc.callStaticMethod("sndaPassportSDK", "call", {
+		type = "initSDK:",
+		appid = sdnaPassport.appid,
+		callback = function (dic)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			sdnaPassport.call("sdnaInitEnd", dic.code, dic.msg)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 17-20, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-33, warpins: 1 ---
+	luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "sndaPassportSDK", "initSDK", {
+		sdnaPassport.appid,
+		function (msg)
+			--- BLOCK #0 1-11, warpins: 1 ---
+			local dic = json.decode(msg)
+
+			sdnaPassport.call("sdnaInitEnd", dic.code, dic.msg)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 34-34, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+sdnaPassport.login = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-18, warpins: 1 ---
+	slot0, slot1 = luaoc.callStaticMethod("sndaPassportSDK", "call", {
+		type = "login:",
+		areaid = tostring(def.areaID),
+		callback = function (dic)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			sdnaPassport.call("sdnaLoginEnd", dic.code, dic.msg, dic.ticket, dic.userid)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 19-22, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 23-37, warpins: 1 ---
+	luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "sndaPassportSDK", "login", {
+		tostring(def.areaID),
+		function (msg)
+			--- BLOCK #0 1-13, warpins: 1 ---
+			local dic = json.decode(msg)
+
+			sdnaPassport.call("sdnaLoginEnd", dic.code, dic.msg, dic.ticket, dic.userid)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 38-38, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+sdnaPassport.logout = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-13, warpins: 1 ---
+	slot0, slot1 = luaoc.callStaticMethod("sndaPassportSDK", "call", {
+		type = "loginOut:",
+		callback = function (dic)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			sdnaPassport.call("sdnaLogoutEnd", dic.code, dic.msg)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 14-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-27, warpins: 1 ---
+	luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "sndaPassportSDK", "logout", {
+		function (msg)
+			--- BLOCK #0 1-11, warpins: 1 ---
+			local dic = json.decode(msg)
+
+			sdnaPassport.call("sdnaLogoutEnd", dic.code, dic.msg)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-28, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+sdnaPassport.getTicket = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-21, warpins: 1 ---
+	slot0, slot1 = luaoc.callStaticMethod("sndaPassportSDK", "call", {
+		type = "getTicket:",
+		appid = sdnaPassport.appid,
+		areaid = tostring(def.areaID),
+		callback = function (dic)
+			--- BLOCK #0 1-8, warpins: 1 ---
+			sdnaPassport.call("sdnaGetTicketEnd", dic.code, dic.msg, dic.ticket)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 22-25, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-40, warpins: 1 ---
+	luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "sndaPassportSDK", "getTicket", {
+		tostring(def.areaID),
+		function (msg)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			local dic = json.decode(msg)
+
+			sdnaPassport.call("sdnaGetTicketEnd", dic.code, dic.msg, dic.ticket)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 41-41, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return sdnaPassport
+--- END OF BLOCK #0 ---
+
+
+

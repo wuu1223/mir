@@ -1,0 +1,115 @@
+--- BLOCK #0 1-27, warpins: 1 ---
+local gplus = {
+	appid = "791000255"
+}
+gplus[1] = phone
+gplus[2] = userid
+gplus[3] = ticket
+gplus.setListenner = function (listenner)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	gplus.listenner = listenner
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.removeListenner = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	gplus.listenner = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.call = function (key, ...)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.init = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 6-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+gplus.login = function ()
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.logout = function ()
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.getTicket = function ()
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.pay = function (productid, gameOrderId, extendInfo)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+gplus.extendFunction = function (func, parameter)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return gplus
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,136 @@
+--- BLOCK #0 1-18, warpins: 1 ---
+local uicontroller = class("uicontroller")
+local magicSetting = import(".magicSetting")
+uicontroller.ctor = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.hideSomeUI(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uicontroller.hideSomeUI = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local rocker = main_scene.ui.console:get("rocker")
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if rocker then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-13, warpins: 1 ---
+	rocker.setVisible(rocker, false)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-22, warpins: 2 ---
+	local lock = main_scene.ui.console:get("lock")
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if lock then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 23-26, warpins: 1 ---
+	lock.setVisible(lock, false)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 27-27, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+uicontroller.initUI = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uicontroller.magichHotKey = function (self, target, magicId)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local magic_setting = magicSetting.new()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uicontroller.updateHotKeyUI = function (self, target)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if target.page == "skill" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for magic_id, node in pairs(target.magic)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 8-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot7 = if def.operate.magicIsHotKey(magic_id)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-17, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 18-18, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return uicontroller
+--- END OF BLOCK #0 ---
+
+
+

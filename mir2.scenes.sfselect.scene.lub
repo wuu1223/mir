@@ -1,0 +1,2153 @@
+--- BLOCK #0 1-60, warpins: 1 ---
+local current = ...
+local common = import("..main.common.common")
+local scene = class("sfselectScene", function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return display.newScene("sfselect")
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local sflistitem = import(".sflistitem")
+local sflist_list = import(".sflist")
+local scheduler = require("framework.scheduler")
+
+table.merge(scene, {})
+
+scene.ctor = function (self, params)
+	--- BLOCK #0 1-30, warpins: 1 ---
+	self.setNodeEventEnabled(self, true)
+
+	self.params = params
+	self.curPageIndex = 1
+
+	sound.playMusic("game_over2", true)
+	res.get2("pic/login/bg.png"):addTo(self):center():fit()
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 31-40, warpins: 1 ---
+	self.setKeypadEnabled(self, true)
+	self.addNodeEventListener(self, cc.KEYPAD_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.key == "back" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		an.newMsgbox("是否退出游戏?", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-6, warpins: 1 ---
+			os.exit(1)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 7-7, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			center = true,
+			hasCancel = true
+		})
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-10, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 41-44, warpins: 2 ---
+	self.requestSfList(self)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.showFirstLaunch = function (self)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	local function exitCallback()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self.accPanel:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	self.showPanel(self, "请输入你要进入的传奇名称", {
+		{
+			text = "服务器名"
+		}
+	}, {
+		{
+			text = "进　入",
+			cb = function (inputs)
+				--- BLOCK #0 1-2, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				slot0 = if inputs then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #1 3-5, warpins: 1 ---
+				--- END OF BLOCK #1 ---
+
+				slot1 = if inputs[1] then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #2 6-10, warpins: 1 ---
+				self:searchServer(inputs[1])
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 11-11, warpins: 3 ---
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end
+		}
+	}, exitCallback)
+	self.showRightBtns(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.showCommonLaunch = function (self)
+	--- BLOCK #0 1-138, warpins: 1 ---
+	local w = 600
+	local pageH = display.height/3 - 10
+	local bgNode = display.newNode():addTo(self):pos(display.cx - w*0.5, display.top - pageH):anchor(0.5, 1)
+
+	display.newRect(cc.rect(0, 0, w, pageH), {
+		borderWidth = 2,
+		borderColor = cc.c4f(0, 0, 0, 1)
+	}):add2(bgNode)
+
+	local adPageView = cc.ui.UIPageView.new({
+		row = 1,
+		rowSpace = 0,
+		columnSpace = 0,
+		column = 1,
+		bCirc = true,
+		viewRect = cc.rect(0, 0, w, pageH),
+		padding = {
+			top = 0,
+			left = 0,
+			bottom = 0,
+			right = 0
+		}
+	}):addTo(bgNode):onTouch(handler(self, self.onTouchAdPageView))
+	self.adPageView = adPageView
+
+	display.newRect(cc.rect(display.cx - w*0.5, 0, w, (display.height*2)/3), {
+		borderWidth = 2,
+		borderColor = cc.c4f(0, 0, 0, 1)
+	}):add2(self)
+
+	local sflist = sflist_list.new(cc.size(w, (display.height*2)/3)):add2(self):anchor(0.5, 0):pos(display.cx, 0)
+	self.sflistView = sflist
+
+	self.showRightBtns(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.showRightBtns = function (self)
+	--- BLOCK #0 1-58, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/login/notice.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("104")
+		self:showNotice()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true
+	}):addTo(self):pos(display.width - 90, display.height - 180)
+	an.newBtn(res.gettex2("pic/login/bVLogin1.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("104")
+
+		local name = cache.getLastSfServer()
+
+		--- END OF BLOCK #0 ---
+
+		if name ~= nil then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 10-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if name ~= "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-17, warpins: 1 ---
+		self:searchServer(name)
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 18-23, warpins: 2 ---
+		an.newMsgbox("您还未进入过服务器!", nil, {
+			center = true
+		})
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 24-24, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		pressBig = true,
+		label = {
+			"上次登录的服务器",
+			20,
+			2,
+			{
+				color = cc.c3b(217, 200, 179)
+			}
+		}
+	}):addTo(self):pos(display.width - 90, display.height - 230)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.serverListData then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 59-62, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.serverListData.kaifubiao == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 63-64, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 65-99, warpins: 3 ---
+	an.newBtn(res.gettex2("pic/login/bVLogin1.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("104")
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self.serverListData then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 9-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if self.serverListData then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 13-214, warpins: 1 ---
+		local serverData = self.serverListData.servers[1]
+		local w = 550
+		local h = 215
+		local node = display.newNode():addTo(self, 2):size(display.width, display.height)
+
+		node.setTouchEnabled(node, true)
+
+		local layer = display.newScale9Sprite(res.getframe2("pic/login/netease_bg.png"), 0, 0, cc.size(w, h)):add2(node):anchor(0.5, 0.5):pos(display.cx, display.cy)
+
+		layer.setTouchEnabled(layer, true)
+		an.newLabel("请输入开发者地址", 24, nil, {
+			color = cc.c3b(0, 176, 240)
+		}):addTo(layer):anchor(0.5, 0.5):pos(w/2, h - 30)
+		an.newBtn(res.gettex2("pic/login/netease_close.png"), function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			node:removeSelf()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			pressBig = true
+		}):addTo(layer):anchor(1, 0.5):pos(w - 15, h - 30)
+
+		local input = an.newInput(0, 0, 200, 30, 30, {
+			label = {
+				"",
+				16
+			}
+		}):addTo(layer, 1):pos(175, h/2):anchor(0, 0)
+		local base = display.newColorLayer(cc.c4b(55, 62, 64, 255)):addto(layer):pos(175, h/2):size(input.getContentSize(input))
+
+		an.newBtn(res.gettex2("pic/login/netease_btn.png"), function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			sound.playSound("104")
+
+			local address = input:getString()
+			--- END OF BLOCK #0 ---
+
+			if address ~= nil then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #1 11-12, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if address ~= "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #2 13-19, warpins: 1 ---
+			slot1 = an.newMsgbox
+			slot2 = "即将进入:"
+			--- END OF BLOCK #2 ---
+
+			slot3 = if not serverData.servername then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 20-20, warpins: 1 ---
+			slot3 = ""
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 21-26, warpins: 2 ---
+			slot1(slot2 .. slot3, function (idx)
+				--- BLOCK #0 1-2, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				if idx == 1 then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #8
+				end
+
+
+				--- BLOCK #1 3-5, warpins: 1 ---
+				local serverConfig = address
+				--- END OF BLOCK #1 ---
+
+				slot1 = if serverConfig then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #2 6-12, warpins: 1 ---
+				local configs = string.split(serverConfig, ":")
+				--- END OF BLOCK #2 ---
+
+				slot2 = if configs then
+				JUMP TO BLOCK #3
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #3 13-18, warpins: 1 ---
+				slot3 = def.setLoginCenter
+				slot4 = configs[1]
+				--- END OF BLOCK #3 ---
+
+				slot5 = if not configs[2] then
+				JUMP TO BLOCK #4
+				else
+				JUMP TO BLOCK #5
+				end
+
+
+				--- BLOCK #4 19-19, warpins: 1 ---
+				slot5 = 8088
+				--- END OF BLOCK #4 ---
+
+				FLOW; TARGET BLOCK #5
+
+
+				--- BLOCK #5 20-23, warpins: 2 ---
+				--- END OF BLOCK #5 ---
+
+				slot6 = if not serverData.servername then
+				JUMP TO BLOCK #6
+				else
+				JUMP TO BLOCK #7
+				end
+
+
+				--- BLOCK #6 24-24, warpins: 1 ---
+				slot6 = "servername"
+
+				--- END OF BLOCK #6 ---
+
+				FLOW; TARGET BLOCK #7
+
+
+				--- BLOCK #7 25-35, warpins: 2 ---
+				slot3(slot4, slot5, slot6, serverData.serverid)
+				game.gotoscene("login", {
+					logout = false
+				}, "crossFade", 1)
+
+				--- END OF BLOCK #7 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+				--- BLOCK #8 36-37, warpins: 1 ---
+				--- END OF BLOCK #8 ---
+
+				if idx == 2 then
+				JUMP TO BLOCK #9
+				else
+				JUMP TO BLOCK #9
+				end
+
+
+				--- BLOCK #9 38-38, warpins: 5 ---
+				return 
+				--- END OF BLOCK #9 ---
+
+
+
+			end, {
+				center = true,
+				btnTexts = {
+					"确定",
+					"取消"
+				}
+			})
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 27-28, warpins: 3 ---
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end, {
+			pressBig = true,
+			scale9 = cc.size(100, 35),
+			label = {
+				"进入测试",
+				18,
+				0,
+				{
+					color = cc.c3b(255, 255, 255)
+				}
+			}
+		}):pos(w/2, 20):add2(layer):anchor(0.5, 0)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 215-215, warpins: 3 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressBig = true,
+		label = {
+			"开发者测试入口",
+			20,
+			2,
+			{
+				color = cc.c3b(217, 200, 179)
+			}
+		}
+	}):addTo(self):pos(display.width - 90, display.height - 280)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+scene.onTouchAdPageView = function (self, event)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	print("onTouchAdPageView", event.pageIdx)
+
+	self.curPageIndex = event.pageIdx
+
+	--- END OF BLOCK #0 ---
+
+	if event.pageIdx == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if event.pageIdx == 2 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 15-17, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if event.pageIdx == 3 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #5 18-18, warpins: 4 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+scene.requestSfList = function (self)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	local url = def.sfAuthUrl
+
+	print("requestSfList", url)
+
+	local httpReq = network.createHTTPRequest(function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name ~= "completed" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if event.name == "failed" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 7-15, warpins: 1 ---
+		an.newMsgbox("获取开发者区服信息失败. ", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-7, warpins: 1 ---
+			os.exit(0)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #2 8-9, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if idx == 2 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 10-13, warpins: 1 ---
+			self:requestSfList()
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 14-14, warpins: 3 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end, {
+			center = true,
+			btnTexts = {
+				"退出",
+				"重试"
+			}
+		}, self)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 16-17, warpins: 2 ---
+		return 
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 18-23, warpins: 2 ---
+		local request = event.request
+		local code = request.getResponseStatusCode(request)
+
+		--- END OF BLOCK #4 ---
+
+		if code ~= 200 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 24-32, warpins: 1 ---
+		an.newMsgbox("获取开发者区服信息失败. ", function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			os.exit(0)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			center = true
+		}, self)
+
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 33-46, warpins: 2 ---
+		p2("normal", request.getResponseData(request))
+		--- END OF BLOCK #6 ---
+
+		slot3 = if not json.decode(request.getResponseData(request))
+
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 47-47, warpins: 1 ---
+		local ret = {}
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 48-52, warpins: 2 ---
+		dump(ret)
+		--- END OF BLOCK #8 ---
+
+		slot3 = if ret then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #9 53-55, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		slot4 = if ret.serverlist then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #10 56-59, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		if ret.serverlist.kaifubiao == 0 then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 60-63, warpins: 1 ---
+		cache.setIsFirstLaunchGame(true)
+
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 64-71, warpins: 4 ---
+		self.serverListData = ret.serverlist
+
+		--- END OF BLOCK #12 ---
+
+		slot4 = if cache.getIsFirstLaunchGame()
+		 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 72-76, warpins: 1 ---
+		self:showFirstLaunch()
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+		--- BLOCK #14 77-82, warpins: 1 ---
+		self:showCommonLaunch()
+		--- END OF BLOCK #14 ---
+
+		slot3 = if ret then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #15 83-86, warpins: 1 ---
+		--- END OF BLOCK #15 ---
+
+		slot4 = if ret.serverlist.imglist then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 87-92, warpins: 1 ---
+		self:updateAdPageView(ret.serverlist.imglist)
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 93-94, warpins: 3 ---
+		--- END OF BLOCK #17 ---
+
+		slot3 = if ret then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #18 95-97, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		slot4 = if ret.serverlist then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 98-103, warpins: 1 ---
+		self.sflistView:setServerListData(ret.serverlist)
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 104-105, warpins: 4 ---
+		--- END OF BLOCK #20 ---
+
+		slot3 = if ret then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #21 106-108, warpins: 1 ---
+		--- END OF BLOCK #21 ---
+
+		slot4 = if ret.serverlist then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #22 109-112, warpins: 1 ---
+		--- END OF BLOCK #22 ---
+
+		slot4 = if ret.serverlist.notice then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 113-117, warpins: 1 ---
+		def.setSFNotice(ret.serverlist.notice)
+
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 118-118, warpins: 4 ---
+		return 
+		--- END OF BLOCK #24 ---
+
+
+
+	end, url, "GET")
+
+	httpReq.start(httpReq)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.searchServer = function (self, name)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if name ~= nil then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if name == "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-8, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.serverListData then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #4 9-11, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not self.itemDatas then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 12-17, warpins: 1 ---
+	local itemDatas = {}
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(self.serverListData.servers)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #6 18-21, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if 0 < v.isactive then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 22-26, warpins: 1 ---
+	table.insert(itemDatas, v)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 27-28, warpins: 3 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #9 29-29, warpins: 1 ---
+	self.itemDatas = itemDatas
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 30-34, warpins: 2 ---
+	local bHave = false
+
+	--- END OF BLOCK #10 ---
+
+	for i, v in ipairs(self.itemDatas)
+
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #11 35-41, warpins: 1 ---
+	local p1, p2 = string.find(v.servername, name)
+
+	--- END OF BLOCK #11 ---
+
+	if p1 == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 42-47, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if p2 == string.len(v.servername)
+
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 48-53, warpins: 1 ---
+	bHave = true
+
+	self.gotoServer(self, i)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 54-55, warpins: 3 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #15 56-57, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot2 = if not bHave then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 58-63, warpins: 1 ---
+	an.newMsgbox("未搜索到该服务器!", nil, {
+		center = true
+	})
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 64-64, warpins: 3 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+scene.gotoServer = function (self, index)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	print("gotoServer", index)
+
+	local itemDatas = self.itemDatas
+	slot3 = an.newMsgbox
+	slot4 = "即将进入:"
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not itemDatas[index].servername then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-13, warpins: 1 ---
+	slot5 = ""
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-21, warpins: 2 ---
+	slot3(slot4 .. slot5, function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #1 3-8, warpins: 1 ---
+		local serverConfig = itemDatas[index].serverip
+		--- END OF BLOCK #1 ---
+
+		slot1 = if serverConfig then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #2 9-19, warpins: 1 ---
+		local configs = string.split(serverConfig, ":")
+		slot3 = def.setLoginCenter
+		slot4 = configs[1]
+		--- END OF BLOCK #2 ---
+
+		slot5 = if not configs[2] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-20, warpins: 1 ---
+		slot5 = 8088
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 21-26, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot6 = if not itemDatas[index].servername then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 27-27, warpins: 1 ---
+		slot6 = "servername"
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 28-51, warpins: 2 ---
+		slot3(slot4, slot5, slot6, itemDatas[index].serverid)
+		cache.setIsFirstLaunchGame(false)
+		cache.setLastSfServer(itemDatas[index].servername)
+		game.gotoscene("login", {
+			logout = false
+		}, "crossFade", 1)
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #7 52-53, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #8 54-54, warpins: 4 ---
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end, {
+		center = true,
+		btnTexts = {
+			"确定",
+			"取消"
+		}
+	})
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.updateAdPageView = function (self, imgList)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local adPageView = self.adPageView
+
+	adPageView.removeAllItems(adPageView)
+
+	local w = 600
+	local pageH = display.height/3 - 10
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(imgList)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 14-38, warpins: 1 ---
+	local item = adPageView.newItem(adPageView)
+	local netSprite = an.newNetSprite(v.url, cc.size(w, pageH))
+
+	netSprite.anchor(netSprite, 0, 0)
+	item.addChild(item, netSprite)
+	adPageView.addItem(adPageView, item)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 39-40, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 41-46, warpins: 1 ---
+	adPageView.reload(adPageView)
+	--- END OF BLOCK #3 ---
+
+	slot5 = if self.pageHandler then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 47-50, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.pageHandler)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 51-59, warpins: 2 ---
+	local function onInterval(dt)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if self.curPageIndex == self.adPageView:getPageCount()
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 10-12, warpins: 1 ---
+		self.curPageIndex = 0
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 13-21, warpins: 2 ---
+		adPageView:gotoPage(self.curPageIndex + 1, true)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	self.pageHandler = scheduler.scheduleGlobal(onInterval, 2)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+scene.onCleanup = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onEnterTransitionFinish = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onEnter = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onExit = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.pageHandler then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.pageHandler)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.showNotice = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not def.sfNotice then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	local content = ""
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-199, warpins: 2 ---
+	local node = display.newNode():size(display.width, display.height):addTo(self, 10)
+	local noticebg = res.get2("pic/common/black_2.png"):addTo(node):pos(node.centerPos(node)):anchor(0.5, 0.5):scale(0.1)
+
+	noticebg.runAction(noticebg, cc.ScaleTo:create(0.2, 1))
+	res.get2("pic/login/notice_title.png"):addTo(noticebg):pos(noticebg.getw(noticebg)/2, noticebg.geth(noticebg) - 25)
+	node.setTouchEnabled(node, true)
+	node.addNodeEventListener(node, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 4-17, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not cc.rectContainsPoint(noticebg:getBoundingBox(), cc.p(event.x, event.y))
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 18-21, warpins: 1 ---
+		node:removeSelf()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 22-23, warpins: 3 ---
+		return true
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		node:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png")
+	}):addTo(noticebg):pos(noticebg.getw(noticebg) - 8, noticebg.geth(noticebg) - 8):anchor(1, 1)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale26.png"), 14, 14, cc.size(noticebg.getw(noticebg) - 28, noticebg.geth(noticebg) - 68)):addTo(noticebg):anchor(0, 0)
+
+	local scroll = an.newScroll(25, 20, noticebg.getw(noticebg) - 50, noticebg.geth(noticebg) - 80):addTo(noticebg):anchor(0, 0)
+	local labelM = an.newLabelM(noticebg.getw(noticebg) - 50, 20, 1, {
+		manual = false
+	}):addTo(scroll):pos(0, noticebg.geth(noticebg) - 80):anchor(0, 1):nextLine()
+	local parseing = true
+
+	local function parseContent(block)
+		--- BLOCK #0 1-24, warpins: 1 ---
+		local p = string.find(block, "/>")
+		local szText = string.trim(string.sub(block, 1, p + 1))
+		local data = string.split(szText, " ")
+		local params = {}
+
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(data)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 25-32, warpins: 1 ---
+		local temp = string.split(v, "=")
+		--- END OF BLOCK #1 ---
+
+		slot11 = if temp[1] then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 33-35, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot11 = if temp[2] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 36-38, warpins: 1 ---
+		params[temp[1]] = temp[2]
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 39-40, warpins: 4 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 41-48, warpins: 1 ---
+		slot6 = labelM
+		slot5 = labelM.setFontSize
+
+		--- END OF BLOCK #5 ---
+
+		slot7 = if not tonumber(params.size)
+
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 49-49, warpins: 1 ---
+		slot7 = 20
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 50-61, warpins: 2 ---
+		slot5(slot6, slot7)
+
+		local urlcolor = string.split(params.urlcolor, "|")
+		slot6 = cc.c3b
+		slot7 = tonumber
+		--- END OF BLOCK #7 ---
+
+		slot8 = if not urlcolor[1] then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 62-62, warpins: 1 ---
+		slot8 = 255
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 63-65, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		slot7 = if not slot7(slot8)
+
+		 then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 66-66, warpins: 1 ---
+		slot7 = 255
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 67-70, warpins: 2 ---
+		slot8 = tonumber
+		--- END OF BLOCK #11 ---
+
+		slot9 = if not urlcolor[2] then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 71-71, warpins: 1 ---
+		slot9 = 255
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 72-76, warpins: 2 ---
+		slot8 = slot8(slot9)
+		slot9 = tonumber
+		--- END OF BLOCK #13 ---
+
+		slot10 = if not urlcolor[3] then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 77-77, warpins: 1 ---
+		slot10 = 255
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 78-91, warpins: 2 ---
+		urlcolor = slot6(slot7, slot8, slot9(slot10))
+		local textcolor = string.split(params.textcolor, "|")
+		slot7 = cc.c3b
+		slot8 = tonumber
+		--- END OF BLOCK #15 ---
+
+		slot9 = if not textcolor[1] then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 92-92, warpins: 1 ---
+		slot9 = 255
+
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 93-95, warpins: 2 ---
+		--- END OF BLOCK #17 ---
+
+		slot8 = if not slot8(slot9)
+
+		 then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #18 96-96, warpins: 1 ---
+		slot8 = 255
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 97-100, warpins: 2 ---
+		slot9 = tonumber
+		--- END OF BLOCK #19 ---
+
+		slot10 = if not textcolor[2] then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 101-101, warpins: 1 ---
+		slot10 = 255
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 102-106, warpins: 2 ---
+		slot9 = slot9(slot10)
+		slot10 = tonumber
+		--- END OF BLOCK #21 ---
+
+		slot11 = if not textcolor[3] then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #22 107-107, warpins: 1 ---
+		slot11 = 255
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 108-113, warpins: 2 ---
+		textcolor = slot7(slot8, slot9, slot10(slot11))
+		--- END OF BLOCK #23 ---
+
+		slot7 = if params.urladdr then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #24 114-119, warpins: 1 ---
+		slot8 = labelM
+		slot7 = labelM.addLabel
+		--- END OF BLOCK #24 ---
+
+		slot9 = if not params.urltext then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #25 120-120, warpins: 1 ---
+		slot9 = params.urladdr
+
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 121-124, warpins: 2 ---
+		slot7(slot8, slot9, urlcolor, nil, nil, function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			device.openURL(params.urladdr)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+
+		--- END OF BLOCK #26 ---
+
+		FLOW; TARGET BLOCK #27
+
+
+		--- BLOCK #27 125-142, warpins: 2 ---
+		block = string.sub(block, p + 2)
+		local p1 = string.find(block, "<t")
+		local p2 = string.find(block, "/>")
+		--- END OF BLOCK #27 ---
+
+		slot7 = if p1 then
+		JUMP TO BLOCK #28
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #28 143-144, warpins: 1 ---
+		--- END OF BLOCK #28 ---
+
+		slot8 = if p2 then
+		JUMP TO BLOCK #29
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #29 145-164, warpins: 1 ---
+		szText = string.sub(block, p1 + 3, p2 - 1)
+		szText = string.gsub(szText, "\\n", "\n")
+
+		labelM:addLabel(szText, textcolor)
+
+		--- END OF BLOCK #29 ---
+
+		FLOW; TARGET BLOCK #30
+
+
+		--- BLOCK #30 165-166, warpins: 3 ---
+		return 
+		--- END OF BLOCK #30 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 200-200, warpins: 5 ---
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 201-202, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if content == "" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 203-203, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #6 204-215, warpins: 1 ---
+	local p1 = string.find(content, "<b")
+	local p2 = string.find(content, "</b>")
+	--- END OF BLOCK #6 ---
+
+	slot8 = if p1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #7 216-217, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot9 = if p2 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #8 218-233, warpins: 1 ---
+	local block = string.sub(content, p1 + 3, p2 - 1)
+
+	parseContent(block)
+	--- END OF BLOCK #8 ---
+
+	if string.len(content)
+
+	 <= p2 + 4 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 234-234, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 235-235, warpins: 0 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #11 236-242, warpins: 1 ---
+	content = string.sub(content, p2 + 4)
+
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #12 243-244, warpins: 2 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+scene.showPanel = function (self, title, inputs, btnsCfg, exitCallback)
+	--- BLOCK #0 1-118, warpins: 1 ---
+	local internal = 55
+	local w = 550
+	local h = internal*#inputs + 160
+	local colorTitle = cc.c3b(0, 176, 240)
+	local colorInputBg = cc.c4b(55, 62, 64, 255)
+	local colorInputTitle = cc.c3b(0, 179, 140)
+	local colorBtnBg = cc.c4b(241, 76, 75, 255)
+	local colorBtnTitle = cc.c3b(255, 255, 255)
+	self.accPanel = display.newNode():size(display.size):addto(self, 1)
+
+	self.accPanel:setTouchEnabled(false)
+
+	local layer = display.newScale9Sprite(res.getframe2("pic/login/netease_bg.png"), 0, 0, cc.size(w, h)):add2(self.accPanel):anchor(0.5, 0.5):pos(display.cx, display.cy)
+
+	layer.setTouchEnabled(layer, true)
+	an.newLabel(title, 24, nil, {
+		color = colorTitle
+	}):addTo(layer):anchor(0.5, 0.5):pos(w/2, h - 30)
+
+	local off = 90
+	local inputWids = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(inputs)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 119-194, warpins: 1 ---
+	local iw = 180
+	local ih = 32
+	local ip = an.newInput(0, 0, iw, ih, 12, {
+		label = {
+			"",
+			24
+		},
+		password = v.password
+	}):addTo(layer, 1):pos(w/2 + 20, h - off)
+	local base = display.newColorLayer(colorInputBg):addto(layer)
+
+	base.setContentSize(base, ip.getContentSize(ip))
+	base.setPosition(base, w/2 - iw/2 + 20, h - off - ih/2)
+	an.newLabel(tostring(v.text), 22, nil, {
+		color = colorInputTitle
+	}):addto(base):pos(-10, ih/2):anchor(1, 0.5)
+
+	inputWids[k] = ip
+	off = off + internal
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 195-196, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 197-202, warpins: 1 ---
+	local btns = {}
+	local totalWidth = 0
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(btnsCfg)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 203-266, warpins: 1 ---
+	local text = an.newLabel(v.text, 24, nil, {
+		color = colorBtnTitle
+	})
+	local sz = text.getContentSize(text)
+	local btn = display.newScale9Sprite(res.getframe2("pic/login/netease_btn.png"), 0, 0, cc.size(sz.width + 24, sz.height + 5)):add2(layer):anchor(0, 0)
+
+	btn.addChild(btn, text)
+	text.pos(text, sz.width/2 + 10, sz.height/2 + 2.5):anchor(0.5, 0.5)
+
+	btns[k] = btn
+	totalWidth = totalWidth + btn.getw(btn)
+
+	text.enableClick(text, function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		local inputStrings = {}
+
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(inputWids)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 6-9, warpins: 1 ---
+		inputStrings[k] = v.getString(v)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-11, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 12-16, warpins: 1 ---
+		v.cb(inputStrings)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 267-268, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 269-278, warpins: 1 ---
+	local gap = (w - totalWidth)/(#btnsCfg + 1)
+	local btnY = 30
+	local off = 0
+
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(btns)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 279-288, warpins: 1 ---
+	v.pos(v, off + gap, btnY)
+
+	off = off + gap + v.getw(v)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 289-290, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 291-292, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+scene.showLayer = function (self, name, ...)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.layer.__cname == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-9, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 10-13, warpins: 1 ---
+	self.layer:removeSelf()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-29, warpins: 3 ---
+	self.layer = import("." .. name, current).new(self, ...):addto(self)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+scene.hideLayer = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.layer.__cname == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	self.layer:removeSelf()
+
+	self.layer = nil
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-14, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+scene.getSfList = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return scene
+--- END OF BLOCK #0 ---
+
+
+

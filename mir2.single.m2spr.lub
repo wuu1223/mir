@@ -1,0 +1,1737 @@
+--- BLOCK #0 1-246, warpins: 1 ---
+local m2sprMgr = {
+	aniIdCnt = 0,
+	debuginfo = "",
+	texIdCnt = 0
+}
+m2sprMgr.texQueue = {}
+m2sprMgr.aniQueue = {}
+m2sprMgr.lasttime = socket.gettime()
+m2sprMgr.aniTimeCache = {}
+m2sprMgr.aniNextTimeCache = {}
+
+setmetatable(m2sprMgr.aniTimeCache, {
+	__mode = "k"
+})
+setmetatable(m2sprMgr.aniNextTimeCache, {
+	__mode = "k"
+})
+
+local m2spr = nil
+m2sprMgr.new = function (...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return m2spr.new(...)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2sprMgr.playAnimation = function (...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return m2spr.playAnimation(...)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local syncLoads = {}
+local syncMustLoads = {}
+local asyncLoads = {}
+
+setmetatable(syncLoads, {
+	__mode = "kv"
+})
+setmetatable(syncMustLoads, {
+	__mode = "kv"
+})
+setmetatable(asyncLoads, {
+	__mode = "kv"
+})
+
+m2sprMgr.loop = function (self)
+	--- BLOCK #0 1-21, warpins: 1 ---
+	local nowtime = socket.gettime()
+	local dt = nowtime - self.lasttime
+	self.lasttime = nowtime
+	local needUpt = m2spr.needUpt
+	local upt = m2spr.upt
+	local aniUpt = m2spr.aniUpt
+	local texQueue = self.texQueue
+	local aniTimeCache = m2sprMgr.aniTimeCache
+	local aniNextTimeCache = m2sprMgr.aniNextTimeCache
+
+	--- END OF BLOCK #0 ---
+
+	for v, k in pairs(self.aniQueue)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 22-26, warpins: 1 ---
+	local delay = nil
+	local start = aniTimeCache[v]
+	--- END OF BLOCK #1 ---
+
+	if aniNextTimeCache[v] <= nowtime then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 27-33, warpins: 1 ---
+	delay = aniUpt(v, nowtime - start)
+	aniNextTimeCache[v] = nowtime + delay
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 34-35, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 36-49, warpins: 1 ---
+	syncLoads.num = 0
+	syncMustLoads.num = 0
+	asyncLoads.num = 0
+	local texQueueNums = nil
+	--- END OF BLOCK #4 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 50-54, warpins: 1 ---
+	texQueueNums = table.nums(texQueue)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 55-60, warpins: 2 ---
+	local insert = table.insert
+
+	--- END OF BLOCK #6 ---
+
+	for v, k in pairs(texQueue)
+
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #19
+
+
+	--- BLOCK #7 61-67, warpins: 1 ---
+	local info = res.getinfo(v.imgid, v.idx)
+	--- END OF BLOCK #7 ---
+
+	slot16 = if info then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 68-70, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot17 = if info.loading then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 71-73, warpins: 1 ---
+	v.asyncRequested = true
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #10 74-80, warpins: 1 ---
+	upt(v, info)
+
+	texQueue[v] = nil
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #11 81-83, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot17 = if v.asyncPriority then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 84-86, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot17 = if not v.asyncRequested then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #13 87-98, warpins: 1 ---
+	asyncLoads.num = asyncLoads.num + 1
+
+	insert(asyncLoads, asyncLoads.num, v)
+
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #14 99-101, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot17 = if v.ani then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 102-105, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot17 = if not v.ani.noForever then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 106-117, warpins: 1 ---
+	syncLoads.num = syncLoads.num + 1
+
+	insert(syncLoads, syncLoads.num, v)
+
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 118-128, warpins: 2 ---
+	syncMustLoads.num = syncMustLoads.num + 1
+
+	insert(syncMustLoads, syncMustLoads.num, v)
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 129-130, warpins: 7 ---
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #19 131-142, warpins: 1 ---
+	local resGetTex = res.gettex
+	local resGetInfo = res.getinfo
+	local begin = socket.gettime()
+	--- END OF BLOCK #19 ---
+
+	for k=1, syncMustLoads.num, 1
+	LOOP BLOCK #20
+	GO OUT TO BLOCK #21
+
+	--- BLOCK #20 143-155, warpins: 2 ---
+	local v = syncMustLoads[k]
+	local _, info = resGetTex(v.imgid, v.idx)
+
+	upt(v, info)
+
+	texQueue[v] = nil
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #21 156-160, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	for k=1, syncLoads.num, 1
+	LOOP BLOCK #22
+	GO OUT TO BLOCK #25
+
+	--- BLOCK #22 161-182, warpins: 2 ---
+	local v = syncLoads[k]
+	local _, info = resGetTex(v.imgid, v.idx)
+
+	upt(v, info)
+
+	texQueue[v] = nil
+	syncLoads[k] = nil
+
+	--- END OF BLOCK #22 ---
+
+	if 0.02 < socket.gettime()
+
+	 - begin then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 183-183, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #24 184-184, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #25 185-189, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	for k=1, syncLoads.num, 1
+	LOOP BLOCK #26
+	GO OUT TO BLOCK #30
+
+	--- BLOCK #26 190-193, warpins: 2 ---
+	local v = syncLoads[k]
+	--- END OF BLOCK #26 ---
+
+	slot18 = if v then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #27 194-199, warpins: 1 ---
+	local info = resGetInfo(v.imgid, v.idx)
+
+	--- END OF BLOCK #27 ---
+
+	slot19 = if info then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 200-205, warpins: 1 ---
+	upt(v, info)
+
+	texQueue[v] = nil
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 206-206, warpins: 3 ---
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #30 207-211, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	for k=1, asyncLoads.num, 1
+	LOOP BLOCK #31
+	GO OUT TO BLOCK #34
+
+	--- BLOCK #31 212-223, warpins: 2 ---
+	local v = asyncLoads[k]
+	v.asyncRequested = true
+	local _, info = resGetTex(v.imgid, v.idx, v.asyncPriority)
+
+	--- END OF BLOCK #31 ---
+
+	slot21 = if not info.loading then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 224-229, warpins: 1 ---
+	upt(v, info)
+
+	texQueue[v] = nil
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 230-230, warpins: 2 ---
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #34 231-234, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 235-264, warpins: 1 ---
+	self.debuginfo = {
+		table.nums(texQueue) .. "/" .. texQueueNums,
+		table.nums(self.aniQueue),
+		string.format("%.4f", socket.gettime() - nowtime)
+	}
+	self.debuginfo = table.concat(self.debuginfo, "-")
+
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 265-265, warpins: 2 ---
+	return 
+	--- END OF BLOCK #36 ---
+
+
+
+end
+m2sprMgr.printAni = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local st = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(m2sprMgr.aniQueue)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	slot6 = k.ctorStack
+	--- END OF BLOCK #1 ---
+
+	slot7 = if not st[k.ctorStack] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	slot7 = {
+		setIdx0 = 0,
+		num = 0,
+		frame = {}
+	}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-29, warpins: 2 ---
+	st[slot6] = slot7
+	st[k.ctorStack].num = st[k.ctorStack].num + 1
+	slot6 = st[k.ctorStack].frame
+	--- END OF BLOCK #3 ---
+
+	slot7 = if not k.ani.lastIdx then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 30-30, warpins: 1 ---
+	slot7 = "??"
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 31-37, warpins: 2 ---
+	slot8 = st[k.ctorStack].frame
+	--- END OF BLOCK #5 ---
+
+	slot9 = if not k.ani.lastIdx then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 38-38, warpins: 1 ---
+	slot9 = "??"
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 39-41, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot8 = if not slot8[slot9] then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 42-42, warpins: 1 ---
+	slot8 = 0
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 43-50, warpins: 2 ---
+	slot6[slot7] = slot8
+	slot6 = st[k.ctorStack].frame
+	--- END OF BLOCK #9 ---
+
+	slot7 = if not k.ani.lastIdx then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 51-51, warpins: 1 ---
+	slot7 = "??"
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 52-58, warpins: 2 ---
+	slot8 = st[k.ctorStack].frame
+	--- END OF BLOCK #11 ---
+
+	slot9 = if not k.ani.lastIdx then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 59-59, warpins: 1 ---
+	slot9 = "??"
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 60-66, warpins: 2 ---
+	slot6[slot7] = slot8[slot9] + 1
+	--- END OF BLOCK #13 ---
+
+	if 2 < k.tozero then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 67-73, warpins: 1 ---
+	st[k.ctorStack].setIdx0 = st[k.ctorStack].setIdx0 + 1
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 74-75, warpins: 3 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #16 76-88, warpins: 1 ---
+	print("#####################################################")
+	print("#####################################################")
+	print("#####################################################")
+	--- END OF BLOCK #16 ---
+
+	for k, v in pairs(st)
+
+
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #23
+
+
+	--- BLOCK #17 89-92, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if 1000 < v.num then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #18 93-97, warpins: 1 ---
+	local str = "### "
+
+	--- END OF BLOCK #18 ---
+
+	for k, v in pairs(v.frame)
+
+
+	LOOP BLOCK #19
+	GO OUT TO BLOCK #21
+
+
+	--- BLOCK #19 98-103, warpins: 1 ---
+	str = str .. k .. "," .. v .. "   #"
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 104-105, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #21 106-111, warpins: 1 ---
+	print(v.num, str, v.setIdx0, k)
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 112-113, warpins: 3 ---
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #23 114-114, warpins: 1 ---
+	return 
+	--- END OF BLOCK #23 ---
+
+
+
+end
+m2sprMgr.addTexQueue = function (node)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	m2sprMgr.texQueue[node] = true
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2sprMgr.removeTexQueue = function (node)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	m2sprMgr.texQueue[node] = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2sprMgr.addAniQueue = function (node)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	m2sprMgr.aniQueue[node] = true
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2sprMgr.removeAniQueue = function (node)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	m2sprMgr.aniQueue[node] = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr = class("m2spr")
+local __setVisible = cc.Node.setVisible
+local __getIsInsideBounds = ycM2Sprite.getIsInsideBounds
+local __setCenterOffset = ycM2Sprite.setCenterOffset
+local __setContentSize = cc.Node.setContentSize
+local __getContentSize = cc.Node.getContentSize
+local __setPosition = cc.Node.setPosition
+local __setBlendFunc = cc.Sprite.setBlendFunc
+local __setTextureAutoSetRect = ycM2Sprite.setTextureAutoSetRect
+local __setFlippedX = cc.Sprite.setFlippedX
+local __setAnchorPoint = cc.Node.setAnchorPoint
+local __addTextureFrame = ycM2Sprite.addTextureFrame
+local __playAniAction = ycM2Sprite.playAniAction
+
+table.merge(m2spr, {
+	imgid,
+	idx,
+	setOffset,
+	blend,
+	syncPriority,
+	asyncPriority,
+	asyncRequested,
+	unknowSize,
+	texQueueID,
+	aniQueueID,
+	ani,
+	isShow
+})
+
+local etcVer = [[
+//ver
+attribute vec4 a_position;
+attribute vec2 a_texCoord;
+attribute vec4 a_color;
+
+#ifdef GL_ES
+varying lowp vec4 v_fragmentColor;
+varying mediump vec2 v_texCoord;
+varying mediump vec2 v_alphaCoord;  
+#else
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+varying vec2 v_alphaCoord;  
+#endif
+
+void main()
+{
+    gl_Position = CC_PMatrix * a_position;
+    v_fragmentColor = a_color;
+    v_texCoord = a_texCoord;
+    v_alphaCoord = v_texCoord + vec2(0.0, 0.5);  
+}
+]]
+local etcFrag = [[
+//Frag
+
+#ifdef GL_ES
+varying lowp vec4 v_fragmentColor;
+varying mediump vec2 v_texCoord;
+varying mediump vec2 v_alphaCoord;
+#else
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+varying vec2 v_alphaCoord;  
+#endif
+
+void main()
+{
+    if(v_texCoord.y >= 0.5){
+    	gl_FragColor = vec4(0,0,0,0);
+    	return;
+    }
+    vec4 texColor = texture2D(CC_Texture0, v_texCoord);
+    texColor.a = texture2D(CC_Texture0, v_alphaCoord).r;
+    gl_FragColor = texColor * v_fragmentColor;
+}
+]]
+local etcProgram = cc.GLProgram:createWithByteArrays(etcVer, etcFrag)
+
+etcProgram.bindAttribLocation(etcProgram, cc.ATTRIBUTE_NAME_POSITION, 4)
+etcProgram.bindAttribLocation(etcProgram, cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR)
+etcProgram.bindAttribLocation(etcProgram, cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS)
+etcProgram.link(etcProgram)
+etcProgram.updateUniforms(etcProgram)
+etcProgram.retain(etcProgram)
+
+m2spr.add2 = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:add2(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.addto = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:add2(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.addTo = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:add2(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.hide = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.setVisible(self, false)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.show = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.setVisible(self, true)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.anchor = function (self, ...)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	__setAnchorPoint(self.spr, ...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.runs = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:runs(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.pos = function (self, x, y)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	__setPosition(self.spr, x, y)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.flipX = function (self, ...)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	__setFlippedX(self.spr, ...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.flipY = function (self, ...)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	__setFlippedY(self.spr, ...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.run = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:run(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.runs = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:runs(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.setScaleX = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:setScaleX(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.setScaleY = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:setScaleY(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.setFilter = function (self, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.spr:setFilter(...)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.removeSelf = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.spr:removeSelf()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.ctor = function (self, imgid, idx, params)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	slot5 = ycM2Sprite
+	slot4 = ycM2Sprite.create
+	slot6 = res.default2()
+	--- END OF BLOCK #0 ---
+
+	slot7 = if params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-9, warpins: 1 ---
+	slot7 = params.setOffset
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if params then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	slot8 = params.blend
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-18, warpins: 2 ---
+	local inst = slot4(slot5, slot6, slot7, slot8)
+	inst.onCleanup = function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:onCleanup()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	self.spr = inst
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not params then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-19, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 20-40, warpins: 2 ---
+	self.imgid = imgid
+	self.idx = idx
+	self.setOffset = params.setOffset
+	self.blend = params.blend
+	self.asyncPriority = params.asyncPriority
+	self.isShow = true
+
+	inst.setNodeEventEnabled(inst, true)
+
+	self.onctor = true
+
+	self.texChanged(self)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+m2spr.onCleanup = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.cleared = true
+
+	m2sprMgr.removeTexQueue(self)
+	m2sprMgr.removeAniQueue(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.needUpt = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return __getIsInsideBounds(self.spr)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.setVisible = function (self, b)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	__setVisible(self.spr, b)
+
+	self.isShow = b
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if b then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 8-13, warpins: 1 ---
+	self.texChanged(self)
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self.ani then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 14-18, warpins: 1 ---
+	m2sprMgr.addAniQueue(self)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 19-26, warpins: 1 ---
+	m2sprMgr.removeAniQueue(self)
+	m2sprMgr.removeTexQueue(self)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 27-27, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+m2spr.getContentSize = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.unknowSize then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-13, warpins: 1 ---
+	self.unknowSize = nil
+	local info = res.getinfo(self.imgid, self.idx, true)
+
+	--- END OF BLOCK #1 ---
+
+	slot1 = if info then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 14-16, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not info.err then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-22, warpins: 1 ---
+	__setContentSize(self.spr, info.w, info.h)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 23-27, warpins: 2 ---
+	__setContentSize(self.spr, 0, 0)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 28-30, warpins: 3 ---
+	return __getContentSize(self.spr)
+	--- END OF BLOCK #5 ---
+
+
+
+end
+m2spr.setBlend = function (self, blend)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.blend ~= blend then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.blend = blend
+
+	self.updateBlendFunc(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+m2spr.updateBlendFunc = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.blend then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-11, warpins: 1 ---
+	__setBlendFunc(self.spr, gl.ONE, gl.DST_ALPHA)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 12-18, warpins: 1 ---
+	__setBlendFunc(self.spr, gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 19-19, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+m2spr.texChanged = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.imgid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if self.idx then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-14, warpins: 1 ---
+	self.unknowSize = true
+	self.asyncRequested = nil
+
+	m2sprMgr.addTexQueue(self)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-15, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+local __setGLProgram = cc.Node.setGLProgram
+m2spr.upt = function (self, info)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if info.err then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	__setTextureAutoSetRect(self.spr, res.default2())
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-17, warpins: 2 ---
+	local tex = info.tex
+	local x = info.x
+	local y = info.y
+	local w = info.w
+	local h = info.h
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not tex then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-17, warpins: 1 ---
+	tex = tex
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 18-20, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot7 = if self.setOffset then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 21-22, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot4 = if y then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 23-27, warpins: 1 ---
+	__setCenterOffset(self.spr, x, -y)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 28-33, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	if tolua.type(tex)
+	 == "cc.SpriteFrame" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 34-38, warpins: 1 ---
+	__setSpriteFrame(self.spr, tex)
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 39-42, warpins: 1 ---
+	__setTextureAutoSetRect(self.spr, tex)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 43-45, warpins: 2 ---
+	self.unknowSize = nil
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+m2spr.setImg = function (self, imgid, idx)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.imgid == imgid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.idx ~= idx then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-11, warpins: 2 ---
+	self.imgid = imgid
+	self.idx = idx
+
+	self.texChanged(self)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+_G.useCppAni = true
+m2spr.playAni = function (self, img, begin, frame, delay, blend, autoRemove, noForever, callback, asyncPriority, nextIdxSpace)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.asyncPriority = asyncPriority
+	--- END OF BLOCK #0 ---
+
+	slot11 = if _G.useCppAni then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #1 6-11, warpins: 1 ---
+	slot11 = {
+		dt = 0,
+		img = img,
+		begin = begin,
+		frame = frame
+	}
+	--- END OF BLOCK #1 ---
+
+	slot12 = if not delay then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-12, warpins: 1 ---
+	slot12 = 0.1
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-16, warpins: 2 ---
+	slot11.delay = slot12
+	slot11.noForever = noForever
+	--- END OF BLOCK #3 ---
+
+	slot12 = if not callback then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 17-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot12 = if noForever then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-20, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot12 = if autoRemove then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 21-24, warpins: 1 ---
+	slot12 = handler(self, self.removeSelf)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 25-27, warpins: 4 ---
+	slot11.callback = slot12
+	--- END OF BLOCK #7 ---
+
+	slot12 = if not nextIdxSpace then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 28-28, warpins: 1 ---
+	slot12 = 1
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 29-38, warpins: 2 ---
+	slot11.nextIdxSpace = slot12
+	self.ani = slot11
+
+	m2sprMgr.removeTexQueue(self)
+
+	--- END OF BLOCK #9 ---
+
+	slot11 = if not game.loopBegin then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 39-41, warpins: 1 ---
+	local nt = socket.gettime()
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 42-54, warpins: 2 ---
+	m2sprMgr.aniTimeCache[self] = nt
+	m2sprMgr.aniNextTimeCache[self] = nt
+
+	self.setBlend(self, blend)
+	--- END OF BLOCK #11 ---
+
+	slot12 = if self.isShow then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #12 55-59, warpins: 1 ---
+	m2sprMgr.addAniQueue(self)
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #13 60-61, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot10 = if not nextIdxSpace then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 62-62, warpins: 1 ---
+	nextIdxSpace = 1
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 63-64, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot4 = if not delay then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 65-65, warpins: 1 ---
+	delay = 0.1
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 66-70, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	for idx=begin, begin + frame*nextIdxSpace, 1
+	LOOP BLOCK #18
+	GO OUT TO BLOCK #19
+
+	--- BLOCK #18 71-83, warpins: 2 ---
+	local frame = res.getframe(img, idx, self.setOffset, 1)
+
+	__addTextureFrame(self.spr, frame, idx)
+
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #19 84-94, warpins: 1 ---
+	slot11 = __playAniAction
+	slot12 = self.spr
+	slot13 = begin
+	slot14 = frame
+	slot15 = delay
+	slot16 = false
+	slot17 = nextIdxSpace
+	slot18 = not noForever
+	slot19 = autoRemove
+	--- END OF BLOCK #19 ---
+
+	slot20 = if callback then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 95-100, warpins: 1 ---
+	slot20 = cc.CallFunc:create(callback)
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 101-101, warpins: 2 ---
+	slot11(slot12, slot13, slot14, slot15, slot16, slot17, slot18, slot19, slot20)
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 102-102, warpins: 3 ---
+	return self
+	--- END OF BLOCK #22 ---
+
+
+
+end
+m2spr.playAnimation = function (img, begin, frame, delay, blend, autoRemove, noForever, callback, noSetOffset, asyncPriority, nextIdxSpace)
+	--- BLOCK #0 1-24, warpins: 1 ---
+	local ani = m2spr.new(nil, nil, {
+		setOffset = not noSetOffset,
+		blend = blend
+	}):playAni(img, begin, frame, delay, blend, autoRemove, noForever, callback, asyncPriority, nextIdxSpace)
+
+	return ani.spr, ani
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.stopAnimation = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.ani = nil
+
+	m2sprMgr.removeAniQueue(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+m2spr.aniUpt = function (self, dt)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local data = self.ani
+	local delay = data.delay
+	local idx = math.floor(dt/delay)
+
+	--- END OF BLOCK #0 ---
+
+	if data.frame - 1 < idx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 11-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot5 = if data.noForever then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 14-19, warpins: 1 ---
+	self.stopAnimation(self)
+	--- END OF BLOCK #2 ---
+
+	slot5 = if data.callback then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-22, warpins: 1 ---
+	data.callback(self)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-25, warpins: 2 ---
+	return 0
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 26-27, warpins: 1 ---
+	idx = idx%data.frame
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-30, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	if data.lastIdx == idx then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 31-33, warpins: 1 ---
+	return delay - dt%delay
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 34-46, warpins: 2 ---
+	data.lastIdx = idx
+	local imgIdx = data.begin + idx*data.nextIdxSpace
+
+	self.setImg(self, data.img, imgIdx)
+
+	return delay - dt%delay
+	--- END OF BLOCK #8 ---
+
+
+
+end
+local listener = cc.EventListenerCustom:create("director_after_update", handler(m2sprMgr, m2sprMgr.loop))
+
+cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+
+return m2sprMgr
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,238 @@
+--- BLOCK #0 1-21, warpins: 1 ---
+local sflistitem = class("sflistitem", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(sflistitem, {
+	data = {}
+})
+
+sflistitem.ctor = function (self, delegate, size, color)
+	--- BLOCK #0 1-195, warpins: 1 ---
+	self.setContentSize(self, size)
+
+	self.delegate = delegate
+
+	self.enableClick(self, function (x, y)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if self.delegate then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-11, warpins: 1 ---
+		self.delegate:onTouchSfList(self.scrollIndex)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-12, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		support = "scroll"
+	})
+
+	self.bg_root = display.newNode():add2(self)
+	self.bg = display.newColorLayer(cc.c4b(254, 254, 0, 255)):size(size):add2(self.bg_root)
+	self.content = display.newNode():add2(self):size(size)
+	self.serverNameLabel = an.newLabel("", 18, 1, {
+		color = def.colors.text
+	}):add2(self.content):pos(self.content:getw()/3/2, self.content:geth()/2):anchor(0.5, 0.5)
+	self.introduceLabel = an.newLabel("", 18, 1, {
+		color = def.colors.text
+	}):add2(self.content):pos((self.content:getw()*2)/3, self.content:geth()/2):anchor(0.5, 0.5)
+	local paddingLine = display.newLine({
+		{
+			self.content:getw()/3,
+			0
+		},
+		{
+			self.content:getw()/3,
+			self.content:geth()
+		}
+	}, {
+		borderWidth = 1,
+		borderColor = cc.c4f(0, 0, 0, 1)
+	}):add2(self.content):anchor(0, 0)
+	local bottomLine = display.newLine({
+		{
+			0,
+			0
+		},
+		{
+			self.content:getw(),
+			0
+		}
+	}, {
+		borderWidth = 1,
+		borderColor = cc.c4f(0, 0, 0, 1)
+	}):add2(self.content):anchor(0, 0)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+sflistitem.setData = function (self, data)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	self.data = data
+	local serverName = data.serverName
+	local introduce = data.introduce
+
+	--- END OF BLOCK #0 ---
+
+	if 6 < string.utf8len(data.serverName)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-18, warpins: 1 ---
+	serverName = string.utf8sub(data.serverName, 1, 6) .. "..."
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 19-25, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if 18 < string.utf8len(data.introduce)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-33, warpins: 1 ---
+	introduce = string.utf8sub(data.introduce, 1, 18) .. "..."
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 34-44, warpins: 2 ---
+	self.serverNameLabel:setText(serverName)
+	self.introduceLabel:setText(introduce)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+sflistitem.setScrollIndex = function (self, index)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.scrollIndex = index
+
+	--- END OF BLOCK #0 ---
+
+	if index == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-44, warpins: 1 ---
+	display.newLine({
+		{
+			0,
+			self.content:geth()
+		},
+		{
+			self.content:getw(),
+			self.content:geth()
+		}
+	}, {
+		borderWidth = 1,
+		borderColor = cc.c4f(0, 0, 0, 1)
+	}):add2(self.content):anchor(0, 0)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 45-45, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+sflistitem.setBgColor = function (self, color)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.bg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.bg:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-11, warpins: 2 ---
+	slot2 = display.newColorLayer
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not color then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-18, warpins: 1 ---
+	slot3 = cc.c4b(254, 254, 254, 255)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-31, warpins: 2 ---
+	self.bg = slot2(slot3):size(self.getContentSize(self)):add2(self.bg_root)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return sflistitem
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,814 @@
+--- BLOCK #0 1-4, warpins: 1 ---
+--- END OF BLOCK #0 ---
+
+if device.platform ~= "android" then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #2
+end
+
+
+--- BLOCK #1 5-6, warpins: 1 ---
+slot0 = false
+--- END OF BLOCK #1 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+--- BLOCK #2 7-7, warpins: 1 ---
+local isAndroid = true
+--- END OF BLOCK #2 ---
+
+FLOW; TARGET BLOCK #3
+
+
+--- BLOCK #3 8-68, warpins: 2 ---
+local yaya = {
+	logined = true,
+	appid = "1000309",
+	authed = true
+}
+yaya.reset = function ()
+	--- BLOCK #0 1-13, warpins: 1 ---
+	yaya.authed = nil
+	yaya.logined = nil
+	yaya.freeMode = nil
+	yaya.isonMic = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.setListenner = function (listenner)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	yaya.listenner = listenner
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.removeListenner = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	yaya.listenner = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call = function (key, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if yaya.listenner then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if yaya.listenner[key] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-14, warpins: 1 ---
+	yaya.listenner[key](...)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-15, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+yaya.initSDK = function (istest)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	yaya.callSDK("initSDK", {
+		"istest",
+		istest
+	}, {
+		"appid",
+		yaya.appid
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.login = function (roomID)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	yaya.reset()
+	yaya.callSDK("login", {
+		"seq",
+		tostring(roomID)
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.logout = function ()
+	--- BLOCK #0 1-8, warpins: 1 ---
+	yaya.reset()
+	yaya.callSDK("logout")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.sendText = function (text, gamedata)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	yaya.callSDK("sendText", {
+		"text",
+		text
+	}, {
+		"gamedata",
+		tostring(gamedata)
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.mic = function (ison, gamedata)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	yaya.callSDK("mic", {
+		"ison",
+		ison
+	}, {
+		"gamedata",
+		tostring(gamedata)
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.setMode = function (mode)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	yaya.callSDK("setMicMode", {
+		"mode",
+		mode
+	}, {
+		sign = "(I)V"
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.uploadVoice = function (path, dur, expand)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	yaya.callSDK("uploadVoiceAndTranslate", {
+		"path",
+		path
+	}, {
+		"dur",
+		dur
+	}, {
+		"expand",
+		expand
+	}, {
+		"retainTime",
+		8
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.uploadPic = function (path, size, msgID)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	yaya.callSDK("uploadPic", {
+		"path",
+		path
+	}, {
+		"size",
+		size
+	}, {
+		"msgID",
+		msgID
+	}, {
+		"retainTime",
+		8
+	}, {
+		"filetype",
+		"jpg"
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.callSDK = function (methodName, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #1 5-16, warpins: 1 ---
+	local params = {}
+	params.type = methodName .. ":"
+	local t = {}
+	t[MULTRES] = ...
+
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(t)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #2 17-19, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if v.sign then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 21-23, warpins: 1 ---
+	params[v[1]] = v[2]
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 24-25, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 26-33, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not luaoc.callStaticMethod("yayaSDK", "call", params)
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 34-38, warpins: 1 ---
+	print("yaya.callSDK call err. ->", methodName, ...)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 39-42, warpins: 2 ---
+	dump(params)
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #9 43-46, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #10 47-55, warpins: 1 ---
+	local params = {}
+	local t = {}
+	t[MULTRES] = ...
+	local sign = nil
+
+	--- END OF BLOCK #10 ---
+
+	for i, v in ipairs(t)
+
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #11 56-58, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot9 = if v.sign then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 59-60, warpins: 1 ---
+	sign = v.sign
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #13 61-64, warpins: 1 ---
+	params[#params + 1] = v[2]
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 65-66, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #15 67-80, warpins: 2 ---
+	dump(params)
+	--- END OF BLOCK #15 ---
+
+	slot4 = if not luaj.callStaticMethod(ANDROID_PACKAGE_NAME .. "yayaSDK", methodName, params, sign)
+	 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 81-85, warpins: 1 ---
+	print("yaya.callSDK call err. ->", methodName, ...)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 86-86, warpins: 4 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+yaya.call_initEnd = function (dic)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_authEnd = function (dic)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+	slot3 = yaya
+	--- END OF BLOCK #0 ---
+
+	if result ~= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	slot4 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	slot4 = true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-10, warpins: 2 ---
+	slot3.authed = slot4
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+yaya.call_loginEnd = function (dic)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+	local yunvaid = dic.yunvaid
+	local leaderID = dic.leaderID
+	local isLeader = dic.isLeader
+	slot6 = yaya
+	--- END OF BLOCK #0 ---
+
+	slot7 = if dic.micMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 10-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if dic.micMode ~= 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-14, warpins: 1 ---
+	slot7 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	slot7 = true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-19, warpins: 3 ---
+	slot6.freeMode = slot7
+	slot6 = yaya
+	--- END OF BLOCK #4 ---
+
+	if result ~= 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-21, warpins: 1 ---
+	slot7 = false
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 22-22, warpins: 1 ---
+	slot7 = true
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 23-29, warpins: 2 ---
+	slot6.logined = slot7
+	yaya.yunvaid = yunvaid
+
+	--- END OF BLOCK #7 ---
+
+	slot6 = if not yaya.freeMode then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 30-33, warpins: 1 ---
+	yaya.setMode(0)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 34-34, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+yaya.call_logoutEnd = function (dic)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+
+	yaya.reset()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_sendTextSuccess = function (dic)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	local gamedata = dic.gamedata
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_sendTextErr = function (dic)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+	local gamedata = dic.gamedata
+	--- END OF BLOCK #0 ---
+
+	slot3 = if gamedata then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	gamedata = gamedata
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-6, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+yaya.call_textNotify = function (dic)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local roomID = dic.roomID
+	local text = dic.text
+	local gamedata = dic.gameData
+	local time = dic.time
+	local yunvaid = dic.yunvaid
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_micEnd = function (dic)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+	local ison = dic.ison
+	yaya.isonMic = ison
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_realtimeVoice = function (dic)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local roomID = dic.roomID
+	local gamedata = dic.gameData
+	local yunvaid = dic.yunvaid
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_realtimeVoiceErr = function (dic)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+	local ison = dic.ison
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_micModeEnd = function (dic)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local result = dic.result
+	local msg = dic.msg
+	slot3 = yaya
+	--- END OF BLOCK #0 ---
+
+	if dic.result ~= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	slot4 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-9, warpins: 1 ---
+	slot4 = true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-11, warpins: 2 ---
+	slot3.freeMode = slot4
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+yaya.call_micModeNotify = function (dic)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local mode = dic.mode
+	slot2 = yaya
+	--- END OF BLOCK #0 ---
+
+	if dic.mode ~= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	slot3 = true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-10, warpins: 2 ---
+	slot2.freeMode = slot3
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+yaya.call_relogin = function (dic)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local result = dic.result
+	local tryReLoginTimes = dic.tryReLoginTimes
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_uploadVoiceEnd = function (dic)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	voice.uploadEnd(dic.result, dic.errMsg, dic.url, dic.text, dic.dur, dic.expand)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+yaya.call_uploadPicEnd = function (dic)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	pic.uploadEnd(dic.result, dic.errMsg, dic.url)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+function yaya_callback(dic)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if isAndroid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-11, warpins: 1 ---
+	local dicstr = dic
+	dic = json.decode(dicstr)
+
+	--- END OF BLOCK #1 ---
+
+	slot0 = if not dic then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-16, warpins: 1 ---
+	printError("yaya_callback decode err. ->[%s]", dicstr)
+
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-26, warpins: 3 ---
+	dump(dic)
+	--- END OF BLOCK #3 ---
+
+	slot1 = if yaya["call_" .. dic.type] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-33, warpins: 1 ---
+	yaya["call_" .. dic.type](dic)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 34-39, warpins: 2 ---
+	yaya.call(dic.type, dic)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return yaya
+--- END OF BLOCK #3 ---
+
+
+

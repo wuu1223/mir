@@ -1,0 +1,6097 @@
+--- BLOCK #0 1-19, warpins: 1 ---
+local current = ...
+local tags = {
+	other = "其他",
+	autoRat = "挂机",
+	equip = "装备",
+	net = "通讯",
+	login = "登录",
+	bag = "背包",
+	error = "lua错误",
+	res = "资源",
+	assert = "断言",
+	normal = "普通"
+}
+local shows = {}
+shows.fps = function (b)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	cc.Director:getInstance():setDisplayStats(b)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+shows.同屏人数 = function (b)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	cc.Director:getInstance():getNotificationNode().screenNode:setVisible(b)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+shows.ping值 = function (b)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	cc.Director:getInstance():getNotificationNode().pingNode:setVisible(b)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+function p2(tag, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	slot1 = print
+	slot2 = "_debug_"
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	slot3 = "normal"
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-8, warpins: 2 ---
+	slot1(slot2, slot3, ...)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+function d2(tag, value, desciption, nestin)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	slot4 = dump
+	slot5 = "_debug_"
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not tag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	slot6 = "normal"
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-10, warpins: 2 ---
+	slot4(slot5, slot6, value, desciption, nestin)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+function __G__TRACKBACK__(errorMessage)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if LuaReportException then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	slot1 = slot1
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-29, warpins: 2 ---
+	p2("error", "----------------------------------------")
+	p2("error", "LUA ERROR: " .. tostring(errorMessage) .. "\n")
+	p2("error", debug.traceback("", 2))
+	p2("error", "----------------------------------------")
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+--- END OF BLOCK #0 ---
+
+if 0 < DEBUG then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #5
+end
+
+
+--- BLOCK #1 20-27, warpins: 1 ---
+local _dumpTag = nil
+local _dump = dump
+
+function dump(mark, tag, value, desciption, nesting)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if mark == "_debug_" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot5 = if not tag then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 1 ---
+	slot5 = "normal"
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-13, warpins: 2 ---
+	_dumpTag = slot5
+
+	_dump(value, desciption, nesting)
+
+	_dumpTag = nil
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 14-19, warpins: 1 ---
+	_dump(mark, tag, value, 1)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 20-20, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+_print = print
+
+local function tprint(mark, tag, ...)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local str = nil
+	--- END OF BLOCK #0 ---
+
+	if mark == "_debug_" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #1 4-13, warpins: 1 ---
+	local params = {}
+	params[MULTRES] = ...
+
+	--- END OF BLOCK #1 ---
+
+	for i=1, select("#", ...)
+
+	, 1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #15
+
+	--- BLOCK #2 14-22, warpins: 2 ---
+	local v = select(i, ...)
+	local valueType = type(v)
+	--- END OF BLOCK #2 ---
+
+	if valueType == "boolean" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 23-24, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot8 = if v then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 25-26, warpins: 1 ---
+	slot10 = "true"
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 27-27, warpins: 1 ---
+	slot10 = "false"
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-29, warpins: 2 ---
+	params[i] = slot10
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #7 30-31, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if valueType == "userdata" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 32-35, warpins: 1 ---
+	slot10 = "userdata("
+	--- END OF BLOCK #8 ---
+
+	slot11 = if not v.__cname then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 36-39, warpins: 1 ---
+	slot11 = tolua.type(v)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 40-43, warpins: 2 ---
+	params[i] = slot10 .. slot11 .. ")"
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #11 44-45, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if valueType ~= "string" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 46-47, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if valueType ~= "number" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 48-48, warpins: 1 ---
+	params[i] = valueType
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 49-49, warpins: 5 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #15 50-56, warpins: 1 ---
+	str = table.concat(params, "   ")
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #16 57-68, warpins: 1 ---
+	local params = {}
+	params[1] = mark
+	params[2] = tag
+	params[MULTRES] = ...
+	local arglen = select("#", ...) + 2
+	--- END OF BLOCK #16 ---
+
+	if arglen == 2 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #17 69-70, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if tag == nil then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #18 71-72, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if mark == nil then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 73-74, warpins: 1 ---
+	arglen = 0
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 75-75, warpins: 1 ---
+	arglen = 1
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 76-79, warpins: 4 ---
+	--- END OF BLOCK #21 ---
+
+	for i=1, arglen, 1
+	LOOP BLOCK #22
+	GO OUT TO BLOCK #35
+
+	--- BLOCK #22 80-85, warpins: 2 ---
+	local v = params[i]
+	local valueType = type(v)
+	--- END OF BLOCK #22 ---
+
+	if valueType == "boolean" then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #23 86-87, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	slot9 = if v then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 88-89, warpins: 1 ---
+	slot11 = "true"
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #25 90-90, warpins: 1 ---
+	slot11 = "false"
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 91-92, warpins: 2 ---
+	params[i] = slot11
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #27 93-94, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	if valueType == "userdata" then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #28 95-98, warpins: 1 ---
+	slot11 = "userdata("
+	--- END OF BLOCK #28 ---
+
+	slot12 = if not v.__cname then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 99-102, warpins: 1 ---
+	slot12 = tolua.type(v)
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 103-106, warpins: 2 ---
+	params[i] = slot11 .. slot12 .. ")"
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #31 107-108, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if valueType ~= "string" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #32 109-110, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if valueType ~= "number" then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 111-111, warpins: 1 ---
+	params[i] = valueType
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 112-112, warpins: 5 ---
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #35 113-121, warpins: 1 ---
+	str = table.concat(params, "   ")
+	--- END OF BLOCK #35 ---
+
+	slot1 = if not _dumpTag then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 122-122, warpins: 1 ---
+	tag = "other"
+
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 123-125, warpins: 3 ---
+	--- END OF BLOCK #37 ---
+
+	slot3 = if m2debug then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #38 126-130, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	slot3 = if m2debug.enables[tag] then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 131-138, warpins: 1 ---
+	_print(string.format("[ %s ] %s", tag, str))
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 139-143, warpins: 2 ---
+	m2debug.add(tag, str)
+
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 144-144, warpins: 2 ---
+	return 
+	--- END OF BLOCK #41 ---
+
+
+
+end
+
+--- END OF BLOCK #1 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+--- BLOCK #2 28-28, warpins: 1 ---
+--- END OF BLOCK #2 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+--- BLOCK #3 29-33, warpins: 0 ---
+scheduler.performWithDelayGlobal(function ()
+	--- BLOCK #0 1-136, warpins: 1 ---
+	tprint("---------- test print ----------")
+	tprint(true, false)
+	tprint(true)
+	tprint(false)
+	tprint(false, false, false)
+	tprint(nil, false)
+	tprint(nil, nil, nil)
+	tprint(nil, nil, "arg")
+	tprint(nil, "arg", "arg")
+	tprint("string1", "string2", "string3", "string4", "string5")
+	tprint("number", 1, 2, 3, 4, 5)
+	tprint("node")
+	tprint(display.newNode())
+	tprint("_debug_", "other", "---------- test print2 ----------")
+	tprint("_debug_", "other", true, false)
+	tprint("_debug_", "other", true)
+	tprint("_debug_", "other", false)
+	tprint("_debug_", "other", false, false, false)
+	tprint("_debug_", "other", nil, false)
+	tprint("_debug_", "other", nil, nil, "arg")
+	tprint("_debug_", "other", nil, "arg", "arg")
+	tprint("_debug_", "other", "string1", "string2", "string3", "string4", "string5")
+	tprint("_debug_", "other", "number", 1, 2, 3, 4, 5)
+	tprint("_debug_", "other", "node")
+	tprint("_debug_", "other", display.newNode())
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end, 1)
+
+--- END OF BLOCK #3 ---
+
+FLOW; TARGET BLOCK #4
+
+
+--- BLOCK #4 34-246, warpins: 2 ---
+print = tprint
+local _replaceScene = display.replaceScene
+local afterDrawListener = nil
+display.replaceScene = function (newScene, ...)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	m2debug.show(newScene)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if afterDrawListener then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-20, warpins: 1 ---
+	cc.Director:getInstance():getEventDispatcher():removeEventListener(afterDrawListener)
+
+	afterDrawListener = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-25, warpins: 2 ---
+	_replaceScene(newScene, ...)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+local _pushScene = cc.Director.pushScene
+cc.Director.pushScene = function (d, newScene, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if m2debug.node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	m2debug.node:removeSelf()
+
+	m2debug.node = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-19, warpins: 2 ---
+	m2debug.show(newScene)
+	--- END OF BLOCK #2 ---
+
+	slot2 = if afterDrawListener then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-32, warpins: 1 ---
+	cc.Director:getInstance():getEventDispatcher():removeEventListener(afterDrawListener)
+
+	afterDrawListener = nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 33-38, warpins: 2 ---
+	_pushScene(d, newScene, ...)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+local _popScene = cc.Director.popScene
+cc.Director.popScene = function (d, ...)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if m2debug.node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	m2debug.node:removeSelf()
+
+	m2debug.node = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-33, warpins: 2 ---
+	afterDrawListener = cc.EventListenerCustom:create("director_after_draw", function ()
+		--- BLOCK #0 1-22, warpins: 1 ---
+		local dir = cc.Director:getInstance()
+		local running = dir.getRunningScene(dir).s
+
+		m2debug.show(running)
+		dir.getEventDispatcher(dir):removeEventListener(afterDrawListener)
+
+		afterDrawListener = nil
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	d.getEventDispatcher(d):addEventListenerWithFixedPriority(afterDrawListener, 1)
+	_popScene(d, ...)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+local node = display.newNode()
+local screenNode = display.newNode():addTo(node)
+node.screenNode = screenNode
+local roleCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 185):add2(screenNode)
+local mapCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 165):add2(screenNode)
+local msgCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 145):add2(screenNode)
+local labelTexCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 125):add2(screenNode)
+local rsTexCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 105):add2(screenNode)
+local mir2TexCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 85):add2(screenNode)
+local m2sprCnt = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):pos(0, 65):add2(screenNode)
+
+cc.Director:getInstance():setNotificationNode(node)
+scheduler.scheduleUpdateGlobal(function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if main_scene then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot0 = if main_scene.ground then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #2 8-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot0 = if main_scene.ground.map then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #3 13-46, warpins: 1 ---
+	local roles = {}
+
+	table.merge(roles, main_scene.ground.map.heros)
+	table.merge(roles, main_scene.ground.map.mons)
+	table.merge(roles, main_scene.ground.map.npcs)
+
+	local allRoleCnt = table.nums(roles)
+	local ignoreCnt = 0
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(roles)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #4 47-49, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot8 = if v.isIgnore then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 50-50, warpins: 1 ---
+	ignoreCnt = ignoreCnt + 1
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 51-52, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 53-66, warpins: 1 ---
+	slot4 = roleCnt
+	slot3 = roleCnt.setString
+	slot5 = "同屏人数: "
+	slot6 = allRoleCnt - ignoreCnt
+	slot7 = " / "
+	slot8 = allRoleCnt
+	slot9 = " / "
+	--- END OF BLOCK #7 ---
+
+	slot10 = if not main_scene.ground.map.current_frame_updatedRoles then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 67-67, warpins: 1 ---
+	slot10 = 0
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 68-81, warpins: 2 ---
+	slot3(slot4, slot5 .. slot6 .. slot7 .. slot8 .. slot9 .. slot10)
+	mapCnt:setString("map消息: " .. main_scene.ground.map.msgs.size())
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 82-99, warpins: 4 ---
+	mir2TexCnt:setString("传奇资源纹理数: " .. res.getMir2TexCount())
+	m2sprCnt:setString("传奇资源精灵: " .. m2spr.debuginfo)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end)
+
+node.pingNode = display.newNode():addTo(node)
+node.pingNode.label = an.newLabel("", 18, 0.8, {
+	sd = true,
+	color = display.COLOR_GREEN
+}):addTo(node.pingNode):pos(0, 210)
+
+scheduler.scheduleGlobal(function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if main_scene then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-13, warpins: 1 ---
+	net.sendPing()
+	g_data.client:setLastTime("ping", true)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-14, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end, 5)
+
+--- END OF BLOCK #4 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+--- BLOCK #5 247-252, warpins: 1 ---
+function print()
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+function dump()
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return 
+
+--- END OF BLOCK #5 ---
+
+FLOW; TARGET BLOCK #6
+
+
+--- BLOCK #6 253-270, warpins: 2 ---
+local debugNode = nil
+local m2debug = {
+	allowTouch = true,
+	catch = false
+}
+m2debug.enables = {}
+m2debug.showEnables = {}
+m2debug.texts = {}
+m2debug.cmNames = {}
+m2debug.smNames = {}
+m2debug.setting = {
+	acLogin = true
+}
+
+--- END OF BLOCK #6 ---
+
+for k, v in pairs(tags)
+
+
+LOOP BLOCK #7
+GO OUT TO BLOCK #9
+
+
+--- BLOCK #7 271-273, warpins: 1 ---
+m2debug.enables[k] = true
+--- END OF BLOCK #7 ---
+
+FLOW; TARGET BLOCK #8
+
+
+--- BLOCK #8 274-275, warpins: 2 ---
+--- END OF BLOCK #8 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+--- BLOCK #9 276-281, warpins: 1 ---
+local filter = cache.getDebug("filter")
+
+--- END OF BLOCK #9 ---
+
+slot5 = if filter then
+JUMP TO BLOCK #10
+else
+JUMP TO BLOCK #13
+end
+
+
+--- BLOCK #10 282-285, warpins: 1 ---
+--- END OF BLOCK #10 ---
+
+for k, v in pairs(filter)
+
+
+LOOP BLOCK #11
+GO OUT TO BLOCK #13
+
+
+--- BLOCK #11 286-287, warpins: 1 ---
+m2debug.enables[k] = v
+
+--- END OF BLOCK #11 ---
+
+FLOW; TARGET BLOCK #12
+
+
+--- BLOCK #12 288-289, warpins: 2 ---
+--- END OF BLOCK #12 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+--- BLOCK #13 290-293, warpins: 2 ---
+--- END OF BLOCK #13 ---
+
+for k, v in pairs(shows)
+
+
+LOOP BLOCK #14
+GO OUT TO BLOCK #16
+
+
+--- BLOCK #14 294-296, warpins: 1 ---
+m2debug.showEnables[k] = true
+--- END OF BLOCK #14 ---
+
+FLOW; TARGET BLOCK #15
+
+
+--- BLOCK #15 297-298, warpins: 2 ---
+--- END OF BLOCK #15 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+--- BLOCK #16 299-304, warpins: 1 ---
+local showEnables = cache.getDebug("shows")
+
+--- END OF BLOCK #16 ---
+
+slot6 = if showEnables then
+JUMP TO BLOCK #17
+else
+JUMP TO BLOCK #20
+end
+
+
+--- BLOCK #17 305-308, warpins: 1 ---
+--- END OF BLOCK #17 ---
+
+for k, v in pairs(showEnables)
+
+
+LOOP BLOCK #18
+GO OUT TO BLOCK #20
+
+
+--- BLOCK #18 309-310, warpins: 1 ---
+m2debug.showEnables[k] = v
+
+--- END OF BLOCK #18 ---
+
+FLOW; TARGET BLOCK #19
+
+
+--- BLOCK #19 311-312, warpins: 2 ---
+--- END OF BLOCK #19 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+--- BLOCK #20 313-316, warpins: 2 ---
+--- END OF BLOCK #20 ---
+
+for k, v in pairs(shows)
+
+LOOP BLOCK #21
+GO OUT TO BLOCK #23
+
+
+--- BLOCK #21 317-320, warpins: 1 ---
+shows[k](m2debug.showEnables[k])
+
+--- END OF BLOCK #21 ---
+
+FLOW; TARGET BLOCK #22
+
+
+--- BLOCK #22 321-322, warpins: 2 ---
+--- END OF BLOCK #22 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+--- BLOCK #23 323-328, warpins: 1 ---
+local setting = cache.getDebug("setting")
+--- END OF BLOCK #23 ---
+
+slot7 = if setting then
+JUMP TO BLOCK #24
+else
+JUMP TO BLOCK #25
+end
+
+
+--- BLOCK #24 329-329, warpins: 1 ---
+m2debug.setting = setting
+--- END OF BLOCK #24 ---
+
+FLOW; TARGET BLOCK #25
+
+
+--- BLOCK #25 330-335, warpins: 2 ---
+local roleSpeed = cache.getDebug("roleSpeed")
+--- END OF BLOCK #25 ---
+
+slot8 = if roleSpeed then
+JUMP TO BLOCK #26
+else
+JUMP TO BLOCK #27
+end
+
+
+--- BLOCK #26 336-336, warpins: 1 ---
+m2debug.roleSpeed = roleSpeed
+
+--- END OF BLOCK #26 ---
+
+FLOW; TARGET BLOCK #27
+
+
+--- BLOCK #27 337-340, warpins: 2 ---
+--- END OF BLOCK #27 ---
+
+for k, v in pairs(_G)
+
+LOOP BLOCK #28
+GO OUT TO BLOCK #34
+
+
+--- BLOCK #28 341-345, warpins: 1 ---
+--- END OF BLOCK #28 ---
+
+if type(v)
+ == "number" then
+JUMP TO BLOCK #29
+else
+JUMP TO BLOCK #33
+end
+
+
+--- BLOCK #29 346-352, warpins: 1 ---
+--- END OF BLOCK #29 ---
+
+if string.find(k, "CM_")
+
+ == 1 then
+JUMP TO BLOCK #30
+else
+JUMP TO BLOCK #31
+end
+
+
+--- BLOCK #30 353-355, warpins: 1 ---
+m2debug.cmNames[v] = k
+
+--- END OF BLOCK #30 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #33
+
+
+--- BLOCK #31 356-362, warpins: 1 ---
+--- END OF BLOCK #31 ---
+
+if string.find(k, "SM_")
+
+ == 1 then
+JUMP TO BLOCK #32
+else
+JUMP TO BLOCK #33
+end
+
+
+--- BLOCK #32 363-364, warpins: 1 ---
+m2debug.smNames[v] = k
+--- END OF BLOCK #32 ---
+
+FLOW; TARGET BLOCK #33
+
+
+--- BLOCK #33 365-366, warpins: 5 ---
+--- END OF BLOCK #33 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+--- BLOCK #34 367-427, warpins: 1 ---
+m2debug.add = function (tag, str)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	m2debug.texts[#m2debug.texts + 1] = {
+		tag,
+		str
+	}
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if m2debug.enables[tag] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 16-19, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if m2debug.node then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 20-26, warpins: 1 ---
+	m2debug.node:addLog(tag, str)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 27-27, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+m2debug.show = function (scene)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not m2debug.hideNode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-16, warpins: 1 ---
+	m2debug.node = debugNode.new():add2(scene, an.z.debug)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+debugNode = class("debugNode", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(debugNode, {
+	btn,
+	btns,
+	beganPos,
+	beganTouchPos,
+	hasMove,
+	lock,
+	content,
+	catchNode
+})
+
+debugNode.ctor = function (self)
+	--- BLOCK #0 1-114, warpins: 1 ---
+	self.btn = res.get2("pic/console/iconbg8.png")
+
+	self.btn:pos(self.btn:centerPos()):add2(self, 1):setCascadeOpacityEnabled(true)
+	res.get2("pic/debug/icon.png"):pos(self.btn:centerPos()):add2(self.btn)
+	self.setCascadeOpacityEnabled(self, true)
+	self.size(self, self.btn:getw(), self.btn:geth()):anchor(0.5, 0.5):pos(self.getw(self)/2, display.height - self.geth(self)/2):opacity(0):runs({
+		cc.FadeIn:create(1),
+		cc.DelayTime:create(3),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:opacity(128)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+	self.btn:setTouchEnabled(true)
+	self.btn:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if self.lock then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-5, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 6-8, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 9-42, warpins: 1 ---
+		self.beganPos = cc.p(self:getPosition())
+		self.beganTouchPos = cc.p(event.x, event.y)
+		self.hasMove = false
+
+		self:opacity(255)
+		self:scale(1)
+		self:stopAllActions()
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+		--- BLOCK #4 43-45, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #5 46-49, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot1 = if not self.hasMove then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #6 50-60, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if 10 >= math.abs(self.beganTouchPos.x - event.x)
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 61-71, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if 10 < math.abs(self.beganTouchPos.y - event.y)
+
+		 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #8 72-95, warpins: 3 ---
+		self.hasMove = true
+		local x = event.x - self.beganTouchPos.x + self.beganPos.x
+		local y = event.y - self.beganTouchPos.y + self.beganPos.y
+		--- END OF BLOCK #8 ---
+
+		if x < 0 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 96-97, warpins: 1 ---
+		x = 0
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #10 98-101, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		if display.width < x then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #11 102-105, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		slot1 = if not display.width then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 105-105, warpins: 1 ---
+		x = x
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 106-108, warpins: 3 ---
+		--- END OF BLOCK #13 ---
+
+		if y < 0 then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 109-110, warpins: 1 ---
+		y = 0
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #15 111-114, warpins: 2 ---
+		--- END OF BLOCK #15 ---
+
+		if display.height < y then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #16 115-118, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		slot2 = if not display.height then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 118-118, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 119-125, warpins: 3 ---
+		self:pos(x, y)
+
+		--- END OF BLOCK #18 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+		--- BLOCK #19 126-128, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #20 129-136, warpins: 1 ---
+		local function newx(x)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if x < self:getw()
+			/2 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 8-14, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot0 = if not (self:getw()
+
+			/2) then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 14-14, warpins: 1 ---
+			x = x
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 15-24, warpins: 3 ---
+			--- END OF BLOCK #3 ---
+
+			if display.width - self:getw()
+			/2 < x then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #4 25-34, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			slot0 = if not (display.width - self:getw()
+
+			/2) then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 34-34, warpins: 1 ---
+			x = x
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 35-35, warpins: 3 ---
+			return x
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+
+		local function newy(y)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if y < self:geth()
+			/2 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 8-14, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot0 = if not (self:geth()
+
+			/2) then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 14-14, warpins: 1 ---
+			y = y
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 15-24, warpins: 3 ---
+			--- END OF BLOCK #3 ---
+
+			if display.height - self:geth()
+			/2 < y then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #4 25-34, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			slot0 = if not (display.height - self:geth()
+
+			/2) then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 34-34, warpins: 1 ---
+			y = y
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 35-35, warpins: 3 ---
+			return y
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+
+		local function bothXY(x, y)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if y < self:geth()
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 7-16, warpins: 1 ---
+			x = newx(x)
+			y = self:geth()/2
+
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+			--- BLOCK #2 17-25, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if display.height - self:geth()
+
+			 < y then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 26-38, warpins: 1 ---
+			x = newx(x)
+			y = display.height - self:geth()/2
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+			--- BLOCK #4 39-42, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			if display.cx < x then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 43-55, warpins: 1 ---
+			x = display.width - self:getw()/2
+			y = newy(y)
+			--- END OF BLOCK #5 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+			--- BLOCK #6 56-64, warpins: 1 ---
+			x = self:getw()/2
+			y = newy(y)
+
+			--- END OF BLOCK #6 ---
+
+			FLOW; TARGET BLOCK #7
+
+
+			--- BLOCK #7 65-67, warpins: 4 ---
+			return x, y
+			--- END OF BLOCK #7 ---
+
+
+
+		end
+
+		local function goto(x, y)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot2 = if self.content then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 5-12, warpins: 1 ---
+			self:moveTo(0.25, x, y)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 13-43, warpins: 1 ---
+			self:runs({
+				cc.MoveTo:create(0.25, cc.p(x, y)),
+				cc.DelayTime:create(3),
+				cc.CallFunc:create(function ()
+					--- BLOCK #0 1-6, warpins: 1 ---
+					self:opacity(128)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end)
+			})
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 44-44, warpins: 2 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+
+		--- END OF BLOCK #20 ---
+
+		slot5 = if not self.hasMove then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 137-169, warpins: 1 ---
+		self.lock = true
+
+		self.btn:runs({
+			cc.ScaleTo:create(0.1, 0.01),
+			cc.ScaleTo:create(0.1, 1),
+			cc.CallFunc:create(function ()
+				--- BLOCK #0 1-7, warpins: 1 ---
+				self.lock = nil
+
+				--- END OF BLOCK #0 ---
+
+				slot0 = if self.content then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 8-24, warpins: 1 ---
+				self.content:removeSelf()
+
+				self.content = nil
+
+				goto(bothXY(self:getPosition()))
+				--- END OF BLOCK #1 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+				--- BLOCK #2 25-28, warpins: 1 ---
+				self:createContent()
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 29-29, warpins: 2 ---
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end)
+		})
+
+		--- END OF BLOCK #21 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+		--- BLOCK #22 170-191, warpins: 1 ---
+		local x = event.x - self.beganTouchPos.x + self.beganPos.x
+		local y = event.y - self.beganTouchPos.y + self.beganPos.y
+		--- END OF BLOCK #22 ---
+
+		slot7 = if self.content then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 192-200, warpins: 1 ---
+		y = newy(y)
+		x = newx(x)
+		--- END OF BLOCK #23 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+		--- BLOCK #24 201-206, warpins: 1 ---
+		x, y = bothXY(x, y)
+
+		--- END OF BLOCK #24 ---
+
+		FLOW; TARGET BLOCK #25
+
+
+		--- BLOCK #25 207-210, warpins: 2 ---
+		goto(x, y)
+
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 211-211, warpins: 2 ---
+		--- END OF BLOCK #26 ---
+
+		FLOW; TARGET BLOCK #27
+
+
+		--- BLOCK #27 212-214, warpins: 5 ---
+		return true
+		--- END OF BLOCK #27 ---
+
+		FLOW; TARGET BLOCK #28
+
+
+		--- BLOCK #28 215-215, warpins: 2 ---
+		--- END OF BLOCK #28 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+debugNode.createContentBase = function (self, type)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-87, warpins: 2 ---
+	self.content = display.newNode():anchor(0, 1):pos(self.btn:getw()/2 + 5, self.btn:geth()/2 - 5):size(480, 320):add2(self)
+	self.content.type = type
+
+	display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(self.content:getContentSize()):add2(self.content)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale2.png")):anchor(0, 0):size(self.content:getContentSize()):add2(self.content)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+debugNode.createContent = function (self, hasInput)
+	--- BLOCK #0 1-53, warpins: 1 ---
+	self.createContentBase(self, "main")
+
+	local scroll = an.newScroll(6, 6, self.content:getw() - 16, self.content:geth() - 12, {
+		labelM = {
+			18,
+			0
+		}
+	}):anchor(0, 0):addTo(self.content)
+	self.content.beginpos = 1
+	self.content.scroll = scroll
+	local loadFront = nil
+
+	scroll.enableTouch(scroll, m2debug.allowTouch)
+	scroll.setListenner(scroll, function (event)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		local x, y = scroll:getScrollOffset()
+
+		--- END OF BLOCK #0 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #1 8-24, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if scroll:getScrollSize()
+		.height - scroll:geth()
+		 < y + scroll.labelM.wordSize.height then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 25-28, warpins: 1 ---
+		self:hideNewMark()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 29-31, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		if y < 0 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #4 32-34, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot3 = if not loadFront then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #5 35-40, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if 1 < self.content.beginpos then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #6 41-42, warpins: 1 ---
+		loadFront = true
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+		--- BLOCK #7 43-45, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #8 46-48, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		slot3 = if loadFront then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #9 49-56, warpins: 1 ---
+		local source = {}
+		--- END OF BLOCK #9 ---
+
+		for i=self.content.beginpos - 1, 1, -1
+		LOOP BLOCK #10
+		GO OUT TO BLOCK #14
+
+		--- BLOCK #10 57-65, warpins: 2 ---
+		local v = m2debug.texts[i]
+		--- END OF BLOCK #10 ---
+
+		slot9 = if m2debug.enables[v[1]] then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #11 66-78, warpins: 1 ---
+		self.content.beginpos = i
+
+		table.insert(source, 1, v)
+
+		--- END OF BLOCK #11 ---
+
+		if 20 <= #source then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 79-79, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #13 80-80, warpins: 2 ---
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #14 81-84, warpins: 2 ---
+		--- END OF BLOCK #14 ---
+
+		if 0 < #source then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #15 85-99, warpins: 1 ---
+		local labelM = an.newLabelM(scroll:getw(), scroll.labelM.fontSize, 0)
+
+		--- END OF BLOCK #15 ---
+
+		for i, v in ipairs(source)
+
+		LOOP BLOCK #16
+		GO OUT TO BLOCK #18
+
+
+		--- BLOCK #16 100-118, warpins: 1 ---
+		labelM.nextLine(labelM):addLabel("[ " .. v[1] .. " ] ", self:getColor(v[1])):addLabel(v[2])
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 119-120, warpins: 2 ---
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #18 121-162, warpins: 1 ---
+		display.newColorLayer(cc.c4b(255, 255, 0, 255)):size(labelM.getw(labelM), 1):add2(labelM)
+		scroll.labelM:insertNodeToFront(labelM, #labelM.lines)
+		scroll:setScrollOffset(0, (y + labelM.geth(labelM)) - labelM.wordSize.height/2)
+
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 163-163, warpins: 2 ---
+		loadFront = nil
+
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 164-164, warpins: 7 ---
+		return 
+		--- END OF BLOCK #20 ---
+
+
+
+	end)
+
+	local source = {}
+	--- END OF BLOCK #0 ---
+
+	for i=#m2debug.texts, 1, -1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+	--- BLOCK #1 54-62, warpins: 2 ---
+	local v = m2debug.texts[i]
+	--- END OF BLOCK #1 ---
+
+	slot10 = if m2debug.enables[v[1]] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 63-74, warpins: 1 ---
+	self.content.beginpos = i
+
+	table.insert(source, 1, v)
+	--- END OF BLOCK #2 ---
+
+	if 20 <= #source then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 75-75, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 76-76, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 77-80, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(source)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #6 81-85, warpins: 1 ---
+	self.addLog(self, v[1], v[2])
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 86-87, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #8 88-132, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-16, warpins: 1 ---
+		local folder = os.date("%Y-%m-%d")
+		local key = os.date("%H-%M-%S") .. ".txt"
+		local value = {}
+
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(m2debug.texts)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 17-25, warpins: 1 ---
+		value[#value + 1] = string.format("[%s]  %s", v[1], v[2])
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 26-27, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 28-44, warpins: 1 ---
+		cache.saveDebugLog(folder, key, value)
+		self:createContentForTips("已保存到[" .. folder .. "/" .. key .. "]")
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"保存",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, self.content:geth() - 50)
+
+	--- END OF BLOCK #8 ---
+
+	slot1 = if hasInput then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #9 133-139, warpins: 1 ---
+	local function executeLua(text)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		local f = loadstring(text)
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if f then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-8, warpins: 1 ---
+		f()
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 9-11, warpins: 1 ---
+		print("lua格式有误.")
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-12, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	local input = nil
+	local mac_use_source_keyboard = true
+	--- END OF BLOCK #9 ---
+
+	if device.platform ~= "mac" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 140-143, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if device.platform == "windows" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 144-145, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot7 = if mac_use_source_keyboard then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 146-200, warpins: 1 ---
+	input = cc.ui.UIInput.new({
+		UIInputType = 1,
+		size = cc.size(self.content:getw(), 40),
+		image = display.newScale9Sprite(res.getframe2("pic/scale/scale2.png")),
+		listener = function (type)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if type == "changed" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 3-19, warpins: 1 ---
+			local text = input:getText()
+
+			--- END OF BLOCK #1 ---
+
+			if string.byte(string.reverse(text))
+			 == string.byte("\\")
+			 then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #2 20-34, warpins: 1 ---
+			executeLua(string.sub(text, 1, #text - 1))
+			input:setText("")
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #3 35-45, warpins: 1 ---
+			executeLua(input:getText())
+			input:setText("")
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 46-46, warpins: 3 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end
+	}):anchor(0, 1):opacity(0):fadeIn(0.1):pos(0, 24):moveTo(0.1, 0, 4):add2(self.content)
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 201-254, warpins: 2 ---
+	input = an.newInput(0, 0, self.content:getw(), 40, 255, {
+		label = {
+			"",
+			22,
+			0
+		},
+		bg = {
+			h = 40,
+			tex = res.gettex2("pic/scale/scale2.png"),
+			offset = {
+				-10,
+				0
+			}
+		},
+		return_call = function ()
+			--- BLOCK #0 1-12, warpins: 1 ---
+			executeLua(input:getText())
+			input:setText("")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):anchor(0, 1):opacity(0):fadeIn(0.1):pos(10, 24):moveTo(0.1, 10, 4):add2(self.content)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 255-276, warpins: 2 ---
+	display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(input.getContentSize(input)):add2(input, -1)
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 277-283, warpins: 2 ---
+	local posx = 0
+
+	local function add(text, func)
+		--- BLOCK #0 1-86, warpins: 1 ---
+		local w = 30
+		local btn = nil
+		btn = an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			func(btn)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			pressBig = true,
+			scale9 = cc.size(string.utf8len(text)*w, 40),
+			label = {
+				text,
+				18,
+				1,
+				{
+					color = cc.c3b(255, 255, 0)
+				}
+			}
+		}):add2(self.content, -1):anchor(0, 0):pos(posx + 28, self.content:geth() - 4)
+
+		display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(btn.getContentSize(btn)):add2(btn, -1)
+
+		posx = posx + btn.getw(btn) + 2
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	slot7 = add
+	--- END OF BLOCK #15 ---
+
+	slot8 = if m2debug.allowTouch then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 284-285, warpins: 1 ---
+	slot8 = "可触摸"
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 286-286, warpins: 1 ---
+	slot8 = "不可触摸"
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 287-310, warpins: 2 ---
+	slot7(slot8, function (btn)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		m2debug.allowTouch = not m2debug.allowTouch
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if m2debug.allowTouch then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 10-15, warpins: 1 ---
+		btn.label:setText("可触摸")
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 16-20, warpins: 1 ---
+		btn.label:setText("不可触摸")
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 21-27, warpins: 2 ---
+		scroll:enableTouch(m2debug.allowTouch)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	add("清空", function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		scroll.labelM:clear()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	add("过滤", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForFilter()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	add("lua", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForLua()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	add("设置", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForSetting()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	add("GM", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForGMCmd()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #18 ---
+
+
+
+end
+debugNode.createContentForFilter = function (self)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	self.createContentBase(self)
+	self.content:setNodeEventEnabled(true)
+
+	self.content.onCleanup = function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		cache.saveDebug("filter", m2debug.enables)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	local cnt = 0
+
+	local function add(key, text)
+		--- BLOCK #0 1-73, warpins: 1 ---
+		local col = cnt%3
+		local line = math.modf(cnt/3)
+		local pos = cc.p(col*160 + 20, self.content:geth() - 40 - line*60)
+		local toggle = an.newToggle(res.gettex2("pic/common/toggle10.png"), res.gettex2("pic/common/toggle11.png"), function (b)
+			--- BLOCK #0 1-5, warpins: 1 ---
+			m2debug.enables[key] = b
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			easy = true,
+			default = m2debug.enables[key],
+			label = {
+				text .. "[" .. key .. "]",
+				20,
+				1,
+				{
+					color = self:getColor(key)
+				}
+			}
+		}):anchor(0, 0.5):pos(pos.x, pos.y):add2(self.content)
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(tags)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 18-21, warpins: 1 ---
+	add(k, v)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 22-23, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 24-64, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContent()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+debugNode.createContentForLua = function (self)
+	--- BLOCK #0 1-21, warpins: 1 ---
+	self.createContentBase(self)
+
+	local config = {}
+	config[1] = {
+		"执行lua语句..",
+		function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:createContent(true)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[2] = {
+		"查询全局变量值..",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:createContentForLuaQueryVar()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[3] = {
+		"查看常量值..",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:createContentForLuaQueryConst()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	slot2 = {}
+	slot3 = "当前版本:"
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not MIR2_VERSION then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 22-22, warpins: 1 ---
+	slot4 = ""
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 23-29, warpins: 2 ---
+	slot2[1] = slot3 .. slot4
+	config[4] = slot2
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(config)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 30-64, warpins: 1 ---
+	an.newLabel(v[1], 22, 0, {
+		color = cc.c3b(255, 255, 0)
+	}):pos(20, self.content:geth() - 80 - (i - 1)*60):add2(self.content):enableClick(v[2], {
+		ani = true
+	})
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 65-66, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 67-107, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContent()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+debugNode.createContentForLuaQueryVar = function (self)
+	--- BLOCK #0 1-73, warpins: 1 ---
+	self.createContentBase(self)
+	an.newLabel("变量名: ", 22, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(0, 0.5):pos(20, self.content:geth() - 50):add2(self.content)
+
+	local input = an.newInput(130, self.content:geth() - 52, 200, 32, 15, {
+		label = {
+			"g_data",
+			22,
+			1
+		},
+		bg = {
+			h = 40,
+			tex = res.gettex2("pic/scale/scale2.png"),
+			offset = {
+				-10,
+				0
+			}
+		}
+	}):anchor(0, 0.5):add2(self.content)
+	local config = {
+		"def",
+		"g_data",
+		"game",
+		"res",
+		"display",
+		"device"
+	}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(config)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 74-127, warpins: 1 ---
+	local col = math.modf((i - 1)/3)
+	local line = (i - 1)%3
+
+	an.newLabel(v, 22, 0, {
+		color = cc.c3b(255, 255, 0)
+	}):anchor(0.5, 0.5):pos(line*170 + 60, self.content:geth() - 120 - col*50):add2(self.content):enableClick(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		input:setString(v)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		ani = true,
+		size = cc.size(120, 40)
+	})
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 128-129, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 130-209, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self:createContentForLuaQueryVarDetail(input:getText())
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"确定",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 150, 30)
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForLua()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+debugNode.createContentForLuaQueryVarDetail = function (self, varText, parent)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.createContentBase(self)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not parent then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	parent = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-15, warpins: 2 ---
+	parent[#parent + 1] = varText
+
+	local function goback()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if #parent == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		self:createContentForLuaQueryVar()
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 10-31, warpins: 1 ---
+		parent[#parent] = nil
+		local lastVar = parent[#parent]
+		parent[#parent] = nil
+
+		self:createContentForLuaQueryVarDetail(lastVar, clone(parent))
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 32-32, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	local fullVarText = ""
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(parent)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #3 16-17, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-19, warpins: 1 ---
+	fullVarText = v
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #5 20-24, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if type(v)
+
+	 == "string" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 25-30, warpins: 1 ---
+	fullVarText = fullVarText .. "[\"" .. v .. "\"]"
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #7 31-35, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if type(v)
+
+	 == "number" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 36-41, warpins: 1 ---
+	fullVarText = fullVarText .. "[" .. v .. "]"
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 42-46, warpins: 1 ---
+	fullVarText = fullVarText .. ":get(\"" .. v[1] .. "\")"
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 47-48, warpins: 5 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #11 49-57, warpins: 1 ---
+	local str = "local var = " .. fullVarText .. " return var"
+	local f = loadstring(str)
+
+	--- END OF BLOCK #11 ---
+
+	slot6 = if not f then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 58-67, warpins: 1 ---
+	self.createContentForTips(self, "查询失败. [" .. str .. "]", goback)
+
+	return 
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 68-77, warpins: 2 ---
+	print(fullVarText)
+
+	local var = f()
+
+	--- END OF BLOCK #13 ---
+
+	if type(var)
+	 ~= "table" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 78-87, warpins: 1 ---
+	self.createContentForTips(self, "变量[" .. varText .. "]并不是table类型", goback)
+
+	return 
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 88-147, warpins: 2 ---
+	local scroll = an.newScroll(6, 6, self.content:getw() - 16, self.content:geth() - 12, {
+		labelM = {
+			22,
+			0
+		}
+	}):anchor(0, 0):addTo(self.content)
+
+	scroll.labelM:nextLine():addLabel("变量名: " .. fullVarText, cc.c3b(255, 0, 255)):nextLine()
+
+	local showVar = var
+	local keys = table.keys(showVar)
+
+	table.sort(keys, function (a, b)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if tostring(a)
+		 >= tostring(b)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 11-11, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-12, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	--- END OF BLOCK #15 ---
+
+	for i, k in pairs(keys)
+
+
+	LOOP BLOCK #16
+	GO OUT TO BLOCK #23
+
+
+	--- BLOCK #16 148-153, warpins: 1 ---
+	local v = showVar[k]
+
+	--- END OF BLOCK #16 ---
+
+	if type(v)
+	 == "table" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 154-200, warpins: 1 ---
+	scroll.labelM:nextLine():addLabel(type(v) .. "  ", display.COLOR_GREEN):addLabel(k .. "  ", cc.c3b(0, 255, 255)):addLabel("查看详情[" .. table.nums(v) .. "]", cc.c3b(255, 255, 0), nil, nil, {
+		ani = true,
+		callback = function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			self:createContentForLuaQueryVarDetail(k, clone(parent))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #18 201-205, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if type(v)
+	 ~= "number" then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 206-210, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if type(v)
+	 == "string" then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 211-240, warpins: 2 ---
+	scroll.labelM:nextLine():addLabel(type(v) .. "  ", display.COLOR_GREEN):addLabel(k .. "  ", cc.c3b(0, 255, 255)):addLabel(v)
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 241-241, warpins: 3 ---
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 242-243, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #23 244-284, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), goback, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #23 ---
+
+
+
+end
+debugNode.createContentForLuaQueryConst = function (self)
+	--- BLOCK #0 1-100, warpins: 1 ---
+	self.createContentBase(self)
+
+	local scroll = an.newScroll(6, 6, self.content:getw() - 16, self.content:geth() - 12, {
+		labelM = {
+			18,
+			0
+		}
+	}):anchor(0, 0):addTo(self.content)
+	local config = {}
+	config[1] = {
+		"原始版本",
+		MIR2_VERSION_BASE
+	}
+	config[2] = {
+		"现在版本",
+		MIR2_VERSION
+	}
+	config[3] = {
+		"登录服务器ip",
+		def.ip
+	}
+	config[4] = {
+		"区服id",
+		def.areaID
+	}
+	config[5] = {
+		"更新服务器ip",
+		import("...upt.def", current).httpRoot
+	}
+	config[6] = {
+		"中央服地址",
+		def.loginCenterIP
+	}
+	config[7] = {
+		"chatHttpRoot",
+		def.chatHttpRoot
+	}
+	config[8] = {
+		"useIGW",
+		def.useIGW
+	}
+	config[9] = {
+		"gameType",
+		def.gameType
+	}
+	config[10] = {
+		"屏幕宽高",
+		display.width .. " * " .. display.height
+	}
+	config[11] = {
+		"版本类型",
+		def.gameVersionType
+	}
+	config[12] = {
+		"客户端版本号",
+		def.MIR_VERSION_NUMBER
+	}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(config)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 101-116, warpins: 1 ---
+	scroll.labelM:nextLine():addLabel(v[1] .. ": ", display.COLOR_GREEN):addLabel(v[2])
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 117-118, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 119-159, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForLua()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+debugNode.createContentForAdaptSpeed = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.createContentBase(self)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not m2debug.roleSpeed then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-13, warpins: 1 ---
+	m2debug.roleSpeed = def.role.speed
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 14-18, warpins: 1 ---
+	def.role.speed = m2debug.roleSpeed
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 19-39, warpins: 2 ---
+	config = {
+		{
+			"一般动作",
+			"normal"
+		},
+		{
+			"加速",
+			"fast"
+		},
+		{
+			"冲撞失败",
+			"rushKung"
+		},
+		{
+			"野蛮冲撞",
+			"rush"
+		},
+		{
+			"基础释法间隔",
+			"spell"
+		},
+		{
+			"基础攻击间隔",
+			"attack"
+		}
+	}
+	local preInput = nil
+	local adapt2input = {}
+	local h = 0
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(config)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 40-121, warpins: 1 ---
+	h = h + 45
+	local input = nil
+
+	local function stopCb()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		print(v[1], num)
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not tolua.isnull(input)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 12-35, warpins: 1 ---
+		local num = tonumber(input:getString())
+		def.role.speed[v[2]] = num
+
+		cache.saveDebug("roleSpeed", def.role.speed)
+		print(v[1], num)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 36-36, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	input = an.newInput(200, self.content:geth() - h, 170, 32, 15, {
+		label = {
+			"" .. def.role.speed[v[2]],
+			22,
+			1
+		},
+		bg = {
+			h = 40,
+			tex = res.gettex2("pic/scale/scale2.png"),
+			offset = {
+				-10,
+				0
+			}
+		},
+		start_call = function ()
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if preInput then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 4-7, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if preInput ~= input then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 8-11, warpins: 1 ---
+			preInput:stopInput()
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 12-14, warpins: 3 ---
+			preInput = input
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end,
+		stop_call = stopCb
+	}):anchor(0, 0.5):add2(self.content)
+	input.onCleanup = function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		stopCb()
+		input:stopInput()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	slot11 = an.newLabel(v[1] .. ":", 22, 0, {
+		color = cc.c3b(255, 255, 255)
+	}):pos(10, self.content:geth() - h - 10):add2(self.content)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 122-123, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 124-125, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+debugNode.createContentForTest = function (self)
+	--- BLOCK #0 1-44, warpins: 1 ---
+	local function setAssetServerUrl(url)
+		--- BLOCK #0 1-65, warpins: 1 ---
+		local uptScene = require("upt.scene")
+		SKIP_UPT = false
+		s = uptScene.new(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			s:setTitle("请重启游戏")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+
+		s:rmdir(device.writablePath .. "cache/")
+		s:rmdir(s.storagePath .. "res/")
+		s:rmdir(s.storagePath .. "rs/")
+		s:rmdir(s.storagePath .. "upt/")
+		os.remove(s.storagePath .. "project.manifest")
+		os.remove(s.storagePath .. "version.manifest")
+		display.replaceScene(s)
+		s:saveRemoteAddress(url)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local config = {}
+	config[1] = {
+		"获取技能书",
+		function ()
+			--- BLOCK #0 1-12, warpins: 1 ---
+			local keys = def.magic.getMagicIds(g_data.player.job, false)
+
+			--- END OF BLOCK #0 ---
+
+			for k, v in pairs(keys)
+
+			LOOP BLOCK #1
+			GO OUT TO BLOCK #3
+
+
+			--- BLOCK #1 13-28, warpins: 1 ---
+			net.send({
+				CM_SAY
+			}, {
+				"@doresou " .. def.magic.getMagicConfigByUid(v).name
+			})
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 29-30, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+			--- BLOCK #3 31-31, warpins: 1 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+	}
+	config[2] = {
+		"升级技能",
+		function (edit)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(edit.getString(edit))
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 8-8, warpins: 1 ---
+			local level = 3
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 9-10, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			slot1 = if level then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #3 11-29, warpins: 1 ---
+			local keys = def.magic.getMagicIds(g_data.player.job, false)
+			local playername = main_scene.ground.player.info:getName()
+
+			--- END OF BLOCK #3 ---
+
+			for k, v in pairs(keys)
+
+
+			LOOP BLOCK #4
+			GO OUT TO BLOCK #6
+
+
+			--- BLOCK #4 30-49, warpins: 1 ---
+			local cmd = string.format("@upuserskill %s %s %d", playername, def.magic.getMagicConfigByUid(v).name, level)
+
+			net.send({
+				CM_SAY
+			}, {
+				cmd
+			})
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 50-51, warpins: 2 ---
+			--- END OF BLOCK #5 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #6 52-52, warpins: 2 ---
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end,
+		true
+	}
+	config[3] = {
+		"道士消耗品",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			local f = {
+				"超级护身符",
+				"超级灰色药粉",
+				"超级黄色药粉"
+			}
+
+			--- END OF BLOCK #0 ---
+
+			for k, v in pairs(f)
+
+			LOOP BLOCK #1
+			GO OUT TO BLOCK #3
+
+
+			--- BLOCK #1 6-16, warpins: 1 ---
+			net.send({
+				CM_SAY
+			}, {
+				"@doresou " .. v
+			})
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 17-18, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+			--- BLOCK #3 19-19, warpins: 1 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+	}
+	config[4] = {
+		"使用测试版热更服务器",
+		function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			setAssetServerUrl("http://116.211.22.22:8989/")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[5] = {
+		"使用运维版热更服务器",
+		function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			setAssetServerUrl("http://mir2ys.webpatch.sdg-china.com/")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[6] = {
+		"刷假人",
+		function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			local util = require("mir2.scenes.main.common.helper.util")
+
+			util.stressTest()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[7] = {
+		"刷假人,重复",
+		function (edit)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(edit.getString(edit))
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 8-8, warpins: 1 ---
+			local num = 3
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 9-18, warpins: 2 ---
+			local util = require("mir2.scenes.main.common.helper.util")
+			local ret = nil
+
+			function c()
+				--- BLOCK #0 1-4, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				if 0 < num then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 5-23, warpins: 1 ---
+				ret = util.stressTest(false, true)
+				num = num - 1
+
+				scheduler.performWithDelayGlobal(c, 1)
+				scheduler.performWithDelayGlobal(ret, 0.5)
+
+				--- END OF BLOCK #1 ---
+
+				FLOW; TARGET BLOCK #2
+
+
+				--- BLOCK #2 24-24, warpins: 2 ---
+				return 
+				--- END OF BLOCK #2 ---
+
+
+
+			end
+
+			c()
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		true
+	}
+	config[8] = {
+		"刷假人随机衣服",
+		function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			local util = require("mir2.scenes.main.common.helper.util")
+
+			util.stressTest(false, true)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[9] = {
+		"刷假人随机衣服技能",
+		function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			local util = require("mir2.scenes.main.common.helper.util")
+
+			util.stressTest(true, true)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+
+	self.createContentForSetting(self, config)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+debugNode.createContentForSetting = function (self, cfg)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.createContentBase(self)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not cfg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #1 6-52, warpins: 1 ---
+	local config = {}
+	config[1] = {
+		"添加测试服务器",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:createContentForSettingServer()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[2] = {
+		"设置界面调试信息",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:createContentForSettingShows()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[3] = {
+		"隐藏工具图标",
+		function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if m2debug.node then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 5-12, warpins: 1 ---
+			m2debug.node:removeSelf()
+
+			m2debug.node = nil
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 13-16, warpins: 2 ---
+			m2debug.hideNode = true
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}
+	config[4] = {
+		"测试lua error",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			local testLuaError = nil
+
+			testLuaError.func(testLuaError)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[5] = {
+		"测试崩溃",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			ycFunction:testCrash()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[6] = {
+		"清理游戏数据",
+		function ()
+			--- BLOCK #0 1-66, warpins: 1 ---
+			local uptScene = require("upt.scene")
+			s = uptScene.new(function ()
+				--- BLOCK #0 1-6, warpins: 1 ---
+				s:setTitle("请重启游戏")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, false)
+
+			s:rmdir(device.writablePath .. "cache/")
+			s:rmdir(s.storagePath .. "res/")
+			s:rmdir(s.storagePath .. "rs/")
+			s:rmdir(s.storagePath .. "upt/")
+			os.remove(s.storagePath .. "project.manifest")
+			os.remove(s.storagePath .. "version.manifest")
+
+			SKIP_UPT = true
+
+			display.replaceScene(s)
+			s:setTitle("请重启游戏")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[7] = {
+		"执行更新",
+		function ()
+			--- BLOCK #0 1-15, warpins: 1 ---
+			local s = nil
+			local uptScene = require("upt.scene")
+			s = uptScene.new(function ()
+				--- BLOCK #0 1-6, warpins: 1 ---
+				s:setTitle("请重启游戏")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, true)
+
+			display.replaceScene(s)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[8] = {
+		"播放CG动画",
+		function ()
+			--- BLOCK #0 1-12, warpins: 1 ---
+			local helper = require("mir2.scenes.main.common.helper.helper")
+
+			def.magic.getConfig("skillMagic")
+			helper.call("CG")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[9] = {
+		"调整动作速度",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:createContentForAdaptSpeed()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[10] = {
+		"清理CG初次标记",
+		function ()
+			--- BLOCK #0 1-12, warpins: 1 ---
+			cache.cgClear()
+			self.content:removeSelf()
+
+			self.content = nil
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	slot3 = {}
+	--- END OF BLOCK #1 ---
+
+	slot4 = if m2debug.setting.manualServer then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 53-54, warpins: 1 ---
+	slot4 = "切换为自动选服"
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 55-55, warpins: 1 ---
+	slot4 = "切换为手动选服"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 56-73, warpins: 2 ---
+	slot3[1] = slot4
+	slot3[2] = function ()
+		--- BLOCK #0 1-18, warpins: 1 ---
+		m2debug.setting.manualServer = not m2debug.setting.manualServer
+
+		cache.saveDebug("setting", m2debug.setting)
+		self:createContentForSetting()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	config[11] = slot3
+	config[12] = {
+		"辅助测试",
+		function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:createContentForTest()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	config[13] = {
+		"测试例",
+		function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			local cases = require("test.testm2spr")()
+
+			self:createContentForSetting(cases)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	slot3 = {}
+	--- END OF BLOCK #4 ---
+
+	slot4 = if m2debug.setting.acLogin then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 74-75, warpins: 1 ---
+	slot4 = "切换为G+登录"
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 76-76, warpins: 1 ---
+	slot4 = "切换为账号登录"
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 77-80, warpins: 2 ---
+	slot3[1] = slot4
+	slot3[2] = function ()
+		--- BLOCK #0 1-18, warpins: 1 ---
+		m2debug.setting.acLogin = not m2debug.setting.acLogin
+
+		cache.saveDebug("setting", m2debug.setting)
+		self:createContentForSetting()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	config[14] = slot3
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 81-91, warpins: 2 ---
+	local pos = self.content:geth() - 40
+	local left = 20
+	local maxWidth = 0
+
+	--- END OF BLOCK #8 ---
+
+	for i, v in ipairs(config)
+
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #9 92-123, warpins: 1 ---
+	local edit = nil
+	local lb = an.newLabel(v[1], 22, 0, {
+		color = cc.c3b(255, 255, 0)
+	}):pos(left, pos):add2(self.content):enableClick(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		v[2](edit)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		ani = true
+	})
+	--- END OF BLOCK #9 ---
+
+	slot13 = if v[3] then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 124-159, warpins: 1 ---
+	edit = an.newInput(0, 0, 40, 30, 255, {
+		donotClip = true,
+		bg = {
+			h = 35,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-10,
+				0
+			}
+		}
+	}):addTo(lb):pos(lb.getw(lb) + 30, 28):anchor(0, 1)
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 160-171, warpins: 2 ---
+	maxWidth = math.max(lb.getw(lb), maxWidth)
+	pos = pos - 45
+	--- END OF BLOCK #11 ---
+
+	if pos < 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 172-179, warpins: 1 ---
+	left = left + maxWidth + 20
+	maxWidth = 0
+	pos = self.content:geth() - 40
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 180-181, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 182-183, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #15 184-224, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContent()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+debugNode.createContentForSettingShows = function (self)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	self.createContentBase(self)
+	self.content:setNodeEventEnabled(true)
+
+	self.content.onCleanup = function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		cache.saveDebug("shows", m2debug.showEnables)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	local cnt = 0
+
+	local function add(key, func)
+		--- BLOCK #0 1-68, warpins: 1 ---
+		local col = cnt%3
+		local line = math.modf(cnt/3)
+		local pos = cc.p(col*160 + 20, self.content:geth() - 40 - line*60)
+		local toggle = an.newToggle(res.gettex2("pic/common/toggle10.png"), res.gettex2("pic/common/toggle11.png"), function (b)
+			--- BLOCK #0 1-10, warpins: 1 ---
+			m2debug.showEnables[key] = b
+
+			shows[key](b)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			easy = true,
+			default = m2debug.showEnables[key],
+			label = {
+				key,
+				20,
+				1,
+				{
+					color = self:getColor(key)
+				}
+			}
+		}):anchor(0, 0.5):pos(pos.x, pos.y):add2(self.content)
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(shows)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 18-20, warpins: 1 ---
+	add(k)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-22, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 23-63, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContent()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+debugNode.createContentForSettingServer = function (self)
+	--- BLOCK #0 1-226, warpins: 1 ---
+	self.createContentBase(self)
+	an.newLabel("服务器IP: ", 22, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(0, 0.5):pos(20, self.content:geth() - 50):add2(self.content)
+
+	local input, areaInput = nil
+	input = an.newInput(130, self.content:geth() - 52, 170, 32, 22, {
+		label = {
+			"",
+			22,
+			1
+		},
+		bg = {
+			h = 40,
+			tex = res.gettex2("pic/scale/scale2.png"),
+			offset = {
+				-10,
+				0
+			}
+		},
+		start_call = function ()
+			--- BLOCK #0 1-1, warpins: 1 ---
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):anchor(0, 0.5):add2(self.content)
+
+	an.newLabel("端口: ", 22, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(0, 0.5):pos(300, self.content:geth() - 50):add2(self.content)
+
+	areaInput = an.newInput(390, self.content:geth() - 52, 90, 32, 6, {
+		label = {
+			"",
+			22,
+			1
+		},
+		bg = {
+			h = 40,
+			tex = res.gettex2("pic/scale/scale2.png"),
+			offset = {
+				-10,
+				0
+			}
+		},
+		start_call = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			input:stopInput()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):anchor(0, 0.5):add2(self.content)
+
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-19, warpins: 1 ---
+		local function tip(text)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			self:createContentForTips(text, function ()
+				--- BLOCK #0 1-5, warpins: 1 ---
+				self:createContentForSetting()
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		input:stopInput()
+		areaInput:stopInput()
+
+		local ip = input:getText()
+		local port = areaInput:getText()
+		--- END OF BLOCK #0 ---
+
+		if port == "" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 20-21, warpins: 1 ---
+		port = 80
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 22-25, warpins: 1 ---
+		port = tonumber(port)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 26-46, warpins: 2 ---
+		local function checkHistory(key, ip, port)
+			--- BLOCK #0 1-5, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot3 = if not m2debug.setting[key] then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 6-9, warpins: 1 ---
+			m2debug.setting[key] = {}
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 10-18, warpins: 2 ---
+			m2debug.setting[key][ip] = port
+			m2debug.setting.ip_history.curIP = ip
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+
+		checkHistory("ip_history", ip, port)
+		cache.saveDebug("setting", m2debug.setting)
+		game.gotoscene("login")
+		self:createContentForSettingServer()
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"确定",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 150, 30)
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForSetting()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	local pos = 30
+	slot4 = m2debug.setting
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not m2debug.setting.ip_history then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 227-232, warpins: 1 ---
+	slot5 = {
+		[def.loginCenterIP] = def.loginCenterPort
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 233-239, warpins: 2 ---
+	slot4.ip_history = slot5
+	slot4 = pairs
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not m2debug.setting.ip_history then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 240-240, warpins: 1 ---
+	slot5 = {}
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 241-242, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	for k, v in slot4(slot5)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #5 243-244, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if k ~= "curIP" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 245-258, warpins: 1 ---
+	local t = k
+	local p = v
+	local clr = cc.c3b(255, 255, 0)
+	--- END OF BLOCK #6 ---
+
+	if k == m2debug.setting.ip_history.curIP then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 259-265, warpins: 1 ---
+	clr = cc.c3b(255, 0, 0)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 266-301, warpins: 2 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-21, warpins: 1 ---
+		def.setLoginCenter(t, p)
+
+		m2debug.setting.ip_history.curIP = t
+
+		cache.saveDebug("setting", m2debug.setting)
+		game.gotoscene("login")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(180, 40),
+		label = {
+			k .. ":" .. p,
+			18,
+			1,
+			{
+				color = clr
+			}
+		}
+	}):add2(self.content):pos(120, pos)
+
+	pos = pos + 40
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 302-303, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #10 304-305, warpins: 1 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+slot9 = m2debug.setting
+--- END OF BLOCK #34 ---
+
+slot10 = if not m2debug.setting.ip_history then
+JUMP TO BLOCK #35
+else
+JUMP TO BLOCK #36
+end
+
+
+--- BLOCK #35 428-428, warpins: 1 ---
+slot10 = {}
+--- END OF BLOCK #35 ---
+
+FLOW; TARGET BLOCK #36
+
+
+--- BLOCK #36 429-441, warpins: 2 ---
+slot9.ip_history = slot10
+m2debug.setting.ip_history["center.peibanmir2.com"] = 8088
+m2debug.setting.ip_history["172.18.10.161"] = 80
+--- END OF BLOCK #36 ---
+
+slot9 = if m2debug.setting.ip_history then
+JUMP TO BLOCK #37
+else
+JUMP TO BLOCK #40
+end
+
+
+--- BLOCK #37 442-445, warpins: 1 ---
+--- END OF BLOCK #37 ---
+
+slot9 = if m2debug.setting.ip_history then
+JUMP TO BLOCK #38
+else
+JUMP TO BLOCK #40
+end
+
+
+--- BLOCK #38 446-450, warpins: 1 ---
+--- END OF BLOCK #38 ---
+
+slot9 = if m2debug.setting.ip_history.curIP then
+JUMP TO BLOCK #39
+else
+JUMP TO BLOCK #40
+end
+
+
+--- BLOCK #39 451-469, warpins: 1 ---
+m2debug.setting.ip_history[def.loginCenterIP] = def.loginCenterPort
+
+def.setLoginCenter(m2debug.setting.ip_history.curIP, m2debug.setting.ip_history[m2debug.setting.ip_history.curIP])
+
+--- END OF BLOCK #39 ---
+
+FLOW; TARGET BLOCK #40
+
+
+--- BLOCK #40 470-487, warpins: 4 ---
+debugNode.createContentForTips = function (self, text, func)
+	--- BLOCK #0 1-41, warpins: 1 ---
+	self.createContentBase(self)
+	an.newLabel(text, 22, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(0.5, 0.5):pos(self.content:centerPos()):add2(self.content)
+
+	slot3 = an.newBtn
+	slot4 = res.gettex2("pic/scale/scale2.png")
+
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not func then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 42-42, warpins: 1 ---
+	function slot5()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContent()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 43-76, warpins: 2 ---
+	slot3(slot4, slot5, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+debugNode.createContentForGMCmd = function (self)
+	--- BLOCK #0 1-41, warpins: 1 ---
+	self.createContentBase(self)
+
+	local scroll = self.createCmdList(self, "common")
+
+	an.newLabel("命令类别", 18, 1, {
+		color = display.COLOR_RED
+	}):addTo(scroll):pos(10, scroll.h):anchor(0, 1)
+
+	local h = scroll.h - scroll.space
+	local cnt = 1
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(def.gmCmd.sort)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 42-72, warpins: 1 ---
+	an.newLabel(i, 18, 1):addTo(scroll):pos((cnt + 2)%3*150 + 10, h):anchor(0, 1):enableClick(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:createCmdList(i)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	cnt = cnt + 1
+	--- END OF BLOCK #1 ---
+
+	if cnt%3 == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 73-75, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot9 = if not scroll.space then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 76-76, warpins: 2 ---
+	slot9 = 0
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 77-78, warpins: 2 ---
+	h = h - slot9
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 79-80, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 81-121, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContent()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self.content):pos(self.content:getw() - 50, 30)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+debugNode.createCmdList = function (self, key)
+	--- BLOCK #0 1-40, warpins: 1 ---
+	self.createContentBase(self)
+
+	local scroll = an.newScroll(6, 6, self.content:getw() - 16, self.content:geth() - 12, {
+		labelM = {
+			18,
+			0
+		}
+	}):anchor(0, 0):addTo(self.content)
+	scroll.h = scroll.geth(scroll) - 5
+	scroll.space = 30
+	local data, goback = nil
+	--- END OF BLOCK #0 ---
+
+	if key == "common" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 41-73, warpins: 1 ---
+	data = def.gmCmd.common
+
+	function goback()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForGMCmd()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	an.newLabel("常用命令", 18, 1, {
+		color = display.COLOR_RED
+	}):addTo(scroll):pos(10, scroll.h):anchor(0, 1)
+
+	scroll.h = scroll.h - scroll.space
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #2 74-79, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for i, v in pairs(def.gmCmd.sort)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 80-81, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if i == key then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 82-83, warpins: 1 ---
+	data = v
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 84-85, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 86-124, warpins: 2 ---
+	function goback()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:createCmdList(key)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:createContentForGMCmd()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(scroll):pos(scroll.getw(scroll) - 40, 24)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 125-129, warpins: 2 ---
+	local cnt = 1
+
+	--- END OF BLOCK #7 ---
+
+	for i, v in ipairs(data)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #8 130-160, warpins: 1 ---
+	local label = an.newLabel(v[1], 18, 1):addTo(scroll):pos((cnt + 2)%3*155, scroll.h):anchor(0, 1):enableClick(function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self:createCmd(v, goback)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	cnt = cnt + 1
+	slot12 = scroll.h
+	--- END OF BLOCK #8 ---
+
+	if cnt%3 ~= 1 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 161-163, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if i == #data then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 164-166, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot13 = if not scroll.space then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 167-167, warpins: 2 ---
+	slot13 = 0
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 168-170, warpins: 2 ---
+	scroll.h = slot12 - slot13
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 171-172, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #14 173-174, warpins: 1 ---
+	return scroll
+	--- END OF BLOCK #14 ---
+
+
+
+end
+debugNode.createCmd = function (self, data, func)
+	--- BLOCK #0 1-88, warpins: 1 ---
+	self.createContentBase(self)
+	self.content:setNodeEventEnabled(true)
+
+	self.content.onCleanup = function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		m2debug.catchNode = nil
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	local scroll = an.newScroll(6, 6, self.content:getw() - 16, self.content:geth() - 12, {
+		labelM = {
+			18,
+			0
+		}
+	}):anchor(0, 0):addTo(self.content)
+
+	dump(data)
+
+	local w = 10
+	local h = scroll.geth(scroll) - 10
+	local sw = 150
+	local sh = 40
+
+	an.newLabelM(self.content:getw() - 20, 20, 1):addTo(scroll):pos(w, h):anchor(0, 1):nextLine():addLabel("命令描述: " .. data[2])
+
+	h = h - sh
+	local edits = {}
+	local needCatch = false
+	local mapEdit = nil
+	--- END OF BLOCK #0 ---
+
+	if data[4] ~= "" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #1 89-98, warpins: 1 ---
+	local t = loadstring("return " .. data[4])
+
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(t())
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #2 99-166, warpins: 1 ---
+	local opt, edit = nil
+	opt = an.newLabel(v, 20, 1):addTo(scroll):pos(10, h):anchor(0, 1)
+	edit = an.newInput(0, 0, 120, 35, 255, {
+		donotClip = true,
+		bg = {
+			h = 35,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-10,
+				0
+			}
+		}
+	}):addTo(scroll):pos(opt.getw(opt) + 30, h):anchor(0, 1)
+	edits[#edits + 1] = edit
+
+	--- END OF BLOCK #2 ---
+
+	slot19 = if not string.find(v, "角色名")
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 167-173, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot19 = if string.find(v, "怪物名")
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 174-221, warpins: 2 ---
+	needCatch = true
+
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-12, warpins: 1 ---
+		print("catch name ", m2debug.catchName)
+
+		slot1 = edit
+		slot0 = edit.setText
+		--- END OF BLOCK #0 ---
+
+		slot2 = if m2debug.catchName then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 13-16, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot2 = if not m2debug.catchName then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 17-17, warpins: 2 ---
+		slot2 = ""
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 18-19, warpins: 2 ---
+		slot0(slot1, slot2)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"获取名字",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(scroll):pos(edit.getPositionX(edit) + edit.getw(edit) + 30, h):anchor(0, 1)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 222-228, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot19 = if string.find(v, "地图ID")
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 229-229, warpins: 1 ---
+	mapEdit = edit
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 230-231, warpins: 2 ---
+	h = h - sh
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 232-233, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #9 234-238, warpins: 2 ---
+	local options = {}
+	local selected = nil
+	--- END OF BLOCK #9 ---
+
+	if data[5] ~= "" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #10 239-248, warpins: 1 ---
+	local t = loadstring("return " .. data[5])
+
+	--- END OF BLOCK #10 ---
+
+	for i, v in ipairs(t())
+
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #11 249-304, warpins: 1 ---
+	local opt = nil
+	opt = an.newBtn(res.gettex2("pic/common/toggle10.png"), function (btn)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for _, tog in ipairs(options)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if tog == btn then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 7-12, warpins: 1 ---
+		tog.select(tog)
+
+		selected = v
+
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 13-15, warpins: 1 ---
+		tog.unselect(tog)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 16-17, warpins: 3 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 18-18, warpins: 1 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end, {
+		manual = true,
+		label = {
+			v,
+			20,
+			1,
+			{
+				color = def.colors.btn20,
+				sc = def.colors.btn20s
+			}
+		},
+		labelOffset = {
+			x = 50,
+			y = 0
+		},
+		select = {
+			res.gettex2("pic/common/toggle11.png")
+		}
+	}):addTo(scroll):anchor(0, 1)
+	options[#options + 1] = opt
+
+	opt.pos(opt, (#options + 2)%3*sw + w, h)
+	--- END OF BLOCK #11 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 305-308, warpins: 1 ---
+	opt.select(opt)
+
+	selected = v
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 309-309, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 310-311, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #15 312-313, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot10 = if mapEdit then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #16 314-319, warpins: 1 ---
+	local mapCfg = {
+		0 = "比奇省",
+		1 = "沃玛森林",
+		2 = "毒蛇山谷",
+		3 = "盟重省",
+		11 = "白日门",
+		6 = "魔龙城",
+		5 = "苍月岛",
+		sldg = "边界城",
+		4 = "封魔谷"
+	}
+	local cnt = 1
+
+	--- END OF BLOCK #16 ---
+
+	for i, v in pairs(mapCfg)
+
+
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #25
+
+
+	--- BLOCK #17 320-355, warpins: 1 ---
+	slot21 = an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		mapEdit:setText(i)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			v,
+			20,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(scroll)
+	slot20 = an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		mapEdit.setText(i)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			v,
+			20,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}).add2(scroll).pos
+	--- END OF BLOCK #17 ---
+
+	if 5 < cnt then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 356-357, warpins: 1 ---
+	slot22 = 6
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 358-358, warpins: 1 ---
+	slot22 = 1
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 359-370, warpins: 2 ---
+	slot20(slot21, (cnt - slot22)*90, h):anchor(0, 1)
+
+	cnt = cnt + 1
+	--- END OF BLOCK #20 ---
+
+	if cnt == 6 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #21 371-373, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot5 = if not (h - sh) then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 373-373, warpins: 1 ---
+	h = h
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 374-374, warpins: 3 ---
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 375-376, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #25 377-378, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	slot9 = if needCatch then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 379-411, warpins: 1 ---
+	self.catchNode = an.newToggle(res.gettex2("pic/common/toggle10.png"), res.gettex2("pic/common/toggle11.png"), function (b)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		m2debug.catch = b
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		easy = true,
+		default = m2debug.catch,
+		label = {
+			"允许获取",
+			20,
+			1
+		}
+	}):addTo(scroll):pos(10, 24):anchor(0, 0.5)
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 412-489, warpins: 2 ---
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		local str = "@" .. data[3]
+
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(edits)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 9-13, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v.getText(v)
+
+		 ~= "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 14-19, warpins: 1 ---
+		str = str .. " " .. v.getText(v)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 20-21, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 22-24, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot1 = if selected then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 25-28, warpins: 1 ---
+		str = str .. " " .. selected
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 29-41, warpins: 2 ---
+		local function encodeMsg(str)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			local ret = {}
+			--- END OF BLOCK #0 ---
+
+			slot0 = if str then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #1 4-11, warpins: 1 ---
+			str = utf8strs(str)
+
+			--- END OF BLOCK #1 ---
+
+			for i, v in ipairs(str)
+
+			LOOP BLOCK #2
+			GO OUT TO BLOCK #6
+
+
+			--- BLOCK #2 12-18, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if 4 <= string.len(v)
+
+			 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 19-46, warpins: 1 ---
+			local t = crypto.encodeBase64(v)
+			t = string.sub(t, 1, string.len(t) - 1)
+			t = string.gsub(t, "/", "!")
+			ret[i] = "{@ej" .. t .. "}"
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+			--- BLOCK #4 47-47, warpins: 1 ---
+			ret[i] = v
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 48-49, warpins: 3 ---
+			--- END OF BLOCK #5 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+			--- BLOCK #6 50-53, warpins: 2 ---
+			return table.concat(ret)
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+
+		net.send({
+			CM_SAY
+		}, {
+			encodeMsg(str)
+		})
+
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"确定",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(scroll):pos(scroll.getw(scroll) - 150, 24)
+	an.newBtn(res.gettex2("pic/scale/scale2.png"), func, {
+		pressBig = true,
+		scale9 = cc.size(80, 40),
+		label = {
+			"返回",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(scroll):pos(scroll.getw(scroll) - 40, 24)
+
+	return 
+	--- END OF BLOCK #27 ---
+
+
+
+end
+debugNode.getColor = function (self, tag)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if tag ~= "error" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if tag == "assert" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	return display.COLOR_RED
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-10, warpins: 2 ---
+	return display.COLOR_GREEN
+	--- END OF BLOCK #3 ---
+
+
+
+end
+debugNode.addLog = function (self, tag, str)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.content.type ~= "main" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-27, warpins: 2 ---
+	local scroll = self.content.scroll
+	local x, y = scroll.getScrollOffset(scroll)
+
+	--- END OF BLOCK #3 ---
+
+	if scroll.getScrollSize(scroll)
+	.height >= y + scroll.geth(scroll)
+
+	 + scroll.labelM.wordSize.height then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 28-29, warpins: 1 ---
+	slot6 = false
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 30-30, warpins: 1 ---
+	local isInEnd = true
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 31-51, warpins: 2 ---
+	scroll.labelM:nextLine():addLabel("[ " .. tag .. " ] ", self.getColor(self, tag)):addLabel(str)
+	--- END OF BLOCK #6 ---
+
+	slot6 = if isInEnd then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 52-64, warpins: 1 ---
+	scroll.setScrollOffset(scroll, 0, scroll.getScrollSize(scroll).height - scroll.geth(scroll))
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 65-67, warpins: 1 ---
+	self.showNewMark(self)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 68-69, warpins: 2 ---
+	return true
+	--- END OF BLOCK #9 ---
+
+
+
+end
+debugNode.showNewMark = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.content.newMark then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-47, warpins: 1 ---
+	self.content.newMark = res.get2("pic/common/msgNew.png"):add2(self.content, 1):run(cc.RepeatForever:create(transition.sequence({
+		cc.ScaleTo:create(0.5, 0.7),
+		cc.ScaleTo:create(0.5, 1)
+	}))):enableClick(function ()
+		--- BLOCK #0 1-28, warpins: 1 ---
+		self.content.newMark:hide()
+		self.content.scroll:setScrollOffset(0, self.content.scroll:getScrollSize().height - self.content.scroll:geth())
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 48-63, warpins: 2 ---
+	self.content.newMark:show():pos(self.content:getw() - 20, 24)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+debugNode.hideNewMark = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.content.newMark then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	self.content.newMark:hide()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return m2debug
+--- END OF BLOCK #40 ---
+
+
+

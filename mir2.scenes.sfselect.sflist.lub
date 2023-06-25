@@ -1,0 +1,680 @@
+--- BLOCK #0 1-28, warpins: 1 ---
+local sflist = class("sflist", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local sflistitem = import(".sflistitem")
+
+table.merge(sflist, {})
+
+sflist.ctor = function (self, size)
+	--- BLOCK #0 1-234, warpins: 1 ---
+	self.setContentSize(self, size)
+
+	local bg = display.newColorLayer(cc.c4b(255, 255, 255, 255)):size(size):add2(self)
+	local toggle1, toggle2 = nil
+	toggle1 = an.newToggle(res.gettex2("pic/common/toggle10.png"), res.gettex2("pic/common/toggle11.png"), function (bSelect)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		print("toggle1")
+		self:selectRank(1)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		label = {
+			"新服榜",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self):pos(10, self.geth(self) - 15):anchor(0, 1)
+	toggle2 = an.newToggle(res.gettex2("pic/common/toggle10.png"), res.gettex2("pic/common/toggle11.png"), function (bSelect)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		print("toggle2")
+		self:selectRank(2)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		label = {
+			"人气榜",
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):add2(self):pos(130, self.geth(self) - 15):anchor(0, 1)
+	self.toggle1 = toggle1
+	self.toggle2 = toggle2
+	local posX = self.toggle2:getPositionX() + self.toggle2:getw() + 15
+	local posY = self.geth(self) - 25
+	self.input = an.newInput(0, 0, 150, 30, 12, {
+		label = {
+			"",
+			16
+		}
+	}):addTo(self, 1):pos(posX, posY):anchor(0, 0.5)
+	local base = display.newColorLayer(cc.c4b(55, 62, 64, 255)):addto(self):pos(posX, posY - 18):size(self.input:getContentSize())
+	posX = base.getPositionX(base) + base.getw(base) + 5
+	posY = self.geth(self) - 13
+
+	an.newBtn(res.gettex2("pic/common/btn10.png"), function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		sound.playSound("104")
+		self:searchServer(self.input:getString())
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		scale9 = cc.size(50, 30),
+		label = {
+			"搜索",
+			18
+		}
+	}):pos(posX, posY):add2(self):anchor(0, 1)
+
+	self.scroll = an.newScroll(0, 0, size.width, size.height - 60):add2(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+sflist.setServerListData = function (self, data)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.serverlistData = data
+
+	self.selectRank(self, 1)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+sflist.searchServer = function (self, name)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if name ~= nil then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if name == "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 6-8, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.serverlistData then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #4 9-11, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not self.itemDatas then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 12-12, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 13-17, warpins: 2 ---
+	local bHave = false
+
+	--- END OF BLOCK #6 ---
+
+	for i, v in ipairs(self.itemDatas)
+
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #7 18-24, warpins: 1 ---
+	local p1, p2 = string.find(v.servername, name)
+
+	--- END OF BLOCK #7 ---
+
+	if p1 == 1 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 25-30, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if p2 == string.len(v.servername)
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 31-36, warpins: 1 ---
+	bHave = true
+
+	self.gotoServer(self, i)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 37-38, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #11 39-40, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot2 = if not bHave then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 41-46, warpins: 1 ---
+	an.newMsgbox("未搜索到该服务器!", nil, {
+		center = true
+	})
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 47-47, warpins: 3 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+sflist.gotoServer = function (self, index)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	print("gotoServer", index)
+
+	local itemDatas = self.itemDatas
+	slot3 = an.newMsgbox
+	slot4 = "即将进入:"
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not itemDatas[index].servername then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-13, warpins: 1 ---
+	slot5 = ""
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-21, warpins: 2 ---
+	slot3(slot4 .. slot5, function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #1 3-8, warpins: 1 ---
+		local serverConfig = itemDatas[index].serverip
+		--- END OF BLOCK #1 ---
+
+		slot1 = if serverConfig then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #2 9-19, warpins: 1 ---
+		local configs = string.split(serverConfig, ":")
+		slot3 = def.setLoginCenter
+		slot4 = configs[1]
+		--- END OF BLOCK #2 ---
+
+		slot5 = if not configs[2] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-20, warpins: 1 ---
+		slot5 = 8088
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 21-26, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot6 = if not itemDatas[index].servername then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 27-27, warpins: 1 ---
+		slot6 = "servername"
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 28-47, warpins: 2 ---
+		slot3(slot4, slot5, slot6, itemDatas[index].serverid)
+		cache.setLastSfServer(itemDatas[index].servername)
+		game.gotoscene("login", {
+			logout = false
+		}, "crossFade", 1)
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #7 48-49, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #8 50-50, warpins: 4 ---
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end, {
+		center = true,
+		btnTexts = {
+			"确定",
+			"取消"
+		}
+	})
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+sflist.selectRank = function (self, rankIndex)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if rankIndex == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 3-15, warpins: 1 ---
+	self.toggle1:setIsSelect(true)
+	self.toggle2:setIsSelect(false)
+
+	--- END OF BLOCK #1 ---
+
+	if self.lastRankIndex == rankIndex then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 16-16, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-23, warpins: 1 ---
+	table.sort(self.serverlistData.servers, function (a, b)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if a.rank1 >= b.rank1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 7-7, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 8-8, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #4 24-36, warpins: 1 ---
+	self.toggle1:setIsSelect(false)
+	self.toggle2:setIsSelect(true)
+
+	--- END OF BLOCK #4 ---
+
+	if self.lastRankIndex == rankIndex then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 37-38, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 39-44, warpins: 2 ---
+	table.sort(self.serverlistData.servers, function (a, b)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if a.rank2 >= b.rank2 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 7-7, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 8-8, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 45-49, warpins: 2 ---
+	self.refreshScrollView(self)
+
+	self.lastRankIndex = rankIndex
+
+	return 
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 50-50, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+
+
+end
+sflist.refreshScrollView = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.serverlistData.servers then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-11, warpins: 2 ---
+	local itemDatas = {}
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.serverlistData.servers)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 12-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if 0 < v.isactive then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-20, warpins: 1 ---
+	table.insert(itemDatas, v)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 21-22, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 23-26, warpins: 1 ---
+	self.itemDatas = itemDatas
+
+	--- END OF BLOCK #6 ---
+
+	slot2 = if self.items then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 27-31, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if type(self.items)
+	 == "table" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 32-35, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	for i, v in ipairs(self.items)
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #9 36-38, warpins: 1 ---
+	v.removeSelf(v)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 39-40, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #11 41-65, warpins: 3 ---
+	self.items = {}
+	local scrollH = math.max(self.scroll:geth(), (#itemDatas + 1)*31)
+
+	self.scroll:setScrollSize(self.scroll:getw(), scrollH)
+	--- END OF BLOCK #11 ---
+
+	for i, v in ipairs(itemDatas)
+
+
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #12 66-111, warpins: 1 ---
+	local sfitem = sflistitem.new(self, cc.size(self.getw(self), 30)):add2(self.scroll):pos(0, scrollH - (i - 1)*31 - 1):anchor(0, 1)
+	local data = {}
+	data.serverName = v.servername
+	data.introduce = v.desc
+
+	sfitem.setData(sfitem, data)
+	sfitem.setScrollIndex(sfitem, i)
+	table.insert(self.items, sfitem)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 112-113, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #14 114-114, warpins: 1 ---
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+sflist.onTouchSfList = function (self, scrollIndex)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	print("onTouchSfList", scrollIndex)
+	self.gotoServer(self, scrollIndex)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return sflist
+--- END OF BLOCK #0 ---
+
+
+

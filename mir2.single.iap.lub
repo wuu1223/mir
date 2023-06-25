@@ -1,0 +1,1044 @@
+--- BLOCK #0 1-12, warpins: 1 ---
+local iap = {}
+iap.productsIdentifies = {}
+iap.curPurchaedVerifyData = {}
+iap.cachedPaymentEvents = {}
+local evt = {
+	IOSIAP_PAYMENT_PURCHAED = 1,
+	IOSIAP_PAYMENT_PURCHASING = 0,
+	IOSIAP_PAYMENT_FAILED = 2,
+	IOSIAP_PAYMENT_RESTORED = 3,
+	IOSIAP_PAYMENT_REMOVED = 4
+}
+
+--- END OF BLOCK #0 ---
+
+for k, v in pairs(evt)
+
+
+LOOP BLOCK #1
+GO OUT TO BLOCK #3
+
+
+--- BLOCK #1 13-13, warpins: 1 ---
+evt[v] = k
+
+--- END OF BLOCK #1 ---
+
+FLOW; TARGET BLOCK #2
+
+
+--- BLOCK #2 14-15, warpins: 2 ---
+--- END OF BLOCK #2 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+--- BLOCK #3 16-71, warpins: 1 ---
+local function encode2hex(str)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	assert(str, "encode2hex arg should be valid")
+
+	local ret = ""
+
+	--- END OF BLOCK #0 ---
+
+	for k=1, string.len(str)
+
+	, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #2
+
+	--- BLOCK #1 13-29, warpins: 2 ---
+	local t = string.byte(string.sub(str, k, k))
+	ret = ret .. string.format("%02x", t)
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #2 30-30, warpins: 1 ---
+	return ret
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+local function decodeFromHex(str)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	assert(str, "decodeFromHex arg should be valid")
+
+	local ret = ""
+
+	--- END OF BLOCK #0 ---
+
+	for k=1, string.len(str)
+
+	, 2
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #1 13-23, warpins: 2 ---
+	local t = tonumber(string.sub(str, k, k + 1), 16)
+	--- END OF BLOCK #1 ---
+
+	if t ~= nil then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 24-29, warpins: 1 ---
+	ret = ret .. string.char(t)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 30-30, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 31-31, warpins: 1 ---
+	return ret
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+local function en(temp)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	return temp
+
+	local str = crypto.encryptXXTEA(temp, "ec_umir2_payment")
+
+	return encode2hex(str)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+local function de(temp)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	return temp
+
+	local str = crypto.decryptXXTEA(decodeFromHex(temp), "ec_umir2_payment")
+
+	return str
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+local function safeFunc(cb)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local traceback = debug.traceback()
+
+	return function (...)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		xpcall(cb, function (...)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			print(traceback)
+			__G__TRACKBACK__(...)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, ...)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+local productsInfo = {}
+productsInfo[1] = {
+	price = 6,
+	name = "6元宝"
+}
+productsInfo[2] = {
+	price = 18,
+	name = "18元宝"
+}
+productsInfo[3] = {
+	price = 28,
+	name = "28元宝"
+}
+productsInfo[4] = {
+	price = 68,
+	name = "68元宝"
+}
+productsInfo[5] = {
+	price = 100,
+	name = "100元宝"
+}
+productsInfo[6] = {
+	price = 198,
+	name = "198元宝"
+}
+productsInfo[7] = {
+	price = 328,
+	name = "328元宝"
+}
+productsInfo[8] = {
+	price = 498,
+	name = "498元宝"
+}
+productsInfo[9] = {
+	price = 648,
+	name = "648元宝"
+}
+iap.init = function ()
+	--- BLOCK #0 1-10, warpins: 1 ---
+	game.loginer:setEvtListener(iap)
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #1 11-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot0 = if not iap.inited then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 15-25, warpins: 1 ---
+	print("iap.init")
+
+	local ok, ret = luaoc.callStaticMethod("IAP", "call", {
+		type = "init:"
+	})
+	--- END OF BLOCK #2 ---
+
+	slot0 = if ok then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-48, warpins: 1 ---
+	ok, ret = luaoc.callStaticMethod("IAP", "call", {
+		type = "addCallbacks:",
+		onRequestProductsFinish = safeFunc(iap.onRequestProductsFinish),
+		onRequestProductsError = safeFunc(iap.onRequestProductsError),
+		onPaymentEvent = safeFunc(iap.onPaymentEvent)
+	})
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 49-50, warpins: 2 ---
+	iap.inited = ok
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 51-56, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if #iap.productsIdentifies <= 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 57-59, warpins: 1 ---
+	iap.updateValidProductsIdentifies()
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 60-62, warpins: 2 ---
+	iap.checkOleVerify()
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 63-63, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+iap.checkOleVerify = function ()
+	--- BLOCK #0 1-17, warpins: 1 ---
+	local data = iap.curPurchaedVerifyData[iap.roleIdentify]
+
+	print("iap.checkOleVerify", data)
+	dump(iap.curPurchaedVerifyData, iap.roleIdentify)
+	--- END OF BLOCK #0 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 18-26, warpins: 1 ---
+	iap.onPurchaed(unpack(data))
+
+	return data[1], data[2]
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-27, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+iap.paymentWithProduct = function (ident, quantity, order, extend, playername)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	local requestdata = en(json.encode({
+		o = order,
+		e = extend,
+		id = iap.roleIdentify,
+		name = playername
+	}))
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 17-25, warpins: 1 ---
+	slot6, slot7 = luaoc.callStaticMethod("IAP", "call", {
+		type = "paymentWithProduct:",
+		identifier = ident,
+		quantity = quantity,
+		requestData = requestdata
+	})
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 26-26, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+iap.finishPayment = function (key)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	print(key)
+
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "ios" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-14, warpins: 1 ---
+	slot1, slot2 = luaoc.callStaticMethod("IAP", "call", {
+		type = "finishPayment:",
+		key = key
+	})
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-15, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+iap.setEvtListener = function (l)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	print("iap.setEvtListener")
+
+	iap.evtListener = l
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(iap.cachedPaymentEvents)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 11-14, warpins: 1 ---
+	iap.onPaymentEvent(v)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-16, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 17-20, warpins: 1 ---
+	iap.cachedPaymentEvents = {}
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+iap.hasUnfinishPayment = function ()
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local data = iap.curPurchaedVerifyData[iap.roleIdentify]
+
+	--- END OF BLOCK #0 ---
+
+	slot0 = if data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-9, warpins: 1 ---
+	return data[1]
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+iap.updateValidProductsIdentifies = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if iap.updatingProducts then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-15, warpins: 2 ---
+	iap.updatingProducts = true
+
+	print("updateValidProductsIdentifies")
+	--- END OF BLOCK #2 ---
+
+	for k, v in pairs(productsInfo)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 16-19, warpins: 1 ---
+	v.identifier = "com.umir2.no1.YB" .. v.price
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-21, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 22-26, warpins: 1 ---
+	local identifies = {}
+
+	--- END OF BLOCK #5 ---
+
+	for k, v in pairs(productsInfo)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #6 27-31, warpins: 1 ---
+	table.insert(identifies, v.identifier)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 32-33, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #8 34-38, warpins: 1 ---
+	iap.requestProducts(identifies)
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+iap.getProductsInfo = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local ret = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, ident in pairs(iap.productsIdentifies)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(productsInfo)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.identifier == ident then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-18, warpins: 1 ---
+	table.insert(ret, v)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-20, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 21-22, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 23-23, warpins: 1 ---
+	return ret
+	--- END OF BLOCK #6 ---
+
+
+
+end
+iap.requestProducts = function (identifies)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	local ok, ret = luaoc.callStaticMethod("IAP", "call", {
+		type = "requestProducts:",
+		identifies = json.encode(identifies)
+	})
+
+	print(ok)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+iap.onRequestProductsFinish = function (ret)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	print("iap.onRequestProductsFinish")
+
+	iap.updatingProducts = false
+	iap.productsIdentifies = ret.validProducts
+
+	iap.evtListener:onUpdatedProducts()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+iap.onRequestProductsError = function (data)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local code = data.code
+	iap.updatingProducts = false
+
+	dump(code)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+iap.onPurchaed = function (order, identifier, receipt, extend, roleIdentify, transaction_id, playername)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	print("iap.onPurchead")
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not roleIdentify then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-13, warpins: 1 ---
+	print("unknow target")
+	iap.finishPayment(transaction_id)
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-28, warpins: 2 ---
+	iap.curPurchaedVerifyData[roleIdentify] = {
+		order,
+		identifier,
+		receipt,
+		extend,
+		roleIdentify,
+		transaction_id,
+		playername
+	}
+
+	--- END OF BLOCK #2 ---
+
+	if roleIdentify ~= iap.roleIdentify then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 29-39, warpins: 1 ---
+	print("不是当前玩家的订单")
+
+	slot8 = iap.evtListener
+	slot7 = iap.evtListener.onVerifyFailed
+	slot9 = 1
+	slot10 = "存在未完成的充值订单，所属玩家"
+	--- END OF BLOCK #3 ---
+
+	slot11 = if not playername then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 40-40, warpins: 1 ---
+	slot11 = ""
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 41-44, warpins: 2 ---
+	slot7(slot8, slot9, slot10 .. slot11 .. "，请前往处理")
+
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 45-50, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot7 = if cache.check_verifiedTransaction(transaction_id)
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 51-59, warpins: 1 ---
+	print("订单已验证", transaction_id, roleIdentify)
+	--- END OF BLOCK #7 ---
+
+	if roleIdentify == iap.roleIdentify then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 60-67, warpins: 1 ---
+	iap.notifyPurchaed(transaction_id, order, identifier, transaction_id)
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 68-85, warpins: 1 ---
+	print("验证中:", transaction_id, roleIdentify)
+	game.loginer:verifyReceipt(order, identifier, receipt, extend, transaction_id, {
+		roleIdentify = roleIdentify,
+		transaction_id = transaction_id
+	})
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 86-86, warpins: 3 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+iap.onPaymentEvent = function (data)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	local identifier = data.identifier
+	local event = data.event
+	local quantity = data.quantity
+	local transaction_id = data.index
+
+	print("onPaymentEvent", evt[event], order, data.error)
+	--- END OF BLOCK #0 ---
+
+	if string.len(data.requestData)
+	 > 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 19-20, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not transaction_id then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 21-25, warpins: 2 ---
+	print("unknow error", data.error)
+
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 26-39, warpins: 2 ---
+	local requestData = json.decode(de(data.requestData))
+	local order = tonumber(requestData.o)
+	local extend = requestData.e
+
+	--- END OF BLOCK #3 ---
+
+	slot8 = if not iap.evtListener then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 40-49, warpins: 1 ---
+	print("not lisetner")
+	table.insert(iap.cachedPaymentEvents, data)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #5 50-53, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if event == evt.IOSIAP_PAYMENT_PURCHAED then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 54-70, warpins: 1 ---
+	print(requestData.id, iap.roleIdentify, transaction_id)
+	iap.onPurchaed(order, data.identifier, data.receipt, extend, requestData.id, transaction_id, requestData.name)
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #7 71-74, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if event == evt.IOSIAP_PAYMENT_FAILED then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 75-84, warpins: 1 ---
+	print(requestData.id, iap.roleIdentify)
+	--- END OF BLOCK #8 ---
+
+	if requestData.id == iap.roleIdentify then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #9 85-97, warpins: 1 ---
+	iap.evtListener:onPaymentFailed(order, identifier, data.error)
+	IAP.finishPayment(transaction_id)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #10 98-101, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if event == evt.IOSIAP_PAYMENT_RESTORED then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 102-102, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 103-106, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if event == evt.IOSIAP_PAYMENT_REMOVED then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #13 107-107, warpins: 7 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+iap.notifyPurchaed = function (roleIdentify, order, identifier, transaction_id)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	iap.evtListener:onPurchaed(order, identifier, roleIdentify)
+	iap.finishPayment(transaction_id)
+
+	iap.curPurchaedVerifyData[roleIdentify] = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+iap.onCetSvrEvt = function (self, code, desc, res, ex)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	print(code, desc, res, ex)
+	dump(res)
+	--- END OF BLOCK #0 ---
+
+	if code ~= -112 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 12-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if res then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 14-16, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if res.status == 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 17-26, warpins: 2 ---
+	print(ex.roleIdentify, iap.roleIdentify)
+	--- END OF BLOCK #3 ---
+
+	if ex.roleIdentify ~= iap.roleIdentify then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-44, warpins: 1 ---
+	print("不是当前玩家的订单", ex.roleIdentify, iap.roleIdentify)
+
+	local id = res.tid
+
+	cache.storage_verifiedTransaction(id, ex.roleIdentify)
+	iap.evtListener:onPurchaed()
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #5 45-50, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot5 = if iap.curPurchaedVerifyData[ex.roleIdentify] then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 51-70, warpins: 1 ---
+	print("验证完成", ex.roleIdentify, ex.transaction_id)
+
+	local order, identifier, receipt, extend = unpack(iap.curPurchaedVerifyData[ex.roleIdentify])
+
+	iap.notifyPurchaed(iap.roleIdentify, order, identifier, ex.transaction_id)
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #7 71-72, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	if code ~= 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 73-80, warpins: 1 ---
+	iap.evtListener:onVerifyFailed(code, desc)
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #9 81-82, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot3 = if not res then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 82-82, warpins: 1 ---
+	res = res
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 83-83, warpins: 6 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+
+return iap
+--- END OF BLOCK #3 ---
+
+
+

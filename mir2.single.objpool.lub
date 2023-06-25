@@ -1,0 +1,192 @@
+--- BLOCK #0 1-11, warpins: 1 ---
+local objpool = {}
+objpool.objs = {}
+objpool.perload = function (class, cnt, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local objs = objpool.objs[class.__cname]
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not objs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	objs = {}
+	objpool.objs[class.__cname] = objs
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-15, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for i=1, cnt, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 16-29, warpins: 2 ---
+	local obj = class.new(...)
+
+	obj.retain(obj)
+	obj.setNodeEventEnabled(obj, true)
+
+	obj.onCleanup = function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		obj:objpool_delegate_cleanup()
+
+		objs[#objs + 1] = obj
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 30-31, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+objpool.new = function (class, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local objs = objpool.objs[class.__cname]
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not objs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	objs = {}
+	objpool.objs[class.__cname] = objs
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-16, warpins: 2 ---
+	local ret = nil
+	--- END OF BLOCK #2 ---
+
+	if 0 < #objs then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-23, warpins: 1 ---
+	ret = objs[1]
+
+	table.remove(objs, 1)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 24-35, warpins: 1 ---
+	ret = class.new()
+
+	ret.retain(ret)
+	ret.setNodeEventEnabled(ret, true)
+
+	ret.onCleanup = function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		ret:objpool_delegate_cleanup()
+
+		objs[#objs + 1] = ret
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 36-41, warpins: 2 ---
+	ret.objpool_delegate_init(ret, ...)
+
+	return ret
+	--- END OF BLOCK #5 ---
+
+
+
+end
+objpool.clear = function (classname)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local objs = objpool.objs[classname]
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if objs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(objs)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 10-12, warpins: 1 ---
+	v.release(v)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 15-18, warpins: 1 ---
+	objpool.objs[classname] = nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-19, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return objpool
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,904 @@
+--- BLOCK #0 1-29, warpins: 1 ---
+local common = import("..main.common.common")
+local scene = class("reconnect", function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return display.newScene("reconnect")
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+scene.ctor = function (self)
+	--- BLOCK #0 1-39, warpins: 1 ---
+	net.add(self)
+	self.add(self, an.newLabel("正在重连中..", 20, 1, {
+		color = cc.c3b(255, 255, 0),
+		sc = display.COLOR_BLACK
+	}):anchor(0.5, 0):pos(display.cx, 30))
+	self.showProgress(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.showProgress = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.reprogress then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-13, warpins: 1 ---
+	self.reprogress:stopAllActions()
+	self.reprogress:removeSelf()
+
+	self.reprogress = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-73, warpins: 2 ---
+	self.reprogress = an.newProgress(res.gettex2("pic/console/bottom/pro2.png"), res.gettex2("pic/console/bottom/probg.png"), {
+		x = 43,
+		y = 4
+	}):anchor(0.5, 0):pos(display.width*0.5, 0):add2(self, 1)
+
+	self.reprogress:setp(0)
+
+	local prodata = 0
+
+	self.reprogress:runForever(transition.sequence({
+		cc.DelayTime:create(0.1),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-11, warpins: 1 ---
+			prodata = prodata + 0.02
+			slot1 = self.reprogress
+			slot0 = self.reprogress.setp
+			--- END OF BLOCK #0 ---
+
+			if 1 < prodata then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 12-13, warpins: 1 ---
+			slot2 = 1
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 14-14, warpins: 1 ---
+			slot2 = prodata
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 15-19, warpins: 2 ---
+			slot0(slot1, slot2)
+			--- END OF BLOCK #3 ---
+
+			if 1 < prodata then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #4 20-23, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			if prodata < 1.1 then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #5 24-27, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			slot0 = if self.reprogress then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #6 28-44, warpins: 1 ---
+			self.reprogress:stopAllActions()
+			self.reprogress:removeSelf()
+
+			self.reprogress = nil
+
+			--- END OF BLOCK #6 ---
+
+			slot0 = if not self.reconnectBox then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 45-53, warpins: 1 ---
+			game.gotoscene("select", nil, "fade", 0.5, display.COLOR_BLACK)
+
+			--- END OF BLOCK #7 ---
+
+			FLOW; TARGET BLOCK #8
+
+
+			--- BLOCK #8 54-54, warpins: 5 ---
+			return 
+			--- END OF BLOCK #8 ---
+
+
+
+		end)
+	}))
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.onEnter = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onExit = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	net.remove(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.reconectFuc = function (self, info)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.reconnectBox then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.reconnectBox:removeSelf()
+
+	self.reconnectBox = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-12, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not self.reconnectBox then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-21, warpins: 1 ---
+	self.reconnectBox = an.newMsgbox(info .. "\n确定重连?", function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-7, warpins: 1 ---
+		common.gotoLogin({
+			logout = true
+		})
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #2 8-9, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-21, warpins: 1 ---
+		self.reconnect = true
+		g_data.login.reconnectState = true
+
+		scheduler.performWithDelayGlobal(function ()
+			--- BLOCK #0 1-14, warpins: 1 ---
+			net.connect(g_data.login.recIP, g_data.login.recPort, self, g_data.login.recSession)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, 0)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 22-25, warpins: 3 ---
+		self.reconnectBox = nil
+
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		center = true,
+		hasCancel = true
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+scene.onLoseConnect = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	print("scene:onLoseConnect")
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.reconnectBox then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	self.reconnectBox:removeSelf()
+
+	self.reconnectBox = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-18, warpins: 2 ---
+	self.reconnectBox = self.reconectFuc(self, "网络连接已断开!")
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.onNetworkStateChange = function (self, currentState)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local connectable = network.isHostNameReachable("www.baidu.com")
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not tolua.isnull(self.reconnectBox)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 11-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if connectable then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-19, warpins: 1 ---
+	self.reconnectBox:removeSelf()
+
+	self.reconnectBox = nil
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-22, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if connectable then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 23-29, warpins: 1 ---
+	slot4 = self
+	slot3 = self.reconectFuc
+	slot5 = "切换到 "
+	--- END OF BLOCK #5 ---
+
+	if currentState == cc.kCCNetworkStatusReachableViaWiFi then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 30-31, warpins: 1 ---
+	slot6 = "WIFI网络"
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 32-32, warpins: 1 ---
+	slot6 = "蜂窝网络"
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 33-34, warpins: 2 ---
+	slot3(slot4, slot5 .. slot6)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 35-35, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+scene.enterSelectScene = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	print("enterSelectScene reconnect")
+	--- END OF BLOCK #0 ---
+
+	if msg.recog == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 7-17, warpins: 1 ---
+	g_data.select:receiveChrs(msg, buf, bufLen)
+
+	--- END OF BLOCK #1 ---
+
+	slot4 = if self.reconnect then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 18-45, warpins: 1 ---
+	self.reconnect = false
+	g_data.login.reconnectState = false
+
+	self.showProgress(self)
+	self.runs(self, {
+		cc.DelayTime:create(5),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			net.remove(self)
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not self.reconnectBox then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 9-17, warpins: 1 ---
+			game.gotoscene("select", nil, "fade", 0.5, display.COLOR_BLACK)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 18-18, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end)
+	})
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 46-66, warpins: 1 ---
+	net.remove(self)
+	g_data.select:receiveChrs(msg, buf, bufLen)
+	game.gotoscene("select", nil, "fade", 0.5, display.COLOR_BLACK)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 67-68, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+scene.socketEvent = function (self, data, status)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if status == 3 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	slot4 = self
+	slot3 = self.reconectFuc
+	--- END OF BLOCK #1 ---
+
+	slot5 = if self.reconnect then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-9, warpins: 1 ---
+	slot5 = "连接超时中断，重连失败"
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	slot5 = "与服务器断开连接"
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-12, warpins: 2 ---
+	slot3(slot4, slot5)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #5 13-14, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if status == 2 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 15-18, warpins: 1 ---
+	self.reconectFuc(self, "连接服务器失败，请检查网络并稍后再试")
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 19-19, warpins: 3 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+scene.processMsg = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not msg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-8, warpins: 1 ---
+	local function tip(str, func)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		an.newMsgbox(str, func)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local ident = msg.ident
+
+	--- END OF BLOCK #2 ---
+
+	if SM_LOGIN == ident then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-22, warpins: 1 ---
+	print("SM_LOGIN reconnect")
+	net.send({
+		CM_RECONNECT
+	}, {
+		g_data.reconnctID
+	})
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #4 23-25, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if SM_LOGIN_AUTH == ident then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #5 26-28, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if msg.param == 2 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 29-29, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #7 30-32, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if msg.param == 1 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #8 33-43, warpins: 1 ---
+	local ret1 = getRecord("TLoginIdResult")
+	local ret2 = getRecord("TLoginIdResult2")
+
+	--- END OF BLOCK #8 ---
+
+	if ret1.size(ret1)
+	 < bufLen then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 44-62, warpins: 1 ---
+	print("SM_LOGIN_AUTH reconnect")
+	net.record(ret2, buf, bufLen)
+
+	g_data.reconnctID = ret2.get(ret2, "reconnectID")
+	g_data.login.loginRet2 = ret2
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #10 63-72, warpins: 1 ---
+	net.record(ret1, buf, bufLen)
+
+	g_data.login.loginRet1 = ret1
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #11 73-73, warpins: 0 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #12 74-76, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if SM_CLIENT_CONF == ident then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 77-83, warpins: 1 ---
+	g_data.chat:setShieldMask(msg.recog)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #14 84-86, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if SM_CHR_LIST == ident then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 87-97, warpins: 1 ---
+	print("SM_CHR_LIST reconnect")
+
+	g_data.login.roleInfo = {
+		msg = msg,
+		buf = buf,
+		bufLen = bufLen
+	}
+
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #16 98-100, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if SM_OUTOFCONNECTION_KICKOUT == ident then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 101-105, warpins: 1 ---
+	self.reconectFuc(self, "已经被其他用户踢下线")
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #18 106-108, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if SM_LOGIN_ALREADY_ONLINE == ident then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #19 109-111, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if msg.recog == 1 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 112-122, warpins: 1 ---
+	print("SM_LOGIN_ALREADY_ONLINE 1 reconnect")
+
+	self.kickoutBox = an.newMsgbox("此账号目前在线，是否强行登录?", function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-18, warpins: 1 ---
+		self:enterSelectScene(g_data.login.roleInfo.msg, g_data.login.roleInfo.buf, g_data.login.roleInfo.bufLen)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 19-28, warpins: 2 ---
+		self.kickoutBox = nil
+		slot1 = net.send
+		slot2 = {
+			CM_LOGIN_ALREADY_ONLINE
+		}
+		--- END OF BLOCK #2 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 29-30, warpins: 1 ---
+		slot3 = 1
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 31-31, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 32-34, warpins: 2 ---
+		slot2.param = slot3
+
+		slot1(slot2)
+
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end, {
+		center = true,
+		hasCancel = true
+	})
+
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #21 123-141, warpins: 1 ---
+	print("SM_LOGIN_ALREADY_ONLINE 0 reconnect")
+	self.enterSelectScene(self, g_data.login.roleInfo.msg, g_data.login.roleInfo.buf, g_data.login.roleInfo.bufLen)
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #22 142-144, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if SM_SELCHR_ERR == ident then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 145-151, warpins: 1 ---
+	an.newMsgbox("服务器维护中，请稍后再试", function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		common.gotoLogin({
+			logout = true
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		center = true
+	})
+
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #24 152-154, warpins: 1 ---
+	return false
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 155-157, warpins: 13 ---
+	return true
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 158-158, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+
+
+end
+
+return scene
+--- END OF BLOCK #0 ---
+
+
+

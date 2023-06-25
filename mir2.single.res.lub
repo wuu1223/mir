@@ -1,0 +1,2894 @@
+--- BLOCK #0 1-105, warpins: 1 ---
+local res = {
+	defaultPackName = "rs"
+}
+res.imgs = {}
+res.maps = {}
+res.packs = {}
+res.caches_m2texs = {}
+res.caches_m2texs_fbo = {}
+res.caches_tex2 = {}
+res.caches_animation = {}
+res.caches_filters = {}
+res.defaults = {}
+res.perload = function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if IS_PLAYER_DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot0 = if res.perloaded then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-9, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-17, warpins: 1 ---
+	res.perloaded = true
+
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(def.perload)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #22
+
+
+	--- BLOCK #5 18-20, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot5 = if not v[3] then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 21-21, warpins: 1 ---
+	local frame = 1
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 22-24, warpins: 2 ---
+	local is8 = v[4]
+	--- END OF BLOCK #7 ---
+
+	slot6 = if is8 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #8 25-27, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot7 = if not v[5] then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 28-28, warpins: 1 ---
+	local skip = 0
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 29-32, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	for j=0, 7, 1
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #16
+
+	--- BLOCK #11 33-36, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	for k=1, frame, 1
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #15
+
+	--- BLOCK #12 37-50, warpins: 2 ---
+	local tex, info = res.gettex(v[1], (v[2] + j*(frame + skip) + k) - 1, 1)
+	--- END OF BLOCK #12 ---
+
+	slot18 = if info.loading then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 51-58, warpins: 1 ---
+	info.loading[#info.loading + 1] = {
+		call = function (tex)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if tex then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-5, warpins: 1 ---
+			tex.retain(tex)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 6-6, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 59-59, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #15 60-60, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #16 61-61, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #17 62-65, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	for j=1, frame, 1
+	LOOP BLOCK #18
+	GO OUT TO BLOCK #21
+
+	--- BLOCK #18 66-76, warpins: 2 ---
+	local tex, info = res.gettex(v[1], (v[2] + j) - 1, 1)
+	--- END OF BLOCK #18 ---
+
+	slot13 = if info.loading then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 77-84, warpins: 1 ---
+	info.loading[#info.loading + 1] = {
+		call = function (tex)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if tex then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-5, warpins: 1 ---
+			tex.retain(tex)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 6-6, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 85-85, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #21 86-87, warpins: 3 ---
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #22 88-88, warpins: 1 ---
+	return 
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 89-89, warpins: 2 ---
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 90-90, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+
+
+end
+local __position = cc.Node.setPosition
+res.makeTexForFBO = function (imgid, idxbegin, frame)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if res.caches_m2texs_fbo[imgid] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 6-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if res.caches_m2texs_fbo[imgid][idxbegin] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-12, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-19, warpins: 3 ---
+	local texs = {}
+	local wcnt = 0
+	local hmax = 0
+	--- END OF BLOCK #3 ---
+
+	for i=1, frame, 1
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #4 20-34, warpins: 2 ---
+	local tex, info = res.gettex(imgid, (idxbegin + i) - 1)
+	local detail = clone(info)
+	texs[#texs + 1] = detail
+	--- END OF BLOCK #4 ---
+
+	slot13 = if not info.err then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 35-43, warpins: 1 ---
+	detail.pos = wcnt
+	wcnt = wcnt + info.w
+	hmax = math.max(hmax, info.h)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 44-50, warpins: 2 ---
+	res.removeinfo(imgid, (idxbegin + i) - 1)
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 51-52, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if wcnt ~= 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 53-54, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if hmax == 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 55-55, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 56-71, warpins: 2 ---
+	local canvas = cc.RenderTexture:create(wcnt, hmax, cc.TEXTURE2D_PIXEL_FORMAT_RGBA4444)
+
+	canvas.begin(canvas)
+	--- END OF BLOCK #10 ---
+
+	for i, v in ipairs(texs)
+
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #11 72-74, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot12 = if not v.err then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 75-99, warpins: 1 ---
+	local spr = display.newSprite(v.tex):flipY(true)
+
+	__position(spr, v.pos + spr.getw(spr)/2, hmax - spr.geth(spr)/2)
+	spr.visit(spr)
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 100-101, warpins: 3 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #14 102-118, warpins: 1 ---
+	canvas.endToLua(canvas)
+
+	local tex = canvas.getSprite(canvas):getTexture()
+
+	tex.retain(tex)
+
+	--- END OF BLOCK #14 ---
+
+	slot8 = if not res.caches_m2texs_fbo[imgid] then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 119-122, warpins: 1 ---
+	res.caches_m2texs_fbo[imgid] = {}
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 123-134, warpins: 2 ---
+	res.caches_m2texs_fbo[imgid][idxbegin] = {
+		tex = tex,
+		frame = frame,
+		details = texs
+	}
+
+	--- END OF BLOCK #16 ---
+
+	for i, v in ipairs(texs)
+
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #19
+
+
+	--- BLOCK #17 135-140, warpins: 1 ---
+	v.tex:release()
+
+	v.tex = nil
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 141-142, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #19 143-143, warpins: 1 ---
+	return 
+	--- END OF BLOCK #19 ---
+
+
+
+end
+res.getFBO = function (imgid, idxbegin, frame)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local fbos = res.caches_m2texs_fbo[imgid]
+	--- END OF BLOCK #0 ---
+
+	slot3 = if fbos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	local fbo = fbos[idxbegin]
+	--- END OF BLOCK #1 ---
+
+	slot5 = if fbo then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if fbo.frame == frame then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-13, warpins: 1 ---
+	slot5 = fbo
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 14-15, warpins: 1 ---
+	slot5 = false
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 16-16, warpins: 0 ---
+	slot5 = true
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 17-17, warpins: 4 ---
+	return slot5
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 18-18, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+
+scheduler.scheduleGlobal(function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(res.caches_animation)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot5 = if not v.mark then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 9-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.ani:getReferenceCount()
+	 == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-22, warpins: 1 ---
+	v.ani:release()
+
+	res.caches_animation[k] = nil
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-24, warpins: 3 ---
+	v.mark = nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 25-26, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 27-31, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	for imgid, v in pairs(res.caches_m2texs)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #7 32-35, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for idx, texinfo in pairs(v)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #8 36-38, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot10 = if not texinfo.loading then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #9 39-41, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot10 = if not texinfo.err then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #10 42-44, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot10 = if texinfo.mark then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 45-47, warpins: 1 ---
+	texinfo.mark = nil
+
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #12 48-50, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot10 = if texinfo.tex then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #13 51-56, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if texinfo.tex:getReferenceCount()
+	 == 1 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 57-62, warpins: 1 ---
+	texinfo.tex:release()
+
+	v[idx] = nil
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 63-64, warpins: 7 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #16 65-66, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #17 67-70, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #18 71-77, warpins: 1 ---
+	local bytesCnt = 0
+	local cnt = 0
+
+	--- END OF BLOCK #18 ---
+
+	for imgid, v in pairs(res.caches_m2texs)
+
+	LOOP BLOCK #19
+	GO OUT TO BLOCK #27
+
+
+	--- BLOCK #19 78-81, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	for idx, texinfo in pairs(v)
+
+
+	LOOP BLOCK #20
+	GO OUT TO BLOCK #26
+
+
+	--- BLOCK #20 82-84, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot12 = if not texinfo.loading then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #21 85-87, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot12 = if not texinfo.err then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #22 88-91, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot12 = if texinfo.tex.getPixelsWide then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 92-107, warpins: 1 ---
+	bytesCnt = bytesCnt + (texinfo.tex:getPixelsWide()*texinfo.tex:getPixelsHigh()*texinfo.tex:getBitsPerPixelForFormat())/8
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 108-108, warpins: 4 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 109-110, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #26 111-112, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #27 113-134, warpins: 1 ---
+	p2("res", "caches_m2texs:", cnt)
+	p2("res", "caches_animation:", table.nums(res.caches_animation))
+	p2("res", string.format("use texture memory: %.02f MB", bytesCnt/1048576))
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 135-135, warpins: 2 ---
+	return 
+	--- END OF BLOCK #28 ---
+
+
+
+end, 60)
+
+res.purgeCachedData = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for imgid, v in pairs(res.caches_m2texs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for idx, texinfo in pairs(v)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #2 10-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot10 = if not texinfo.loading then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 13-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot10 = if not texinfo.err then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot10 = if texinfo.tex then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-24, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if texinfo.tex:getReferenceCount()
+	 == 1 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 25-30, warpins: 1 ---
+	texinfo.tex:release()
+
+	v[idx] = nil
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 31-32, warpins: 6 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #8 33-34, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #9 35-39, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	for k, v in pairs(res.caches_tex2)
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #10 40-42, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot5 = if not v.err then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 43-48, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if v.tex:getReferenceCount()
+	 == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 49-56, warpins: 1 ---
+	v.tex:release()
+
+	res.caches_tex2[k] = nil
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 57-58, warpins: 4 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #14 59-63, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	for k, v in pairs(res.caches_animation)
+
+	LOOP BLOCK #15
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #15 64-67, warpins: 1 ---
+	v.ani:release()
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 68-69, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #17 70-77, warpins: 1 ---
+	res.caches_animation = {}
+
+	--- END OF BLOCK #17 ---
+
+	for k, v in pairs(res.imgs)
+
+	LOOP BLOCK #18
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #18 78-82, warpins: 1 ---
+	ycRes:release(v)
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 83-84, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #20 85-92, warpins: 1 ---
+	res.imgs = {}
+
+	--- END OF BLOCK #20 ---
+
+	for k, v in pairs(res.packs)
+
+	LOOP BLOCK #21
+	GO OUT TO BLOCK #23
+
+
+	--- BLOCK #21 93-97, warpins: 1 ---
+	ycRes:release(v)
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 98-99, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #23 100-107, warpins: 1 ---
+	res.packs = {}
+
+	--- END OF BLOCK #23 ---
+
+	for k, v in pairs(res.maps)
+
+	LOOP BLOCK #24
+	GO OUT TO BLOCK #26
+
+
+	--- BLOCK #24 108-112, warpins: 1 ---
+	mir2map:release(v)
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 113-114, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #26 115-118, warpins: 1 ---
+	res.maps = {}
+
+	return 
+	--- END OF BLOCK #26 ---
+
+
+
+end
+
+function res_loadEndForAsync(imgid, idx, tex)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local infos = res.caches_m2texs[imgid]
+	local info = nil
+	--- END OF BLOCK #0 ---
+
+	slot3 = if infos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	info = infos[idx]
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not info then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 10-16, warpins: 1 ---
+	p2("res", "res_loadEndForAsync -> info not found!", key)
+	--- END OF BLOCK #3 ---
+
+	slot2 = if tex then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 17-19, warpins: 1 ---
+	tex.release(tex)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 20-20, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 21-23, warpins: 2 ---
+	info.tex = tex
+	--- END OF BLOCK #6 ---
+
+	if tex ~= nil then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 24-25, warpins: 1 ---
+	slot5 = false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 26-26, warpins: 1 ---
+	slot5 = true
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 27-30, warpins: 2 ---
+	info.err = slot5
+
+	--- END OF BLOCK #9 ---
+
+	slot5 = if info.loading then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 31-34, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	for i, v in ipairs(info.loading)
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #11 35-37, warpins: 1 ---
+	v.call(tex)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 38-39, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #13 40-42, warpins: 2 ---
+	info.loading = nil
+
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+
+res.getMir2TexCount = function ()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local cnt = 0
+
+	--- END OF BLOCK #0 ---
+
+	for imgid, v in pairs(res.caches_m2texs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for idx, texinfo in pairs(v)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #2 11-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot11 = if not texinfo.loading then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 14-16, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot11 = if not texinfo.err then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 17-19, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot11 = if texinfo.tex then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-20, warpins: 1 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 21-22, warpins: 5 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #7 23-24, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #8 25-25, warpins: 1 ---
+	return cnt
+	--- END OF BLOCK #8 ---
+
+
+
+end
+res.reloadAllTex = function (tasks)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for imgid, v in pairs(res.caches_m2texs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for idx, texinfo in pairs(v)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #2 10-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot11 = if not texinfo.loading then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 13-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot11 = if not texinfo.err then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot11 = if texinfo.tex then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-35, warpins: 1 ---
+	local tex = texinfo.tex
+	local image = res.loadimg(imgid):makeImage(idx, false)
+
+	tex.releaseGLTexture(tex)
+	tex.initWithImage(tex, image)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 36-37, warpins: 5 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #7 38-39, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #8 40-44, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	for k, v in pairs(res.caches_tex2)
+
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #9 45-47, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot6 = if not v.err then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 48-63, warpins: 1 ---
+	local tex = v.tex
+	local image = res.getpack(v.packname):makeImageWithFilename(v.filename)
+
+	tex.releaseGLTexture(tex)
+	tex.initWithImage(tex, image)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 64-65, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #12 66-66, warpins: 1 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+res.tex2Key = function (filename, packname)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return filename .. "-" .. packname
+	--- END OF BLOCK #0 ---
+
+
+
+end
+res.frameKey = function (imgid, idx, setOffset)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	slot3 = imgid
+	slot4 = "-"
+	slot5 = idx
+	slot6 = "-"
+	--- END OF BLOCK #0 ---
+
+	slot2 = if setOffset then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	slot7 = "1"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-9, warpins: 1 ---
+	slot7 = "0"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-11, warpins: 2 ---
+	return slot3 .. slot4 .. slot5 .. slot6 .. slot7
+	--- END OF BLOCK #3 ---
+
+
+
+end
+res.animationKey = function (imgid, beginidx, endidx, delay)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	slot4 = imgid
+	slot5 = "-"
+	slot6 = beginidx
+	slot7 = "-"
+	slot8 = endidx
+	slot9 = "-"
+	slot10 = delay
+	slot11 = "-"
+	--- END OF BLOCK #0 ---
+
+	slot12 = if setOffset then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-13, warpins: 1 ---
+	slot12 = "1"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 14-14, warpins: 1 ---
+	slot12 = "0"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-16, warpins: 2 ---
+	return slot4 .. slot5 .. slot6 .. slot7 .. slot8 .. slot9 .. slot10 .. slot11 .. slot12
+	--- END OF BLOCK #3 ---
+
+
+
+end
+res.default = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not res.defaults.tex1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-26, warpins: 1 ---
+	res.defaults.tex1 = cc.Director:getInstance():getTextureCache():addImage("public/default.png")
+
+	res.defaults.tex1:retain()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-30, warpins: 2 ---
+	return res.defaults.tex1
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.default2 = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not res.defaults.tex2 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-26, warpins: 1 ---
+	res.defaults.tex2 = cc.Director:getInstance():getTextureCache():addImage("public/empty.png")
+
+	res.defaults.tex2:retain()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-30, warpins: 2 ---
+	return res.defaults.tex2
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.defaultFrame = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not res.defaults.frame then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-29, warpins: 1 ---
+	res.defaults.frame = cc.SpriteFrame:createWithTexture(res.default2(), cc.rect(0, 0, 32, 32))
+
+	res.defaults.frame:retain()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 30-33, warpins: 2 ---
+	return res.defaults.frame
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.loadimg = function (imgid)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local img = res.imgs[imgid]
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not img then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-20, warpins: 1 ---
+	img = ycRes:create(1, imgid, "data/" .. imgid .. ".zip", "")
+	res.imgs[imgid] = img
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-21, warpins: 2 ---
+	return img
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.getinfo = function (imgid, idx, needLoad)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local infos = res.caches_m2texs[imgid]
+	local info = nil
+	--- END OF BLOCK #0 ---
+
+	slot3 = if infos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	info = infos[idx]
+
+	--- END OF BLOCK #1 ---
+
+	slot4 = if info then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-10, warpins: 1 ---
+	return info
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-12, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if needLoad then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 13-22, warpins: 1 ---
+	local x, y, w, h = res.loadimg(imgid):getTexInfo(idx)
+
+	--- END OF BLOCK #4 ---
+
+	slot5 = if x then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-28, warpins: 1 ---
+	return {
+		x = x,
+		y = y,
+		w = w,
+		h = h
+	}
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 29-29, warpins: 3 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+res.removeinfo = function (imgid, idx)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local infos = res.caches_m2texs[imgid]
+	--- END OF BLOCK #0 ---
+
+	slot2 = if infos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	infos[idx] = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.get = function (imgid, idx, setOffset, asyncPriority, blend, class)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not class then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-4, warpins: 1 ---
+	local spriteClass = cc.Sprite
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-14, warpins: 2 ---
+	local sprite = nil
+	local tex, info = res.gettex(imgid, idx, asyncPriority)
+	--- END OF BLOCK #2 ---
+
+	slot10 = if info.err then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-29, warpins: 1 ---
+	sprite = spriteClass.createWithTexture(spriteClass, res.default2(), cc.rect(0, 0, 2, 2))
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #4 30-32, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot10 = if info.loading then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 33-47, warpins: 1 ---
+	sprite = spriteClass.createWithTexture(spriteClass, res.default(), cc.rect(0, 0, info.w, info.h))
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 48-52, warpins: 1 ---
+	sprite = spriteClass.createWithTexture(spriteClass, tex)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 53-54, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if setOffset then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 55-65, warpins: 1 ---
+	sprite.anchor(sprite, 0, 1)
+	__position(sprite, info.x, -info.y)
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 66-67, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	slot3 = if asyncPriority then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #10 68-70, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot10 = if info.loading then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 71-85, warpins: 1 ---
+	sprite.setNodeEventEnabled(sprite, true)
+
+	sprite.onCleanup = function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(info.loading)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 6-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v.sprite == sprite then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-16, warpins: 1 ---
+		table.remove(info.loading, i)
+
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 17-18, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 19-19, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+	info.loading[#info.loading + 1] = {
+		sprite = sprite,
+		call = function (tex)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			sprite:setNodeEventEnabled(false)
+			--- END OF BLOCK #0 ---
+
+			slot0 = if tex then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 8-12, warpins: 1 ---
+			sprite:setTex(tex)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 13-13, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 86-87, warpins: 3 ---
+	return sprite
+	--- END OF BLOCK #12 ---
+
+
+
+end
+res.gettex = function (imgid, idx, asyncPriority)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local infos = res.caches_m2texs[imgid]
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not infos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	infos = {}
+	res.caches_m2texs[imgid] = infos
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-12, warpins: 2 ---
+	local info = infos[idx]
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not info then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #3 13-21, warpins: 1 ---
+	slot6 = res.loadimg(imgid)
+	slot5 = res.loadimg(imgid).getTex
+	slot7 = idx
+	--- END OF BLOCK #3 ---
+
+	slot8 = if not asyncPriority then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 22-22, warpins: 1 ---
+	slot8 = 0
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 23-25, warpins: 2 ---
+	local tex, x, y, w, h = slot5(slot6, slot7, slot8)
+	--- END OF BLOCK #5 ---
+
+	slot5 = if tex then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 26-33, warpins: 1 ---
+	info = {
+		tex = tex,
+		x = x,
+		y = y,
+		w = w,
+		h = h
+	}
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #7 34-36, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if 0 < w then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 37-38, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if asyncPriority then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 39-41, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if 0 < asyncPriority then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 42-50, warpins: 1 ---
+	info = {
+		x = x,
+		y = y,
+		w = w,
+		h = h,
+		loading = {}
+	}
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 51-59, warpins: 3 ---
+	p2("res", "res.gettex faild!", imgid, idx, w, asyncPriority)
+
+	info = {
+		err = true
+	}
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 60-60, warpins: 3 ---
+	infos[idx] = info
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 61-65, warpins: 2 ---
+	info.mark = true
+
+	return info.tex, info
+	--- END OF BLOCK #13 ---
+
+
+
+end
+res.getui = function (uiidx, idx)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local imgid = "prguse"
+	--- END OF BLOCK #0 ---
+
+	if 1 < uiidx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	imgid = imgid .. uiidx
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-12, warpins: 2 ---
+	return res.get(imgid, idx)
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.getuitex = function (uiidx, idx)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local imgid = "prguse"
+	--- END OF BLOCK #0 ---
+
+	if 1 < uiidx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	imgid = imgid .. uiidx
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-12, warpins: 2 ---
+	return res.gettex(imgid, idx)
+	--- END OF BLOCK #2 ---
+
+
+
+end
+local __setOffset = cc.SpriteFrame.setOffset
+local __setTexture = cc.SpriteFrame.setTexture
+local __getReferenceCount = cc.Ref.getReferenceCount
+local __release = cc.Ref.release
+res.getframe = function (imgid, idx, setOffset, asyncPriority, blend)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local frame = nil
+	local tex, info = res.gettex(imgid, idx, asyncPriority, blend)
+	--- END OF BLOCK #0 ---
+
+	slot8 = if info.err then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-16, warpins: 1 ---
+	frame = res.defaultFrame()
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #2 17-19, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if info.loading then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-36, warpins: 1 ---
+	frame = cc.SpriteFrame:createWithTexture(res.default(), cc.rect(0, 0, info.w, info.h))
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 37-56, warpins: 1 ---
+	frame = cc.SpriteFrame:createWithTexture(tex, cc.rect(0, 0, tex.getContentSize(tex).width, tex.getContentSize(tex).height))
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 57-58, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if setOffset then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 59-67, warpins: 1 ---
+	__setOffset(frame, cc.p(info.x, -info.y))
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 68-69, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	slot3 = if asyncPriority then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 70-72, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot8 = if info.loading then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 73-83, warpins: 1 ---
+	frame.retain(frame)
+
+	info.loading[#info.loading + 1] = {
+		call = function (tex)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if 1 < __getReferenceCount(frame)
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 7-11, warpins: 1 ---
+			frame:setTexture(tex)
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 12-15, warpins: 2 ---
+			__release(frame)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 84-85, warpins: 3 ---
+	return frame
+	--- END OF BLOCK #10 ---
+
+
+
+end
+res.getani = function (imgid, beginidx, endidx, delay, setOffset, isReversed, asyncPriority, blend)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local step = 1
+	--- END OF BLOCK #0 ---
+
+	slot5 = if isReversed then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	beginidx = endidx
+	endidx = beginidx
+	step = -1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-20, warpins: 2 ---
+	local key = res.animationKey(imgid, beginidx, endidx, delay, setOffset)
+	local animationInfo = res.caches_animation[key]
+	--- END OF BLOCK #2 ---
+
+	slot10 = if animationInfo then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-24, warpins: 1 ---
+	animationInfo.mark = true
+
+	return animationInfo.ani
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 25-29, warpins: 2 ---
+	local frames = {}
+	--- END OF BLOCK #4 ---
+
+	for index=beginidx, endidx, step
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #9
+
+	--- BLOCK #5 30-39, warpins: 2 ---
+	local frame = res.getframe(imgid, index, setOffset, asyncPriority, blend)
+	--- END OF BLOCK #5 ---
+
+	slot16 = if frame then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 40-43, warpins: 1 ---
+	frames[#frames + 1] = frame
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 44-44, warpins: 0 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 45-45, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #9 46-49, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	if 0 < #frames then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 50-65, warpins: 1 ---
+	local animation = cc.Animation:createWithSpriteFrames(frames, delay)
+
+	animation.retain(animation)
+
+	res.caches_animation[key] = {
+		mark = true,
+		ani = animation
+	}
+
+	return animation
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 66-66, warpins: 2 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+res.loadmap = function (mapid)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local map = res.maps[mapid]
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-22, warpins: 1 ---
+	cache.unzipMapFile(mapid)
+
+	local fullpath = cache.getMapFilePath(mapid)
+	map = mir2map:create(fullpath)
+	res.maps[mapid] = map
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 23-23, warpins: 2 ---
+	return map
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.unLoadmap = function (mapid)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(res.maps)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if mapid == k then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-17, warpins: 1 ---
+	mir2map:release(v)
+
+	res.maps[mapid] = nil
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 18-19, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 20-20, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+res.getpack = function (packname)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local pack = res.packs[packname]
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not pack then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-23, warpins: 1 ---
+	print("Create Pack:", packname)
+
+	pack = ycRes:create(1, packname, packname .. ".zip", "")
+	res.packs[packname] = pack
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 24-24, warpins: 2 ---
+	return pack
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.getfile = function (filename, packname)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if def.bLazyLoadConfig then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-27, warpins: 1 ---
+	local dir = device.writablePath .. "config/" .. def.serverId .. "/" .. def.zoneid .. "/"
+	local filePath = dir .. filename
+
+	print("bLazyLoadConfig filePath", filePath)
+
+	local rawData = io.readfile(filePath)
+
+	return rawData
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #2 28-30, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if USE_SOURCE_RES then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 31-37, warpins: 1 ---
+	return ycFunction:getFileData(filename, false)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #4 38-41, warpins: 1 ---
+	slot2 = res.getpack
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not packname then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 42-43, warpins: 1 ---
+	slot3 = res.defaultPackName
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 44-48, warpins: 2 ---
+	return slot2(slot3):getFileData(filename)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 49-49, warpins: 3 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+res.get2_helper = function (filename, x, y, params, packname)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot5 = if not IS_PLAYER_DEBUG then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 8-21, warpins: 1 ---
+	local tex = cc.Director:getInstance():getTextureCache():addImage(filename)
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not tex then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 22-27, warpins: 1 ---
+	tex = res.gettex2(filename, packname)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-35, warpins: 2 ---
+	return display.newSprite(tex, x, y, params)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 36-43, warpins: 2 ---
+	return res.get2(filename, x, y, params, packname)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 44-44, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+res.get2 = function (filename, x, y, params, packname)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	return display.newSprite(res.gettex2(filename, packname), x, y, params)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+res.gettex2 = function (filename, packname)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if USE_SOURCE_RES then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if packname then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if packname == res.defaultPackName then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-21, warpins: 2 ---
+	return cc.Director:getInstance():getTextureCache():addImage(filename)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-23, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if not packname then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-25, warpins: 1 ---
+	packname = res.defaultPackName
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 26-35, warpins: 2 ---
+	local key = res.tex2Key(filename, packname)
+	local info = res.caches_tex2[key]
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not info then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 36-45, warpins: 1 ---
+	local tex = res.getpack(packname):getTexWithFilename(filename)
+	--- END OF BLOCK #7 ---
+
+	slot4 = if tex then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 46-51, warpins: 1 ---
+	info = {
+		tex = tex,
+		packname = packname,
+		filename = filename
+	}
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 52-57, warpins: 1 ---
+	info = {
+		err = true,
+		tex = res.default2()
+	}
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 58-60, warpins: 2 ---
+	res.caches_tex2[key] = info
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 61-63, warpins: 2 ---
+	return info.tex, info.err
+	--- END OF BLOCK #11 ---
+
+
+
+end
+res.getframe2 = function (filename, packname)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local tex = res.gettex2(filename, packname)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if tex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-26, warpins: 1 ---
+	return cc.SpriteFrame:createWithTexture(tex, cc.rect(0, 0, tex.getContentSize(tex).width, tex.getContentSize(tex).height))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-27, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+res.getani2 = function (filenameformat, beginidx, endidx, delay)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local key = res.animationKey(filenameformat, beginidx, endidx, delay, setOffset)
+	local animationInfo = res.caches_animation[key]
+	--- END OF BLOCK #0 ---
+
+	slot5 = if animationInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 14-17, warpins: 1 ---
+	animationInfo.mark = true
+
+	return animationInfo.ani
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-22, warpins: 2 ---
+	local frames = {}
+	--- END OF BLOCK #2 ---
+
+	for i=beginidx, endidx, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 23-53, warpins: 2 ---
+	local tex = res.gettex2(string.format(filenameformat, i))
+	local frame = cc.SpriteFrame:createWithTexture(tex, cc.rect(0, 0, tex.getContentSize(tex).width, tex.getContentSize(tex).height))
+	frames[#frames + 1] = frame
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 54-57, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if 0 < #frames then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 58-73, warpins: 1 ---
+	local animation = cc.Animation:createWithSpriteFrames(frames, delay)
+
+	animation.retain(animation)
+
+	res.caches_animation[key] = {
+		mark = true,
+		ani = animation
+	}
+
+	return animation
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 74-74, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+res.getFilter = function (key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local f = res.caches_filters[key]
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if f then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return f
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-8, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if key == "gray" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-16, warpins: 1 ---
+	local params = {
+		0.2,
+		0.3,
+		0.5,
+		0.1
+	}
+	f = filter.newFilter("GRAY", params)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #4 17-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if key == "outline_skill" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-31, warpins: 1 ---
+	local params = {
+		shaderName = "outline_skill",
+		u_threshold = 0.75,
+		u_radius = 0.02,
+		frag = "public/tex_outline.fsh"
+	}
+	params.u_outlineColor = {
+		1,
+		0,
+		1
+	}
+	f = filter.newFilter("CUSTOM", json.encode(params))
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #6 32-33, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if key == "outline_role" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 34-46, warpins: 1 ---
+	local params = {
+		shaderName = "outline_role",
+		u_threshold = 0.75,
+		u_radius = 0.01,
+		frag = "public/tex_outline.fsh"
+	}
+	params.u_outlineColor = {
+		1,
+		0.2,
+		0.2
+	}
+	f = filter.newFilter("CUSTOM", json.encode(params))
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 47-48, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if key == "high_light" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 49-58, warpins: 1 ---
+	local params = {
+		shaderName = "high_light",
+		frag = "public/tex_hightlight.fsh"
+	}
+	f = filter.newFilter("CUSTOM", json.encode(params))
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 59-65, warpins: 5 ---
+	f.retain(f)
+
+	res.caches_filters[key] = f
+
+	return f
+	--- END OF BLOCK #10 ---
+
+
+
+end
+
+return res
+--- END OF BLOCK #0 ---
+
+
+

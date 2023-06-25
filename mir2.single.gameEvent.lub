@@ -1,0 +1,12 @@
+--- BLOCK #0 1-16, warpins: 1 ---
+local gameEvent = {}
+
+cc.GameObject.extend(gameEvent):addComponent("components.behavior.EventProtocol"):exportMethods()
+
+gameEvent.skillHotKey = "skill_hot_key"
+
+return gameEvent
+--- END OF BLOCK #0 ---
+
+
+
