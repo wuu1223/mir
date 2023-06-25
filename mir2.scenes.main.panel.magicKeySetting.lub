@@ -1,0 +1,121 @@
+--- BLOCK #0 1-11, warpins: 1 ---
+local common = import("..common.common")
+local magicKeySetting = class("magicKeySetting", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+magicKeySetting.ctor = function (self, params)
+	--- BLOCK #0 1-95, warpins: 1 ---
+	local bg = res.get2("pic/common/black_3.png"):addTo(self):anchor(0, 0)
+
+	self.size(self, bg.getContentSize(bg)):anchor(0.5, 0.5):center()
+	res.get2("pic/panels/mail/title.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 10):anchor(0.5, 1)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):addTo(bg):pos(bg.getw(bg) - 5, bg.geth(bg) - 9):anchor(1, 1)
+
+	--- END OF BLOCK #0 ---
+
+	for i=1, 2, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #1 96-99, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	for j=1, 8, 1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #2 100-102, warpins: 2 ---
+	local strKey = ""
+	--- END OF BLOCK #2 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 103-106, warpins: 1 ---
+	strKey = "F" .. j
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 107-110, warpins: 1 ---
+	strKey = "F" .. j .. "\nCtrl"
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 111-164, warpins: 2 ---
+	local button = an.newBtn(res.gettex2("pic/common/btn101.png"), function (owner)
+		--- BLOCK #0 1-26, warpins: 1 ---
+		sound.playSound("103")
+		g_data.hotKey:setMagicHotKey((i - 1)*12 + 5 + j, params.magicId)
+		gameEvent:dispatchEvent({
+			name = gameEvent.skillHotKey
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		label = {
+			strKey,
+			18,
+			1,
+			{
+				color = cc.c3b(255, 255, 0)
+			}
+		}
+	}):pos((j - 1)*39*1.2 + 60, bg.geth(bg) - ((i - 1)*41*1.5 + 80)):anchor(0.5, 0.5):add2(self)
+	button.index = (i - 1)*12 + j
+	button.keyId = button.index + 5
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 165-166, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 167-168, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+
+return magicKeySetting
+--- END OF BLOCK #0 ---
+
+
+

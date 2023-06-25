@@ -1,0 +1,581 @@
+--- BLOCK #0 1-49, warpins: 1 ---
+local textInfo = import("..common.textInfo")
+local heroHead = class("heroHead", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(heroHead, {})
+
+local poses = {}
+poses.openMap = {
+	x = display.width - 160,
+	y = display.height - 21
+}
+poses.hideMap = {
+	x = display.width - 40,
+	y = display.height - 21
+}
+heroHead.resetPanelPosition = function (self, key)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	self.pos(self, poses[key].x, poses[key].y):anchor(1, 1)
+
+	return self
+	--- END OF BLOCK #0 ---
+
+
+
+end
+heroHead.isInPos = function (self, key)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.getPositionX(self)
+	 == poses[key].x then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.getPositionY(self)
+
+	 ~= poses[key].y then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-18, warpins: 2 ---
+	slot2 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 19-19, warpins: 1 ---
+	slot2 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-20, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #4 ---
+
+
+
+end
+heroHead.ctor = function (self)
+	--- BLOCK #0 1-45, warpins: 1 ---
+	self._supportMove = true
+	local node = display.newNode():addTo(self, 1)
+	local bg = res.get2("pic/console/head-icons/head_info.png"):addTo(node):pos(0, 0):anchor(0, 0)
+
+	self.size(self, bg.getw(bg), bg.geth(bg))
+
+	slot4 = self
+	slot3 = self.resetPanelPosition
+	--- END OF BLOCK #0 ---
+
+	slot5 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 46-47, warpins: 1 ---
+	slot5 = "openMap"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 48-48, warpins: 1 ---
+	slot5 = "hideMap"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 49-123, warpins: 2 ---
+	slot3(slot4, slot5)
+	node.size(node, bg.getw(bg), bg.geth(bg))
+
+	self.name = an.newLabel("", 18, 1):addTo(node):pos(137, 69):anchor(0.5, 0.5)
+	self.lv = an.newLabel("", 14, 1):addTo(node):pos(14, 14):anchor(0.5, 0.5)
+	self.prog = {}
+	local config = {}
+	config[1] = {
+		posY = 46,
+		key = "HP",
+		pic = "head_HP",
+		posX = 74,
+		text = {
+			posY = 52,
+			posX = 140
+		}
+	}
+	config[2] = {
+		posY = 30,
+		key = "MP",
+		pic = "head_MP",
+		posX = 80,
+		text = {
+			posY = 35,
+			posX = 140
+		}
+	}
+	config[3] = {
+		posY = 14,
+		key = "EXP",
+		pic = "head_Exp",
+		posX = 71,
+		text = {
+			posY = 20,
+			posX = 140
+		}
+	}
+	config[4] = {
+		posY = 5,
+		key = "DRINK",
+		pic = "head_drink",
+		posX = 48,
+		text = {
+			posY = 0,
+			posX = 0
+		}
+	}
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(config)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 124-147, warpins: 1 ---
+	self.prog[v.key] = res.get2("pic/console/head-icons/" .. v.pic .. ".png"):addTo(node):pos(v.posX, v.posY):anchor(0, 0)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 148-149, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 150-153, warpins: 1 ---
+	self.upt(self)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+heroHead.putItem = function (self, item, x, y)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if item.formPanel.__cname == "heroBag" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-10, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not g_data.client.heroPutInItem then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 11-17, warpins: 1 ---
+	local data = item.data
+
+	--- END OF BLOCK #3 ---
+
+	slot5 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 18-28, warpins: 1 ---
+	main_scene.ui.panels.bag:delItem(data.get(data, "makeIndex"))
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 29-59, warpins: 2 ---
+	g_data.bag:delItem(data.get(data, "makeIndex"))
+	g_data.client:setHeroPutInItem(data)
+
+	local makeIndex = data.get(data, "makeIndex")
+
+	net.send({
+		CM_HERO_TOHEROBAG,
+		recog = makeIndex
+	}, {
+		data.getVar("name")
+	})
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 60-60, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+heroHead.setPercent = function (self, key, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local p = 0
+	--- END OF BLOCK #0 ---
+
+	slot4 = if params.cur then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if params.max then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not (params.cur/params.max) then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	p = p
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-15, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	if 1 < p then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 16-17, warpins: 1 ---
+	p = 1
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #6 18-20, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if p < 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 21-22, warpins: 1 ---
+	p = 0
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #8 23-25, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot4 = if self.prog then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #9 26-29, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot4 = if self.prog[key] then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 30-49, warpins: 1 ---
+	local w = self.prog[key]:getTexture():getContentSize().width
+	local h = self.prog[key]:getTexture():getContentSize().height
+
+	--- END OF BLOCK #10 ---
+
+	if key == "DRINK" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 50-63, warpins: 1 ---
+	self.prog[key]:setTextureRect(cc.rect(0, h*(p - 1), w, h*p))
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 64-75, warpins: 1 ---
+	self.prog[key]:setTextureRect(cc.rect(0, 0, w*p, h))
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 76-76, warpins: 4 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+heroHead.showHeroInfo = function (self)
+	--- BLOCK #0 1-109, warpins: 1 ---
+	local labels = {}
+
+	local function addLabel(str)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		labels[#labels + 1] = an.newLabel(str, 15, 1)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	addLabel("体力值: " .. g_data.hero.ability:get("HP") .. "/" .. g_data.hero.ability:get("maxHP"))
+	addLabel("魔法值: " .. g_data.hero.ability:get("MP") .. "/" .. g_data.hero.ability:get("maxMP"))
+	addLabel("经验值: " .. string.format("%.2f%%", g_data.hero.ability:get("Exp")/g_data.hero.ability:get("maxExp")*100))
+	addLabel("忠诚度: " .. string.format("%.2f%%", g_data.hero.fealty/100))
+	addLabel("醉酒度: " .. string.format("%d%%", g_data.hero.drinkStatusValue/g_data.hero.drinkStatusMaxValue*100))
+
+	self.heroInfo = textInfo.show(labels, cc.p(self.getPositionX(self), self.getPositionY(self) + 3))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+heroHead.upt = function (self)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	self.name:setString(g_data.hero.name)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.headshot then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 11-15, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if g_data.hero.sex then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 16-20, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if g_data.hero.job then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-69, warpins: 1 ---
+	local img = string.format("pic/console/head-icons/%d_%d.png", g_data.hero.sex, g_data.hero.job)
+	self.headshot = display.newSprite(res.gettex2(img), nil, nil, {
+		class = cc.FilteredSpriteWithOne
+	}):addTo(self):pos(45, 40):anchor(0.5, 0.5)
+
+	self.headshot:setTouchEnabled(true)
+	self.headshot:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-23, warpins: 1 ---
+		self.isMoved = false
+		self.initPos = cc.p(self:getPosition())
+		self.touchPos = cc.p(event.x, event.y)
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #2 24-26, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 27-52, warpins: 1 ---
+		self.isMoved = true
+
+		self:pos((self.initPos.x + event.x) - self.touchPos.x, (self.initPos.y + event.y) - self.touchPos.y)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #4 53-55, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #5 56-59, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot1 = if not self.isMoved then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 60-63, warpins: 1 ---
+		self:showHeroInfo()
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 64-66, warpins: 2 ---
+		self.isMoved = false
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 67-68, warpins: 4 ---
+		return true
+		--- END OF BLOCK #8 ---
+
+
+
+	end)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 70-160, warpins: 4 ---
+	self.lv:setString(g_data.hero.ability:get("level") .. "")
+	self.setPercent(self, "HP", {
+		cur = g_data.hero.ability:get("HP"),
+		max = g_data.hero.ability:get("maxHP")
+	})
+	self.setPercent(self, "MP", {
+		cur = g_data.hero.ability:get("MP"),
+		max = g_data.hero.ability:get("maxMP")
+	})
+	self.setPercent(self, "EXP", {
+		cur = g_data.hero.ability:get("Exp"),
+		max = g_data.hero.ability:get("maxExp")
+	})
+	self.setPercent(self, "DRINK", {
+		cur = g_data.hero.drinkStatusValue,
+		max = g_data.hero.drinkStatusMaxValue
+	})
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return heroHead
+--- END OF BLOCK #0 ---
+
+
+

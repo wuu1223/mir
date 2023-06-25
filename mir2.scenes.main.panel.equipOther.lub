@@ -1,0 +1,1029 @@
+--- BLOCK #0 1-26, warpins: 1 ---
+local scale = 1.3
+local item = import("..common.item")
+local titleTips = import("..common.titleInfo")
+local equipOther = class("equipOther", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(equipOther, {})
+
+equipOther.ctor = function (self, userInfo)
+	--- BLOCK #0 1-197, warpins: 1 ---
+	local bg = res.get2("pic/panels/equip/bg.png"):anchor(0, 0):addto(self)
+	self.bg = bg
+
+	self.anchor(self, 1, 1):pos(display.width - 60, display.height - 16):size(cc.size(bg.getContentSize(bg).width, bg.getContentSize(bg).height))
+
+	self._scale = 1
+	self._supportMove = true
+
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(self.getw(self), self.geth(self) - 48):addto(self, 1)
+	an.newLabel(userInfo.get(userInfo, "userName"), 22, 1, {
+		color = def.colors.get(userInfo.get(userInfo, "nameColorIndex"))
+	}):anchor(0.5, 0.5):pos(self.getw(self)/2, self.geth(self) - 34):addto(self)
+
+	self.guildLabel = an.newLabel("", 22, 1, {
+		color = cc.c3b(191, 173, 126)
+	}):anchor(0.5, 0.5):addto(self):pos(self.getw(self)*0.5, 395)
+	self.clanLabel = an.newLabel("", 20, 1, {
+		color = cc.c3b(191, 173, 126)
+	}):anchor(0.5, 0.5):addto(self):pos(self.getw(self)*0.5, 360)
+	local texts = {
+		"equip"
+	}
+	local titleInfo = {
+		"装\n备"
+	}
+	local tabs = {}
+
+	local function click(btn)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(tabs)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v == btn then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-28, warpins: 1 ---
+		v.select(v)
+		v.setLocalZOrder(v, 5)
+		v.label:setColor(cc.c3b(232, 204, 216))
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 29-45, warpins: 1 ---
+		v.setLocalZOrder(v, i - 5)
+		v.unselect(v)
+		v.label:setColor(cc.c3b(166, 161, 151))
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 46-47, warpins: 3 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 48-52, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if btn.page ~= self.page then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 53-58, warpins: 1 ---
+		self:showContent(userInfo, btn.page)
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 59-59, warpins: 2 ---
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(texts)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 198-280, warpins: 1 ---
+	tabs[i] = an.newBtn(res.gettex2("pic/common/btn130.png"), function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		label = {
+			titleInfo[i],
+			24,
+			1,
+			cc.c3b(166, 161, 151)
+		},
+		labelOffset = {
+			x = 2,
+			y = 12
+		},
+		select = {
+			res.gettex2("pic/common/btn131.png"),
+			manual = true
+		}
+	}):add2(self, i - 5):anchor(1, 1):pos(8, (i - 1)*86 - 402)
+
+	tabs[i]:setTouchEnabled(false)
+	display.newNode():size(tabs[i]:getw(), tabs[i]:geth() - 30):pos(0, 30):add2(tabs[i]):enableClick(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		click(tabs[i])
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	tabs[i].page = v
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 281-282, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 283-287, warpins: 1 ---
+	click(tabs[1])
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+equipOther.showContent = function (self, userInfo, page)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-17, warpins: 2 ---
+	self.content = display.newNode():addto(self)
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not page then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-18, warpins: 1 ---
+	page = "equip"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-31, warpins: 2 ---
+	self.page = page
+
+	self.guildLabel:setString("")
+	self.clanLabel:setString("")
+	--- END OF BLOCK #4 ---
+
+	if page == "equip" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #5 32-50, warpins: 1 ---
+	self.content:setScale(1.2)
+
+	self.disY = 0
+	local tmpsex = Hibyte(Hiword(userInfo.get(userInfo, "feature")))
+	--- END OF BLOCK #5 ---
+
+	if def.gameVersionType == "176" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 51-55, warpins: 1 ---
+	self.disY = -26
+	--- END OF BLOCK #6 ---
+
+	if sex == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 56-57, warpins: 1 ---
+	slot4 = "pic/panels/equip/equip176_0.png"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 58-58, warpins: 1 ---
+	local bghead = "pic/panels/equip/equip176_1.png"
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 59-67, warpins: 2 ---
+	self.bg:setTex(res.gettex2(bghead))
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #10 68-73, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if userInfo.get(userInfo, "clanName")
+
+	 == " 的英雄" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 74-75, warpins: 1 ---
+	slot4 = "_0.png"
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 76-76, warpins: 1 ---
+	local bgend = ".png"
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 77-79, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	if tmpsex%2 == 0 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 80-81, warpins: 1 ---
+	slot5 = "pic/panels/equip/sex0"
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 82-82, warpins: 1 ---
+	local bghead = "pic/panels/equip/sex1"
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 83-92, warpins: 2 ---
+	self.bg:setTex(res.gettex2(bghead .. bgend))
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 93-110, warpins: 2 ---
+	local hairID = Lobyte(Hiword(userInfo.get(userInfo, "feature")))
+	hairID = ycFunction:band(hairID, 15)
+
+	--- END OF BLOCK #17 ---
+
+	if 0 < hairID then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 111-129, warpins: 1 ---
+	res.getui(1, hairID + 440):add2(self.content):anchor(0.5, 1):pos(139, 240)
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 130-139, warpins: 2 ---
+	self.items = {}
+	local tmpDisY = 0
+
+	--- END OF BLOCK #19 ---
+
+	for i, v in ipairs(userInfo.get(userInfo, "userItems"))
+
+	LOOP BLOCK #20
+	GO OUT TO BLOCK #29
+
+
+	--- BLOCK #20 140-145, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	if v.get(v, "Index")
+
+	 ~= 0 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #21 146-148, warpins: 1 ---
+	tmpDisY = 0
+	--- END OF BLOCK #21 ---
+
+	if i ~= 3 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #22 149-150, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if i ~= 4 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #23 151-153, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	if 6 <= i then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #24 154-156, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if i <= 9 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 157-157, warpins: 3 ---
+	tmpDisY = self.disY
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 158-184, warpins: 3 ---
+	local x, y, z, isSetOffset, attach = self.idx2pos(self, i - 1)
+	self.items[i] = item.new(v, self, {
+		mute = true,
+		img = "stateitem",
+		donotMove = true,
+		isSetOffset = isSetOffset,
+		idx = k
+	}):addto(self.content, z):pos(x, y + tmpDisY)
+	--- END OF BLOCK #26 ---
+
+	slot15 = if attach then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 185-206, warpins: 1 ---
+	self.items[i .. "_attach"] = item.new(v, self, {
+		donotMove = true,
+		idx = i
+	}):addto(self.content, attach[3]):pos(attach[1], attach[2])
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 207-208, warpins: 4 ---
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #29 209-214, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if userInfo.get(userInfo, "clanName")
+	 == " 的英雄" then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #30 215-218, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot6 = if self.items[14] then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #31 219-222, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	slot6 = if self.items[5] then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 223-227, warpins: 1 ---
+	self.items[5]:hide()
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 228-261, warpins: 3 ---
+	an.newLabel(userInfo.get(userInfo, "guildName") .. userInfo.get(userInfo, "clanName"), 16, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):addto(self.content):pos(150, 368)
+
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #60
+
+
+	--- BLOCK #34 262-271, warpins: 1 ---
+	local info = ""
+
+	--- END OF BLOCK #34 ---
+
+	if net.str(userInfo.get(userInfo, "guildName"))
+	 == "" then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #35 272-280, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	if net.str(userInfo.get(userInfo, "clanName"))
+	 == "" then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 281-291, warpins: 1 ---
+	self.guildLabel:setString(info)
+	self.clanLabel:setString(info)
+
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #60
+
+
+	--- BLOCK #37 292-312, warpins: 2 ---
+	info = userInfo.get(userInfo, "guildName")
+
+	self.guildLabel:setString(info)
+
+	info = userInfo.get(userInfo, "clanName")
+
+	self.clanLabel:setString(info)
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #60
+
+
+	--- BLOCK #38 313-314, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	if page == "title" then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #60
+	end
+
+
+	--- BLOCK #39 315-340, warpins: 1 ---
+	res.get2("pic/panels/equip/title.png"):anchor(0.5, 0):pos(self.getw(self)*0.5, 42):add2(self.content)
+
+	local titleInfo = g_data.player.titleInfo
+
+	--- END OF BLOCK #39 ---
+
+	slot3 = if titleInfo then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 341-343, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	if #titleInfo == 0 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 344-344, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 345-356, warpins: 1 ---
+	local hero = main_scene.ground.map:findHeroWithName(userInfo.get(userInfo, "userName"))
+
+	--- END OF BLOCK #42 ---
+
+	slot4 = if hero then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 357-359, warpins: 1 ---
+	--- END OF BLOCK #43 ---
+
+	slot5 = if not hero.roleid then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 360-360, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 361-387, warpins: 1 ---
+	local tmpRoleID = hero.roleid
+	local curbg = res.get2("pic/panels/equip/titlebg0.png"):anchor(0.5, 0):pos(self.getw(self)*0.5, 290):add2(self.content)
+	local curTitleList = {}
+
+	--- END OF BLOCK #45 ---
+
+	for i, v in ipairs(titleInfo)
+
+
+	LOOP BLOCK #46
+	GO OUT TO BLOCK #49
+
+
+	--- BLOCK #46 388-390, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if v.ActorID == tmpRoleID then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 391-392, warpins: 1 ---
+	curTitleList = v
+
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #48 393-394, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #49 395-397, warpins: 2 ---
+	--- END OF BLOCK #49 ---
+
+	slot8 = if not curTitleList.data then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #50 398-398, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 399-431, warpins: 1 ---
+	an.newLabel("封号列表", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):addto(self.content):pos(self.getw(self)*0.5, 270)
+
+	local curSetTitle = nil
+	slot9 = ipairs
+	--- END OF BLOCK #51 ---
+
+	slot10 = if not curTitleList.data then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #52 432-432, warpins: 1 ---
+	slot10 = {}
+
+	--- END OF BLOCK #52 ---
+
+	FLOW; TARGET BLOCK #53
+
+
+	--- BLOCK #53 433-434, warpins: 2 ---
+	--- END OF BLOCK #53 ---
+
+	for i, v in slot9(slot10)
+
+	LOOP BLOCK #54
+	GO OUT TO BLOCK #58
+
+
+	--- BLOCK #54 435-441, warpins: 1 ---
+	--- END OF BLOCK #54 ---
+
+	if v.get(v, "ID")
+
+	 == curTitleList.curTitleID then
+	JUMP TO BLOCK #55
+	else
+	JUMP TO BLOCK #56
+	end
+
+
+	--- BLOCK #55 442-530, warpins: 1 ---
+	local btn = nil
+	btn = an.newBtn(res.gettex("ui1", v.get(v, "Look")), function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		select = {
+			res.gettex("ui1", v.get(v, "Look") + 1)
+		}
+	}):anchor(0.5, 0.5):pos(38, curbg.geth(curbg)*0.55):add2(curbg)
+
+	btn.setTouchEnabled(btn, false)
+	an.newLabel(v.get(v, "TitleName"), 24, 1, {
+		color = cc.c3b(255, 255, 0)
+	}):anchor(0.5, 0.5):addto(curbg):pos(curbg.getw(curbg)*0.6, curbg.geth(curbg)*0.55):enableClick(function (x, y)
+		--- BLOCK #0 1-11, warpins: 1 ---
+		titleTips.show(v, cc.p(x, y), {
+			noshow = true
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #55 ---
+
+	FLOW; TARGET BLOCK #56
+
+
+	--- BLOCK #56 531-531, warpins: 2 ---
+	--- END OF BLOCK #56 ---
+
+	FLOW; TARGET BLOCK #57
+
+
+	--- BLOCK #57 532-533, warpins: 2 ---
+	--- END OF BLOCK #57 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #53
+
+
+	--- BLOCK #58 534-561, warpins: 1 ---
+	local h = 66
+	local scroll = an.newScroll(40, 52, 248, h*3):addto(self.content)
+
+	scroll.setScrollSize(scroll, 248, math.max(h*3, #curTitleList.data*h))
+
+	--- END OF BLOCK #58 ---
+
+	for i=1, #curTitleList.data, 1
+	LOOP BLOCK #59
+	GO OUT TO BLOCK #60
+
+	--- BLOCK #59 562-677, warpins: 2 ---
+	local title = curTitleList.data[i]
+	local bg = res.get2("pic/panels/equip/titlebg0.png"):anchor(0.5, 0):pos(124, scroll.getScrollSize(scroll).height - h*i):add2(scroll)
+	local btn = nil
+	btn = an.newBtn(res.gettex("ui1", title.get(title, "Look")), function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		select = {
+			res.gettex("ui1", title.get(title, "Look") + 1)
+		}
+	}):anchor(0.5, 0.5):pos(38, bg.geth(bg)*0.55):add2(bg)
+
+	btn.setTouchEnabled(btn, false)
+	an.newLabel(title.get(title, "TitleName"), 16, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(0, 0.5):addto(bg):pos(bg.getw(bg)*0.3, bg.geth(bg)*0.34):enableClick(function (x, y)
+		--- BLOCK #0 1-11, warpins: 1 ---
+		titleTips.show(title, cc.p(x, y), {
+			noshow = true
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #59 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #58
+
+
+	--- BLOCK #60 678-678, warpins: 5 ---
+	return 
+	--- END OF BLOCK #60 ---
+
+	FLOW; TARGET BLOCK #61
+
+
+	--- BLOCK #61 679-679, warpins: 2 ---
+	--- END OF BLOCK #61 ---
+
+	FLOW; TARGET BLOCK #62
+
+
+	--- BLOCK #62 680-680, warpins: 2 ---
+	--- END OF BLOCK #62 ---
+
+	FLOW; TARGET BLOCK #63
+
+
+	--- BLOCK #63 681-681, warpins: 2 ---
+	--- END OF BLOCK #63 ---
+
+
+
+end
+equipOther.initPosTable = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.itemPosTable then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-32, warpins: 1 ---
+	slot1 = {
+		[0] = {
+			44,
+			240,
+			0,
+			true,
+			68,
+			10,
+			90,
+			130
+		},
+		{
+			44,
+			240,
+			1,
+			true,
+			15,
+			55,
+			65,
+			155
+		},
+		{
+			226,
+			218,
+			2
+		},
+		{
+			226,
+			280,
+			2
+		},
+		{
+			44,
+			242,
+			2,
+			true,
+			74,
+			140,
+			60,
+			40
+		},
+		{
+			50,
+			162,
+			2
+		},
+		{
+			226,
+			162,
+			2
+		},
+		{
+			50,
+			104,
+			2
+		},
+		{
+			226,
+			104,
+			2
+		},
+		{
+			50,
+			44,
+			2
+		},
+		{
+			107,
+			44,
+			2
+		},
+		{
+			165,
+			44,
+			2
+		},
+		{
+			226,
+			44,
+			2
+		},
+		{
+			44,
+			242,
+			2,
+			true,
+			74,
+			140,
+			60,
+			40
+		}
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 33-34, warpins: 2 ---
+	self.itemPosTable = slot1
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+equipOther.idx2pos = function (self, idx)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	self.initPosTable(self)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.itemPosTable[tonumber(idx)
+
+	] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-11, warpins: 1 ---
+	local pos = {
+		0,
+		0,
+		0,
+		0
+	}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-17, warpins: 2 ---
+	return pos[1], pos[2], pos[3], pos[4], pos.attach
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return equipOther
+--- END OF BLOCK #0 ---
+
+
+

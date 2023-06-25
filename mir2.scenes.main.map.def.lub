@@ -1,0 +1,130 @@
+--- BLOCK #0 1-102, warpins: 1 ---
+local def = {}
+def.loadOutsideAreaBottom = 15
+def.loadOutsideArea = 1
+def.loadNum = 500
+def.tile = {
+	w = 48,
+	h = 32
+}
+def.topTag = 7000000
+def.ET_DIGOUTZOMBI = 1
+def.ET_PILESTONES = 3
+def.ET_HOLYCURTAIN = 4
+def.ET_FIRE = 5
+def.ET_SCULPEICE = 6
+def.ET_DIGINZOMBI = 7
+def.ET_CAKEFIRE = 8
+def.ET_MAGICDOOR = 9
+def.ET_SPRING = 14
+def.ET_FIREDRAGONSTATUARY = 15
+def.ET_FIREDRAG = 16
+def.ET_MAGICGATE = 17
+def.ET_ICESEAT = 18
+def.ET_GetEXP = 19
+def.ET_RELEASE_FIRE = 20
+def.ET_BTFIRE = 21
+def.ET_FootBallEvent = 22
+def.ET_YanHuaTextEvent = 23
+def.ET_YanChenEvent = 25
+def.ET_Flood = 24
+def.ET_Iceberg = 27
+def.ET_DAMAGETRAP = 28
+def.ET_CACHOT = 29
+def.ET_BIRTHDAY_FIRE = 30
+def.ET_SWMY = 31
+def.ET_SWMY_PLUS = 32
+def.ET_revIceberg = 33
+def.ET_WORLDBOSS = 34
+def.ET_FIVE_EARTH_ELEMENT = 36
+def.ET_ASS_BZXJ = 37
+def.ET_ASS_BZXJ_PLUS = 38
+def.ET_TBDL_FIRE = 39
+def.ET_MIRMATCH_RANDBUFF = 40
+def.ET_INTENTLY = 78
+def.ET_SOULMATE = 79
+def.ET_FLYINGFIREBALL = 80
+def.ET_ROMANTICSTARRAIN = 81
+def.ET_SWEETDREAMS = 82
+def.ET_DANCEOFTHESKY = 83
+def.ET_SUCHASFOGDREAM = 84
+def.CAKEFIREBASE = 320
+def.ET_STALL_EVENT = 41
+
+scheduler.performWithDelayGlobal(function ()
+	--- BLOCK #0 1-14, warpins: 1 ---
+	local cfg = res.getfile("config/doorPoint.txt")
+	local doorPoint = {}
+	local datas = string.split(cfg, "\n")
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(datas)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 15-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v ~= "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 17-25, warpins: 1 ---
+	local data = string.split(v, ",")
+	local id = data[1]
+	--- END OF BLOCK #2 ---
+
+	slot10 = if not doorPoint[id] then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-26, warpins: 1 ---
+	slot10 = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 27-43, warpins: 2 ---
+	doorPoint[id] = slot10
+	doorPoint[id][#doorPoint[id] + 1] = {
+		x = tonumber(data[2]),
+		y = tonumber(data[3]),
+		terminal = data[4]
+	}
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 44-45, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 46-48, warpins: 1 ---
+	def.doorPoint = doorPoint
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end, 0)
+
+return def
+--- END OF BLOCK #0 ---
+
+
+

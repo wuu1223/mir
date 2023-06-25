@@ -1,0 +1,3375 @@
+--- BLOCK #0 1-257, warpins: 1 ---
+local controlHeight = 110
+local common = import("..common.common")
+local bigmap = class("bigmap", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(bigmap, {
+	texSize,
+	mapid,
+	mapFile,
+	mapw,
+	maph,
+	point,
+	group,
+	bgSprs,
+	borderSpr,
+	mapScale,
+	mapNode,
+	mapSpr,
+	title,
+	titleLabel,
+	worldMapScale,
+	worldMapNode,
+	worldMapSpr,
+	worldMode,
+	findPathNode,
+	findPathPoint,
+	dest,
+	destPoint,
+	inputx,
+	inputy,
+	likeSpr,
+	tabs,
+	quickNode,
+	npcScroll,
+	handler
+})
+
+local minh = 350
+local config = {}
+config.0 = {
+	title = "比奇省",
+	res = "biqi",
+	x = 566,
+	y = 397,
+	spriteOffset = cc.p(0, -40),
+	worldpos = cc.p(-563, 1077),
+	signpos = {
+		x = 570,
+		y = 465
+	}
+}
+config.1 = {
+	title = "沃玛森林",
+	res = "woma",
+	x = 453,
+	y = 591,
+	spriteOffset = cc.p(8, 0),
+	worldpos = cc.p(-448, 856),
+	signpos = {
+		x = 472,
+		y = 647
+	}
+}
+config.2 = {
+	title = "毒蛇山谷",
+	res = "dushe",
+	x = 766,
+	y = 463,
+	spriteOffset = cc.p(-40, 50),
+	worldpos = cc.p(-727, 942),
+	signpos = {
+		x = 730,
+		y = 555
+	}
+}
+config.3 = {
+	title = "盟重省",
+	res = "mengzhong",
+	x = 827,
+	y = 576,
+	spriteOffset = cc.p(-65, 118),
+	worldpos = cc.p(-775, 825),
+	signpos = {
+		x = 764,
+		y = 735
+	}
+}
+config.4 = {
+	title = "封魔谷",
+	res = "fengmo",
+	x = 274,
+	y = 692,
+	spriteOffset = cc.p(0, -20),
+	worldpos = cc.p(-268, 783),
+	signpos = {
+		x = 270,
+		y = 737
+	}
+}
+config.5 = {
+	title = "苍月岛",
+	res = "cangyue",
+	x = 442,
+	y = 1015,
+	spriteOffset = cc.p(0, -30),
+	worldpos = cc.p(-444, 464),
+	signpos = {
+		x = 445,
+		y = 1025
+	}
+}
+config.6 = {
+	title = "魔龙城",
+	res = "molong",
+	x = 1096,
+	y = 435,
+	spriteOffset = cc.p(10, -32),
+	worldpos = cc.p(-1104, 1033),
+	signpos = {
+		x = 1105,
+		y = 485
+	}
+}
+config.11 = {
+	title = "白日门",
+	res = "bairi",
+	x = 403,
+	y = 779,
+	spriteOffset = cc.p(20, -25),
+	worldpos = cc.p(-417, 694),
+	signpos = {
+		x = 415,
+		y = 825
+	}
+}
+config.SLDG = {
+	title = "边界城",
+	res = "bianjie",
+	x = 650,
+	y = 182,
+	spriteOffset = cc.p(0, -30),
+	worldpos = cc.p(-646, 1259),
+	signpos = {
+		x = 645,
+		y = 280
+	}
+}
+bigmap.ctor = function (self, tex)
+	--- BLOCK #0 1-298, warpins: 1 ---
+	self._supportMove = true
+
+	self.setNodeEventEnabled(self, true)
+
+	self.onCleanup = function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self:unloadMapFile()
+		self:unscheduleHandle()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	local b1 = res.get2("pic/panels/bigmap/bg1.png"):anchor(0, 1):addTo(self, -1)
+	local b2 = res.get2("pic/panels/bigmap/bg2.png"):anchor(0, 0):addTo(self, -1)
+	local b3 = res.get2("pic/panels/bigmap/bg3.png"):anchor(0, 0):addTo(self, -1)
+	self.bgSprs = {
+		b1,
+		b2,
+		b3
+	}
+
+	res.get2("pic/panels/bigmap/map.png"):addTo(b1):pos(b1.getw(b1)/2, b1.geth(b1)/2 + 12):anchor(0.5, 0.5)
+
+	local sprs = {
+		"pic/panels/bigmap/tab_world.png",
+		"pic/panels/bigmap/tab_local.png"
+	}
+	self.tabs = common.tabs(b1, {
+		ox = 3,
+		oy = 10,
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-7, warpins: 1 ---
+		self:change2WorldMap()
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #2 8-9, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-13, warpins: 1 ---
+		self:change2LocalMap()
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 14-14, warpins: 3 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		tabTp = 1,
+		pos = {
+			offset = 70,
+			x = 1,
+			y = b1.geth(b1) - 82,
+			anchor = cc.p(1, 0.5)
+		},
+		default = {
+			var = 2,
+			manual = true
+		}
+	})
+	self.controlNode = display.newNode():addTo(b3):pos(0, 0)
+
+	an.newLabel("X:", 20, 1, {
+		color = cc.c3b(255, 255, 0)
+	}):anchor(0, 0.5):pos(27, b3.geth(b3)/2 - 2):addTo(self.controlNode)
+
+	self.inputx = an.newInput(52, b3.geth(b3)/2 - 7, 86, 32, 4, {
+		label = {
+			"",
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not tonumber(self.inputx:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-10, warpins: 1 ---
+			local num = 0
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-17, warpins: 2 ---
+			local w, h = self:mapSize()
+			--- END OF BLOCK #2 ---
+
+			if num < 0 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 18-19, warpins: 1 ---
+			num = 0
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #4 20-21, warpins: 2 ---
+			--- END OF BLOCK #4 ---
+
+			if w < num then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #5 22-23, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			slot0 = if not w then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 23-23, warpins: 1 ---
+			num = num
+
+			--- END OF BLOCK #6 ---
+
+			FLOW; TARGET BLOCK #7
+
+
+			--- BLOCK #7 24-29, warpins: 3 ---
+			self:setDestPoint(num)
+
+			return 
+			--- END OF BLOCK #7 ---
+
+
+
+		end
+	}):addTo(self.controlNode):anchor(0, 0.5)
+
+	an.newLabel("Y:", 20, 1, {
+		color = cc.c3b(255, 255, 0)
+	}):anchor(0, 0.5):pos(140, b3.geth(b3)/2 - 2):addTo(self.controlNode)
+
+	self.inputy = an.newInput(165, b3.geth(b3)/2 - 7, 86, 32, 4, {
+		label = {
+			"",
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not tonumber(self.inputy:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-10, warpins: 1 ---
+			local num = 0
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-17, warpins: 2 ---
+			local w, h = self:mapSize()
+			--- END OF BLOCK #2 ---
+
+			if num < 0 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 18-19, warpins: 1 ---
+			num = 0
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #4 20-21, warpins: 2 ---
+			--- END OF BLOCK #4 ---
+
+			if h < num then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #5 22-23, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			slot0 = if not h then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 23-23, warpins: 1 ---
+			num = num
+
+			--- END OF BLOCK #6 ---
+
+			FLOW; TARGET BLOCK #7
+
+
+			--- BLOCK #7 24-30, warpins: 3 ---
+			self:setDestPoint(nil, num)
+
+			return 
+			--- END OF BLOCK #7 ---
+
+
+
+		end
+	}):addTo(self.controlNode):anchor(0, 0.5)
+	self.likeSpr = res.get2("pic/panels/bigmap/start_n.png"):enableClick(function (x, y)
+		--- BLOCK #0 1-19, warpins: 1 ---
+		sound.playSound("103")
+
+		local x = tonumber(self.inputx:getText())
+		local y = tonumber(self.inputy:getText())
+
+		--- END OF BLOCK #0 ---
+
+		FLOW; TARGET BLOCK #1
+
+
+		--- BLOCK #1 20-21, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot2 = if x then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 22-23, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot3 = if not y then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 24-30, warpins: 2 ---
+		main_scene.ui:tip("无效的坐标！")
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #4 31-39, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot4 = if self:canWalk(x, y)
+		.block then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 40-46, warpins: 1 ---
+		main_scene.ui:tip("目标是无法到达, 收藏失败！")
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #6 47-51, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot4 = if self.likeSpr.state then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 52-72, warpins: 1 ---
+		g_data.bigmap:removeLike(self.mapid, x, y)
+		self:setLikeSprState(false)
+		main_scene.ui:tip("移除收藏坐标成功.")
+
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #8 73-183, warpins: 1 ---
+		local edit = nil
+		local _, bg = common.msgbox("", {
+			okFunc = function ()
+				--- BLOCK #0 1-10, warpins: 1 ---
+				local str = edit:getText()
+
+				--- END OF BLOCK #0 ---
+
+				if string.len(str)
+				 == 0 then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 11-19, warpins: 1 ---
+				main_scene.ui:tip("请输入收藏点的名字！")
+
+				return true
+
+				--- END OF BLOCK #1 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+				--- BLOCK #2 20-40, warpins: 1 ---
+				g_data.bigmap:addLike(self.mapid, str, x, y)
+				self:setLikeSprState(true)
+				main_scene.ui:tip("收藏坐标点成功.")
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 41-41, warpins: 2 ---
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end,
+			title = res.gettex2("pic/panels/bigmap/quick.png")
+		})
+
+		an.newLabel("给收藏的地点加一个名字", 20, 1, {
+			color = def.colors.labelYellow
+		}):addTo(bg):pos(bg.getw(bg)/2, 210):anchor(0.5, 0.5)
+
+		edit = an.newInput(0, 0, 200, 45, 7, {
+			bg = {
+				h = 36,
+				tex = res.gettex2("pic/scale/scale16.png"),
+				offset = {
+					-20,
+					5
+				}
+			}
+		}):addTo(bg):pos(bg.getw(bg)/2 + 20, bg.geth(bg)/2 + 15):anchor(0.5, 0.5)
+
+		an.newLabel("您可以在快捷寻路中找到您收藏的坐标", 16, 1, {
+			color = def.colors.btn20
+		}):addTo(bg):pos(bg.getw(bg)/2, 100):anchor(0.5, 0.5)
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 184-185, warpins: 4 ---
+		return 
+		--- END OF BLOCK #9 ---
+
+
+
+	end):addTo(self.controlNode):pos(260, b3.geth(b3)/2 - 2):anchor(0, 0.5)
+
+	local function autopath()
+		--- BLOCK #0 1-20, warpins: 1 ---
+		sound.playSound("103")
+
+		local x = tonumber(self.inputx:getText())
+		local y = tonumber(self.inputy:getText())
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if x then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 21-22, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not y then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 23-29, warpins: 2 ---
+		main_scene.ui:tip("无效的地图坐标！")
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 30-37, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		if self.mapid == main_scene.ground.map.mapid then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 38-42, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if self.dest.from == "npc" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 43-43, warpins: 1 ---
+		y = y + 1
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 44-52, warpins: 3 ---
+		--- END OF BLOCK #6 ---
+
+		slot2 = if self:canWalk(x, y)
+		.block then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 53-59, warpins: 1 ---
+		main_scene.ui:tip("目标是阻挡, 无法到达！")
+
+		return 
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 60-72, warpins: 2 ---
+		main_scene.ui.console.controller.autoFindPath:searching(x, y, self.mapid)
+
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end
+
+	local function sdgo()
+		--- BLOCK #0 1-20, warpins: 1 ---
+		sound.playSound("103")
+
+		local x = tonumber(self.inputx:getText())
+		local y = tonumber(self.inputy:getText())
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if x then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 21-22, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not y then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 23-29, warpins: 2 ---
+		main_scene.ui:tip("无效的地图坐标！")
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 30-37, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		if self.mapid ~= main_scene.ground.map.mapid then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 38-44, warpins: 1 ---
+		main_scene.ui:tip("无法在不同地图间传送！")
+
+		return 
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 45-49, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		if self.dest.from == "npc" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 50-50, warpins: 1 ---
+		y = y + 1
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 51-61, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		slot2 = if main_scene.ground.map:canWalk(x, y)
+		.block then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 62-68, warpins: 1 ---
+		main_scene.ui:tip("目标是阻挡, 无法传送！")
+
+		return 
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 69-74, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		slot2 = if g_data.equip.items[7] then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 75-83, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		if g_data.equip.items[7].getVar("name")
+		 ~= "传送戒指" then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #11 84-89, warpins: 2 ---
+		--- END OF BLOCK #11 ---
+
+		slot2 = if g_data.equip.items[8] then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 90-98, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if g_data.equip.items[8].getVar("name")
+		 ~= "传送戒指" then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 99-105, warpins: 2 ---
+		an.newMsgbox("需要佩戴传送戒指！", nil, {
+			center = true
+		})
+
+		return 
+
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 106-120, warpins: 3 ---
+		net.send({
+			CM_SAY
+		}, {
+			"@sdgo " .. " " .. x .. " " .. y
+		})
+
+		return 
+		--- END OF BLOCK #14 ---
+
+
+
+	end
+
+	local function quickpath()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:loadQuickPath()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local btns = {}
+	btns[1] = {
+		sprite = "pic/panels/bigmap/tab_auto.png",
+		posx = 535,
+		click = autopath
+	}
+	btns[2] = {
+		sprite = "pic/panels/bigmap/tab_transfer.png",
+		posx = 435,
+		click = sdgo
+	}
+	btns[3] = {
+		sprite = "pic/panels/bigmap/tab_quick.png",
+		posx = 335,
+		click = quickpath
+	}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(btns)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 299-335, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), v.click, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2(v.sprite)
+	}):anchor(0, 0.5):pos(v.posx, b3.geth(b3)/2 - 2):addTo(self.controlNode)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 336-337, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 338-394, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(b1.getw(b1) - 9, b1.geth(b1) - 9):addTo(b1)
+	self.loadLocalMap(self)
+
+	local autoFindPath = main_scene.ui.console.controller.autoFindPath
+	local pathDestX = autoFindPath.destx
+	local pathDestY = autoFindPath.desty
+
+	self.schedule(self, function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if autoFindPath.points then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if pathDestX == autoFindPath.destx then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-14, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if pathDestY ~= autoFindPath.desty then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 15-18, warpins: 2 ---
+		self:loadFindPath()
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 19-19, warpins: 3 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, 0.1)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.reset = function (self, size)
+	--- BLOCK #0 1-66, warpins: 1 ---
+	self.size(self, self.bgSprs[1]:getw(), size.height + controlHeight):anchor(0.5, 0.5):center()
+	self.bgSprs[1]:pos(0, self.geth(self))
+	self.bgSprs[2]:pos(0, self.bgSprs[3]:geth()):scaleY((self.geth(self) - self.bgSprs[1]:geth() - self.bgSprs[3]:geth())/self.bgSprs[2]:geth())
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self._touchFrames then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 67-70, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self._touchFrames.main then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 71-86, warpins: 1 ---
+	local rect = cc.rect(0, 0, self.getw(self), self.geth(self))
+
+	self.addTouchFrame(self, rect, "main")
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 87-87, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.loadFindPath = function (self)
+	--- BLOCK #0 1-30, warpins: 1 ---
+	self.loadFindPathPoint(self, main_scene.ui.console.controller.autoFindPath.points)
+
+	local point = main_scene.ui.console.controller.autoFindPath.points[#main_scene.ui.console.controller.autoFindPath.points]
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not main_scene.ui.console.autoRat.enableRat then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 31-36, warpins: 1 ---
+	self.loadDestPoint(self, point.x, point.y, {
+		noAction = true
+	})
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 37-37, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.loadLocalMap = function (self, param)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.controlNode:show()
+	self.unloadMapFile(self)
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if param then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 10-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if param.switch then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-30, warpins: 1 ---
+	self.mapid = param.id
+	self.title = param.title
+
+	self.loadMapFile(self)
+
+	self.maph = self.mapFile:geth()
+	self.mapw = self.mapFile:getw()
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 31-49, warpins: 2 ---
+	self.mapid = main_scene.ground.map.mapid
+	self.title = g_data.map.mapTitle
+	self.maph = main_scene.ground.map.h
+	self.mapw = main_scene.ground.map.w
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 50-61, warpins: 2 ---
+	common.getMinimapTexture(self.mapid, function (tex)
+		--- BLOCK #0 1-45, warpins: 1 ---
+		local maxw = 615
+		local maxh = 450
+		self.texSize = tex.getContentSize(tex)
+		self.mapScale = math.min(maxw/self.texSize.width, maxh/self.texSize.height)
+		local mapSize = cc.size(self.texSize.width*self.mapScale, self.texSize.height*self.mapScale)
+		local resetSize = cc.size(mapSize.width, mapSize.height)
+		local offsetX = 0
+		local offsetY = 0
+		--- END OF BLOCK #0 ---
+
+		if maxh <= mapSize.height then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 46-48, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if mapSize.width < maxw then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 49-59, warpins: 1 ---
+		offsetX = (self.bgSprs[1]:getw() - 26 - mapSize.width)/2
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #3 60-62, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		if maxw <= mapSize.width then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 63-66, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if mapSize.height < minh then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 67-72, warpins: 1 ---
+		resetSize.height = minh
+		offsetY = (minh - mapSize.height)/2
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 73-187, warpins: 4 ---
+		self:reset(resetSize)
+
+		self.mapNode = display.newNode():pos(offsetX + 13, offsetY + 60):size(mapSize):addTo(self, 1)
+		self.mapSpr = display.newSprite(tex):scale(self.mapScale):anchor(0, 0):addTo(self.mapNode)
+
+		display.newScale9Sprite(res.getframe2("pic/scale/scale27.png"), 0, 0, mapSize):anchor(0, 0):addTo(self.mapNode)
+
+		self.titleLabel = an.newLabel(self.title, 20, 1, {
+			color = display.COLOR_WHITE
+		}):addTo(self.mapNode):pos(5, 5):anchor(0, 0)
+
+		self:loadEntryInfo()
+		self:pointUpt(main_scene.ground.map, main_scene.ground.player)
+		--- END OF BLOCK #6 ---
+
+		slot7 = if main_scene.ui.console.controller.autoFindPath.points then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 188-191, warpins: 1 ---
+		self:loadFindPath()
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 192-222, warpins: 2 ---
+		local hasMove, handler = nil
+		local doubleClick = false
+
+		local function click(event)
+			--- BLOCK #0 1-32, warpins: 1 ---
+			local rect1 = self:getBoundingBox()
+			local rect2 = self.mapNode:getBoundingBox()
+			local x, y = self:gamePos(event.x - rect1.x - rect2.x, event.y - rect1.y - rect2.y)
+			local point = self:canWalk(x, y)
+
+			--- END OF BLOCK #0 ---
+
+			slot6 = if doubleClick then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #1 33-35, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot6 = if not point.block then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 36-48, warpins: 1 ---
+			main_scene.ui.console.controller.autoFindPath:searching(x, y, self.mapid)
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #3 49-54, warpins: 1 ---
+			main_scene.ui:tip("目标是阻挡, 无法到达！")
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 55-57, warpins: 3 ---
+			handler = nil
+			doubleClick = nil
+
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end
+
+		local touchNode = display.newNode():size(self.mapNode:getContentSize()):addto(self.mapNode)
+
+		touchNode.setTouchEnabled(touchNode, true)
+		touchNode.addNodeEventListener(touchNode, cc.NODE_TOUCH_EVENT, function (event)
+			--- BLOCK #0 1-22, warpins: 1 ---
+			local rect1 = self:getBoundingBox()
+			local rect2 = self.mapNode:getBoundingBox()
+			local x = event.x - rect1.x - rect2.x
+			local y = event.y - rect1.y - rect2.y
+			--- END OF BLOCK #0 ---
+
+			if event.name == "began" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #1 23-25, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot5 = if handler then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 26-28, warpins: 1 ---
+			doubleClick = true
+
+			return false
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 29-30, warpins: 1 ---
+			return true
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 31-31, warpins: 0 ---
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+			--- BLOCK #5 32-34, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			if event.name == "moved" then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 35-36, warpins: 1 ---
+			hasMove = true
+			--- END OF BLOCK #6 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+			--- BLOCK #7 37-39, warpins: 1 ---
+			--- END OF BLOCK #7 ---
+
+			if event.name == "ended" then
+			JUMP TO BLOCK #8
+			else
+			JUMP TO BLOCK #12
+			end
+
+
+			--- BLOCK #8 40-63, warpins: 1 ---
+			local pos = self:convertToNodeSpace(cc.p(event.x, event.y))
+
+			--- END OF BLOCK #8 ---
+
+			slot6 = if cc.rectContainsPoint(self.mapNode:getBoundingBox(), cc.p(pos.x, pos.y))
+			 then
+			JUMP TO BLOCK #9
+			else
+			JUMP TO BLOCK #11
+			end
+
+
+			--- BLOCK #9 64-76, warpins: 1 ---
+			self:setDestPoint(self:gamePos(x, y))
+
+			--- END OF BLOCK #9 ---
+
+			slot6 = if not hasMove then
+			JUMP TO BLOCK #10
+			else
+			JUMP TO BLOCK #11
+			end
+
+
+			--- BLOCK #10 77-82, warpins: 1 ---
+			handler = scheduler.performWithDelayGlobal(function ()
+				--- BLOCK #0 1-4, warpins: 1 ---
+				click(event)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, 0.25)
+			--- END OF BLOCK #10 ---
+
+			FLOW; TARGET BLOCK #11
+
+
+			--- BLOCK #11 83-83, warpins: 3 ---
+			hasMove = false
+
+			--- END OF BLOCK #11 ---
+
+			FLOW; TARGET BLOCK #12
+
+
+			--- BLOCK #12 84-85, warpins: 4 ---
+			return 
+			--- END OF BLOCK #12 ---
+
+			FLOW; TARGET BLOCK #13
+
+
+			--- BLOCK #13 86-86, warpins: 2 ---
+			--- END OF BLOCK #13 ---
+
+			FLOW; TARGET BLOCK #14
+
+
+			--- BLOCK #14 87-87, warpins: 2 ---
+			--- END OF BLOCK #14 ---
+
+
+
+		end)
+
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end)
+	--- END OF BLOCK #4 ---
+
+	if self.mapid == main_scene.ground.map.mapid then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 62-76, warpins: 1 ---
+	net.send({
+		CM_MEMBERS_POSITION_INFO
+	})
+	self.unscheduleHandle(self)
+
+	self.handler = scheduler.scheduleGlobal(function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if 0 < table.nums(g_data.player.groupMembers)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 10-15, warpins: 1 ---
+		net.send({
+			CM_MEMBERS_POSITION_INFO
+		})
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-16, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, 1)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 77-78, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+bigmap.loadWorldMap = function (self)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	self.controlNode:hide()
+
+	local localh = self.texSize.height*self.mapScale
+	slot2 = cc.size
+	slot3 = 615
+	--- END OF BLOCK #0 ---
+
+	if localh < minh then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 15-18, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not (minh - 2) then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 19-19, warpins: 2 ---
+	slot4 = localh
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 20-99, warpins: 2 ---
+	local worldMapSize = slot2(slot3, slot4)
+	self.worldMapScale = 0.75
+	self.worldMapNode = an.newScroll(14, 61, worldMapSize.width, worldMapSize.height, {
+		dir = 0
+	}):addTo(self, 1)
+
+	self.worldMapNode.scrollView:setBounceable(false)
+
+	self.worldMapSpr = res.get2("pic/panels/bigmap/bg4.png"):addTo(self.worldMapNode):scale(self.worldMapScale):anchor(0, 1):pos(0, worldMapSize.height)
+	self.borderSpr = display.newScale9Sprite(res.getframe2("pic/scale/scale27.png"), 13, 60, cc.size(worldMapSize.width + 2, worldMapSize.height + 2)):anchor(0, 0):addTo(self, 2)
+
+	local function checkScrollPos(pos)
+		--- BLOCK #0 1-15, warpins: 1 ---
+		local x = pos.x*self.worldMapScale
+		local y = pos.y*self.worldMapScale
+		x = x + worldMapSize.width/2
+		--- END OF BLOCK #0 ---
+
+		if 0 < x then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 16-17, warpins: 1 ---
+		x = 0
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #2 18-33, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if self.worldMapSpr:getw()
+		*self.worldMapScale < math.abs(x - worldMapSize.width)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 34-46, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot1 = if not (worldMapSize.width - self.worldMapSpr:getw()
+
+		*self.worldMapScale) then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 46-46, warpins: 1 ---
+		x = x
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 47-54, warpins: 3 ---
+		y = y + worldMapSize.height/2
+		--- END OF BLOCK #5 ---
+
+		if y < worldMapSize.height then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #6 55-58, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot2 = if not worldMapSize.height then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 58-58, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 59-68, warpins: 3 ---
+		--- END OF BLOCK #8 ---
+
+		if self.worldMapSpr:geth()
+		*self.worldMapScale < y then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #9 69-78, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		slot2 = if not (self.worldMapSpr:geth()
+
+		*self.worldMapScale) then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 78-78, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 79-81, warpins: 3 ---
+		return x, y
+		--- END OF BLOCK #11 ---
+
+
+
+	end
+
+	local scrollpos = nil
+
+	--- END OF BLOCK #3 ---
+
+	slot5 = if config[self.mapid] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 100-133, warpins: 1 ---
+	res.get2("pic/panels/bigmap/p-blue.png"):addTo(self.worldMapSpr, 1):pos(config[self.mapid].signpos.x, config[self.mapid].signpos.y)
+	self.worldMapNode.scrollView:scrollTo(checkScrollPos(config[self.mapid].worldpos))
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 134-143, warpins: 1 ---
+	self.worldMapNode.scrollView:scrollTo(checkScrollPos(config.0.worldpos))
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 144-147, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(config)
+
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 148-202, warpins: 1 ---
+	local exactTouchInst = exactTouch:create(res.getfile("pic/panels/bigmap/btn-" .. v.res .. ".png"))
+	local area = nil
+	area = an.newBtn(res.gettex2("pic/panels/bigmap/btn-" .. v.res .. ".png"), function ()
+		--- BLOCK #0 1-30, warpins: 1 ---
+		area.sprite:setTex(res.gettex2("pic/panels/bigmap/labeln-" .. v.res .. ".png"))
+		self.tabs.click(2, true)
+		self:change2LocalMap({
+			switch = true,
+			id = k,
+			title = v.title
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressShow = true,
+		support = "scroll",
+		pressBig = 1.001,
+		sprite = res.gettex2("pic/panels/bigmap/labeln-" .. v.res .. ".png"),
+		spriteOffset = v.spriteOffset,
+		customTouchCheck = function (x, y)
+			--- BLOCK #0 1-15, warpins: 1 ---
+			local p = area:convertToNodeSpace(cc.p(x, y))
+
+			return exactTouchInst:containsPoint(p.x, p.y)
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		call_remove = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			exactTouchInst:release()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):addTo(self.worldMapSpr):pos(v.x, v.y):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 203-204, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 205-236, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-12, warpins: 1 ---
+		local x, y = self.worldMapNode.scrollView.scrollNode:getPosition()
+
+		print(x, y)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		label = {
+			"获取坐标",
+			20,
+			1
+		}
+	}):addTo(self):pos(10, 10):anchor(0, 0)
+
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+bigmap.loadQuickPath = function (self)
+	--- BLOCK #0 1-186, warpins: 1 ---
+	local node = display.newNode():addTo(main_scene.ui, main_scene.ui.z.detail):size(display.width, display.height):anchor(0.5, 0.5):center()
+	self.quickNode = node
+	local bg = res.get2("pic/panels/bigmap/quick-bg.png"):addTo(node):pos(node.getw(node)/2, node.geth(node)/2):anchor(0.5, 0.5)
+
+	res.get2("pic/panels/bigmap/quick.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 20):anchor(0.5, 0.5)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		sound.playSound("103")
+		node:removeSelf()
+
+		node = nil
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(bg.getw(bg) - 4, bg.geth(bg) - 3):addTo(bg)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale16.png"), 0, 0, cc.size(165, 260)):addTo(bg):pos(112, 15):anchor(0, 0)
+
+	local isFromNpc = false
+	local list = display.newNode():addTo(bg)
+
+	local function createList(key)
+		--- BLOCK #0 1-23, warpins: 1 ---
+		list:removeAllChildren()
+
+		local scroll = an.newScroll(115, 17, 160, 255):addTo(list):anchor(0, 0)
+		local data = {}
+		--- END OF BLOCK #0 ---
+
+		if key == "NPC" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #1 24-40, warpins: 1 ---
+		self.npcScroll = scroll
+
+		scroll.setNodeEventEnabled(scroll, true)
+
+		scroll.onCleanup = function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			self.npcScroll = nil
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+		local npcs = g_data.bigmap:getNpcs(self.title)
+
+		--- END OF BLOCK #1 ---
+
+		slot3 = if not npcs then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #2 41-60, warpins: 1 ---
+		g_data.client:setLastNpcMap({
+			title = self.title,
+			id = self.mapid
+		})
+		--- END OF BLOCK #2 ---
+
+		if self.mapid == main_scene.ground.map.mapid then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 61-67, warpins: 1 ---
+		net.send({
+			CM_QUERY_MAP_NPC,
+			param = 0
+		})
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #4 68-78, warpins: 1 ---
+		net.send({
+			CM_QUERY_MAP_NPC,
+			param = 1
+		}, {
+			self.mapid
+		})
+
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 79-79, warpins: 1 ---
+		isFromNpc = true
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 80-81, warpins: 3 ---
+		--- END OF BLOCK #6 ---
+
+		slot2 = if not npcs then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 82-82, warpins: 1 ---
+		data = {}
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 83-83, warpins: 2 ---
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+		--- BLOCK #9 84-85, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		if key == "transform" then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #10 86-91, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		for i, v in pairs(def.map.transferPositions)
+
+
+		LOOP BLOCK #11
+		GO OUT TO BLOCK #14
+
+
+		--- BLOCK #11 92-101, warpins: 1 ---
+		local var = string.split(i, "-")
+		--- END OF BLOCK #11 ---
+
+		if var[1] == self.mapid then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 102-115, warpins: 1 ---
+		data[#data + 1] = {
+			id = var[1],
+			name = v.name,
+			x = v.x,
+			y = v.y,
+			destMapid = var[2]
+		}
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 116-117, warpins: 3 ---
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #14 118-118, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+		--- BLOCK #15 119-127, warpins: 1 ---
+		local likes = g_data.bigmap:getLikes(self.mapid)
+		--- END OF BLOCK #15 ---
+
+		slot3 = if likes then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #16 128-135, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		if self.mapid == main_scene.ground.map.mapid then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 136-137, warpins: 1 ---
+		data = likes
+
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+		--- BLOCK #18 138-141, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		for i, v in ipairs(likes)
+
+
+		LOOP BLOCK #19
+		GO OUT TO BLOCK #21
+
+
+		--- BLOCK #19 142-154, warpins: 1 ---
+		data[#data + 1] = {
+			name = v.name,
+			x = v.x,
+			y = v.y,
+			destMapid = self.mapid
+		}
+
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 155-156, warpins: 2 ---
+		--- END OF BLOCK #20 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+		--- BLOCK #21 157-164, warpins: 5 ---
+		self:createCell(data, scroll, isFromNpc)
+
+		return 
+		--- END OF BLOCK #21 ---
+
+
+
+	end
+
+	local sprs = {
+		"pic/panels/bigmap/tab_npc.png",
+		"pic/panels/bigmap/tab_point.png",
+		"pic/panels/bigmap/tab_collect.png"
+	}
+
+	common.tabs(bg, {
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		createList(({
+			"NPC",
+			"transform",
+			"like"
+		})[idx])
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		tabTp = 2,
+		scale = 0.8,
+		pos = {
+			x = 15,
+			offset = 45,
+			y = 230,
+			anchor = cc.p(0, 0)
+		}
+	})
+	node.setTouchEnabled(node, true)
+	node.setTouchSwallowEnabled(node, true)
+	node.addNodeEventListener(node, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 4-17, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not cc.rectContainsPoint(bg:getBoundingBox(), cc.p(event.x, event.y))
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 18-22, warpins: 1 ---
+		node:removeSelf()
+
+		node = nil
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 23-23, warpins: 3 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.createCell = function (self, data, scroll, fromNpc)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(data)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-47, warpins: 1 ---
+	local y = (i - 1)*44 - 260 - 30
+
+	an.newBtn(res.gettex2("pic/panels/bigmap/label_n.png"), function (btn)
+		--- BLOCK #0 1-16, warpins: 1 ---
+		sound.playSound("103")
+
+		slot2 = main_scene.ui.console.controller.autoFindPath
+		slot1 = main_scene.ui.console.controller.autoFindPath.searching
+		slot3 = v.x
+		--- END OF BLOCK #0 ---
+
+		slot4 = if fromNpc then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 17-21, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot4 = if not (v.y + 1) then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 22-23, warpins: 2 ---
+		slot4 = v.y
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 24-32, warpins: 2 ---
+		slot1(slot2, slot3, slot4, v.destMapid)
+		self.quickNode:removeSelf()
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		support = "scroll",
+		pressImage = res.gettex2("pic/panels/bigmap/label_s.png"),
+		label = {
+			v.name,
+			20,
+			1,
+			{
+				color = def.colors.btn30
+			}
+		}
+	}):addTo(scroll):pos(80, y):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 48-49, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 50-51, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.uptNpcCell = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.npcScroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-11, warpins: 1 ---
+	local data = g_data.bigmap:getNpcs(self.title)
+
+	--- END OF BLOCK #1 ---
+
+	slot1 = if data then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-17, warpins: 1 ---
+	self.createCell(self, data, self.npcScroll, true)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-18, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.uptGroupPos = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.group then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(self.group)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	v.removeSelf(v)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-12, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 13-20, warpins: 2 ---
+	self.group = {}
+
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(g_data.bigmap.group)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #5 21-93, warpins: 1 ---
+	local x, y = self.mapPos(self, v.x, v.y)
+	local point = display.newColorLayer(def.colors.get(250, true)):addTo(self.mapNode, 1):size(6, 6)
+
+	point.pos(point, x - point.getw(point)/2, y - point.geth(point)/2)
+
+	local label = an.newLabel(v.name, 14, 1, {
+		color = display.COLOR_GREEN
+	}):addTo(point)
+
+	label.pos(label, point.getw(point)/2, point.geth(point)/2 + 2):anchor(0.5, 0)
+
+	self.group[#self.group + 1] = point
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 94-95, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #7 96-96, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+bigmap.loadEntryInfo = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local info = def.bigmap[tostring(self.mapid)]
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if info then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 9-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(info)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 13-40, warpins: 1 ---
+	an.newLabel(v[2], 16, 2, {
+		color = def.colors.text
+	}):addTo(self.mapNode):pos(self.mapPos(self, v[3], v[4])):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 41-42, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 43-43, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bigmap.loadDestPoint = function (self, x, y, params)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not self.dest then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	self.dest = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-10, warpins: 2 ---
+	local form = params.from
+	local noAction = params.noAction
+	slot6 = self.dest
+	--- END OF BLOCK #2 ---
+
+	slot7 = if not x then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 11-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if not self.dest.x then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-15, warpins: 1 ---
+	slot7 = 0
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 16-19, warpins: 3 ---
+	slot6.x = slot7
+	slot6 = self.dest
+	--- END OF BLOCK #5 ---
+
+	slot7 = if not y then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 20-23, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot7 = if not self.dest.y then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 24-24, warpins: 1 ---
+	slot7 = 0
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 25-40, warpins: 3 ---
+	slot6.y = slot7
+	self.dest.from = from
+	x, y = self.mapPos(self, self.dest.x, self.dest.y)
+	--- END OF BLOCK #8 ---
+
+	slot6 = if not self.destPoint then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 41-55, warpins: 1 ---
+	self.destPoint = res.get2("pic/panels/bigmap/p-blue.png"):anchor(0.5, 0):addTo(self.mapNode, 1)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 56-65, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot6 = if self.canWalk(self, self.dest.x, self.dest.y)
+	.block then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 66-78, warpins: 1 ---
+	self.destPoint:setTex(res.gettex2("pic/panels/bigmap/p-red.png"))
+	self.setLikeSprState(self, false)
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #12 79-98, warpins: 1 ---
+	self.destPoint:setTex(res.gettex2("pic/panels/bigmap/p-blue.png"))
+	--- END OF BLOCK #12 ---
+
+	slot6 = if g_data.bigmap:isExistLike(self.mapid, self.dest.x, self.dest.y)
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 99-103, warpins: 1 ---
+	self.setLikeSprState(self, true)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 104-107, warpins: 1 ---
+	self.setLikeSprState(self, false)
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 108-113, warpins: 3 ---
+	self.destPoint:stopAllActions()
+	--- END OF BLOCK #15 ---
+
+	slot5 = if noAction then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 114-123, warpins: 1 ---
+	self.destPoint:pos(x, y):show()
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 124-142, warpins: 1 ---
+	self.destPoint:pos(x, self.mapNode:geth()):show()
+	self.destPoint:moveTo(0.1, x, y)
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 143-143, warpins: 2 ---
+	return 
+	--- END OF BLOCK #18 ---
+
+
+
+end
+bigmap.mapSize = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local w, h = nil
+	--- END OF BLOCK #0 ---
+
+	if self.mapid ~= main_scene.ground.map.mapid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-12, warpins: 1 ---
+	h = self.maph
+	w = self.mapw
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 13-21, warpins: 1 ---
+	h = main_scene.ground.map.h
+	w = main_scene.ground.map.w
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 22-24, warpins: 2 ---
+	return w, h
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.mapPos = function (self, x, y)
+	--- BLOCK #0 1-23, warpins: 1 ---
+	local w, h = self.mapSize(self)
+	local percent = {}
+	percent.x = self.texSize.width/w*self.mapScale
+	percent.y = self.texSize.height/h*self.mapScale
+
+	return x*percent.x, (h - y - 1)*percent.y
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.gamePos = function (self, x, y)
+	--- BLOCK #0 1-29, warpins: 1 ---
+	local w, h = self.mapSize(self)
+	local percent = {}
+	percent.x = self.texSize.width/w*self.mapScale
+	percent.y = self.texSize.height/h*self.mapScale
+
+	return math.modf(x/percent.x), math.modf(h - y/percent.y - 1)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.setDestPoint = function (self, x, y, from)
+	--- BLOCK #0 1-32, warpins: 1 ---
+	self.loadDestPoint(self, x, y, {
+		from = from
+	})
+	self.inputx:setString(self.dest.x .. "")
+	self.inputy:setString(self.dest.y .. "")
+	main_scene.ui.console.controller.autoFindPath:multiMapPathStop()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.canWalk = function (self, gamex, gamey)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local ret = nil
+	--- END OF BLOCK #0 ---
+
+	if self.mapid ~= main_scene.ground.map.mapid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 9-17, warpins: 1 ---
+	ret = {}
+	local data = self.mapFile:gettile(gamex, gamey)
+
+	--- END OF BLOCK #1 ---
+
+	slot4 = if data then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #2 18-26, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 0 < ycFunction:band(data.doorIndex, 128)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 27-29, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot5 = if not data.doorOpen then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 30-33, warpins: 1 ---
+	ret.block = "door"
+	ret.data = data
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #5 34-36, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot5 = if not data.canWalk then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 37-39, warpins: 1 ---
+	ret.block = "map"
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 40-48, warpins: 1 ---
+	ret = main_scene.ground.map:canWalk(gamex, gamey)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 49-49, warpins: 5 ---
+	return ret
+	--- END OF BLOCK #8 ---
+
+
+
+end
+bigmap.removeAllFindPath = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not self.mapNode then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-7, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-10, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot1 = if self.findPathNode then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 11-16, warpins: 1 ---
+	self.findPathNode:removeSelf()
+
+	self.findPathNode = nil
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-19, warpins: 2 ---
+	self.findPathPoint = nil
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+bigmap.removePoint = function (self, key)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not self.mapNode then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-7, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-10, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.findPathPoint then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 11-14, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.findPathPoint[key] then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 15-22, warpins: 1 ---
+	self.findPathPoint[key]:removeSelf()
+
+	self.findPathPoint[key] = nil
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-23, warpins: 3 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+--- END OF BLOCK #0 ---
+
+if 0 < DEBUG then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #2
+end
+
+
+--- BLOCK #1 258-259, warpins: 1 ---
+bigmap.loadFlagPoints = function (self, type, points, color)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.mapid ~= main_scene.ground.map.mapid then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if not self.flagPoints then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-15, warpins: 1 ---
+	slot4 = {}
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 16-23, warpins: 2 ---
+	self.flagPoints = slot4
+
+	--- END OF BLOCK #5 ---
+
+	slot4 = if not tolua.isnull(self.flagPoints[type])
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 24-28, warpins: 1 ---
+	self.flagPoints[type]:removeSelf()
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 29-55, warpins: 2 ---
+	self.flagPoints[type] = display.newNode():size(self.mapNode:getContentSize()):addTo(self.mapNode)
+	local findPathNode = self.flagPoints[type]
+	local autoFindPath = main_scene.ui.console.controller.autoFindPath
+
+	--- END OF BLOCK #7 ---
+
+	for i, v in ipairs(points)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #8 56-59, warpins: 1 ---
+	slot11 = display.newColorLayer
+	--- END OF BLOCK #8 ---
+
+	slot12 = if not color then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 60-66, warpins: 1 ---
+	slot12 = cc.c4b(0, 0, 255, 255)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 67-96, warpins: 2 ---
+	local point = slot11(slot12):size(4, 4):addTo(findPathNode)
+	local x, y = self.mapPos(self, v.x, v.y)
+
+	point.pos(point, x - self.point:getw()/2, y - self.point:geth()/2)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 97-98, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #12 99-99, warpins: 1 ---
+	return findPathNode
+	--- END OF BLOCK #12 ---
+
+
+
+end
+--- END OF BLOCK #1 ---
+
+FLOW; TARGET BLOCK #2
+
+
+--- BLOCK #2 260-287, warpins: 2 ---
+bigmap.loadFindPathPoint = function (self, points)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.mapid ~= main_scene.ground.map.mapid then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-40, warpins: 2 ---
+	self.removeAllFindPath(self)
+
+	self.findPathNode = display.newNode():size(self.mapNode:getContentSize()):addTo(self.mapNode)
+	self.findPathPoint = {}
+	local autoFindPath = main_scene.ui.console.controller.autoFindPath
+
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(points)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 41-86, warpins: 1 ---
+	local point = display.newColorLayer(cc.c4b(0, 255, 255, 255)):size(4, 4):addTo(self.findPathNode)
+	local x, y = self.mapPos(self, v.x, v.y)
+
+	point.pos(point, x - self.point:getw()/2, y - self.point:geth()/2)
+
+	self.findPathPoint[autoFindPath.key(autoFindPath, v.x, v.y)] = point
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 87-88, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 89-89, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+bigmap.pointUpt = function (self, map, player)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.mapid ~= main_scene.ground.map.mapid then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not self.point then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-34, warpins: 1 ---
+	self.point = display.newColorLayer(def.colors.get(251, true)):addTo(self.mapNode, 1):size(6, 6)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 35-56, warpins: 2 ---
+	local x, y = self.mapPos(self, player.x, player.y)
+
+	self.point:pos(x - self.point:getw()/2, y - self.point:geth()/2)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+bigmap.resetInput = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.inputx:setString("")
+	self.inputy:setString("")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.loadMapFile = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.mapFile = res.loadmap(self.mapid)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.unloadMapFile = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.mapFile then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	res.unLoadmap(self.mapid)
+
+	self.mapFile = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.removeLocalMap = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.mapNode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-24, warpins: 1 ---
+	self.mapNode:removeSelf()
+
+	self.mapNode = nil
+	self.findPathNode = nil
+	self.point = nil
+	self.findPathPoint = nil
+	self.destPoint = nil
+	self.titleLabel = nil
+	self.group = nil
+
+	self.unscheduleHandle(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 25-25, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.removeWorldMap = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.worldMapNode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-15, warpins: 1 ---
+	self.worldMapNode:removeSelf()
+
+	self.worldMapNode = nil
+
+	self.borderSpr:removeSelf()
+
+	self.borderSpr = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-16, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.change2WorldMap = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-16, warpins: 2 ---
+	self.worldMode = true
+
+	self.resetInput(self)
+	self.removeLocalMap(self)
+	self.loadWorldMap(self)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.change2LocalMap = function (self, param)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-17, warpins: 2 ---
+	self.worldMode = false
+
+	self.resetInput(self)
+	self.removeWorldMap(self)
+	self.loadLocalMap(self, param)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+bigmap.change2CurMap = function (self)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	self.resetInput(self)
+	self.removeLocalMap(self)
+	self.loadLocalMap(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmap.setLikeSprState = function (self, state)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	slot3 = self.likeSpr
+	slot2 = self.likeSpr.setTex
+	slot4 = res.gettex2
+	--- END OF BLOCK #0 ---
+
+	slot1 = if state then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-9, warpins: 1 ---
+	slot5 = "pic/panels/bigmap/start_s.png"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 10-10, warpins: 1 ---
+	slot5 = "pic/panels/bigmap/start_n.png"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-15, warpins: 2 ---
+	slot2(slot3, slot4(slot5))
+
+	self.likeSpr.state = state
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.updateTitle = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.worldMode then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not self.titleLabel then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-7, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-19, warpins: 2 ---
+	self.title = g_data.map.mapTitle
+
+	self.titleLabel:setString(g_data.map.mapTitle)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmap.unscheduleHandle = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.handler then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.handler)
+
+	self.handler = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return bigmap
+--- END OF BLOCK #2 ---
+
+
+

@@ -1,0 +1,4345 @@
+--- BLOCK #0 1-165, warpins: 1 ---
+local common = import("..common.common")
+local chatItem = import("..common.chatItem")
+local voiceBtn = import("..common.voiceBtn")
+local keyboardEx = import("..common.keyboardEx")
+local relation = class("relation", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local titleFontSize = 20
+local itemFontSize = 18
+local btnTitleFontSize = 18
+local chatNameFontSize = 18
+local chatContentFontSize = 18
+
+table.merge(relation, {
+	home,
+	members,
+	content,
+	tabNode
+})
+
+relation.ATTENTION_COLORS = {
+	250,
+	253,
+	254,
+	5
+}
+relation.uiColor = {
+	cellSel = cc.c3b(250, 206, 0),
+	cellNor = cc.c3b(245, 235, 205),
+	cellOffline = cc.c3b(53, 53, 53, 255),
+	cellTitle = cc.c3b(219, 194, 122)
+}
+relation.ctor = function (self)
+	--- BLOCK #0 1-135, warpins: 1 ---
+	self._supportMove = true
+	self.needClean = {}
+	local bg = display.newSprite(res.gettex2("pic/common/black_2.png")):anchor(0, 0):add2(self)
+
+	self.size(self, bg.getw(bg), bg.geth(bg)):anchor(0.5, 0.5):center()
+	display.newSprite(res.gettex2("pic/panels/friend/title.png")):anchor(0.5, 0.5):pos(bg.getw(bg)*0.5, bg.geth(bg) - 24):add2(bg)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(self.getw(self) - 9, self.geth(self) - 8):addto(self)
+
+	self.nodeContent = display.newNode():addto(self)
+
+	self.nodeContent:size(bg.getw(bg), bg.geth(bg)):anchor(0, 0)
+
+	local texts = {
+		"friend",
+		"near",
+		"attention",
+		"black"
+	}
+	local textlabels = {
+		"friendTitle",
+		"nearTitle",
+		"attentionTitle",
+		"blackTitle"
+	}
+	local tabs = {}
+
+	local function click(btn)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(tabs)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v == btn then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-18, warpins: 1 ---
+		v.select(v)
+		v.setLocalZOrder(v, 5)
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 19-25, warpins: 1 ---
+		v.unselect(v)
+		v.setLocalZOrder(v, i)
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 26-27, warpins: 3 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 28-32, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if btn.page ~= self.page then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 33-37, warpins: 1 ---
+		self:showContentWithRefresh(btn.page)
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 38-38, warpins: 2 ---
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(texts)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 136-187, warpins: 1 ---
+	tabs[i] = an.newBtn(res.gettex2("pic/common/btn110.png"), click, {
+		support = "easy",
+		sprite = res.gettex2("pic/panels/friend/" .. textlabels[i] .. ".png"),
+		spriteOffset = {
+			x = 3,
+			y = 10
+		},
+		select = {
+			res.gettex2("pic/common/btn111.png"),
+			manual = true
+		}
+	}):add2(self):anchor(1, 1):pos(0, bg.geth(bg) - 38 - (i - 1)*70)
+	tabs[i].page = v
+
+	--- END OF BLOCK #1 ---
+
+	if texts[1] == v then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 188-190, warpins: 1 ---
+	click(tabs[i])
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 191-192, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 193-211, warpins: 1 ---
+	self.dataHandler = handler(self, self.onDataUpdate)
+
+	g_data.relation:addNotifyListener(self.dataHandler)
+	self.setNodeEventEnabled(self, true)
+
+	self.onCleanup = function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		g_data.relation:removeNotifyListener(self.dataHandler)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+relation.onDataUpdate = function (self, src, relation)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if relation == "friend" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.page ~= "friend" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #2 6-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if relation == "near" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-10, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if self.page ~= "near" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 11-12, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if relation == "attention" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 13-15, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if self.page ~= "attention" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 16-17, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if relation == "blackList" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 18-20, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if self.page == "black" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 21-24, warpins: 4 ---
+	self.showContent(self, self.page)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 25-25, warpins: 3 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+relation.showContentWithRefresh = function (self, page)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.showContent(self, page)
+	--- END OF BLOCK #0 ---
+
+	if page == "friend" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-13, warpins: 1 ---
+	net.send({
+		CM_QUERY_RELATION_FRIEND
+	})
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #2 14-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if page == "attention" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-22, warpins: 1 ---
+	net.send({
+		CM_QUERY_RELATION_ATTENTION
+	})
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 23-24, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if page == "black" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 25-30, warpins: 1 ---
+	net.send({
+		CM_QUERY_RELATION_NORMBLACKLIST
+	})
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 31-31, warpins: 4 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+relation.showContent = function (self, page, ...)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-27, warpins: 2 ---
+	self.content = display.newNode():addto(self)
+
+	self.content:size(self.getw(self), self.geth(self))
+	--- END OF BLOCK #2 ---
+
+	if page == "friend" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 28-33, warpins: 1 ---
+	self.showContentFriend(self, self.content, ...)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #4 34-35, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if page == "near" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 36-41, warpins: 1 ---
+	self.showContentNear(self, self.content, ...)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #6 42-43, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if page == "attention" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 44-49, warpins: 1 ---
+	self.showContentAttention(self, self.content, ...)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 50-51, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if page == "black" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 52-56, warpins: 1 ---
+	self.showContentBlack(self, self.content, ...)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 57-57, warpins: 5 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+relation.setCellColor = function (cell, color)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(cell.getChildren(cell))
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if tolua.type(v)
+	 == "cc.Node" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-16, warpins: 1 ---
+	v.setColor(v, color)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-18, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 19-19, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+relation.selectPlayer = function (self, name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local cell = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(name)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	cell = self.cellList[name]
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	cell = name
+	name = cell.name
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-17, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not tolua.isnull(cell)
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #4 18-20, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot3 = if self.selectPic_ then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 21-26, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot3 = if not tolua.isnull(self.selectPic_)
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 27-30, warpins: 1 ---
+	self.selectPic_:removeSelf()
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 31-65, warpins: 3 ---
+	self.selectPic_ = display.newScale9Sprite(res.getframe2("pic/scale/scale25.png"), 0, 0, cc.size(cell.width, cell.height)):anchor(0, 0):pos(0, 0):add2(cell)
+
+	--- END OF BLOCK #7 ---
+
+	slot3 = if not tolua.isnull(self.selectedCell_)
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 66-73, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if self.selectedCell_.data:get("isonline")
+	 == 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 74-81, warpins: 1 ---
+	relation.setCellColor(self.selectedCell_, relation.uiColor.cellOffline)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 82-88, warpins: 1 ---
+	relation.setCellColor(self.selectedCell_, relation.uiColor.cellNor)
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 89-95, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	if cell.data:get("isonline")
+	 ~= 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 96-102, warpins: 1 ---
+	relation.setCellColor(cell, relation.uiColor.cellSel)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 103-103, warpins: 2 ---
+	self.selectedCell_ = cell
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 104-106, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	if self.page == "friend" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 107-114, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot3 = if g_data.relation:getFriend(name)
+	 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 115-118, warpins: 1 ---
+	self.initChatList(self, name)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 119-119, warpins: 3 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+relation.enableSelect = function (self, cell)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	cell.setTouchEnabled(cell, true)
+	cell.setTouchSwallowEnabled(cell, false)
+	cell.addNodeEventListener(cell, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		cell.offsetBeginY = event.y
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #2 10-12, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 13-23, warpins: 1 ---
+		local offsetY = event.y - cell.offsetBeginY
+
+		--- END OF BLOCK #3 ---
+
+		if math.abs(offsetY)
+		 <= 5 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 24-29, warpins: 1 ---
+		self:selectPlayer(cell.name)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 30-30, warpins: 4 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local chatListView = class("listView", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+chatListView.wdayStrs = {
+	"星期日",
+	"星期一",
+	"星期二",
+	"星期三",
+	"星期四",
+	"星期五",
+	"星期六"
+}
+chatListView.ctor = function (self, chatRecord)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	self.chatRecord = chatRecord
+	self.itemInterval = 5
+
+	local function onNewChat(from, evt, content)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if evt == "newItem" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-23, warpins: 1 ---
+		local node = self:createChatItem(content)
+
+		table.insert(self.items, 1, node)
+		self:arrange()
+		self.chatRecord:readed()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 24-24, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	chatRecord.addNotifyListener(chatRecord, onNewChat)
+	self.setNodeEventEnabled(self, true)
+
+	self.onCleanup = function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		chatRecord:removeNotifyListener(onNewChat)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	self.lastChatTime = 0
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chatListView.clear = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.preY = 0
+
+	self.removeAllChildren(self)
+
+	self.items = {}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+chatListView.createChatItem = function (self, itemData)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	local n = display.newNode():add2(self)
+	local posY = 0
+	local itv = itemData.time - self.lastChatTime
+	--- END OF BLOCK #0 ---
+
+	if 300 < itv then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 15-27, warpins: 1 ---
+	local timeTable = os.date("*t", itemData.time)
+	local wdaystr = chatListView.wdayStrs[timeTable.wday]
+	--- END OF BLOCK #1 ---
+
+	if 12 <= timeTable.hour then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 28-29, warpins: 1 ---
+	slot7 = " 下午 "
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 30-30, warpins: 1 ---
+	local noon = " 上午 "
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 31-72, warpins: 2 ---
+	timeStr = string.format("%s %s %02d:%02d", wdaystr, noon, timeTable.hour, timeTable.min)
+	local timeItem = an.newLabel(timeStr, chatNameFontSize, 1):add2(n):pos(self.viewWidth/2, -posY):anchor(0.5, 1)
+
+	timeItem.setColor(timeItem, relation.uiColor.cellNor)
+
+	posY = posY + timeItem.geth(timeItem) + self.itemInterval
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 73-89, warpins: 2 ---
+	self.lastChatTime = itemData.time
+	slot6 = an.newLabel(itemData.name, chatNameFontSize, 1):add2(n)
+	slot5 = an.newLabel(itemData.name, chatNameFontSize, 1).add2(n).pos
+	--- END OF BLOCK #5 ---
+
+	slot7 = if itemData.isOther then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 90-91, warpins: 1 ---
+	slot7 = 3
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 92-93, warpins: 1 ---
+	slot7 = self.viewWidth - 3
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 94-100, warpins: 2 ---
+	slot6 = slot5(slot6, slot7, -posY)
+	slot5 = slot5(slot6, slot7, -posY).anchor
+	--- END OF BLOCK #8 ---
+
+	slot7 = if itemData.isOther then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 101-102, warpins: 1 ---
+	slot7 = 0
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 103-103, warpins: 1 ---
+	slot7 = 1
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 104-144, warpins: 2 ---
+	local nameItem = slot5(slot6, slot7, 1)
+
+	nameItem.setColor(nameItem, relation.uiColor.cellTitle)
+
+	posY = posY + nameItem.geth(nameItem) + self.itemInterval
+	local chatData = common.decodeMsg(itemData.text)
+	local chatItem = common.createChatLabel({
+		strWidth = 320,
+		channel = "私聊",
+		data = chatData,
+		user = itemData.name,
+		fontSize = chatContentFontSize
+	}, true):add2(n):anchor(0, 1)
+
+	--- END OF BLOCK #11 ---
+
+	for k, v in pairs(chatData)
+
+
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #12 145-150, warpins: 1 ---
+	local voice = chatItem.findVoiceBubbleForMsgID(chatItem, v.msgID)
+
+	--- END OF BLOCK #12 ---
+
+	slot13 = if voice then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 151-153, warpins: 1 ---
+	voice.hideUnread(voice)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 154-155, warpins: 3 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #15 156-160, warpins: 1 ---
+	local itemWidth = 345
+	--- END OF BLOCK #15 ---
+
+	if #chatItem.lines == 1 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #16 161-169, warpins: 1 ---
+	local l = chatItem.lines[1]
+	local max = 0
+
+	--- END OF BLOCK #16 ---
+
+	for k, v in ipairs(l.getChildren(l))
+
+
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #17 170-178, warpins: 1 ---
+	local w = v.getPosition(v) + v.getw(v)
+	--- END OF BLOCK #17 ---
+
+	if max < w then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 179-179, warpins: 1 ---
+	max = w
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 180-181, warpins: 3 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #20 182-182, warpins: 1 ---
+	itemWidth = max
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 183-187, warpins: 2 ---
+	slot10 = chatItem
+	slot9 = chatItem.pos
+	--- END OF BLOCK #21 ---
+
+	slot11 = if itemData.isOther then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 188-189, warpins: 1 ---
+	slot11 = 20
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #23 190-192, warpins: 1 ---
+	slot11 = self.viewWidth - itemWidth - 20
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 193-199, warpins: 2 ---
+	slot9(slot10, slot11, -posY - 12)
+
+	n.chatLabel = chatItem
+	--- END OF BLOCK #24 ---
+
+	slot9 = if itemData.isOther then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 200-201, warpins: 1 ---
+	slot9 = -9
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+	--- BLOCK #26 202-202, warpins: 1 ---
+	local offsetX = itemWidth + 18
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 203-205, warpins: 2 ---
+	--- END OF BLOCK #27 ---
+
+	if itemWidth < 80 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 206-206, warpins: 1 ---
+	itemWidth = 80
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 207-216, warpins: 2 ---
+	slot10 = display.newScale9Sprite
+	slot11 = res.getframe2
+	slot12 = string.format
+	slot13 = "pic/scale/chatBubble%d.png"
+	--- END OF BLOCK #29 ---
+
+	slot14 = if itemData.isOther then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 217-218, warpins: 1 ---
+	slot14 = 1
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #31 219-219, warpins: 1 ---
+	slot14 = 2
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 220-237, warpins: 2 ---
+	slot11 = slot10(slot11(slot12(slot13, slot14)), offsetX, -8, cc.size(itemWidth + 30, chatItem.geth(chatItem) + 24))
+	slot10 = slot10(slot11(slot12(slot13, slot14)), offsetX, -8, cc.size(itemWidth + 30, chatItem.geth(chatItem) + 24)).anchor
+	--- END OF BLOCK #32 ---
+
+	slot12 = if itemData.isOther then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 238-239, warpins: 1 ---
+	slot12 = 0
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #34 240-240, warpins: 1 ---
+	slot12 = 1
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 241-254, warpins: 2 ---
+	local pnl = slot10(slot11, slot12, 0):add2(chatItem, -1)
+	slot12 = pnl
+	slot11 = pnl.setCapInsets
+	slot13 = cc.rect
+	--- END OF BLOCK #35 ---
+
+	slot14 = if itemData.isOther then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 255-256, warpins: 1 ---
+	slot14 = 59
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #37 257-257, warpins: 1 ---
+	slot14 = 15
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 258-272, warpins: 2 ---
+	slot11(slot12, slot13(slot14, 23, 5, 5))
+
+	posY = posY + self.itemInterval + pnl.geth(pnl)
+	n.height = posY
+
+	return n, posY
+	--- END OF BLOCK #38 ---
+
+
+
+end
+chatListView.arrange = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local start = 0
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	start = start + v.height
+
+	v.pos(v, 0, start)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-14, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 15-19, warpins: 1 ---
+	self.preY = -start + self.viewHeight
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+chatListView.initChatList = function (self, defaultItemCnt)
+	--- BLOCK #0 1-25, warpins: 1 ---
+	self.clear(self)
+
+	self.viewWidth = self.getParent(self):getw()
+	self.viewHeight = self.getParent(self):geth()
+	self.start = 0
+	local iter = self.chatRecord:rIterator()
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not defaultItemCnt then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 26-26, warpins: 1 ---
+	local defaultItemCnt = 10
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-30, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for k=1, defaultItemCnt, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #3 31-34, warpins: 2 ---
+	local item = iter()
+	--- END OF BLOCK #3 ---
+
+	slot8 = if not item then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 35-35, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 36-42, warpins: 1 ---
+	local node, itemHeight = self.createChatItem(self, item)
+	self.items[k] = node
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 43-51, warpins: 2 ---
+	self.arrange(self)
+	self.pos(self, 0, 0)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+chatListView.loadFront = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local iter = self.chatRecord:rIterator()
+	local defaultItemCnt = #self.items + 10
+	--- END OF BLOCK #0 ---
+
+	for k=1, defaultItemCnt, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #1 12-17, warpins: 2 ---
+	local item = iter()
+	--- END OF BLOCK #1 ---
+
+	slot8 = if not self.items[k] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 18-19, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot7 = if not item then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 21-26, warpins: 1 ---
+	local node, itemHeight = self.createChatItem(self, item)
+	self.items[k] = node
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 27-27, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 28-31, warpins: 2 ---
+	self.arrange(self)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+relation.getChatLabelMs = function (self)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	print("relation:getChatLabelMs")
+
+	local ret = {}
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not tolua.isnull(self.chatListView)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 11-15, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(self.chatListView.items)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 16-20, warpins: 1 ---
+	table.insert(ret, v.chatLabel)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 21-22, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 23-23, warpins: 2 ---
+	return ret
+	--- END OF BLOCK #4 ---
+
+
+
+end
+relation.initChatList = function (self, friendName)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	print("relation:initChatList")
+	--- END OF BLOCK #0 ---
+
+	slot2 = if tolua.isnull(self.chatView)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-16, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not tolua.isnull(self.chatListView)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-22, warpins: 1 ---
+	self.chatListView:removeSelf()
+
+	self.chatListView = nil
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-38, warpins: 2 ---
+	self.chattingPlayer = friendName
+
+	self.loadInput(self, true)
+
+	local chatRecord = g_data.relation:getRecords(common.getPlayerName(), friendName)
+
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not chatRecord then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 39-39, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 40-69, warpins: 1 ---
+	local chat = chatListView.new(chatRecord):add2(self.chatView)
+
+	chatRecord.readed(chatRecord)
+
+	local scroll = self.chatView
+
+	scroll.setScrollOffset(scroll, 0, 0)
+
+	local loadFront = false
+
+	self.chatView:setListenner(function (event)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		local x, y = scroll:getScrollOffset()
+		--- END OF BLOCK #0 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 8-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot3 = if chat.preY then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #2 12-15, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if y < chat.preY then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #3 16-17, warpins: 1 ---
+		loadFront = true
+
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #4 18-20, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #5 21-23, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot3 = if loadFront then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #6 24-32, warpins: 1 ---
+		print("loadFront", loadFront)
+		chat:loadFront()
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #7 33-35, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 36-36, warpins: 1 ---
+		loadFront = false
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 37-37, warpins: 7 ---
+		return 
+		--- END OF BLOCK #9 ---
+
+
+
+	end)
+	chat.initChatList(chat)
+
+	self.chatListView = chat
+
+	--- END OF BLOCK #6 ---
+
+	slot6 = if self.selectedCell_ then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 70-76, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot6 = if self.selectedCell_:getChildByName("unread")
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 77-85, warpins: 1 ---
+	self.selectedCell_:getChildByName("unread"):setVisible(false)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 86-87, warpins: 3 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 88-88, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 89-89, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+
+
+end
+relation.fixStrLen = function (self, text, len)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local strs = utf8strs(text)
+	--- END OF BLOCK #0 ---
+
+	if len < #strs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	local ret = ""
+	--- END OF BLOCK #1 ---
+
+	for k=1, len, 1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #3
+
+	--- BLOCK #2 12-15, warpins: 2 ---
+	ret = ret .. strs[k]
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #3 16-19, warpins: 1 ---
+	return ret .. "..."
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-20, warpins: 2 ---
+	return text
+	--- END OF BLOCK #4 ---
+
+
+
+end
+relation.showContentFriend = function (self, parent)
+	--- BLOCK #0 1-82, warpins: 1 ---
+	print("relation:showContentFriend")
+
+	self.page = "friend"
+	self.chattingPlayer = nil
+	local dataList = g_data.relation:getFriends()
+	local back1 = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(196, 336)):anchor(0, 0):pos(20, 64):add2(parent)
+	local back2 = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(392, 336)):anchor(0, 0):pos(228, 64):add2(parent)
+	local n = display.newNode():add2(back1)
+	local width = {
+		138,
+		51
+	}
+	local Titlelabel = {
+		"角色名",
+		"等级"
+	}
+	local posOffset = 3
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(width)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 83-144, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(v + 2, 42)):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+	an.newLabel(Titlelabel[i], titleFontSize, 1, {
+		color = relation.uiColor.cellTitle
+	}):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+
+	posOffset = posOffset + v
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 145-146, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 147-254, warpins: 1 ---
+	local chatView = an.newScroll(4, 4, 384, 286):add2(back2)
+
+	chatView.setScrollSize(chatView, 384, 286)
+
+	self.chatView = chatView
+
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(388, 42)):anchor(0.5, 0.5):pos(back2.getw(back2)*0.5, back2.geth(back2) - 23):add2(back2)
+	an.newLabel("好友私聊", 20, 1, {
+		color = relation.uiColor.cellTitle
+	}):anchor(0.5, 0.5):pos(back2.getw(back2)*0.5, back2.geth(back2) - 23):add2(back2)
+
+	local data = {}
+	local friendView = an.newScroll(4, 4, 188, 286):add2(back1)
+	local h = 42
+
+	friendView.setScrollSize(friendView, 188, math.max(286, #data*h))
+	--- END OF BLOCK #3 ---
+
+	if #dataList == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 255-286, warpins: 1 ---
+	an.newLabel("当前无好友", 24, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):pos(friendView.getw(friendView)/2, friendView.geth(friendView)/2):add2(friendView, 2)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 287-292, warpins: 2 ---
+	self.cellList = {}
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(dataList)
+
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #18
+
+
+	--- BLOCK #6 293-299, warpins: 1 ---
+	slot18 = display.newScale9Sprite
+	slot19 = res.getframe2
+	--- END OF BLOCK #6 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 300-301, warpins: 1 ---
+	slot20 = "pic/scale/scale18.png"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 302-302, warpins: 1 ---
+	slot20 = "pic/scale/scale19.png"
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 303-407, warpins: 2 ---
+	local cell = slot18(slot19(slot20), 0, 0, cc.size(188, h)):anchor(0, 0):pos(0, friendView.getScrollSize(friendView).height - i*h):add2(friendView)
+	local label = v.get(v, "name")
+	cell.name = label
+	cell.height = h
+	cell.width = 188
+
+	an.newLabel(self.fixStrLen(self, label, 8), 18, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(70, h*0.5)
+
+	label = v.get(v, "level")
+
+	an.newLabel(label, 18, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(162, h*0.5)
+	self.enableSelect(self, cell)
+
+	cell.data = v
+
+	--- END OF BLOCK #9 ---
+
+	slot20 = if not next(self.cellList)
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 408-411, warpins: 1 ---
+	self.selectPlayer(self, cell)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 412-420, warpins: 2 ---
+	self.cellList[cell.name] = cell
+
+	--- END OF BLOCK #11 ---
+
+	if v.get(v, "isonline")
+	 == 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 421-427, warpins: 1 ---
+	relation.setCellColor(cell, relation.uiColor.cellOffline)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 428-509, warpins: 2 ---
+	local unread = display.newSprite(res.gettex2("pic/panels/friend/unread.png")):add2(cell):pos(width[1], cell.geth(cell)):anchor(0.5, 1)
+
+	unread.setName(unread, "unread")
+	unread.scale(unread, 0.8)
+
+	local chatRecord = g_data.relation:getRecords(common.getPlayerName(), cell.name)
+	local unreadLabel = an.newLabel(tostring(chatRecord.getUnreadCnt(chatRecord)), 14, 1, {
+		color = relation.uiColor.cellTitle
+	}):add2(unread):pos(unread.getw(unread)/2, unread.geth(unread)/2):anchor(0.5, 0.5)
+	slot24 = unread
+	slot23 = unread.setVisible
+
+	--- END OF BLOCK #13 ---
+
+	if chatRecord.getUnreadCnt(chatRecord)
+
+	 == 0 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 510-511, warpins: 1 ---
+	slot25 = false
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 512-512, warpins: 1 ---
+	slot25 = true
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 513-519, warpins: 2 ---
+	slot23(slot24, slot25)
+
+	local function onUpdate()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		scheduler.performWithDelayGlobal(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if tolua.isnull(cell)
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 7-12, warpins: 1 ---
+			chatRecord:removeNotifyListener(onUpdate)
+
+			return 
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 13-17, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			if cell == self.selectedCell_ then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 18-18, warpins: 1 ---
+			return 
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 19-27, warpins: 2 ---
+			slot1 = unread
+			slot0 = unread.setVisible
+
+			--- END OF BLOCK #4 ---
+
+			if chatRecord:getUnreadCnt()
+
+			 == 0 then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 28-29, warpins: 1 ---
+			slot2 = false
+			--- END OF BLOCK #5 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+			--- BLOCK #6 30-30, warpins: 1 ---
+			slot2 = true
+
+			--- END OF BLOCK #6 ---
+
+			FLOW; TARGET BLOCK #7
+
+
+			--- BLOCK #7 31-75, warpins: 2 ---
+			slot0(slot1, slot2)
+			unreadLabel:removeFromParent()
+
+			unreadLabel = an.newLabel(tostring(chatRecord:getUnreadCnt()), 14, 1, {
+				color = relation.uiColor.cellTitle
+			}):add2(unread):pos(unread:getw()/2, unread:geth()/2):anchor(0.5, 0.5)
+
+			return 
+			--- END OF BLOCK #7 ---
+
+
+
+		end, 0)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	chatRecord.addNotifyListener(chatRecord, onUpdate)
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 520-521, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #18 522-589, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		sound.playSound("103")
+		relation.showInputDialog(self.page, function (name)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if name then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-4, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if name == "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 5-11, warpins: 2 ---
+			main_scene.ui:tip("名称不能为空")
+
+			return 
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 12-16, warpins: 2 ---
+			self.addFriend(name)
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/tj.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(68, 36)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		sound.playSound("103")
+		self:showMenu(cc.p(111, 50))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/cz.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(170, 36)
+
+	return 
+	--- END OF BLOCK #18 ---
+
+
+
+end
+relation.transChatTarget = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	common.changeChatStyle({
+		{
+			"target",
+			self.chattingPlayer
+		},
+		{
+			"channel",
+			"私聊"
+		}
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.loadInput = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.page ~= "friend" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-12, warpins: 1 ---
+	local parent = self.content
+	local orgBase = parent.getChildByName(parent, "chatBase")
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if self.chattingPlayer then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-24, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if g_data.relation:getFriend(self.chattingPlayer):get("isonline")
+	 == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 25-26, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if orgBase then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 27-29, warpins: 1 ---
+	orgBase.removeFromParent(orgBase)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 30-30, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 31-32, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if orgBase then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #8 33-35, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot3 = if unreload then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 36-36, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 37-37, warpins: 0 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #11 38-44, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if g_data.chat.style.input == self.inputType then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 45-45, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 46-48, warpins: 1 ---
+	orgBase.removeFromParent(orgBase)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 49-213, warpins: 3 ---
+	self.inputType = g_data.chat.style.input
+	local base = display.newScale9Sprite(res.getframe2("pic/scale/edit.png"), 0, 0, cc.size(340, 42)):anchor(0.5, 0.5):pos(186, 32)
+
+	base.add2(base, parent):anchor(0.5, 0.5):pos(448, 38):setName("chatBase")
+
+	local input = an.newInput(10, base.geth(base)/2, 280, 40, 80, {
+		placeholder = "",
+		label = {
+			"",
+			20
+		}
+	}):addTo(base):anchor(0, 0.5):hide()
+	self.keyboard = an.newInput(10, base.geth(base)/2, 320, 40, 50, {
+		defaultString = "",
+		label = {
+			"",
+			20
+		},
+		return_call = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self:say()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		getWorldY_call = function ()
+			--- BLOCK #0 1-22, warpins: 1 ---
+			return self:getPositionY() - self:geth()*self:getAnchorPoint().y + self.content:getPositionY()
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		keyboardEx = {
+			get = function ()
+				--- BLOCK #0 1-9, warpins: 1 ---
+				self:transChatTarget()
+
+				return keyboardEx.create(self.keyboard)
+				--- END OF BLOCK #0 ---
+
+
+
+			end,
+			remove = function ()
+				--- BLOCK #0 1-3, warpins: 1 ---
+				return keyboardEx.destory()
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}
+	}):addto(base):anchor(0, 0.5)
+	local vb = voiceBtn.new(res.gettex2("pic/panels/friend/voice0.png"), res.gettex2("pic/panels/friend/voice1.png")):add2(base):anchor(1, 0):pos(-5, 1)
+	local listener = cc.EventListenerTouchOneByOne:create()
+
+	listener.setSwallowTouches(listener, false)
+	listener.registerScriptHandler(listener, function (touch, event)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		local pos = touch.getLocation(touch)
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not tolua.isnull(vb)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 10-13, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot3 = if vb.hitTest then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 14-20, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot3 = if vb:hitTest(pos)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 21-24, warpins: 1 ---
+		self:transChatTarget()
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 25-25, warpins: 4 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, cc.Handler.EVENT_TOUCH_BEGAN)
+
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+	eventDispatcher.addEventListenerWithFixedPriority(eventDispatcher, listener, -1)
+
+	base.onCleanup = function (self)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		eventDispatcher:removeEventListener(listener)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	return 
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 214-214, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 215-215, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 216-216, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 217-217, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+
+
+end
+relation.say = function (self)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.transChatTarget(self)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if common.say(self.keyboard:getRichText())
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-17, warpins: 1 ---
+	self.keyboard:setText("")
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-18, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.showContentNear = function (self, parent, list)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	print("relation:showContentNear")
+
+	self.page = "near"
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not list then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-12, warpins: 1 ---
+	local dataList = g_data.relation:getNearList()
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-47, warpins: 2 ---
+	local back1 = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(602, 336)):anchor(0, 0):pos(20, 64):add2(parent)
+	local width = {
+		178,
+		80,
+		80,
+		80,
+		178
+	}
+	local Titlelabel = {
+		"角色名",
+		"等级",
+		"职业",
+		"性别",
+		"所属行会"
+	}
+	local posOffset = 3
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(width)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 48-109, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(v + 2, 42)):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+	an.newLabel(Titlelabel[i], titleFontSize, 1, {
+		color = relation.uiColor.cellTitle
+	}):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+
+	posOffset = posOffset + v
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 110-111, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 112-137, warpins: 1 ---
+	local data = {}
+	local friendView = an.newScroll(4, 4, 596, 286):add2(back1)
+	local h = 42
+
+	friendView.setScrollSize(friendView, 596, math.max(286, #data*h))
+	--- END OF BLOCK #5 ---
+
+	if #dataList == 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 138-169, warpins: 1 ---
+	an.newLabel("当前附近无其他玩家", 24, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):pos(friendView.getw(friendView)/2, friendView.geth(friendView)/2):add2(friendView, 2)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 170-175, warpins: 2 ---
+	self.cellList = {}
+
+	--- END OF BLOCK #7 ---
+
+	for i, v in ipairs(dataList)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #29
+
+
+	--- BLOCK #8 176-185, warpins: 1 ---
+	local name = v
+	local level = ""
+	local job = ""
+	local sex = ""
+	local guild = ""
+
+	--- END OF BLOCK #8 ---
+
+	if type(v)
+
+	 ~= "string" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #9 186-202, warpins: 1 ---
+	name = v.get(v, "name")
+	level = v.get(v, "level")
+	job = v.get(v, "job")
+	--- END OF BLOCK #9 ---
+
+	if job == 0 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 203-204, warpins: 1 ---
+	job = "战士"
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #11 205-206, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if job == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 207-208, warpins: 1 ---
+	job = "法师"
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #13 209-210, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if job == 2 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 211-211, warpins: 1 ---
+	job = "道士"
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 212-217, warpins: 4 ---
+	--- END OF BLOCK #15 ---
+
+	if v.get(v, "sex")
+
+	 == 0 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 218-219, warpins: 1 ---
+	sex = "男"
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 220-220, warpins: 1 ---
+	sex = "女"
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 221-228, warpins: 2 ---
+	slot22 = self
+	slot21 = self.fixStrLen
+
+	--- END OF BLOCK #18 ---
+
+	slot23 = if not v.get(v, "guildName")
+
+	 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 229-229, warpins: 1 ---
+	slot23 = ""
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 230-232, warpins: 2 ---
+	guild = slot21(slot22, slot23, 11)
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 233-239, warpins: 2 ---
+	slot21 = display.newScale9Sprite
+	slot22 = res.getframe2
+	--- END OF BLOCK #21 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 240-241, warpins: 1 ---
+	slot23 = "pic/scale/scale18.png"
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #23 242-242, warpins: 1 ---
+	slot23 = "pic/scale/scale19.png"
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 243-417, warpins: 2 ---
+	local cell = slot21(slot22(slot23), 0, 0, cc.size(596, h)):anchor(0, 0):pos(0, friendView.getScrollSize(friendView).height - i*h):add2(friendView)
+	local label = name
+	cell.name = name
+	cell.height = h
+	cell.width = 596
+
+	an.newLabel(self.fixStrLen(self, label, 11), itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(86, h*0.5)
+
+	label = level
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(220, h*0.5)
+
+	label = job
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(300, h*0.5)
+
+	label = sex
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(380, h*0.5)
+
+	label = guild
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(504, h*0.5)
+	self.enableSelect(self, cell)
+	--- END OF BLOCK #24 ---
+
+	if type(v)
+
+	 ~= "string" then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #25 418-423, warpins: 1 ---
+	cell.data = v
+
+	--- END OF BLOCK #25 ---
+
+	slot23 = if not next(self.cellList)
+	 then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 424-427, warpins: 1 ---
+	self.selectPlayer(self, cell)
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 428-430, warpins: 2 ---
+	self.cellList[cell.name] = cell
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 431-432, warpins: 3 ---
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #29 433-467, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		sound.playSound("103")
+		self:showMenu(cc.p(525, 50))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/cz.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(576, 36)
+
+	return 
+	--- END OF BLOCK #29 ---
+
+
+
+end
+relation.showContentAttention = function (self, parent)
+	--- BLOCK #0 1-45, warpins: 1 ---
+	print("relation:showContentAttention")
+
+	self.page = "attention"
+	local dataList = g_data.relation:getAttentions()
+	local back1 = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(602, 336)):anchor(0, 0):pos(20, 64):add2(parent)
+	local width = {
+		200,
+		120,
+		120,
+		156
+	}
+	local Titlelabel = {
+		"角色名",
+		"等级",
+		"职业",
+		"显示颜色"
+	}
+	local posOffset = 3
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(width)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 46-107, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(v + 2, 42)):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+	an.newLabel(Titlelabel[i], titleFontSize, 1, {
+		color = relation.uiColor.cellTitle
+	}):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+
+	posOffset = posOffset + v
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 108-109, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 110-135, warpins: 1 ---
+	local data = {}
+	local friendView = an.newScroll(4, 4, 596, 286):add2(back1)
+	local h = 42
+
+	friendView.setScrollSize(friendView, 596, math.max(286, #data*h))
+	--- END OF BLOCK #3 ---
+
+	if #dataList == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 136-167, warpins: 1 ---
+	an.newLabel("当前未关注其他玩家", 24, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):pos(friendView.getw(friendView)/2, friendView.geth(friendView)/2):add2(friendView, 2)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 168-173, warpins: 2 ---
+	self.cellList = {}
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(dataList)
+
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #6 174-180, warpins: 1 ---
+	slot15 = display.newScale9Sprite
+	slot16 = res.getframe2
+	--- END OF BLOCK #6 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 181-182, warpins: 1 ---
+	slot17 = "pic/scale/scale18.png"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 183-183, warpins: 1 ---
+	slot17 = "pic/scale/scale19.png"
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 184-285, warpins: 2 ---
+	local cell = slot15(slot16(slot17), 0, 0, cc.size(596, h)):anchor(0, 0):pos(0, friendView.getScrollSize(friendView).height - i*h):add2(friendView)
+	local label = v.get(v, "name")
+	cell.name = label
+	cell.height = h
+	cell.width = 596
+
+	an.newLabel(self.fixStrLen(self, label, 12), itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(98, h*0.5)
+
+	label = v.get(v, "level")
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(260, h*0.5)
+
+	label = v.get(v, "job")
+	--- END OF BLOCK #9 ---
+
+	if label == 0 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 286-287, warpins: 1 ---
+	label = "战士"
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #11 288-289, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if label == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 290-291, warpins: 1 ---
+	label = "法师"
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #13 292-293, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if label == 2 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 294-294, warpins: 1 ---
+	label = "道士"
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 295-361, warpins: 4 ---
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(380, h*0.5)
+
+	local colorIndex = v.get(v, "color")
+	local c = def.colors.get(colorIndex, true)
+
+	display.newColorLayer(c):pos(500, 8):addto(cell):size(26, 26):setName("color")
+	self.enableSelect(self, cell)
+
+	cell.data = v
+
+	--- END OF BLOCK #15 ---
+
+	slot19 = if not next(self.cellList)
+	 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 362-365, warpins: 1 ---
+	self.selectPlayer(self, cell)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 366-374, warpins: 2 ---
+	self.cellList[cell.name] = cell
+
+	--- END OF BLOCK #17 ---
+
+	if v.get(v, "isonline")
+	 == 0 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 375-381, warpins: 1 ---
+	relation.setCellColor(cell, relation.uiColor.cellOffline)
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 382-383, warpins: 3 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #20 384-484, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:showAttentionColorMenu()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/szys.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(376, 36)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		sound.playSound("103")
+		relation.showInputDialog(self.page, function (name)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if name then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-4, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if name == "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 5-11, warpins: 2 ---
+			main_scene.ui:tip("名称不能为空")
+
+			return 
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 12-16, warpins: 2 ---
+			relation.addAttention(name)
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/tjgz.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(476, 36)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self.selectedCell_ then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-14, warpins: 1 ---
+		relation.removeAttention(self.selectedCell_.name)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 15-15, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/qxgz.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(576, 36)
+
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+relation.showContentBlack = function (self, parent)
+	--- BLOCK #0 1-45, warpins: 1 ---
+	print("relation:showContentBlack")
+
+	self.page = "black"
+	local dataList = g_data.relation:getBlackList()
+	local back1 = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(602, 336)):anchor(0, 0):pos(20, 64):add2(parent)
+	local width = {
+		300,
+		296
+	}
+	local Titlelabel = {
+		"角色名",
+		"等级"
+	}
+	local posOffset = 3
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(width)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 46-107, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(v + 2, 42)):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+	an.newLabel(Titlelabel[i], titleFontSize, 1, {
+		color = relation.uiColor.cellTitle
+	}):anchor(0.5, 0.5):pos(posOffset + v*0.5, back1.geth(back1) - 23):add2(back1)
+
+	posOffset = posOffset + v
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 108-109, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 110-135, warpins: 1 ---
+	local data = {}
+	local friendView = an.newScroll(4, 4, 596, 286):add2(back1)
+	local h = 42
+
+	friendView.setScrollSize(friendView, 596, math.max(286, #data*h))
+	--- END OF BLOCK #3 ---
+
+	if #dataList == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 136-167, warpins: 1 ---
+	an.newLabel("当前未添加玩家进入黑名单", 24, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):pos(friendView.getw(friendView)/2, friendView.geth(friendView)/2):add2(friendView, 2)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 168-174, warpins: 2 ---
+	local selectPic = nil
+	self.cellList = {}
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(dataList)
+
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #6 175-181, warpins: 1 ---
+	slot16 = display.newScale9Sprite
+	slot17 = res.getframe2
+	--- END OF BLOCK #6 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 182-183, warpins: 1 ---
+	slot18 = "pic/scale/scale18.png"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 184-184, warpins: 1 ---
+	slot18 = "pic/scale/scale19.png"
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 185-285, warpins: 2 ---
+	local cell = slot16(slot17(slot18), 0, 0, cc.size(596, h)):anchor(0, 0):pos(0, friendView.getScrollSize(friendView).height - i*h):add2(friendView)
+	local label = v.get(v, "name")
+	cell.name = label
+	cell.height = h
+	cell.width = 596
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(150, h*0.5)
+
+	label = v.get(v, "level")
+
+	an.newLabel(label, itemFontSize, 1, {
+		color = relation.uiColor.cellNor
+	}):add2(cell):anchor(0.5, 0.5):pos(450, h*0.5)
+	self.enableSelect(self, cell)
+
+	cell.data = v
+
+	--- END OF BLOCK #9 ---
+
+	slot18 = if not next(self.cellList)
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 286-289, warpins: 1 ---
+	self.selectPlayer(self, cell)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 290-298, warpins: 2 ---
+	self.cellList[cell.name] = cell
+
+	--- END OF BLOCK #11 ---
+
+	if v.get(v, "isonline")
+	 == 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 299-305, warpins: 1 ---
+	relation.setCellColor(cell, relation.uiColor.cellOffline)
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 306-307, warpins: 3 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #14 308-375, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		sound.playSound("103")
+		relation.showInputDialog(self.page, function (name)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if name then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-4, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if name == "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 5-11, warpins: 2 ---
+			main_scene.ui:tip("名称不能为空")
+
+			return 
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 12-16, warpins: 2 ---
+			relation.addBlackList(name)
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/tj.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(476, 36)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self.selectedCell_ then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-14, warpins: 1 ---
+		relation.removeBlackList(self.selectedCell_.name)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 15-15, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/friend/sc.png")
+	}):add2(parent):anchor(0.5, 0.5):pos(576, 36)
+
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+relation.clickCheck = function (self, time)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	slot3 = g_data.client
+	slot2 = g_data.client.checkLastTime
+	slot4 = "friend"
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not time then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	slot5 = 3
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not slot2(slot3, slot4, slot5)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-25, warpins: 1 ---
+	main_scene.ui:tip("操作太快, 请重试.", cc.c3b(255, 255, 0))
+
+	return false
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 26-34, warpins: 2 ---
+	g_data.client:setLastTime("friend", true)
+
+	return true
+	--- END OF BLOCK #4 ---
+
+
+
+end
+relation.showInputDialog = function (type, cb)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local tip = nil
+	--- END OF BLOCK #0 ---
+
+	if type == "friend" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	tip = "请输入想要添加好友的玩家名称:"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type == "attention" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-9, warpins: 1 ---
+	tip = "请输入想要添加关注的玩家名称:"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #4 10-11, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if type == "black" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 12-12, warpins: 1 ---
+	tip = "请输入想要添加黑名单的玩家名称:"
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 13-77, warpins: 4 ---
+	local titlePng = "pic/common/msgtitle.png"
+	local input = nil
+	local _, bg = common.msgbox("", {
+		okFunc = function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			local str = input:getText()
+
+			cb(str)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	an.newLabel(tip, 20, 1):addTo(bg):pos(bg.getw(bg)/2, 180):anchor(0.5, 0.5)
+
+	input = an.newInput(bg.getw(bg)/2, 140, 250, 36, 14, {
+		checkCLen = true,
+		bg = {
+			h = 36,
+			tex = res.gettex2("pic/scale/scale16.png"),
+			offset = {
+				-10,
+				2
+			}
+		}
+	}):addTo(bg):anchor(0.5, 0.5)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+relation.showAttentionColorMenu = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if tolua.isnull(self.selectedCell_)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-16, warpins: 1 ---
+	local playerName = self.selectedCell_.name
+	local cellCfg = {}
+	local interval = 20
+
+	--- END OF BLOCK #2 ---
+
+	for k, v in ipairs(relation.ATTENTION_COLORS)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 17-33, warpins: 1 ---
+	local c = {}
+	c.w = 92
+	c.h = 40
+	c.idx = v
+	local clr = def.colors.get(v, true)
+	c.clr = clr
+	c.cellCls = function ()
+		--- BLOCK #0 1-31, warpins: 1 ---
+		sound.playSound("103")
+
+		local n = display.newNode():size(c.w, c.h)
+
+		display.newColorLayer(c.clr):size(c.w, c.h):add2(n)
+
+		return n
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	cellCfg[k] = c
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 34-35, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 36-52, warpins: 1 ---
+	common.createOperationMenu(cellCfg, interval, function (panel, cfg)
+		--- BLOCK #0 1-43, warpins: 1 ---
+		panel.removeSelf(panel)
+		self.selectedCell_:getChildByName("color"):removeSelf()
+		display.newColorLayer(cfg.clr):pos(500, 8):addto(self.selectedCell_):size(26, 26):setName("color")
+		g_data.relation:setAttentionColor(playerName, cfg.idx)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end):add2(self):pos(324, 48)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 53-53, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+
+
+end
+relation.showMenu = function (self, pos)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if tolua.isnull(self.selectedCell_)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-15, warpins: 1 ---
+	local playerName = self.selectedCell_.name
+	local cellCfg = {}
+	local interval = 6
+	local operation = {}
+
+	--- END OF BLOCK #2 ---
+
+	if self.page ~= "friend" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-22, warpins: 1 ---
+	table.insert(operation, {
+		title = "私聊",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			relation.chatWith(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-38, warpins: 2 ---
+	table.insert(operation, {
+		title = "查看信息",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			relation.showInfo(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	local relation = g_data.relation:getRelationShip(playerName)
+
+	--- END OF BLOCK #4 ---
+
+	slot7 = if not relation.isFriend then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 39-46, warpins: 1 ---
+	table.insert(operation, {
+		title = "添加好友",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.addFriend(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 47-53, warpins: 1 ---
+	table.insert(operation, {
+		title = "删除好友",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.removeFriend(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 54-56, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot7 = if not relation.isAttention then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 57-63, warpins: 1 ---
+	table.insert(operation, {
+		title = "添加关注",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.addAttention(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 64-66, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot7 = if not relation.isBlack then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 67-73, warpins: 1 ---
+	table.insert(operation, {
+		title = "加黑名单",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.addBlackList(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 74-86, warpins: 2 ---
+	table.insert(operation, {
+		title = "邀请组队",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.addGroupMember(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #11 ---
+
+	if #g_data.player.groupMembers == 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 87-93, warpins: 1 ---
+	table.insert(operation, {
+		title = "申请入队",
+		op = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.joinGroup(playerName)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 94-98, warpins: 2 ---
+	local panel = nil
+
+	--- END OF BLOCK #13 ---
+
+	for k, v in ipairs(operation)
+
+
+	LOOP BLOCK #14
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #14 99-110, warpins: 1 ---
+	local c = {}
+	c.w = 94
+	c.h = 41
+	c.idx = k - 1
+	c.op = v
+	c.cellCls = function ()
+		--- BLOCK #0 1-37, warpins: 1 ---
+		local btn = an.newBtn(res.gettex2("pic/common/btn10.png"), function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			sound.playSound("103")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			pressImage = res.gettex2("pic/common/btn11.png"),
+			label = {
+				c.op.title,
+				18,
+				1,
+				{
+					color = def.colors.btn20
+				}
+			}
+		}):anchor(0, 0)
+
+		btn.setTouchSwallowEnabled(btn, false)
+
+		return btn
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	cellCfg[k] = c
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 111-112, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #16 113-131, warpins: 1 ---
+	panel = common.createOperationMenu(cellCfg, interval, function (panel, cfg)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if cfg.op.op then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-7, warpins: 1 ---
+		local _ = cfg.op.op()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-11, warpins: 2 ---
+		panel.removeSelf(panel)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		width = 110
+	}):add2(self):pos(pos.x, pos.y)
+
+	return 
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 132-132, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+
+
+end
+relation.onAddFriendOk = function (buf, recog)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if buf then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-13, warpins: 1 ---
+	main_scene.ui:tip(net.str(buf) .. " 同意成为您的好友")
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-14, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+relation.onAddFriendFail = function (buf, recog)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if buf then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not net.str(buf)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	local name = "对方"
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-33, warpins: 2 ---
+	local tip = {
+		[-2.0] = "不能添加自己为好友",
+		[-4.0] = "好友人数达到上限"
+	}
+	tip[-1] = name .. "不在线或输入名错误"
+	tip[-3] = name .. "已是好友"
+	tip[-5] = "添加" .. name .. "失败"
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.onAddAtt = function (recog)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local tip = {
+		[0] = "添加关注成功",
+		[-4.0] = "关注人数达到上限",
+		[-1.0] = "名字为空6",
+		[-3.0] = "不能关注自己",
+		[-5.0] = "对方已被关注",
+		[-2.0] = "对方不在线或输入名错误"
+	}
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.onAddBlack = function (recog)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local tip = {
+		[0] = "添加黑名单成功",
+		[-4.0] = "黑名单人数达到上限",
+		[-1.0] = "名字为空",
+		[-3.0] = "不能添加自己",
+		[-5.0] = "对方已在黑名单中",
+		[-2.0] = "对方不在线或输入名错误"
+	}
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.onDelFriend = function (recog)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local tip = {
+		[0] = "好友删除成功",
+		[-1.0] = "不能删除自己",
+		[-2.0] = "对方不是好友"
+	}
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.onDelAtt = function (recog)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local tip = {
+		[0] = "取消关注成功",
+		[-1.0] = "对方未被关注"
+	}
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.onDelBlack = function (recog)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local tip = {
+		[0] = "取消黑名单成功",
+		[-1.0] = "对方未被加入黑名单"
+	}
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.onUptAttClr = function (recog)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local tip = {
+		[0] = "设置关注颜色成功",
+		[-1.0] = "对方未被关注",
+		[-2.0] = "设置关注颜色失败"
+	}
+
+	main_scene.ui:tip(tip[recog])
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.addFriend = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_ADD_RELATION_FRIEND
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.addAttention = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_ADD_RELATION_ATTENTION
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.addBlackList = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_ADD_RELATION_NORMBLACKLIST
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.removeFriend = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_DEL_RELATION_FRIEND
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.removeAttention = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_DEL_RELATION_ATTENTION
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.removeBlackList = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_DEL_RELATION_NORMBLACKLIST
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.addGroupMember = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	slot1 = net.send
+	slot2 = {}
+	--- END OF BLOCK #0 ---
+
+	if #g_data.player.groupMembers == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if not CM_CREATEGROUP then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-13, warpins: 2 ---
+	slot3 = CM_ADDGROUPMEMBER
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-18, warpins: 2 ---
+	slot2[1] = slot3
+
+	slot1(slot2, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.joinGroup = function (name)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	net.send({
+		CM_JOINGROUP
+	}, {
+		name
+	})
+	main_scene.ui:tip("申请加入 " .. name .. " 的队伍")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+relation.chatWith = function (name)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.relation:getFriend(name)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-27, warpins: 1 ---
+	main_scene.ui:showPanel("relation")
+
+	local friendPanel = main_scene.ui.panels.relation
+
+	friendPanel.showContent(friendPanel, "friend")
+	friendPanel.selectPlayer(friendPanel, name)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 28-36, warpins: 1 ---
+	common.changeChatStyle({
+		{
+			"target",
+			name
+		},
+		{
+			"channel",
+			"私聊"
+		}
+	})
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 37-37, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+relation.showInfo = function (name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	net.send({
+		CM_QUERYUSERSTATE
+	}, {
+		name
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return relation
+--- END OF BLOCK #0 ---
+
+
+

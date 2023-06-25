@@ -1,0 +1,349 @@
+--- BLOCK #0 1-5, warpins: 1 ---
+local panelDelegate = {}
+panelDelegate.extend = function (target, name, parent)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	target.hidePanel = function (self)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		parent:hidePanel(name)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	target.setFocus = function (self)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not main_scene.ui.isChoseItem then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 6-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if parent.lastFocus then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-15, warpins: 1 ---
+		parent.lastFocus:setLocalZOrder(0)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 16-24, warpins: 2 ---
+		parent.lastFocus = self
+
+		self.setLocalZOrder(self, parent.z.focus)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 25-28, warpins: 1 ---
+		self.setLocalZOrder(self, 0)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 29-29, warpins: 2 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+	target.checkInPanel = function (self, pos)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		local p = self.convertToWorldSpace(self, cc.p(0, 0))
+
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(self._touchFrames)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 13-46, warpins: 1 ---
+		local rect = v.rect
+
+		--- END OF BLOCK #1 ---
+
+		slot9 = if cc.rectContainsPoint(cc.rect(p.x + rect.x*self.getScale(self), p.y + rect.y*self.getScale(self), rect.width*self.getScale(self), rect.height*self.getScale(self)), pos)
+
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 47-48, warpins: 1 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 49-50, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 51-51, warpins: 1 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+	target.addTouchFrame = function (self, rect, name, onlyRect)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		self.removeTouchFrame(self, name)
+
+		local frame = {}
+		frame.rect = rect
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not onlyRect then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-75, warpins: 1 ---
+		frame.mask1 = display.newNode():pos(rect.x, rect.y):size(rect.width, rect.height):addto(self, -999999999)
+
+		frame.mask1:setTouchEnabled(true)
+		frame.mask1:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not self._supportMove then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 5-5, warpins: 1 ---
+			return 
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 6-8, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			if event.name == "began" then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 9-26, warpins: 1 ---
+			frame.beganPos = cc.p(self:getPosition())
+			frame.beganTouchPos = cc.p(event.x, event.y)
+
+			return true
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 27-29, warpins: 2 ---
+			--- END OF BLOCK #4 ---
+
+			if event.name ~= "moved" then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 30-32, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			if event.name == "ended" then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 33-54, warpins: 2 ---
+			self:pos(event.x - frame.beganTouchPos.x + frame.beganPos.x, event.y - frame.beganTouchPos.y + frame.beganPos.y)
+
+			--- END OF BLOCK #6 ---
+
+			FLOW; TARGET BLOCK #7
+
+
+			--- BLOCK #7 55-55, warpins: 2 ---
+			return 
+			--- END OF BLOCK #7 ---
+
+
+
+		end)
+
+		frame.mask2 = display.newNode():pos(rect.x, rect.y):size(rect.width, rect.height):addto(self, 999999999)
+
+		frame.mask2:setTouchEnabled(true)
+		frame.mask2:setTouchSwallowEnabled(false)
+		frame.mask2:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if event.name == "began" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-9, warpins: 1 ---
+			self:setFocus()
+
+			return true
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 10-10, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 76-79, warpins: 2 ---
+		self._touchFrames[name] = frame
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	target.removeTouchFrame = function (self, name)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if self._touchFrames[name] then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot2 = if self._touchFrames[name].mask1 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-15, warpins: 1 ---
+		self._touchFrames[name].mask1:removeSelf()
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 16-20, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		slot2 = if self._touchFrames[name].mask2 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 21-26, warpins: 1 ---
+		self._touchFrames[name].mask2:removeSelf()
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 27-29, warpins: 2 ---
+		self._touchFrames[name] = nil
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 30-30, warpins: 2 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+	target._touchFrames = {}
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not target._mainRect then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 16-26, warpins: 1 ---
+	local rect = cc.rect(0, 0, target.getw(target), target.geth(target))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-33, warpins: 2 ---
+	target.addTouchFrame(target, rect, "main")
+
+	return target
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return panelDelegate
+--- END OF BLOCK #0 ---
+
+
+

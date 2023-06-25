@@ -1,0 +1,713 @@
+--- BLOCK #0 1-47, warpins: 1 ---
+local panelSize = cc.size(120, 120)
+local role = import("..role.role")
+local common = import("..common.common")
+local minimap = class("minimap", function ()
+	--- BLOCK #0 1-12, warpins: 1 ---
+	return display.newClippingRectangleNode(cc.rect(0, 0, panelSize.width, panelSize.height))
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(minimap, {})
+
+local __position = cc.Node.setPosition
+minimap.createPointTexture = function (self)
+	--- BLOCK #0 1-46, warpins: 1 ---
+	local dn = cc.DrawNode:create()
+
+	dn.drawPoint(dn, cc.p(0, 0), 8, cc.c4f(1, 1, 1, 1))
+
+	local pointTexture = cc.RenderTexture:create(1, 1)
+
+	pointTexture.begin(pointTexture)
+	dn.visit(dn)
+	pointTexture.endToLua(pointTexture)
+	pointTexture.retain(pointTexture)
+
+	return pointTexture.getSprite(pointTexture):getTexture()
+	--- END OF BLOCK #0 ---
+
+
+
+end
+minimap.ctor = function (self)
+	--- BLOCK #0 1-80, warpins: 1 ---
+	self.setNodeEventEnabled(self, true)
+	self.size(self, panelSize.width, panelSize.height):anchor(1, 1):pos(display.width, display.height - 29)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale2.png"), 0, 0, cc.size(self.getw(self), self.geth(self))):anchor(0, 0):add2(self, 1)
+
+	self.isTranslucent = true
+
+	display.newNode():size(self.getw(self), self.geth(self)):add2(self):enableClick(function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self.bg then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 5-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if main_scene.ui.panels.bigmap then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-17, warpins: 1 ---
+		main_scene.ui:hidePanel("bigmap")
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 18-23, warpins: 1 ---
+		main_scene.ui:showPanel("bigmap")
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 24-24, warpins: 3 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if main_scene.ui.panels.heroHead then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 81-90, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if main_scene.ui.panels.heroHead:isInPos("hideMap")
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 91-98, warpins: 1 ---
+	main_scene.ui.panels.heroHead:resetPanelPosition("openMap")
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 99-103, warpins: 3 ---
+	slot1 = minimap
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not minimap.pointTexture then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 104-106, warpins: 1 ---
+	slot2 = self.createPointTexture(self)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 107-112, warpins: 2 ---
+	slot1.pointTexture = slot2
+
+	self.reload(self)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+minimap.onCleanup = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if main_scene.ui.panels.heroHead then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if main_scene.ui.panels.heroHead:isInPos("openMap")
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-24, warpins: 1 ---
+	main_scene.ui.panels.heroHead:resetPanelPosition("hideMap")
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 25-25, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+minimap.reload = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.bg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.bg:removeSelf()
+
+	self.bg = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-12, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.pointNode then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-18, warpins: 1 ---
+	self.pointNode:removeSelf()
+
+	self.pointNode = nil
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-34, warpins: 2 ---
+	self.points = {}
+	self.pointDns = {}
+	self.percent = nil
+
+	common.getMinimapTexture(main_scene.ground.map.mapid, function (tex)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if tex then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-8, warpins: 1 ---
+		self:load(tex)
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 9-16, warpins: 1 ---
+		common.addMsg("没有可用的地图", def.colors.clRed, 256)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 17-17, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+minimap.load = function (self, tex)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.cameraPow = 1
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ground.map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-22, warpins: 1 ---
+	self.cameraPow = math.max(main_scene.ground.map.w/tex.getContentSize(tex).width*2, 0.6)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 23-73, warpins: 2 ---
+	self.bg = display.newSprite(tex):anchor(0, 0):add2(self):scale(self.cameraPow)
+	self.pointNode = display.newNode():size(self.bg:getContentSize()):add2(self):scale(self.cameraPow)
+
+	self.scroll(self, main_scene.ground.map, main_scene.ground.player)
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if main_scene.ground.map then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 74-102, warpins: 1 ---
+	local roles = {}
+
+	table.merge(roles, main_scene.ground.map.heros)
+	table.merge(roles, main_scene.ground.map.mons)
+	table.merge(roles, main_scene.ground.map.npcs)
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(roles)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 103-109, warpins: 1 ---
+	self.pointUpt(self, main_scene.ground.map, v)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 110-111, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 112-117, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if main_scene.ui.panels.bigmap then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 118-129, warpins: 1 ---
+	main_scene.ui:hidePanel("bigmap")
+	main_scene.ui:showPanel("bigmap")
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 130-130, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+minimap.setTranslucent = function (self, isTranslucent)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.isTranslucent = isTranslucent
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.bg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	slot3 = self.bg
+	slot2 = self.bg.opacity
+	--- END OF BLOCK #1 ---
+
+	slot1 = if isTranslucent then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	slot4 = 128
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	slot4 = 255
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-13, warpins: 2 ---
+	slot2(slot3, slot4)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 14-14, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+minimap.computePercent = function (self, map)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.percent then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self.bg then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-23, warpins: 1 ---
+	local size = self.bg:getTexture():getContentSize()
+	self.percent = {
+		x = size.width/map.w,
+		y = size.height/map.h
+	}
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 24-24, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+minimap.scroll = function (self, map, player)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.bg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if map then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not player then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-8, warpins: 3 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 9-114, warpins: 2 ---
+	self.computePercent(self, map)
+
+	local x = math.max(0, player.x*self.percent.x - self.getw(self)/2/self.cameraPow)
+	local y = math.max(0, player.y*self.percent.y - self.geth(self)/2/self.cameraPow)
+
+	self.bg:setTextureRect(cc.rect(x, y, self.getw(self)/self.cameraPow, self.geth(self)/self.cameraPow))
+
+	local size = self.bg:getTexture():getContentSize()
+	x = math.max(0, player.x*self.percent.x*self.cameraPow - self.getw(self)/2)
+	y = math.max(0, player.y*self.percent.y*self.cameraPow - self.geth(self)/2)
+
+	self.pointNode:pos(-x, (y + self.geth(self)) - size.height*self.cameraPow)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+minimap.addPoint = function (self, role)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.bg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if role.die then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-7, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-20, warpins: 2 ---
+	local color = nil
+	local race = role.getRace(role)
+	local pointsSz = self.cameraPow/8
+
+	--- END OF BLOCK #3 ---
+
+	slot5 = if checkExist(race, 50, 12)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 21-22, warpins: 1 ---
+	color = 215
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #5 23-29, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot5 = if checkExist(race, 0, 150)
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 30-36, warpins: 1 ---
+	color = 251
+	--- END OF BLOCK #6 ---
+
+	if g_data.player.roleid == role.roleid then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 37-38, warpins: 1 ---
+	color = 255
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 39-39, warpins: 1 ---
+	color = 249
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 40-66, warpins: 4 ---
+	local point = display.newSprite(minimap.pointTexture):add2(self.pointNode):scale(self.cameraPow/3)
+	self.points[role.roleid] = point
+
+	point.setColor(point, def.colors.get(color, true))
+
+	return point
+	--- END OF BLOCK #9 ---
+
+
+
+end
+minimap.removePoint = function (self, roleid)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.points[roleid] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	self.points[roleid]:removeSelf()
+
+	self.points[roleid] = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+minimap.pointUpt = function (self, map, role)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.bg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if role.die then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-12, warpins: 1 ---
+	self.removePoint(self, role.roleid)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #4 13-17, warpins: 1 ---
+	local point = self.points[role.roleid]
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not point then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-22, warpins: 1 ---
+	point = self.addPoint(self, role)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-50, warpins: 2 ---
+	self.computePercent(self, map)
+	__position(point, role.x*self.percent.x - point.getw(point)/2, (map.h - role.y - 1)*self.percent.y - point.geth(point)/2)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 51-51, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+
+return minimap
+--- END OF BLOCK #0 ---
+
+
+

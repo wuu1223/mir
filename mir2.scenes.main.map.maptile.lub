@@ -1,0 +1,623 @@
+--- BLOCK #0 1-27, warpins: 1 ---
+local def = import(".def")
+local maptile = class("maptile")
+
+table.merge(maptile, {})
+
+local __position = cc.Node.setPosition
+local __AnchorPoint = cc.Node.setAnchorPoint
+maptile.remove = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.sprites)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	v.removeSelf(v)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+maptile.ctor = function (self, map, x, y)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.sprites = {}
+	local data = map.file:gettile(x, y)
+
+	--- END OF BLOCK #0 ---
+
+	slot5 = if map.hasRes then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #1 12-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not data then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 14-14, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-18, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if 0 < data.bgidx then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 19-21, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if x%2 == 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 22-24, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if y%2 == 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 25-29, warpins: 1 ---
+	local img = "tiles"
+	--- END OF BLOCK #6 ---
+
+	if 0 < data.tileLib then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 30-33, warpins: 1 ---
+	img = img .. data.tileLib + 1
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 34-72, warpins: 2 ---
+	local bg = m2spr.new(img, data.bgidx - 1, {
+		asyncPriority = 2
+	}).spr:anchor(0, 0):flipX(data.r1):addto(map.layers.bg, y)
+	self.sprites.bg = bg
+
+	__position(bg, x*def.tile.w, (map.h - y - 1)*def.tile.h)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 73-76, warpins: 4 ---
+	--- END OF BLOCK #9 ---
+
+	if 0 < data.mididx then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #10 77-81, warpins: 1 ---
+	local img = "smtiles"
+	--- END OF BLOCK #10 ---
+
+	if 0 < data.smTileLib then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 82-85, warpins: 1 ---
+	img = img .. data.smTileLib + 1
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 86-126, warpins: 2 ---
+	local mid = m2spr.new(img, data.mididx - 1, {
+		asyncPriority = 1
+	}).spr:anchor(0, 0):flipX(data.r2):addto(map.layers.mid, y)
+	self.sprites.mid = mid
+
+	__position(mid, x*def.tile.w, (map.h - y)*def.tile.h)
+
+	--- END OF BLOCK #12 ---
+
+	if data.smTilesAniFrameAndSpeed ~= 0 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #13 127-130, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if 0 < data.midAniOfs then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #14 131-134, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if 0 < data.midAniCnt then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 135-177, warpins: 1 ---
+	self.sprites.midAni = m2spr.playAnimation(img, data.mididx - 1, data.midAniCnt, nil, data.midAniBlend, nil, nil, nil, nil, 1, data.midAniOfs):anchor(0, 0):flipX(reverse):addto(map.layers.mid, y)
+
+	__position(self.sprites.midAni, x*def.tile.w, (map.h - y)*def.tile.h)
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 178-181, warpins: 5 ---
+	--- END OF BLOCK #16 ---
+
+	if 0 < data.objidx then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #17 182-186, warpins: 1 ---
+	local img = "objects"
+	--- END OF BLOCK #17 ---
+
+	if 0 < data.objFileIdx then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 187-190, warpins: 1 ---
+	img = img .. data.objFileIdx + 1
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 191-194, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	if 1 < data.aniFrame then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #20 195-211, warpins: 1 ---
+	self.sprites.obj = m2spr.playAnimation(img, data.objidx - 1, data.aniFrame, nil, data.blend, nil, nil, nil, nil, 1)
+	local yoff = 0
+	--- END OF BLOCK #20 ---
+
+	if data.aniTick == 1 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 212-212, warpins: 1 ---
+	yoff = -3
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 213-237, warpins: 2 ---
+	__position(self.sprites.obj, x*def.tile.w, (map.h - y + yoff)*def.tile.h)
+	__AnchorPoint(self.sprites.obj, cc.p(0, 0))
+
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #23 238-271, warpins: 1 ---
+	self.sprites.obj = m2spr.new(img, data.objidx - 1, {
+		asyncPriority = 1
+	})
+
+	__position(self.sprites.obj.spr, x*def.tile.w, (map.h - y)*def.tile.h)
+	__AnchorPoint(self.sprites.obj.spr, cc.p(0, 0))
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 272-275, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	slot6 = if self.sprites.obj then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 276-287, warpins: 1 ---
+	self.sprites.obj:flipX(data.r3):addto(map.layers.obj, y)
+
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 288-290, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	if data.doorIndex ~= 0 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 291-298, warpins: 1 ---
+	data.doorOpen = false
+
+	map.addDoorTile(map, data, x, y)
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 299-302, warpins: 3 ---
+	--- END OF BLOCK #28 ---
+
+	if 0 < data.aniNo then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #29 303-306, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if 0 < data.aniOfs then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #30 307-310, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	if 0 < data.aniCnt then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #31 311-367, warpins: 1 ---
+	self.sprites.ani = m2spr.playAnimation("anitiles" .. data.aniLib + 1, data.aniNo - 1, data.aniCnt - 1, nil, data.aniBlend, nil, nil, nil, nil, 1, data.aniOfs):anchor(0, 0):flipX(data.r4):addto(map.layers.obj, y)
+
+	__position(self.sprites.ani, x*def.tile.w, (map.h - y)*def.tile.h)
+	__AnchorPoint(self.sprites.ani, cc.p(0, 0))
+
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #32 368-405, warpins: 1 ---
+	self.sprites.bg = res.get2("pic/maptile/bg.png", nil, nil, {
+		class = cc.FilteredSpriteWithOne
+	}):anchor(0, 0):addto(map.layers.bg, y)
+
+	__position(self.sprites.bg, x*def.tile.w, (map.h - y)*def.tile.h)
+
+	--- END OF BLOCK #32 ---
+
+	slot4 = if data then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #33 406-408, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	slot5 = if not data.canWalk then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 409-450, warpins: 1 ---
+	self.sprites.obj = res.get2("pic/maptile/obj" .. math.random(3) .. ".png", nil, nil, {
+		class = cc.FilteredSpriteWithOne
+	}):anchor(0, 0):addto(map.layers.bg, y)
+
+	__position(self.sprites.obj, x*def.tile.w, (map.h - y)*def.tile.h)
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 451-451, warpins: 7 ---
+	return 
+	--- END OF BLOCK #35 ---
+
+
+
+end
+maptile.setDoorState = function (self, data)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local img = "objects"
+	--- END OF BLOCK #0 ---
+
+	if 0 < data.objFileIdx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	img = img .. data.objFileIdx + 1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-19, warpins: 2 ---
+	slot4 = self.sprites.obj
+	slot3 = self.sprites.obj.setImg
+	slot5 = img
+	slot6 = data.objidx - 1
+	--- END OF BLOCK #2 ---
+
+	slot7 = if data.doorOpen then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if not data.doorOffset then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-23, warpins: 2 ---
+	slot7 = 0
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 24-26, warpins: 2 ---
+	slot3(slot4, slot5, slot6 + slot7)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+maptile.addTile = function (data, x, y, bgLayer, midLayer, objLayer, maph, maxh)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < data.bgidx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if x%2 == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if y%2 == 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 11-15, warpins: 1 ---
+	local img = "tiles"
+	--- END OF BLOCK #3 ---
+
+	if 0 < data.tileLib then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-19, warpins: 1 ---
+	img = img .. data.tileLib + 1
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 20-65, warpins: 2 ---
+	local spr = res.get(img, data.bgidx - 1):anchor(0, 0):pos(x*def.tile.w, (maph - y - 1)*def.tile.h):flipX(data.r1):addto(bgLayer, y)
+	maxh = math.max(maxh, spr.getPositionY(spr) + spr.getContentSize(spr).height)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 66-69, warpins: 4 ---
+	--- END OF BLOCK #6 ---
+
+	if 0 < data.mididx then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #7 70-74, warpins: 1 ---
+	local img = "smtiles"
+	--- END OF BLOCK #7 ---
+
+	if 0 < data.smTileLib then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 75-78, warpins: 1 ---
+	img = img .. data.smTileLib + 1
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 79-123, warpins: 2 ---
+	local spr = res.get(img, data.mididx - 1):anchor(0, 0):pos(x*def.tile.w, (maph - y)*def.tile.h):flipX(data.r2):addto(midLayer, y)
+	maxh = math.max(maxh, spr.getPositionY(spr) + spr.getContentSize(spr).height)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 124-127, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if 0 < data.objidx then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #11 128-132, warpins: 1 ---
+	local img = "objects"
+	--- END OF BLOCK #11 ---
+
+	if 0 < data.objFileIdx then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 133-136, warpins: 1 ---
+	img = img .. data.objFileIdx + 1
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 137-140, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	if data.aniFrame <= 1 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 141-185, warpins: 1 ---
+	local spr = res.get(img, data.objidx - 1):anchor(0, 0):pos(x*def.tile.w, (maph - y)*def.tile.h):flipX(data.r3):addto(objLayer, y)
+	maxh = math.max(maxh, spr.getPositionY(spr) + spr.getContentSize(spr).height)
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 186-186, warpins: 3 ---
+	return maxh
+	--- END OF BLOCK #15 ---
+
+
+
+end
+
+return maptile
+--- END OF BLOCK #0 ---
+
+
+

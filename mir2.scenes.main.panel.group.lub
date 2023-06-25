@@ -1,0 +1,2215 @@
+--- BLOCK #0 1-28, warpins: 1 ---
+local group = class("group", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local common = import("..common.common")
+
+table.merge(group, {
+	lightBtn,
+	namesLayer,
+	groupLeader = false
+})
+
+group.ctor = function (self)
+	--- BLOCK #0 1-72, warpins: 1 ---
+	self._supportMove = true
+	self.groupLeader = false
+	local bg = display.newSprite(res.gettex2("pic/common/black_0.png")):anchor(0, 0):add2(self)
+
+	self.size(self, bg.getw(bg), bg.geth(bg)):anchor(0.5, 0.5):center()
+	display.newSprite(res.gettex2("pic/panels/group/title.png")):anchor(0.5, 0.5):pos(bg.getw(bg)*0.5, bg.geth(bg) - 24):add2(bg)
+
+	local width = {
+		210,
+		60,
+		60,
+		150
+	}
+	self.Titlelabel = {
+		"角色名",
+		"等级",
+		"职业",
+		"所属行会"
+	}
+	local posOffset = 143
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(width)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 73-137, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(v + 2, 42)):anchor(0.5, 0.5):pos(posOffset + v*0.5, self.geth(self) - 74):add2(self)
+
+	self.Titlelabel[i] = an.newLabel(self.Titlelabel[i], 20, 1, {
+		color = def.colors.labelTitle
+	}):anchor(0.5, 0.5):pos(posOffset + v*0.5, self.geth(self) - 74):add2(self)
+	posOffset = posOffset + v
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 138-139, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 140-186, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(self.getw(self) - 9, self.geth(self) - 8):addto(self)
+
+	--- END OF BLOCK #3 ---
+
+	if 1 < #g_data.player.groupMembers then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 187-190, warpins: 1 ---
+	g_data.player.groupEnable = true
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 191-288, warpins: 2 ---
+	self.stateLabel = an.newLabel("允许组队", 18, 1, {
+		color = def.colors.labelGray
+	}):anchor(1, 0.5):add2(bg):pos(110, 38)
+
+	local function click()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if 1 < #g_data.player.groupMembers then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-8, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-18, warpins: 2 ---
+		slot0 = net.send
+		slot1 = {
+			CM_GROUPMODE
+		}
+		--- END OF BLOCK #2 ---
+
+		slot2 = if self.groupBtn.isSelect then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 19-20, warpins: 1 ---
+		slot2 = 0
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 21-21, warpins: 1 ---
+		slot2 = 1
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 22-33, warpins: 2 ---
+		slot1.param = slot2
+
+		slot0(slot1)
+		self.groupBtn:setIsSelect(not self.groupBtn.isSelect)
+
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	self.groupBtn = an.newBtn(res.gettex2("pic/common/toggle10.png"), click, {
+		support = "easy",
+		select = {
+			res.gettex2("pic/common/toggle11.png"),
+			manual = true
+		}
+	}):anchor(0, 0.5):pos(118, 38):add2(bg)
+
+	self.groupBtn:setIsSelect(g_data.player.groupEnable)
+
+	self.labelTitle = {
+		mine = {
+			"角色名",
+			"等级",
+			"职业",
+			"所在地图",
+			{
+				"退出队伍",
+				"添加",
+				"踢出队伍"
+			},
+			"当前未组队。",
+			{
+				"tuicdw",
+				"tj",
+				"tcdw"
+			}
+		},
+		near = {
+			"角色名",
+			"等级",
+			"职业",
+			"所属行会",
+			{
+				"其他操作"
+			},
+			"当前附近无其他玩家。",
+			{
+				"cz"
+			}
+		},
+		group = {
+			"队长名",
+			"等级",
+			"人数",
+			"队长行会",
+			{
+				"申请入队"
+			},
+			"当前附近无其他队伍。",
+			{
+				"sqrd"
+			}
+		},
+		friends = {
+			"角色名",
+			"等级",
+			"职业",
+			"所属行会",
+			{
+				"邀请入队"
+			},
+			"当前无好友在线。",
+			{
+				"yqrd"
+			}
+		}
+	}
+	local texts = {
+		"mine",
+		"near",
+		"group",
+		"friends"
+	}
+	local tabs = {}
+
+	local function click(btn)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(tabs)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v == btn then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-14, warpins: 1 ---
+		v.select(v)
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 15-17, warpins: 1 ---
+		v.unselect(v)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 18-19, warpins: 3 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 20-24, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if btn.page ~= self.page then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #6 25-31, warpins: 1 ---
+		self.page = btn.page
+
+		--- END OF BLOCK #6 ---
+
+		if self.page == "near" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #7 32-42, warpins: 1 ---
+		self:showPageInfo(btn.page)
+
+		local list = {}
+		--- END OF BLOCK #7 ---
+
+		slot2 = if main_scene.ground.map then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 43-49, warpins: 1 ---
+		list = main_scene.ground.map:getHeroNameList()
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 50-54, warpins: 2 ---
+		local data = {}
+
+		--- END OF BLOCK #9 ---
+
+		for i, v in ipairs(list)
+
+		LOOP BLOCK #10
+		GO OUT TO BLOCK #12
+
+
+		--- BLOCK #10 55-69, warpins: 1 ---
+		print("Near player " .. ycFunction:getStringLenWithAscii(v) .. v)
+
+		data[#data + 1] = {
+			"string",
+			v,
+			15
+		}
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 70-71, warpins: 2 ---
+		--- END OF BLOCK #11 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #12 72-75, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if 0 < #data then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #13 76-89, warpins: 1 ---
+		net.send({
+			CM_QUERY_NEARBYPLAYER,
+			param = #list
+		}, nil, data)
+		print("net.send({CM_QUERY_NEARBYPLAYER,param=#data},nil,data)")
+
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+		--- BLOCK #14 90-93, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		if self.page == "friends" then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #15 94-103, warpins: 1 ---
+		local data = g_data.relation:getFriends()
+		local online = {}
+
+		--- END OF BLOCK #15 ---
+
+		for i, v in ipairs(data)
+
+		LOOP BLOCK #16
+		GO OUT TO BLOCK #19
+
+
+		--- BLOCK #16 104-109, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		if v.get(v, "isonline")
+
+		 == 1 then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 110-112, warpins: 1 ---
+		online[#online + 1] = v
+
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 113-114, warpins: 3 ---
+		--- END OF BLOCK #18 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #19 115-121, warpins: 1 ---
+		self:showPageInfo(btn.page, online)
+		--- END OF BLOCK #19 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+		--- BLOCK #20 122-125, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		if self.page == "mine" then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 126-140, warpins: 1 ---
+		net.send({
+			CM_QUERY_GROUP_MEMBERS
+		})
+		self:showPageInfo(btn.page, g_data.player.groupMembers)
+		--- END OF BLOCK #21 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+		--- BLOCK #22 141-144, warpins: 1 ---
+		--- END OF BLOCK #22 ---
+
+		if self.page == "group" then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 145-158, warpins: 1 ---
+		self:showPageInfo(btn.page)
+		print("CM_QUERY_NEARBYGROUP")
+		net.send({
+			CM_QUERY_NEARBYGROUP
+		})
+
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 159-159, warpins: 7 ---
+		return 
+		--- END OF BLOCK #24 ---
+
+
+
+	end
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(texts)
+
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #6 289-333, warpins: 1 ---
+	tabs[i] = an.newBtn(res.gettex2("pic/common/btn60.png"), click, {
+		support = "easy",
+		sprite = res.gettex2("pic/panels/group/" .. v .. "_n.png"),
+		anchor = {
+			0.5,
+			0.5
+		},
+		select = {
+			res.gettex2("pic/common/btn61.png"),
+			manual = true
+		}
+	}):add2(bg):anchor(0, 0.5):pos(18, (i - 1)*54 - 370)
+	tabs[i].page = v
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 334-335, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #8 336-340, warpins: 1 ---
+	click(tabs[1])
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+group.enableAllow = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.groupBtn:setIsSelect(g_data.player.groupEnable)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+group.showPageInfo = function (self, page, data)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-39, warpins: 2 ---
+	self.content = display.newNode():addto(self)
+
+	self.content:size(539, 387):anchor(1, 1):pos(self.getw(self) - 16, self.geth(self) - 70)
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not data then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 40-40, warpins: 1 ---
+	data = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 41-49, warpins: 2 ---
+	slot4 = self.groupBtn
+	slot3 = self.groupBtn.setTouchEnabled
+	--- END OF BLOCK #4 ---
+
+	if #g_data.player.groupMembers ~= 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 50-51, warpins: 1 ---
+	slot5 = false
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 52-52, warpins: 1 ---
+	slot5 = true
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 53-59, warpins: 2 ---
+	slot3(slot4, slot5)
+
+	local selectRole = nil
+
+	local function clickfunc(cmd, name)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if cmd == "退出队伍" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 3-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if #g_data.player.groupMembers == 0 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-15, warpins: 1 ---
+		main_scene.ui:tip("您还没有队伍。")
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 16-53, warpins: 1 ---
+		local msgbox = nil
+		msgbox = an.newMsgbox("", function (isOk)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if isOk == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-24, warpins: 1 ---
+			g_data.client:setLastTime("group", true)
+
+			g_data.player.groupEnable = false
+
+			net.send({
+				CM_DELGROUPMEMBER
+			}, {
+				common.getPlayerName()
+			})
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 25-25, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			hasCancel = true
+		})
+
+		an.newLabel("您确定退出队伍吗？", 20, 1, {
+			color = def.colors.cellNor
+		}):addTo(msgbox.bg):pos(msgbox.bg:getw()/2, 180):anchor(0.5, 0.5)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #4 54-55, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if cmd == "队伍链接" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 56-62, warpins: 1 ---
+		main_scene.ui:tip("此功能暂未开放。")
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #6 63-64, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if cmd == "添加" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #7 65-71, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if 0 < #g_data.player.groupMembers then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #8 72-76, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		slot2 = if not g_data.player.isTeamLeader then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 77-84, warpins: 1 ---
+		main_scene.ui:tip("不是队长不能添加成员。")
+
+		return 
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 85-148, warpins: 3 ---
+		local msgbox = nil
+		msgbox = an.newMsgbox("  输入邀请组队的玩家名.", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #1 3-9, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if msgbox.nameInput:getString()
+
+			 == "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 10-10, warpins: 1 ---
+			return 
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 11-20, warpins: 2 ---
+			--- END OF BLOCK #3 ---
+
+			if msgbox.nameInput:getString()
+			 == common.getPlayerName()
+			 then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 21-27, warpins: 1 ---
+			main_scene.ui:tip("不可邀请自己组队。")
+
+			return 
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 28-43, warpins: 2 ---
+			g_data.client:setLastTime("group", true)
+
+			slot1 = net.send
+			slot2 = {}
+			--- END OF BLOCK #5 ---
+
+			if #g_data.player.groupMembers == 0 then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 44-46, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			slot3 = if not CM_CREATEGROUP then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 47-47, warpins: 2 ---
+			slot3 = CM_ADDGROUPMEMBER
+			--- END OF BLOCK #7 ---
+
+			FLOW; TARGET BLOCK #8
+
+
+			--- BLOCK #8 48-56, warpins: 2 ---
+			slot2[1] = slot3
+
+			slot1(slot2, {
+				msgbox.nameInput:getString()
+			})
+
+			--- END OF BLOCK #8 ---
+
+			FLOW; TARGET BLOCK #9
+
+
+			--- BLOCK #9 57-57, warpins: 2 ---
+			return 
+			--- END OF BLOCK #9 ---
+
+
+
+		end, {
+			disableScroll = true,
+			hasCancel = true
+		})
+		msgbox.nameInput = an.newInput(0, 0, msgbox.bg:getw() - 60, 40, 14, {
+			checkCLen = true,
+			label = {
+				"",
+				20,
+				1
+			},
+			bg = {
+				tex = res.gettex2("pic/scale/scale16.png"),
+				offset = {
+					-10,
+					2
+				}
+			},
+			tip = {
+				"",
+				20,
+				1,
+				{
+					color = cc.c3b(128, 128, 128)
+				}
+			}
+		}):add2(msgbox.bg):pos(msgbox.bg:getw()*0.5 + 10, msgbox.bg:geth()*0.5 + 20)
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 149-150, warpins: 4 ---
+		--- END OF BLOCK #11 ---
+
+		slot1 = if not name then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 151-152, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 153-154, warpins: 2 ---
+		--- END OF BLOCK #13 ---
+
+		if cmd == "邀请入队" then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 155-195, warpins: 1 ---
+		local msgbox = nil
+		msgbox = an.newMsgbox("", function (isOk)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if isOk == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #1 3-18, warpins: 1 ---
+			g_data.client:setLastTime("group", true)
+
+			slot1 = net.send
+			slot2 = {}
+			--- END OF BLOCK #1 ---
+
+			if #g_data.player.groupMembers == 0 then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 19-21, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			slot3 = if not CM_CREATEGROUP then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 22-22, warpins: 2 ---
+			slot3 = CM_ADDGROUPMEMBER
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 23-27, warpins: 2 ---
+			slot2[1] = slot3
+
+			slot1(slot2, {
+				name
+			})
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 28-28, warpins: 2 ---
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end, {
+			hasCancel = true
+		})
+
+		an.newLabel("您确定邀请 " .. name .. " 加入队伍吗？", 20, 1, {
+			color = def.colors.cellNor
+		}):addTo(msgbox.bg):pos(msgbox.bg:getw()/2, 180):anchor(0.5, 0.5)
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+		--- BLOCK #15 196-197, warpins: 1 ---
+		--- END OF BLOCK #15 ---
+
+		if cmd == "申请入队" then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #16 198-204, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		if 0 < #g_data.player.groupMembers then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 205-211, warpins: 1 ---
+		main_scene.ui:tip("您已有队伍。")
+
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+		--- BLOCK #18 212-252, warpins: 1 ---
+		local msgbox = nil
+		msgbox = an.newMsgbox("", function (isOk)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if isOk == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-18, warpins: 1 ---
+			g_data.client:setLastTime("group", true)
+			net.send({
+				CM_JOINGROUP
+			}, {
+				name
+			})
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 19-19, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			hasCancel = true
+		})
+
+		an.newLabel("您确定申请加入 " .. name .. " 的队伍吗？", 20, 1, {
+			color = def.colors.cellNor
+		}):addTo(msgbox.bg):pos(msgbox.bg:getw()/2, 180):anchor(0.5, 0.5)
+		--- END OF BLOCK #18 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+		--- BLOCK #19 253-254, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		if cmd == "踢出队伍" then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #20 255-263, warpins: 1 ---
+		print("踢出队伍")
+		--- END OF BLOCK #20 ---
+
+		if #g_data.player.groupMembers == 0 then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 264-271, warpins: 1 ---
+		main_scene.ui:tip("您还没有队伍。")
+
+		return 
+
+		--- END OF BLOCK #21 ---
+
+		FLOW; TARGET BLOCK #22
+
+
+		--- BLOCK #22 272-278, warpins: 2 ---
+		--- END OF BLOCK #22 ---
+
+		if 0 < #g_data.player.groupMembers then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #25
+		end
+
+
+		--- BLOCK #23 279-283, warpins: 1 ---
+		--- END OF BLOCK #23 ---
+
+		slot2 = if not g_data.player.isTeamLeader then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #25
+		end
+
+
+		--- BLOCK #24 284-291, warpins: 1 ---
+		main_scene.ui:tip("不是队长不能踢出成员。")
+
+		return 
+
+		--- END OF BLOCK #24 ---
+
+		FLOW; TARGET BLOCK #25
+
+
+		--- BLOCK #25 292-332, warpins: 3 ---
+		local msgbox = nil
+		msgbox = an.newMsgbox("", function (isOk)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if isOk == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-18, warpins: 1 ---
+			g_data.client:setLastTime("group", true)
+			net.send({
+				CM_DELGROUPMEMBER
+			}, {
+				name
+			})
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 19-19, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			hasCancel = true
+		})
+
+		an.newLabel("您确定要求 " .. name .. " 离开队伍吗？", 20, 1, {
+			color = def.colors.cellNor
+		}):addTo(msgbox.bg):pos(msgbox.bg:getw()/2, 180):anchor(0.5, 0.5)
+		--- END OF BLOCK #25 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+		--- BLOCK #26 333-334, warpins: 1 ---
+		--- END OF BLOCK #26 ---
+
+		if cmd == "其他操作" then
+		JUMP TO BLOCK #27
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #27 335-344, warpins: 1 ---
+		self:showMenu(cc.p(510, 58), name)
+
+		--- END OF BLOCK #27 ---
+
+		FLOW; TARGET BLOCK #28
+
+
+		--- BLOCK #28 345-346, warpins: 6 ---
+		return 
+		--- END OF BLOCK #28 ---
+
+		FLOW; TARGET BLOCK #29
+
+
+		--- BLOCK #29 347-347, warpins: 2 ---
+		--- END OF BLOCK #29 ---
+
+
+
+	end
+
+	--- END OF BLOCK #7 ---
+
+	slot5 = if not self.labelTitle[page] then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 60-60, warpins: 1 ---
+	local labels = {}
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 61-64, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	for i=1, 4, 1
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #13
+
+	--- BLOCK #10 65-71, warpins: 2 ---
+	slot11 = self.Titlelabel[i]
+	slot10 = self.Titlelabel[i].setString
+	--- END OF BLOCK #10 ---
+
+	slot12 = if not labels[i] then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 72-72, warpins: 1 ---
+	slot12 = ""
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 73-74, warpins: 2 ---
+	slot10(slot11, slot12)
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #13 75-77, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot6 = if not labels[5] then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 78-78, warpins: 1 ---
+	slot6 = {}
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 79-82, warpins: 2 ---
+	labels[5] = slot6
+	--- END OF BLOCK #15 ---
+
+	slot6 = if not labels[7] then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 83-83, warpins: 1 ---
+	local btnSpr = {}
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 84-87, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	for i, v in ipairs(labels[5])
+
+	LOOP BLOCK #18
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #18 88-125, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		clickfunc(v, selectRole)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/group/" .. btnSpr[i] .. ".png")
+	}):add2(self.content):anchor(0.5, 0.5):pos(i*100 - 580, 38)
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 126-127, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #20 128-153, warpins: 1 ---
+	local infoView = an.newScroll(58, 62, 478, 300):add2(self.content)
+	local h = 42
+
+	infoView.setScrollSize(infoView, 530, math.max(320, #data*h))
+
+	local selectPic, selectData = nil
+	--- END OF BLOCK #20 ---
+
+	if #data == 0 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #21 154-158, warpins: 1 ---
+	slot11 = an.newLabel
+	--- END OF BLOCK #21 ---
+
+	slot12 = if not labels[6] then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 159-159, warpins: 1 ---
+	slot12 = ""
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 160-192, warpins: 2 ---
+	slot11(slot12, 24, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):pos(self.content:getw()/2 + 40, self.content:geth()/2 + 30):add2(self.content, 2)
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 193-196, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	for i, v in ipairs(data)
+
+
+	LOOP BLOCK #25
+	GO OUT TO BLOCK #55
+
+
+	--- BLOCK #25 197-204, warpins: 1 ---
+	local info = {}
+	slot17 = display.newScale9Sprite
+	slot18 = res.getframe2
+	--- END OF BLOCK #25 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 205-206, warpins: 1 ---
+	slot19 = "pic/scale/scale18.png"
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #27 207-207, warpins: 1 ---
+	slot19 = "pic/scale/scale19.png"
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 208-237, warpins: 2 ---
+	local cell = slot17(slot18(slot19), 0, 0, cc.size(530, h)):anchor(0, 0):pos(0, infoView.getScrollSize(infoView).height - i*h):add2(infoView)
+
+	--- END OF BLOCK #28 ---
+
+	if page == "mine" then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 238-243, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if v.get(v, "isonline")
+	 ~= 1 then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 244-245, warpins: 2 ---
+	--- END OF BLOCK #30 ---
+
+	if page == "near" then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 246-253, warpins: 2 ---
+	--- END OF BLOCK #31 ---
+
+	slot18 = if not cc.c3b(255, 255, 255)
+
+	 then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 254-256, warpins: 2 ---
+	local tmpColor = def.colors.cellOffline
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 257-272, warpins: 2 ---
+	local name = g_data.player:fixStrLen(v.get(v, "name"), 8)
+	slot20 = #info + 1
+	slot21 = an.newLabel
+	--- END OF BLOCK #33 ---
+
+	slot22 = if not name then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 273-273, warpins: 1 ---
+	slot22 = ""
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 274-326, warpins: 2 ---
+	info[slot20] = slot21(slot22, 18, 1, {
+		color = tmpColor
+	}):add2(cell):anchor(0.5, 0.5):pos(105, h*0.5)
+	local label = v.get(v, "level") .. ""
+	info[#info + 1] = an.newLabel(label, 18, 1, {
+		color = tmpColor
+	}):add2(cell):anchor(0.5, 0.5):pos(240, h*0.5)
+
+	--- END OF BLOCK #35 ---
+
+	if page == "group" then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 327-334, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	slot20 = if not (v.get(v, "job")
+
+	 .. "") then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 335-344, warpins: 2 ---
+	label = g_data.player:getOtherJobStr(v.get(v, "job"))
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 345-371, warpins: 2 ---
+	info[#info + 1] = an.newLabel(label, 18, 1, {
+		color = tmpColor
+	}):add2(cell):anchor(0.5, 0.5):pos(300, h*0.5)
+
+	--- END OF BLOCK #38 ---
+
+	if page == "mine" then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #39 372-377, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if v.get(v, "isonline")
+	 == 1 then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 378-383, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	slot20 = if not v.get(v, "guildName")
+
+	 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 384-384, warpins: 2 ---
+	label = "离线"
+
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 385-385, warpins: 2 ---
+	--- END OF BLOCK #42 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #43 386-391, warpins: 1 ---
+	--- END OF BLOCK #43 ---
+
+	slot20 = if not v.get(v, "guildName")
+
+	 then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 392-392, warpins: 1 ---
+	label = ""
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 393-398, warpins: 3 ---
+	slot21 = #info + 1
+	slot22 = an.newLabel
+	--- END OF BLOCK #45 ---
+
+	slot23 = if not label then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #46 399-399, warpins: 1 ---
+	slot23 = ""
+	--- END OF BLOCK #46 ---
+
+	FLOW; TARGET BLOCK #47
+
+
+	--- BLOCK #47 400-425, warpins: 2 ---
+	info[slot21] = slot22(slot23, 18, 1, {
+		color = tmpColor
+	}):add2(cell):anchor(0.5, 0.5):pos(405, h*0.5)
+
+	--- END OF BLOCK #47 ---
+
+	if v.get(v, "isCaptain")
+	 == 1 then
+	JUMP TO BLOCK #48
+	else
+	JUMP TO BLOCK #49
+	end
+
+
+	--- BLOCK #48 426-443, warpins: 1 ---
+	res.get2("pic/panels/group/icon.png"):add2(cell):anchor(0.5, 0.5):pos(30, h*0.48)
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 444-459, warpins: 2 ---
+	cell.setTouchEnabled(cell, true)
+	cell.setTouchSwallowEnabled(cell, false)
+	cell.addNodeEventListener(cell, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		cell.offsetBeginY = event.y
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #2 10-12, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #3 13-23, warpins: 1 ---
+		local offsetY = event.y - cell.offsetBeginY
+
+		--- END OF BLOCK #3 ---
+
+		if math.abs(offsetY)
+		 <= 5 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #4 24-26, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot2 = if selectPic then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #5 27-31, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		for i, v in ipairs(selectPic.info)
+
+
+		LOOP BLOCK #6
+		GO OUT TO BLOCK #10
+
+
+		--- BLOCK #6 32-37, warpins: 1 ---
+		slot8 = v
+		slot7 = v.setColor
+		--- END OF BLOCK #6 ---
+
+		slot9 = if not selectPic.color then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 38-40, warpins: 1 ---
+		slot9 = def.colors.cellNor
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 41-41, warpins: 2 ---
+		slot7(slot8, slot9)
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 42-43, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #10 44-48, warpins: 1 ---
+		selectPic:removeSelf()
+
+		selectPic = nil
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 49-93, warpins: 2 ---
+		selectRole = v:get("name")
+		selectPic = display.newScale9Sprite(res.getframe2("pic/scale/scale17.png"), 0, 0, cc.size(530, h)):anchor(0, 0):pos(0, 0):add2(cell)
+		selectPic.info = info
+		selectPic.color = tmpColor
+
+		--- END OF BLOCK #11 ---
+
+		for i, v in ipairs(info)
+
+		LOOP BLOCK #12
+		GO OUT TO BLOCK #14
+
+
+		--- BLOCK #12 94-99, warpins: 1 ---
+		v.setColor(v, def.colors.cellSel)
+
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 100-101, warpins: 2 ---
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #14 102-102, warpins: 4 ---
+		return 
+		--- END OF BLOCK #14 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #49 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #50 460-499, warpins: 1 ---
+	selectRole = v.get(v, "name")
+	selectPic = display.newScale9Sprite(res.getframe2("pic/scale/scale17.png"), 0, 0, cc.size(530, h)):anchor(0, 0):pos(0, 0):add2(cell)
+	selectPic.info = info
+	selectPic.color = tmpColor
+
+	--- END OF BLOCK #50 ---
+
+	for i, v in ipairs(info)
+
+	LOOP BLOCK #51
+	GO OUT TO BLOCK #53
+
+
+	--- BLOCK #51 500-505, warpins: 1 ---
+	v.setColor(v, def.colors.cellSel)
+
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 506-507, warpins: 2 ---
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #53 508-509, warpins: 2 ---
+	--- END OF BLOCK #53 ---
+
+	FLOW; TARGET BLOCK #54
+
+
+	--- BLOCK #54 510-511, warpins: 2 ---
+	--- END OF BLOCK #54 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #55 512-513, warpins: 1 ---
+	return 
+	--- END OF BLOCK #55 ---
+
+
+
+end
+group.allowRequest = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if g_data.client.lastTime.group then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-17, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if 5 >= socket.gettime()
+
+	 - g_data.client.lastTime.group then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 18-19, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 20-20, warpins: 2 ---
+	slot1 = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-21, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #4 ---
+
+
+
+end
+group.showMenu = function (self, pos, name)
+	--- BLOCK #0 1-26, warpins: 1 ---
+	local cellCfg = {}
+	local interval = 6
+	local operation = {}
+
+	table.insert(operation, {
+		title = "私聊",
+		op = function ()
+			--- BLOCK #0 1-11, warpins: 1 ---
+			common.changeChatStyle({
+				{
+					"target",
+					name
+				},
+				{
+					"channel",
+					"私聊"
+				}
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(operation, {
+		title = "查看信息",
+		op = function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			net.send({
+				CM_QUERYUSERSTATE
+			}, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	local relation = g_data.relation:getRelationShip(name)
+
+	--- END OF BLOCK #0 ---
+
+	slot7 = if not relation.isFriend then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 27-34, warpins: 1 ---
+	table.insert(operation, {
+		title = "添加好友",
+		op = function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			net.send({
+				CM_ADD_RELATION_FRIEND
+			}, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 35-41, warpins: 1 ---
+	table.insert(operation, {
+		title = "删除好友",
+		op = function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			net.send({
+				CM_DEL_RELATION_FRIEND
+			}, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 42-44, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if not relation.isAttention then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 45-51, warpins: 1 ---
+	table.insert(operation, {
+		title = "添加关注",
+		op = function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			net.send({
+				CM_ADD_RELATION_ATTENTION
+			}, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 52-54, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot7 = if not relation.isBlack then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 55-61, warpins: 1 ---
+	table.insert(operation, {
+		title = "加黑名单",
+		op = function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			net.send({
+				CM_ADD_RELATION_NORMBLACKLIST
+			}, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 62-74, warpins: 2 ---
+	table.insert(operation, {
+		title = "邀请组队",
+		op = function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			slot0 = net.send
+			slot1 = {}
+			--- END OF BLOCK #0 ---
+
+			if #g_data.player.groupMembers == 0 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-12, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot2 = if not CM_CREATEGROUP then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 13-13, warpins: 2 ---
+			slot2 = CM_ADDGROUPMEMBER
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 14-19, warpins: 2 ---
+			slot1[1] = slot2
+
+			slot0(slot1, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+	})
+	--- END OF BLOCK #7 ---
+
+	if #g_data.player.groupMembers == 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 75-81, warpins: 1 ---
+	table.insert(operation, {
+		title = "申请入队",
+		op = function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			net.send({
+				CM_JOINGROUP
+			}, {
+				name
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 82-86, warpins: 2 ---
+	local panel = nil
+
+	--- END OF BLOCK #9 ---
+
+	for k, v in ipairs(operation)
+
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #10 87-98, warpins: 1 ---
+	local c = {}
+	c.w = 94
+	c.h = 41
+	c.idx = k - 1
+	c.op = v
+	c.cellCls = function ()
+		--- BLOCK #0 1-37, warpins: 1 ---
+		local btn = an.newBtn(res.gettex2("pic/common/btn10.png"), function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			sound.playSound("103")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			pressImage = res.gettex2("pic/common/btn11.png"),
+			label = {
+				c.op.title,
+				18,
+				1,
+				{
+					color = def.colors.btn20
+				}
+			}
+		}):anchor(0, 0)
+
+		btn.setTouchSwallowEnabled(btn, false)
+
+		return btn
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	cellCfg[k] = c
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 99-100, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #12 101-119, warpins: 1 ---
+	panel = common.createOperationMenu(cellCfg, interval, function (panel, cfg)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if cfg.op.op then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-7, warpins: 1 ---
+		local _ = cfg.op.op()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-11, warpins: 2 ---
+		panel.removeSelf(panel)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		width = 110
+	}):add2(self):pos(pos.x, pos.y)
+
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+
+return group
+--- END OF BLOCK #0 ---
+
+
+

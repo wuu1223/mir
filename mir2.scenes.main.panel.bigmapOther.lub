@@ -1,0 +1,558 @@
+--- BLOCK #0 1-44, warpins: 1 ---
+local scale = 0.8
+local bigmapOther = class("bigmapOther", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(bigmapOther, {
+	texSize,
+	point,
+	mapScale,
+	mapNode,
+	findPathNode,
+	findPathPoint,
+	dest,
+	destPoint,
+	playerInThisMap
+})
+
+bigmapOther.ctor = function (self, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self._supportMove = true
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-297, warpins: 2 ---
+	local tex = params.tex
+	local mapData = params.mapData
+	local user = params.user
+	self.mapData = mapData
+	local mapw = 615
+	self.texSize = tex.getContentSize(tex)
+	self.mapScale = mapw/self.texSize.width
+	local mapSize = cc.size(mapw, self.texSize.height*self.mapScale)
+	local controlHeight = 112
+	local bg = display.newNode():scale(scale):add2(self)
+	local b1 = res.get2("pic/panels/bigmap/bg1.png")
+	local b2 = res.get2("pic/panels/bigmap/bg2.png")
+	local b3 = res.get2("pic/panels/bigmap/bg3.png")
+
+	bg.size(bg, b1.getw(b1), mapSize.height + controlHeight)
+	b3.anchor(b3, 0, 0):add2(bg, -1)
+	b2.anchor(b2, 0, 0):pos(0, b3.geth(b3)):scaleY((bg.geth(bg) - b1.geth(b1) - b3.geth(b3))/b2.geth(b2)):add2(bg, -1)
+	b1.anchor(b1, 0, 1):pos(0, bg.geth(bg)):add2(bg, -1)
+
+	self.mapNode = display.newNode():pos(13, 14):size(mapSize):add2(bg, 1)
+	local mapSpr = display.newSprite(tex):scale(self.mapScale):anchor(0, 0):add2(self.mapNode)
+
+	display.newScale9Sprite(res.getframe2("pic/scale/scale2.png"), 0, 0, mapSize):anchor(0, 0):add2(self.mapNode, 1)
+	self.size(self, bg.getw(bg)*scale, bg.geth(bg)*scale):anchor(0.5, 0.5):center()
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png")
+	}):anchor(1, 1):pos(self.getw(self) - 4, self.geth(self) - 4):addto(self, 1)
+	an.newLabelM(self.getw(self) - 30, 18, 1, {
+		manual = true
+	}):anchor(0, 0.5):pos(15, self.geth(self) - 58):add2(self):nextLine():addLabel(user, cc.c3b(0, 255, 0)):addLabel("当前位于"):addLabel(string.format("%s(%s,%s)", mapData.mapTitle, mapData.x, mapData.y), cc.c3b(0, 255, 0))
+
+	--- END OF BLOCK #2 ---
+
+	if g_data.map.mapTitle == mapData.mapTitle then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 298-304, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if main_scene.ground.map.mapid == mapData.mapID then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 305-306, warpins: 1 ---
+	self.playerInThisMap = true
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 307-314, warpins: 3 ---
+	self.setDestPoint(self, mapData.x, mapData.y)
+	--- END OF BLOCK #5 ---
+
+	slot13 = if self.playerInThisMap then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 315-409, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-16, warpins: 1 ---
+		local x = mapData.x
+		local y = mapData.y + 1
+
+		--- END OF BLOCK #0 ---
+
+		slot2 = if main_scene.ground.map:canWalk(x, y)
+		.block then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 17-23, warpins: 1 ---
+		main_scene.ui:tip("目标是阻挡, 无法传送！")
+
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 24-29, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if g_data.equip.items.7 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 30-38, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if g_data.equip.items.7.getVar("name")
+		 ~= "传送戒指" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #4 39-44, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot2 = if g_data.equip.items.8 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 45-53, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if g_data.equip.items.8.getVar("name")
+		 ~= "传送戒指" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 54-60, warpins: 2 ---
+		an.newMsgbox("需要佩戴传送戒指！", nil, {
+			center = true
+		})
+
+		return 
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 61-74, warpins: 3 ---
+		net.send_old({
+			CM_SAY
+		}, {
+			"@传送 " .. x .. " " .. y
+		})
+
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/bigmap/cszt.png")
+	}):anchor(1, 0.5):pos(self.getw(self) - 112, self.geth(self) - 58):add2(self)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-16, warpins: 1 ---
+		local x = mapData.x
+		local y = mapData.y + 1
+
+		--- END OF BLOCK #0 ---
+
+		slot2 = if main_scene.ground.map:canWalk(x, y)
+		.block then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 17-27, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot2 = if main_scene.ground.map:canWalk(x, y - 1)
+		.block then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 28-34, warpins: 1 ---
+		main_scene.ui:tip("目标是阻挡, 无法到达！")
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 35-45, warpins: 3 ---
+		main_scene.ui.console.controller.autoFindPath:searching(x, y)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/bigmap/xlzt.png")
+	}):anchor(1, 0.5):pos(self.getw(self) - 12, self.geth(self) - 58):add2(self)
+	self.pointUpt(self, main_scene.ground.map, main_scene.ground.player)
+	--- END OF BLOCK #6 ---
+
+	slot13 = if main_scene.ui.console.controller.autoFindPath.points then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 410-418, warpins: 1 ---
+	self.loadFindPathPoint(self, main_scene.ui.console.controller.autoFindPath.points)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 419-420, warpins: 3 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+bigmapOther.mapPos = function (self, x, y)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local w, h = nil
+	--- END OF BLOCK #0 ---
+
+	slot5 = if self.playerInThisMap then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	h = main_scene.ground.map.h
+	w = main_scene.ground.map.w
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 15-27, warpins: 1 ---
+	local file = res.loadmap(self.mapData.mapID)
+	h = file.geth(file)
+	w = file.getw(file)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 28-47, warpins: 2 ---
+	local percent = {}
+	percent.x = self.texSize.width/w*self.mapScale
+	percent.y = self.texSize.height/h*self.mapScale
+
+	return x*percent.x, (h - y - 1)*percent.y
+	--- END OF BLOCK #3 ---
+
+
+
+end
+bigmapOther.setDestPoint = function (self, x, y)
+	--- BLOCK #0 1-36, warpins: 1 ---
+	x, y = self.mapPos(self, x, y)
+	local point = res.get2("pic/panels/bigmap/p-green.png"):anchor(0.5, 0):add2(self.mapNode, 1):pos(x, self.mapNode:geth()):moveTo(0.1, x, y)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+bigmapOther.removeAllFindPath = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.playerInThisMap then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.findPathNode then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-13, warpins: 1 ---
+	self.findPathNode:removeSelf()
+
+	self.findPathNode = nil
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-16, warpins: 2 ---
+	self.findPathPoint = nil
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+bigmapOther.removePoint = function (self, key)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.playerInThisMap then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if self.findPathPoint then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 8-11, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.findPathPoint[key] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 12-19, warpins: 1 ---
+	self.findPathPoint[key]:removeSelf()
+
+	self.findPathPoint[key] = nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 20-20, warpins: 3 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+bigmapOther.loadFindPathPoint = function (self, points)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.playerInThisMap then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-28, warpins: 2 ---
+	self.removeAllFindPath(self)
+
+	self.findPathNode = display.newNode():size(self.mapNode:getContentSize()):add2(self.mapNode)
+	self.findPathPoint = {}
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(points)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 29-70, warpins: 1 ---
+	local point = display.newColorLayer(cc.c4b(0, 255, 255, 255)):size(4, 4):add2(self.findPathNode)
+	local x, y = self.mapPos(self, v.x, v.y)
+
+	point.pos(point, x - self.point:getw()/2, y - self.point:geth()/2)
+
+	self.findPathPoint[v.key] = point
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 71-72, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 73-73, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+bigmapOther.pointUpt = function (self, map, player)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.playerInThisMap then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not self.point then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-27, warpins: 1 ---
+	self.point = display.newColorLayer(def.colors.get(251, true)):add2(self.mapNode, 1):size(6, 6)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-49, warpins: 2 ---
+	local x, y = self.mapPos(self, player.x, player.y)
+
+	self.point:pos(x - self.point:getw()/2, y - self.point:geth()/2)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return bigmapOther
+--- END OF BLOCK #0 ---
+
+
+

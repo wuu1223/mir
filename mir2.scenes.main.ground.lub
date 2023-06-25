@@ -1,0 +1,3495 @@
+--- BLOCK #0 1-36, warpins: 1 ---
+local map = import(".map.map")
+local magic = import(".common.magic")
+local common = import(".common.common")
+local ground = class("ground", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newLayer()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local settingLogic = import(".common.settingLogic")
+local helper = import(".common.helper.helper")
+
+table.merge(ground, {})
+
+ground.ctor = function (self)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	self.map = nil
+	self.player = nil
+
+	self.scale(self, g_data.setting.display.mapScale)
+
+	self.helper = helper
+
+	helper:init()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ground.onEnter = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ground.onExit = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ground.update = function (self, dt)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	self.map:update(dt)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+ground.processMsg = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not msg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-8, warpins: 1 ---
+	local function tip(str, func)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		an.newMsgbox(str, func)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local ident = msg.ident
+	--- END OF BLOCK #2 ---
+
+	if SM_LOGON == ident then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #3 9-18, warpins: 1 ---
+	local len1 = getRecordSize("TPlayerState")
+	local len2 = getRecordSize("TPlayerStateEx")
+	slot8 = net.record
+	--- END OF BLOCK #3 ---
+
+	if bufLen == len1 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-20, warpins: 1 ---
+	slot9 = "TPlayerState"
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 21-21, warpins: 1 ---
+	slot9 = "TPlayerStateEx"
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 22-96, warpins: 2 ---
+	local v = slot8(slot9, buf, bufLen)
+	self.player = self.map:findRole(msg.recog, {
+		isPlayer = true,
+		roleid = msg.recog,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		feature = v.get(v, "feature"),
+		state = v.get(v, "allBodyState")
+	})
+
+	self.helper:enterMap(map.mapid)
+	net.send({
+		CM_QUERYBAGITEMS
+	})
+	g_data.player:setRoleID(msg.recog)
+	g_data.player:setSex(v.get(v, "feature"):get("sex"))
+
+	slot10 = g_data.player
+	slot9 = g_data.player.setAllowGroup
+
+	--- END OF BLOCK #6 ---
+
+	if Lobyte(Loword(v.get(v, "state")))
+
+	 ~= 1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 97-98, warpins: 1 ---
+	slot11 = false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 99-99, warpins: 1 ---
+	slot11 = true
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 100-117, warpins: 2 ---
+	slot9(slot10, slot11)
+	main_scene.ui:show()
+	main_scene.ui:showPanel("minimap")
+	g_data.mail:startSchedule()
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #10 118-120, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if SM_LOGON_64ID == ident then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 121-126, warpins: 1 ---
+	IAP.roleIdentify = buf
+
+	IAP.init()
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #12 127-129, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if SM_NEWMAP == ident then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #13 130-132, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot6 = if self.map then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 133-136, warpins: 1 ---
+	self.map:removeSelf()
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 137-155, warpins: 2 ---
+	self.map = map.new(net.str(buf)):addto(self)
+	self.player = nil
+
+	net.setWaitMsg(SM_LOGON)
+
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #16 156-158, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if SM_CHANGEMAP == ident then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #17 159-187, warpins: 1 ---
+	local strs = net.strs(buf)
+	local params = {
+		isPlayer = true
+	}
+	params.roleid = self.player.roleid
+	params.x = msg.param
+	params.y = msg.tag
+	params.dir = self.player.dir
+	params.feature = self.player.feature
+	params.state = self.player.state
+	local name = self.player.info.name
+	local hitSpeed = self.player.hitSpeed
+
+	--- END OF BLOCK #17 ---
+
+	slot10 = if self.map then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 188-191, warpins: 1 ---
+	self.map:removeSelf()
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 192-237, warpins: 2 ---
+	self.map = map.new(strs[1]):addto(self)
+	self.player = self.map:findRole(params.roleid, params)
+
+	self.player.info:setHP(g_data.player.ability:get("HP"), g_data.player.ability:get("maxHP"))
+	self.helper:enterMap(net.str(buf))
+	--- END OF BLOCK #19 ---
+
+	slot10 = if name.texts then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 238-244, warpins: 1 ---
+	self.player.info:setName(name.texts, name.color)
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 245-247, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+	slot10 = if name.color then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 248-253, warpins: 1 ---
+	self.player.info:setNameColor(name.color)
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 254-279, warpins: 2 ---
+	self.player.hitSpeed = hitSpeed
+
+	main_scene.ui:hidePanel("npc")
+	main_scene.ui:hidePanel("bigmapOther")
+	main_scene.ui:hidePanel("stall")
+	--- END OF BLOCK #23 ---
+
+	slot10 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 280-286, warpins: 1 ---
+	main_scene.ui.panels.minimap:reload()
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 287-303, warpins: 2 ---
+	main_scene.ui.console.controller.autoFindPath:singleMapPathStop()
+	main_scene.ui.console.controller.autoFindPath:research()
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #26 304-306, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if SM_MAPINFO_EX == ident then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 307-314, warpins: 1 ---
+	g_data.map:setMapReplaceTable(buf, bufLen)
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #28 315-317, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	if SM_SAFE_ZONE_INFO == ident then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 318-326, warpins: 1 ---
+	g_data.map:setSafeZone(msg.param, buf, bufLen)
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #30 327-329, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	if SM_AREASTATE == ident then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 330-344, warpins: 1 ---
+	g_data.map:setMapState(msg.recog)
+	main_scene.ui.console:call("bottom", "uptMap")
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #32 345-347, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if SM_MAPDESCRIPTION == ident then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #33 348-375, warpins: 1 ---
+	g_data.map:setMapTitle(net.strs(buf, string.char(13))[1])
+	main_scene.ui.console:call("bottom", "uptMap")
+	--- END OF BLOCK #33 ---
+
+	slot6 = if main_scene.ui.panels.bigmap then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #34 376-383, warpins: 1 ---
+	main_scene.ui.panels.bigmap:updateTitle()
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #35 384-386, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	if SM_LEVELUP == ident then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 387-399, warpins: 1 ---
+	self.map:showEffectForName("levelup", {
+		x = self.player.x,
+		y = self.player.y
+	})
+
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #37 400-402, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	if SM_FEATURECHANGED == ident then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #38 403-408, warpins: 1 ---
+	local feature = nil
+
+	--- END OF BLOCK #38 ---
+
+	if bufLen == getRecordSize("TFeature")
+
+	 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 409-416, warpins: 1 ---
+	feature = net.record("TFeature", buf, bufLen)
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #41
+
+
+	--- BLOCK #40 417-421, warpins: 1 ---
+	feature = MakeLong(msg.param, msg.tag)
+
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 422-436, warpins: 2 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		feature = feature,
+		state = MakeLong(msg.series, 0)
+	})
+
+	--- END OF BLOCK #41 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #42 437-439, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	if SM_CHARSTATUSCHANGED == ident then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #43 440-450, warpins: 1 ---
+	local state = net.record("TAllBodyState", buf, bufLen)
+
+	--- END OF BLOCK #43 ---
+
+	if self.player.roleid == msg.recog then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 451-458, warpins: 1 ---
+	self.player:processMsg(ident, nil, nil, nil, nil, state)
+	--- END OF BLOCK #44 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #45 459-468, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		state = state
+	})
+	--- END OF BLOCK #45 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #46 469-471, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if SM_USERNAME == ident then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 472-488, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		name = net.strs(buf, "\\"),
+		nameColor = msg.param
+	})
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #48 489-491, warpins: 1 ---
+	--- END OF BLOCK #48 ---
+
+	if SM_CHANGENAMECOLOR == ident then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #49 492-502, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		nameColor = msg.param
+	})
+	--- END OF BLOCK #49 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #50 503-505, warpins: 1 ---
+	--- END OF BLOCK #50 ---
+
+	if SM_CHANGELIGHT == ident then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #52
+	end
+
+
+	--- BLOCK #51 506-509, warpins: 1 ---
+	print("SM_CHANGELIGHT, 人物的照明程度？")
+	--- END OF BLOCK #51 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #52 510-517, warpins: 1 ---
+	--- END OF BLOCK #52 ---
+
+	slot6 = if checkExist(ident, SM_HIDE, SM_GHOST, SM_DISAPPEAR)
+	 then
+	JUMP TO BLOCK #53
+	else
+	JUMP TO BLOCK #56
+	end
+
+
+	--- BLOCK #53 518-523, warpins: 1 ---
+	--- END OF BLOCK #53 ---
+
+	if msg.recog ~= g_data.player.roleid then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #54 524-526, warpins: 1 ---
+	--- END OF BLOCK #54 ---
+
+	slot6 = if self.map then
+	JUMP TO BLOCK #55
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #55 527-534, warpins: 1 ---
+	self.map:addMsg({
+		remove = true,
+		roleid = msg.recog
+	})
+	--- END OF BLOCK #55 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #56 535-537, warpins: 1 ---
+	--- END OF BLOCK #56 ---
+
+	if SM_ACT_GOOD == ident then
+	JUMP TO BLOCK #57
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #57 538-549, warpins: 1 ---
+	self.player:executeSuccess()
+	main_scene.ui.console.autoRat:onActGood()
+
+	--- END OF BLOCK #57 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #58 550-552, warpins: 1 ---
+	--- END OF BLOCK #58 ---
+
+	if SM_ACT_FAIL == ident then
+	JUMP TO BLOCK #59
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #59 553-557, warpins: 1 ---
+	local x, y, dir = nil
+	--- END OF BLOCK #59 ---
+
+	if 0 < msg.param then
+	JUMP TO BLOCK #60
+	else
+	JUMP TO BLOCK #62
+	end
+
+
+	--- BLOCK #60 558-561, warpins: 1 ---
+	--- END OF BLOCK #60 ---
+
+	if 0 < msg.tag then
+	JUMP TO BLOCK #61
+	else
+	JUMP TO BLOCK #62
+	end
+
+
+	--- BLOCK #61 562-566, warpins: 1 ---
+	dir = msg.series
+	y = msg.tag
+	x = msg.param
+
+	--- END OF BLOCK #61 ---
+
+	FLOW; TARGET BLOCK #62
+
+
+	--- BLOCK #62 567-584, warpins: 3 ---
+	self.player:executeFail(x, y, dir)
+	main_scene.ui.console.autoRat:onActFail(x, y, dir)
+	--- END OF BLOCK #62 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #63 585-587, warpins: 1 ---
+	--- END OF BLOCK #63 ---
+
+	if SM_FIREON == ident then
+	JUMP TO BLOCK #64
+	else
+	JUMP TO BLOCK #65
+	end
+
+
+	--- BLOCK #64 588-608, warpins: 1 ---
+	g_data.client:setLastTime("fire", true)
+	g_data.player:setHitEnable("fire", true)
+	common.addMsg("您的武器因精神火球而炙热", 219, 256)
+	--- END OF BLOCK #64 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #65 609-611, warpins: 1 ---
+	--- END OF BLOCK #65 ---
+
+	if SM_LNGHITONOFF == ident then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #66 612-614, warpins: 1 ---
+	--- END OF BLOCK #66 ---
+
+	if msg.recog == 0 then
+	JUMP TO BLOCK #67
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #67 615-628, warpins: 1 ---
+	g_data.player:setHitEnable("long", true)
+	common.addMsg("开启刺杀剑术", 219, 256)
+	--- END OF BLOCK #67 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #68 629-642, warpins: 1 ---
+	g_data.player:setHitEnable("long", false)
+	common.addMsg("关闭刺杀剑术", 219, 256)
+	--- END OF BLOCK #68 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #69 643-645, warpins: 1 ---
+	--- END OF BLOCK #69 ---
+
+	if SM_WIDEHITONOFF == ident then
+	JUMP TO BLOCK #70
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #70 646-648, warpins: 1 ---
+	--- END OF BLOCK #70 ---
+
+	if msg.recog == 0 then
+	JUMP TO BLOCK #71
+	else
+	JUMP TO BLOCK #72
+	end
+
+
+	--- BLOCK #71 649-656, warpins: 1 ---
+	g_data.player:setHitEnable("wide", true)
+	--- END OF BLOCK #71 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #73
+
+
+	--- BLOCK #72 657-663, warpins: 1 ---
+	g_data.player:setHitEnable("wide", false)
+	--- END OF BLOCK #72 ---
+
+	FLOW; TARGET BLOCK #73
+
+
+	--- BLOCK #73 664-670, warpins: 2 ---
+	--- END OF BLOCK #73 ---
+
+	slot6 = if not main_scene.ui.console.autoRat.enableRat then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #74 671-673, warpins: 1 ---
+	--- END OF BLOCK #74 ---
+
+	if msg.recog == 0 then
+	JUMP TO BLOCK #75
+	else
+	JUMP TO BLOCK #76
+	end
+
+
+	--- BLOCK #75 674-680, warpins: 1 ---
+	common.addMsg("开启半月弯刀", 219, 256)
+	--- END OF BLOCK #75 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #76 681-687, warpins: 1 ---
+	common.addMsg("关闭半月弯刀", 219, 256)
+	--- END OF BLOCK #76 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #77 688-690, warpins: 1 ---
+	--- END OF BLOCK #77 ---
+
+	if SM_POWER_OK == ident then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #78 691-698, warpins: 1 ---
+	g_data.player:setHitEnable("pow", true)
+	--- END OF BLOCK #78 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #79 699-701, warpins: 1 ---
+	--- END OF BLOCK #79 ---
+
+	if SM_SWORDHIT_ON == ident then
+	JUMP TO BLOCK #80
+	else
+	JUMP TO BLOCK #82
+	end
+
+
+	--- BLOCK #80 702-704, warpins: 1 ---
+	--- END OF BLOCK #80 ---
+
+	if msg.recog == 0 then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #81 705-725, warpins: 1 ---
+	g_data.client:setLastTime("swordhit", true)
+	g_data.player:setHitEnable("sword", true)
+	common.addMsg("您的剑气已凝聚成形", 219, 256)
+
+	--- END OF BLOCK #81 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #82 726-728, warpins: 1 ---
+	--- END OF BLOCK #82 ---
+
+	if SM_ITEMSHOW == ident then
+	JUMP TO BLOCK #83
+	else
+	JUMP TO BLOCK #84
+	end
+
+
+	--- BLOCK #83 729-763, warpins: 1 ---
+	local itemid = msg.recog
+	local x = msg.param
+	local y = msg.tag
+	local looks = msg.series
+	local flooritem = net.record("TFloorItem", buf, string.len(buf))
+
+	self.map:showItem(true, itemid, x, y, flooritem.get(flooritem, "name"), looks, flooritem.get(flooritem, "owner"), flooritem.get(flooritem, "state"))
+
+	--- END OF BLOCK #83 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #84 764-766, warpins: 1 ---
+	--- END OF BLOCK #84 ---
+
+	if SM_ITEMHIDE == ident then
+	JUMP TO BLOCK #85
+	else
+	JUMP TO BLOCK #86
+	end
+
+
+	--- BLOCK #85 767-776, warpins: 1 ---
+	local itemid = msg.recog
+	local x = msg.param
+	local y = msg.tag
+
+	self.map:showItem(false, itemid)
+	--- END OF BLOCK #85 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #86 777-779, warpins: 1 ---
+	--- END OF BLOCK #86 ---
+
+	if SM_DISAPPEAR == ident then
+	JUMP TO BLOCK #87
+	else
+	JUMP TO BLOCK #88
+	end
+
+
+	--- BLOCK #87 780-783, warpins: 1 ---
+	print("SM_DISAPPEAR, 地上物品消失")
+	--- END OF BLOCK #87 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #88 784-786, warpins: 1 ---
+	--- END OF BLOCK #88 ---
+
+	if SM_SHOWEVENT == ident then
+	JUMP TO BLOCK #89
+	else
+	JUMP TO BLOCK #93
+	end
+
+
+	--- BLOCK #89 787-791, warpins: 1 ---
+	--- END OF BLOCK #89 ---
+
+	if getRecordSize("TEventMessage")
+	 == bufLen then
+	JUMP TO BLOCK #90
+	else
+	JUMP TO BLOCK #91
+	end
+
+
+	--- BLOCK #90 792-808, warpins: 1 ---
+	self.map:showEvent(msg.recog, Loword(msg.tag), msg.series, msg.param, net.record("TEventMessage", buf, bufLen))
+	--- END OF BLOCK #90 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #91 809-813, warpins: 1 ---
+	--- END OF BLOCK #91 ---
+
+	if getRecordSize("TEventMessage2")
+	 == bufLen then
+	JUMP TO BLOCK #92
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #92 814-830, warpins: 1 ---
+	self.map:showEvent(msg.recog, Loword(msg.tag), msg.series, msg.param, net.record("TEventMessage2", buf, bufLen))
+	--- END OF BLOCK #92 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #93 831-833, warpins: 1 ---
+	--- END OF BLOCK #93 ---
+
+	if SM_HIDEEVENT == ident then
+	JUMP TO BLOCK #94
+	else
+	JUMP TO BLOCK #95
+	end
+
+
+	--- BLOCK #94 834-839, warpins: 1 ---
+	self.map:hideEvent(msg.recog)
+	--- END OF BLOCK #94 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #95 840-842, warpins: 1 ---
+	--- END OF BLOCK #95 ---
+
+	if SM_USEITEMMAGIC == ident then
+	JUMP TO BLOCK #96
+	else
+	JUMP TO BLOCK #97
+	end
+
+
+	--- BLOCK #96 843-851, warpins: 1 ---
+	self.map:showEvent(msg.recog, msg.tag, msg.series, msg.param)
+
+	--- END OF BLOCK #96 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #97 852-854, warpins: 1 ---
+	--- END OF BLOCK #97 ---
+
+	if SM_OPENDOOR_OK ~= ident then
+	JUMP TO BLOCK #98
+	else
+	JUMP TO BLOCK #99
+	end
+
+
+	--- BLOCK #98 855-857, warpins: 1 ---
+	--- END OF BLOCK #98 ---
+
+	if SM_CLOSEDOOR == ident then
+	JUMP TO BLOCK #99
+	else
+	JUMP TO BLOCK #103
+	end
+
+
+	--- BLOCK #99 858-863, warpins: 2 ---
+	slot7 = self.map
+	slot6 = self.map.setDoorState
+	--- END OF BLOCK #99 ---
+
+	if SM_OPENDOOR_OK ~= ident then
+	JUMP TO BLOCK #100
+	else
+	JUMP TO BLOCK #101
+	end
+
+
+	--- BLOCK #100 864-865, warpins: 1 ---
+	slot8 = false
+	--- END OF BLOCK #100 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #102
+
+
+	--- BLOCK #101 866-866, warpins: 1 ---
+	slot8 = true
+
+	--- END OF BLOCK #101 ---
+
+	FLOW; TARGET BLOCK #102
+
+
+	--- BLOCK #102 867-876, warpins: 2 ---
+	slot6(slot7, slot8, msg.param, msg.tag)
+	g_data.client:setLastTime("openDoor")
+	--- END OF BLOCK #102 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #103 877-879, warpins: 1 ---
+	--- END OF BLOCK #103 ---
+
+	if SM_OPENDOOR_LOCK == ident then
+	JUMP TO BLOCK #104
+	else
+	JUMP TO BLOCK #105
+	end
+
+
+	--- BLOCK #104 880-892, warpins: 1 ---
+	main_scene.ui:tip("此门被锁定.")
+	g_data.client:setLastTime("openDoor")
+
+	--- END OF BLOCK #104 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #105 893-895, warpins: 1 ---
+	--- END OF BLOCK #105 ---
+
+	if SM_TURN == ident then
+	JUMP TO BLOCK #106
+	else
+	JUMP TO BLOCK #123
+	end
+
+
+	--- BLOCK #106 896-907, warpins: 1 ---
+	local len1 = getRecordSize("TCharDesc")
+	local len2 = getRecordSize("TNewCharDesc")
+	local len3 = getRecordSize("TNewStateRec")
+	local desc, roleMsg, job, name, nameColor = nil
+	--- END OF BLOCK #106 ---
+
+	if bufLen == len1 then
+	JUMP TO BLOCK #107
+	else
+	JUMP TO BLOCK #108
+	end
+
+
+	--- BLOCK #107 908-915, warpins: 1 ---
+	desc = net.record("TCharDesc", buf, bufLen)
+	--- END OF BLOCK #107 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #121
+
+
+	--- BLOCK #108 916-917, warpins: 1 ---
+	--- END OF BLOCK #108 ---
+
+	if bufLen == len2 then
+	JUMP TO BLOCK #109
+	else
+	JUMP TO BLOCK #110
+	end
+
+
+	--- BLOCK #109 918-925, warpins: 1 ---
+	desc = net.record("TNewCharDesc", buf, bufLen)
+	--- END OF BLOCK #109 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #121
+
+
+	--- BLOCK #110 926-927, warpins: 1 ---
+	--- END OF BLOCK #110 ---
+
+	if len3 <= bufLen then
+	JUMP TO BLOCK #111
+	else
+	JUMP TO BLOCK #121
+	end
+
+
+	--- BLOCK #111 928-950, warpins: 1 ---
+	desc, buf, bufLen = net.record("TNewStateRec", buf, bufLen)
+	roleMsg = true
+	job = desc.get(desc, "job")
+	nameColor = desc.get(desc, "nameClr")
+	--- END OF BLOCK #111 ---
+
+	if 0 < bufLen then
+	JUMP TO BLOCK #112
+	else
+	JUMP TO BLOCK #121
+	end
+
+
+	--- BLOCK #112 951-957, warpins: 1 ---
+	local strs = net.strs(buf)
+	--- END OF BLOCK #112 ---
+
+	slot15 = if strs[1] then
+	JUMP TO BLOCK #113
+	else
+	JUMP TO BLOCK #114
+	end
+
+
+	--- BLOCK #113 958-963, warpins: 1 ---
+	name = string.split(strs[1], "\\")
+
+	--- END OF BLOCK #113 ---
+
+	FLOW; TARGET BLOCK #114
+
+
+	--- BLOCK #114 964-966, warpins: 2 ---
+	--- END OF BLOCK #114 ---
+
+	slot15 = if strs[2] then
+	JUMP TO BLOCK #115
+	else
+	JUMP TO BLOCK #117
+	end
+
+
+	--- BLOCK #115 967-976, warpins: 1 ---
+	--- END OF BLOCK #115 ---
+
+	if string.byte(strs[2])
+	 == string.byte("+")
+
+	 then
+	JUMP TO BLOCK #116
+	else
+	JUMP TO BLOCK #117
+	end
+
+
+	--- BLOCK #116 977-987, warpins: 1 ---
+	local heroTeam = cWilIdxHeroTeamLord
+	slot16 = string.sub(strs[2], 2, string.len(strs[2]))
+
+	--- END OF BLOCK #116 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #121
+
+
+	--- BLOCK #117 988-990, warpins: 2 ---
+	--- END OF BLOCK #117 ---
+
+	slot15 = if strs[2] then
+	JUMP TO BLOCK #118
+	else
+	JUMP TO BLOCK #120
+	end
+
+
+	--- BLOCK #118 991-1000, warpins: 1 ---
+	--- END OF BLOCK #118 ---
+
+	if string.byte(strs[2])
+	 == string.byte("-")
+
+	 then
+	JUMP TO BLOCK #119
+	else
+	JUMP TO BLOCK #120
+	end
+
+
+	--- BLOCK #119 1001-1011, warpins: 1 ---
+	local heroTeam = cWilIdxHeroTeamMember
+	slot16 = string.sub(strs[2], 2, string.len(strs[2]))
+	--- END OF BLOCK #119 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #121
+
+
+	--- BLOCK #120 1012-1013, warpins: 2 ---
+	local heroTeam = 0
+	slot16 = strs[2]
+
+	--- END OF BLOCK #120 ---
+
+	FLOW; TARGET BLOCK #121
+
+
+	--- BLOCK #121 1014-1015, warpins: 7 ---
+	--- END OF BLOCK #121 ---
+
+	slot9 = if desc then
+	JUMP TO BLOCK #122
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #122 1016-1045, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		feature = desc.get(desc, "feature"),
+		state = desc.get(desc, "status"),
+		job = job,
+		name = name,
+		nameColor = nameColor
+	})
+	--- END OF BLOCK #122 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #123 1046-1062, warpins: 1 ---
+	--- END OF BLOCK #123 ---
+
+	slot6 = if checkExist(ident, SM_WALK, SM_RUN, SM_BACKSTEP, SM_SKELETON, SM_ALIVE, SM_DEATH, SM_NOWDEATH, SM_RUSH, SM_RUSHKUNG, SM_HERO_RUSH, SM_HERO_RUSHKUNG, SM_MONRUSH)
+	 then
+	JUMP TO BLOCK #124
+	else
+	JUMP TO BLOCK #133
+	end
+
+
+	--- BLOCK #124 1063-1065, warpins: 1 ---
+	--- END OF BLOCK #124 ---
+
+	slot6 = if self.player then
+	JUMP TO BLOCK #125
+	else
+	JUMP TO BLOCK #126
+	end
+
+
+	--- BLOCK #125 1066-1070, warpins: 1 ---
+	--- END OF BLOCK #125 ---
+
+	if msg.recog == self.player.roleid then
+	JUMP TO BLOCK #126
+	else
+	JUMP TO BLOCK #127
+	end
+
+
+	--- BLOCK #126 1071-1077, warpins: 2 ---
+	--- END OF BLOCK #126 ---
+
+	slot6 = if not checkExist(ident, SM_WALK, SM_RUN)
+
+	 then
+	JUMP TO BLOCK #127
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #127 1078-1086, warpins: 2 ---
+	local len1 = getRecordSize("TCharDesc")
+	local len2 = getRecordSize("TNewCharDesc")
+	local desc = nil
+	--- END OF BLOCK #127 ---
+
+	if bufLen == len1 then
+	JUMP TO BLOCK #128
+	else
+	JUMP TO BLOCK #129
+	end
+
+
+	--- BLOCK #128 1087-1094, warpins: 1 ---
+	desc = net.record("TCharDesc", buf, bufLen)
+	--- END OF BLOCK #128 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #131
+
+
+	--- BLOCK #129 1095-1096, warpins: 1 ---
+	--- END OF BLOCK #129 ---
+
+	if bufLen == len2 then
+	JUMP TO BLOCK #130
+	else
+	JUMP TO BLOCK #131
+	end
+
+
+	--- BLOCK #130 1097-1103, warpins: 1 ---
+	desc = net.record("TNewCharDesc", buf, bufLen)
+
+	--- END OF BLOCK #130 ---
+
+	FLOW; TARGET BLOCK #131
+
+
+	--- BLOCK #131 1104-1105, warpins: 3 ---
+	--- END OF BLOCK #131 ---
+
+	slot8 = if desc then
+	JUMP TO BLOCK #132
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #132 1106-1132, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		feature = desc.get(desc, "feature"),
+		state = desc.get(desc, "status")
+	})
+	--- END OF BLOCK #132 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #133 1133-1146, warpins: 1 ---
+	--- END OF BLOCK #133 ---
+
+	slot6 = if checkExist(ident, SM_HIT, SM_HEAVYHIT, SM_BIGHIT, SM_POWERHIT, SM_LONGHIT, SM_WIDEHIT, SM_HERO_LASTHIT, SM_HERO_LONGHIT, SM_SQUARE_HIT)
+	 then
+	JUMP TO BLOCK #134
+	else
+	JUMP TO BLOCK #136
+	end
+
+
+	--- BLOCK #134 1147-1151, warpins: 1 ---
+	--- END OF BLOCK #134 ---
+
+	if msg.recog ~= self.player.roleid then
+	JUMP TO BLOCK #135
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #135 1152-1168, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series)
+	})
+
+	--- END OF BLOCK #135 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #136 1169-1171, warpins: 1 ---
+	--- END OF BLOCK #136 ---
+
+	if SM_PHYSICAL_ATT == ident then
+	JUMP TO BLOCK #137
+	else
+	JUMP TO BLOCK #164
+	end
+
+
+	--- BLOCK #137 1172-1184, warpins: 1 ---
+	local v = net.record("TClientPhyAttRec", buf, bufLen)
+	local hitMode = v.get(v, "hitMode")
+	local newIdent = ident
+	--- END OF BLOCK #137 ---
+
+	if hitMode == 1000 then
+	JUMP TO BLOCK #138
+	else
+	JUMP TO BLOCK #139
+	end
+
+
+	--- BLOCK #138 1185-1186, warpins: 1 ---
+	newIdent = SM_HIT
+	--- END OF BLOCK #138 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #139 1187-1188, warpins: 1 ---
+	--- END OF BLOCK #139 ---
+
+	if hitMode == 1001 then
+	JUMP TO BLOCK #140
+	else
+	JUMP TO BLOCK #141
+	end
+
+
+	--- BLOCK #140 1189-1190, warpins: 1 ---
+	newIdent = SM_HEAVYHIT
+	--- END OF BLOCK #140 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #141 1191-1192, warpins: 1 ---
+	--- END OF BLOCK #141 ---
+
+	if hitMode == 1002 then
+	JUMP TO BLOCK #142
+	else
+	JUMP TO BLOCK #143
+	end
+
+
+	--- BLOCK #142 1193-1194, warpins: 1 ---
+	newIdent = SM_BIGHIT
+	--- END OF BLOCK #142 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #143 1195-1196, warpins: 1 ---
+	--- END OF BLOCK #143 ---
+
+	if hitMode == 1003 then
+	JUMP TO BLOCK #144
+	else
+	JUMP TO BLOCK #145
+	end
+
+
+	--- BLOCK #144 1197-1198, warpins: 1 ---
+	newIdent = SM_POWERHIT
+	--- END OF BLOCK #144 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #145 1199-1200, warpins: 1 ---
+	--- END OF BLOCK #145 ---
+
+	if hitMode == 1004 then
+	JUMP TO BLOCK #146
+	else
+	JUMP TO BLOCK #147
+	end
+
+
+	--- BLOCK #146 1201-1202, warpins: 1 ---
+	newIdent = SM_LONGHIT
+	--- END OF BLOCK #146 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #147 1203-1204, warpins: 1 ---
+	--- END OF BLOCK #147 ---
+
+	if hitMode == 1005 then
+	JUMP TO BLOCK #148
+	else
+	JUMP TO BLOCK #149
+	end
+
+
+	--- BLOCK #148 1205-1206, warpins: 1 ---
+	newIdent = SM_WIDEHIT
+	--- END OF BLOCK #148 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #149 1207-1208, warpins: 1 ---
+	--- END OF BLOCK #149 ---
+
+	if hitMode == 1007 then
+	JUMP TO BLOCK #150
+	else
+	JUMP TO BLOCK #151
+	end
+
+
+	--- BLOCK #150 1209-1210, warpins: 1 ---
+	newIdent = SM_FIREHIT
+	--- END OF BLOCK #150 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #151 1211-1212, warpins: 1 ---
+	--- END OF BLOCK #151 ---
+
+	if hitMode == 1011 then
+	JUMP TO BLOCK #152
+	else
+	JUMP TO BLOCK #153
+	end
+
+
+	--- BLOCK #152 1213-1214, warpins: 1 ---
+	newIdent = SM_HERO_LONGHIT
+	--- END OF BLOCK #152 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #153 1215-1216, warpins: 1 ---
+	--- END OF BLOCK #153 ---
+
+	if hitMode == 1012 then
+	JUMP TO BLOCK #154
+	else
+	JUMP TO BLOCK #155
+	end
+
+
+	--- BLOCK #154 1217-1218, warpins: 1 ---
+	newIdent = SM_HERO_LASTHIT
+	--- END OF BLOCK #154 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #155 1219-1220, warpins: 1 ---
+	--- END OF BLOCK #155 ---
+
+	if hitMode == 1013 then
+	JUMP TO BLOCK #156
+	else
+	JUMP TO BLOCK #157
+	end
+
+
+	--- BLOCK #156 1221-1222, warpins: 1 ---
+	newIdent = SM_SQUARE_HIT
+	--- END OF BLOCK #156 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #157 1223-1224, warpins: 1 ---
+	--- END OF BLOCK #157 ---
+
+	if hitMode == 1015 then
+	JUMP TO BLOCK #158
+	else
+	JUMP TO BLOCK #159
+	end
+
+
+	--- BLOCK #158 1225-1226, warpins: 1 ---
+	newIdent = SM_SWORD_HIT
+	--- END OF BLOCK #158 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #159 1227-1228, warpins: 1 ---
+	--- END OF BLOCK #159 ---
+
+	if hitMode == 1017 then
+	JUMP TO BLOCK #160
+	else
+	JUMP TO BLOCK #161
+	end
+
+
+	--- BLOCK #160 1229-1230, warpins: 1 ---
+	newIdent = SM_HundredHit
+	--- END OF BLOCK #160 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #163
+
+
+	--- BLOCK #161 1231-1232, warpins: 1 ---
+	--- END OF BLOCK #161 ---
+
+	if hitMode == 1018 then
+	JUMP TO BLOCK #162
+	else
+	JUMP TO BLOCK #163
+	end
+
+
+	--- BLOCK #162 1233-1233, warpins: 1 ---
+	newIdent = SM_HORIZONHIT
+
+	--- END OF BLOCK #162 ---
+
+	FLOW; TARGET BLOCK #163
+
+
+	--- BLOCK #163 1234-1257, warpins: 14 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = newIdent,
+		x = v.get(v, "x"),
+		y = v.get(v, "y"),
+		dir = v.get(v, "dir")
+	})
+	--- END OF BLOCK #163 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #164 1258-1260, warpins: 1 ---
+	--- END OF BLOCK #164 ---
+
+	if SM_BUTCH == ident then
+	JUMP TO BLOCK #165
+	else
+	JUMP TO BLOCK #167
+	end
+
+
+	--- BLOCK #165 1261-1265, warpins: 1 ---
+	--- END OF BLOCK #165 ---
+
+	if self.player.roleid ~= msg.recog then
+	JUMP TO BLOCK #166
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #166 1266-1282, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series)
+	})
+
+	--- END OF BLOCK #166 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #167 1283-1285, warpins: 1 ---
+	--- END OF BLOCK #167 ---
+
+	if SM_FLYAXE == ident then
+	JUMP TO BLOCK #168
+	else
+	JUMP TO BLOCK #169
+	end
+
+
+	--- BLOCK #168 1286-1331, warpins: 1 ---
+	local wl = net.record("TMessageBodyW", buf, bufLen)
+
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		roleParams = {
+			target = MakeLong(wl.get(wl, "tag1"), wl.get(wl, "tag2")),
+			x = wl.get(wl, "param1"),
+			y = wl.get(wl, "param2")
+		}
+	})
+
+	--- END OF BLOCK #168 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #169 1332-1334, warpins: 1 ---
+	--- END OF BLOCK #169 ---
+
+	if SM_SPELL == ident then
+	JUMP TO BLOCK #170
+	else
+	JUMP TO BLOCK #174
+	end
+
+
+	--- BLOCK #170 1335-1338, warpins: 1 ---
+	local magicId, magicLevel = nil
+	--- END OF BLOCK #170 ---
+
+	if 4 < bufLen then
+	JUMP TO BLOCK #171
+	else
+	JUMP TO BLOCK #173
+	end
+
+
+	--- BLOCK #171 1339-1349, warpins: 1 ---
+	magicId, buf, bufLen = net.int(buf, bufLen)
+	--- END OF BLOCK #171 ---
+
+	if 4 < bufLen then
+	JUMP TO BLOCK #172
+	else
+	JUMP TO BLOCK #173
+	end
+
+
+	--- BLOCK #172 1350-1355, warpins: 1 ---
+	magicLevel = net.int(buf, bufLen)
+
+	--- END OF BLOCK #172 ---
+
+	FLOW; TARGET BLOCK #173
+
+
+	--- BLOCK #173 1356-1379, warpins: 3 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		roleParams = {
+			targetX = msg.param,
+			targetY = msg.tag,
+			effect = {
+				effectID = Byte(msg.series - 1),
+				magicId = magicId,
+				magicLevel = magicLevel
+			}
+		}
+	})
+
+	--- END OF BLOCK #173 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #174 1380-1382, warpins: 1 ---
+	--- END OF BLOCK #174 ---
+
+	if SM_MAGICFIRE == ident then
+	JUMP TO BLOCK #175
+	else
+	JUMP TO BLOCK #181
+	end
+
+
+	--- BLOCK #175 1383-1386, warpins: 1 ---
+	local target, magicLevel = nil
+	--- END OF BLOCK #175 ---
+
+	if 4 <= bufLen then
+	JUMP TO BLOCK #176
+	else
+	JUMP TO BLOCK #177
+	end
+
+
+	--- BLOCK #176 1387-1394, warpins: 1 ---
+	target, buf, bufLen = net.int(buf, bufLen)
+	--- END OF BLOCK #176 ---
+
+	FLOW; TARGET BLOCK #177
+
+
+	--- BLOCK #177 1395-1397, warpins: 2 ---
+	--- END OF BLOCK #177 ---
+
+	if 4 <= bufLen then
+	JUMP TO BLOCK #178
+	else
+	JUMP TO BLOCK #179
+	end
+
+
+	--- BLOCK #178 1398-1403, warpins: 1 ---
+	magicLevel = net.int(buf, bufLen)
+
+	--- END OF BLOCK #178 ---
+
+	FLOW; TARGET BLOCK #179
+
+
+	--- BLOCK #179 1404-1431, warpins: 2 ---
+	self.map:addMsg({
+		magic = {
+			msg.recog,
+			Lobyte(msg.series),
+			Hibyte(msg.series),
+			msg.param,
+			msg.tag,
+			target
+		}
+	})
+	--- END OF BLOCK #179 ---
+
+	if msg.recog == g_data.player.roleid then
+	JUMP TO BLOCK #180
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #180 1432-1439, warpins: 1 ---
+	g_data.client:setLastTime("spell", true)
+	--- END OF BLOCK #180 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #181 1440-1442, warpins: 1 ---
+	--- END OF BLOCK #181 ---
+
+	if SM_MAGICFIRE_FAIL == ident then
+	JUMP TO BLOCK #182
+	else
+	JUMP TO BLOCK #183
+	end
+
+
+	--- BLOCK #182 1443-1446, warpins: 1 ---
+	print("SM_MAGICFIRE_FAIL")
+
+	--- END OF BLOCK #182 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #183 1447-1449, warpins: 1 ---
+	--- END OF BLOCK #183 ---
+
+	if SM_DIGUP == ident then
+	JUMP TO BLOCK #184
+	else
+	JUMP TO BLOCK #185
+	end
+
+
+	--- BLOCK #184 1450-1477, warpins: 1 ---
+	local wl = net.record("TMessageBodyWL", buf, bufLen)
+
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		feature = wl.get(wl, "param1")
+	})
+	--- END OF BLOCK #184 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #185 1478-1480, warpins: 1 ---
+	--- END OF BLOCK #185 ---
+
+	if SM_DIGDOWN == ident then
+	JUMP TO BLOCK #186
+	else
+	JUMP TO BLOCK #187
+	end
+
+
+	--- BLOCK #186 1481-1497, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series)
+	})
+
+	--- END OF BLOCK #186 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #187 1498-1500, warpins: 1 ---
+	--- END OF BLOCK #187 ---
+
+	if SM_STRUCK == ident then
+	JUMP TO BLOCK #188
+	else
+	JUMP TO BLOCK #208
+	end
+
+
+	--- BLOCK #188 1501-1506, warpins: 1 ---
+	local hp, mp, maxHp, maxMp = nil
+
+	--- END OF BLOCK #188 ---
+
+	if bufLen == getRecordSize("TMessageBodyWL")
+
+	 then
+	JUMP TO BLOCK #189
+	else
+	JUMP TO BLOCK #190
+	end
+
+
+	--- BLOCK #189 1507-1510, warpins: 1 ---
+	maxHp = msg.tag
+	hp = msg.param
+
+	--- END OF BLOCK #189 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #192
+
+
+	--- BLOCK #190 1511-1515, warpins: 1 ---
+	--- END OF BLOCK #190 ---
+
+	if bufLen == getRecordSize("TStruckInfo")
+
+	 then
+	JUMP TO BLOCK #191
+	else
+	JUMP TO BLOCK #192
+	end
+
+
+	--- BLOCK #191 1516-1541, warpins: 1 ---
+	local v = net.record("TStruckInfo", buf, bufLen)
+	maxMp = v.get(v, "maxMp")
+	maxHp = v.get(v, "maxHp")
+	mp = v.get(v, "mp")
+	hp = v.get(v, "hp")
+
+	--- END OF BLOCK #191 ---
+
+	FLOW; TARGET BLOCK #192
+
+
+	--- BLOCK #192 1542-1546, warpins: 3 ---
+	--- END OF BLOCK #192 ---
+
+	if self.player.roleid == msg.recog then
+	JUMP TO BLOCK #193
+	else
+	JUMP TO BLOCK #197
+	end
+
+
+	--- BLOCK #193 1547-1566, warpins: 1 ---
+	g_data.player.ability:set("HP", hp)
+	g_data.player.ability:set("maxHP", maxHp)
+	--- END OF BLOCK #193 ---
+
+	slot7 = if mp then
+	JUMP TO BLOCK #194
+	else
+	JUMP TO BLOCK #196
+	end
+
+
+	--- BLOCK #194 1567-1568, warpins: 1 ---
+	--- END OF BLOCK #194 ---
+
+	slot9 = if maxMp then
+	JUMP TO BLOCK #195
+	else
+	JUMP TO BLOCK #196
+	end
+
+
+	--- BLOCK #195 1569-1599, warpins: 1 ---
+	settingLogic.missHp(g_data.player.ability:get("MP") - mp, false)
+	g_data.player.ability:set("MP", mp)
+	g_data.player.ability:set("maxMP", maxMp)
+	--- END OF BLOCK #195 ---
+
+	FLOW; TARGET BLOCK #196
+
+
+	--- BLOCK #196 1600-1614, warpins: 3 ---
+	self.player.info:setHP(hp, maxHp, msg.series)
+	settingLogic.missHp(msg.series, true)
+	--- END OF BLOCK #196 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #207
+
+
+	--- BLOCK #197 1615-1619, warpins: 1 ---
+	--- END OF BLOCK #197 ---
+
+	slot10 = if self.player.hero then
+	JUMP TO BLOCK #198
+	else
+	JUMP TO BLOCK #207
+	end
+
+
+	--- BLOCK #198 1620-1626, warpins: 1 ---
+	--- END OF BLOCK #198 ---
+
+	if self.player.hero.roleid == msg.recog then
+	JUMP TO BLOCK #199
+	else
+	JUMP TO BLOCK #207
+	end
+
+
+	--- BLOCK #199 1627-1650, warpins: 1 ---
+	g_data.hero.ability:set("HP", hp)
+	g_data.hero.ability:set("maxHP", maxHp)
+	--- END OF BLOCK #199 ---
+
+	if 0 < msg.series then
+	JUMP TO BLOCK #200
+	else
+	JUMP TO BLOCK #201
+	end
+
+
+	--- BLOCK #200 1651-1657, warpins: 1 ---
+	settingLogic.missHp(msg.series, true, true)
+	--- END OF BLOCK #200 ---
+
+	FLOW; TARGET BLOCK #201
+
+
+	--- BLOCK #201 1658-1659, warpins: 2 ---
+	--- END OF BLOCK #201 ---
+
+	slot7 = if mp then
+	JUMP TO BLOCK #202
+	else
+	JUMP TO BLOCK #206
+	end
+
+
+	--- BLOCK #202 1660-1661, warpins: 1 ---
+	--- END OF BLOCK #202 ---
+
+	slot9 = if maxMp then
+	JUMP TO BLOCK #203
+	else
+	JUMP TO BLOCK #206
+	end
+
+
+	--- BLOCK #203 1662-1673, warpins: 1 ---
+	--- END OF BLOCK #203 ---
+
+	if 0 < g_data.hero.ability:get("MP")
+	 - mp then
+	JUMP TO BLOCK #204
+	else
+	JUMP TO BLOCK #205
+	end
+
+
+	--- BLOCK #204 1674-1688, warpins: 1 ---
+	settingLogic.missHp(g_data.hero.ability:get("MP") - mp, false, true)
+	--- END OF BLOCK #204 ---
+
+	FLOW; TARGET BLOCK #205
+
+
+	--- BLOCK #205 1689-1708, warpins: 2 ---
+	g_data.hero.ability:set("MP", mp)
+	g_data.hero.ability:set("maxMP", maxMp)
+	--- END OF BLOCK #205 ---
+
+	FLOW; TARGET BLOCK #206
+
+
+	--- BLOCK #206 1709-1719, warpins: 3 ---
+	self.player.hero.info:setHP(hp, maxHp, msg.series)
+	--- END OF BLOCK #206 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #207
+
+
+	--- BLOCK #207 1720-1734, warpins: 4 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		hp = hp,
+		maxhp = maxHp,
+		outhp = msg.series
+	})
+	--- END OF BLOCK #207 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #208 1735-1737, warpins: 1 ---
+	--- END OF BLOCK #208 ---
+
+	if SM_SHOWBODY_EFFECT == ident then
+	JUMP TO BLOCK #209
+	else
+	JUMP TO BLOCK #213
+	end
+
+
+	--- BLOCK #209 1738-1740, warpins: 1 ---
+	--- END OF BLOCK #209 ---
+
+	if msg.param == 11 then
+	JUMP TO BLOCK #210
+	else
+	JUMP TO BLOCK #211
+	end
+
+
+	--- BLOCK #210 1741-1749, warpins: 1 ---
+	self.map:showEffectForName("protectionStruck", {
+		roleid = msg.recog
+	})
+	--- END OF BLOCK #210 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #211 1750-1752, warpins: 1 ---
+	--- END OF BLOCK #211 ---
+
+	if msg.param == 20 then
+	JUMP TO BLOCK #212
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #212 1753-1761, warpins: 1 ---
+	self.map:showEffectForName("bloodlust", {
+		roleid = msg.recog
+	})
+
+	--- END OF BLOCK #212 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #213 1762-1764, warpins: 1 ---
+	--- END OF BLOCK #213 ---
+
+	if SM_HEALTHSPELLCHANGED == ident then
+	JUMP TO BLOCK #214
+	else
+	JUMP TO BLOCK #235
+	end
+
+
+	--- BLOCK #214 1765-1770, warpins: 1 ---
+	local hp, mp, maxHp, maxMp = nil
+
+	--- END OF BLOCK #214 ---
+
+	if bufLen == getRecordSize("TMessageBodyWL")
+
+	 then
+	JUMP TO BLOCK #215
+	else
+	JUMP TO BLOCK #216
+	end
+
+
+	--- BLOCK #215 1771-1797, warpins: 1 ---
+	local v = net.record("TMessageBodyWL", buf, bufLen)
+	maxMp = v.get(v, "tag2")
+	maxHp = v.get(v, "param2")
+	mp = v.get(v, "tag1")
+	hp = v.get(v, "param1")
+	--- END OF BLOCK #215 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #217
+
+
+	--- BLOCK #216 1798-1802, warpins: 1 ---
+	maxHp = msg.series
+	mp = msg.tag
+	hp = msg.param
+	--- END OF BLOCK #216 ---
+
+	FLOW; TARGET BLOCK #217
+
+
+	--- BLOCK #217 1803-1807, warpins: 2 ---
+	--- END OF BLOCK #217 ---
+
+	if self.player.roleid == msg.recog then
+	JUMP TO BLOCK #218
+	else
+	JUMP TO BLOCK #224
+	end
+
+
+	--- BLOCK #218 1808-1852, warpins: 1 ---
+	local missHp = g_data.player.ability:get("HP") - hp
+	local missMp = g_data.player.ability:get("MP") - mp
+
+	g_data.player.ability:set("HP", hp)
+	g_data.player.ability:set("maxHP", maxHp)
+	g_data.player.ability:set("MP", mp)
+	--- END OF BLOCK #218 ---
+
+	slot9 = if maxMp then
+	JUMP TO BLOCK #219
+	else
+	JUMP TO BLOCK #220
+	end
+
+
+	--- BLOCK #219 1853-1861, warpins: 1 ---
+	g_data.player.ability:set("maxMP", maxMp)
+	--- END OF BLOCK #219 ---
+
+	FLOW; TARGET BLOCK #220
+
+
+	--- BLOCK #220 1862-1871, warpins: 2 ---
+	self.player.info:setHP(hp, maxHp)
+	--- END OF BLOCK #220 ---
+
+	if 0 < missHp then
+	JUMP TO BLOCK #221
+	else
+	JUMP TO BLOCK #222
+	end
+
+
+	--- BLOCK #221 1872-1878, warpins: 1 ---
+	settingLogic.missHp(missHp, true, false)
+	--- END OF BLOCK #221 ---
+
+	FLOW; TARGET BLOCK #222
+
+
+	--- BLOCK #222 1879-1881, warpins: 2 ---
+	--- END OF BLOCK #222 ---
+
+	if 0 < missMp then
+	JUMP TO BLOCK #223
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #223 1882-1889, warpins: 1 ---
+	settingLogic.missHp(missMp, false, false)
+
+	--- END OF BLOCK #223 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #224 1890-1894, warpins: 1 ---
+	--- END OF BLOCK #224 ---
+
+	slot10 = if self.player.hero then
+	JUMP TO BLOCK #225
+	else
+	JUMP TO BLOCK #234
+	end
+
+
+	--- BLOCK #225 1895-1901, warpins: 1 ---
+	--- END OF BLOCK #225 ---
+
+	if self.player.hero.roleid == msg.recog then
+	JUMP TO BLOCK #226
+	else
+	JUMP TO BLOCK #234
+	end
+
+
+	--- BLOCK #226 1902-1913, warpins: 1 ---
+	local missHp = g_data.hero.ability:get("HP") - hp
+
+	--- END OF BLOCK #226 ---
+
+	if 0 < missHp then
+	JUMP TO BLOCK #227
+	else
+	JUMP TO BLOCK #228
+	end
+
+
+	--- BLOCK #227 1914-1920, warpins: 1 ---
+	settingLogic.missHp(missHp, true, true)
+
+	--- END OF BLOCK #227 ---
+
+	FLOW; TARGET BLOCK #228
+
+
+	--- BLOCK #228 1921-1932, warpins: 2 ---
+	missHp = g_data.hero.ability:get("MP") - mp
+
+	--- END OF BLOCK #228 ---
+
+	if 0 < missHp then
+	JUMP TO BLOCK #229
+	else
+	JUMP TO BLOCK #230
+	end
+
+
+	--- BLOCK #229 1933-1939, warpins: 1 ---
+	settingLogic.missHp(missHp, false, true)
+	--- END OF BLOCK #229 ---
+
+	FLOW; TARGET BLOCK #230
+
+
+	--- BLOCK #230 1940-1971, warpins: 2 ---
+	g_data.hero.ability:set("HP", hp)
+	g_data.hero.ability:set("maxHP", maxHp)
+	g_data.hero.ability:set("MP", mp)
+	--- END OF BLOCK #230 ---
+
+	slot9 = if maxMp then
+	JUMP TO BLOCK #231
+	else
+	JUMP TO BLOCK #232
+	end
+
+
+	--- BLOCK #231 1972-1981, warpins: 1 ---
+	g_data.hero.ability:set("maxMP", maxMp)
+	--- END OF BLOCK #231 ---
+
+	FLOW; TARGET BLOCK #232
+
+
+	--- BLOCK #232 1982-1997, warpins: 2 ---
+	self.player.hero.info:setHP(hp, maxHp)
+	--- END OF BLOCK #232 ---
+
+	slot11 = if main_scene.ui.panels.heroHead then
+	JUMP TO BLOCK #233
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #233 1998-2007, warpins: 1 ---
+	main_scene.ui.panels.heroHead:upt()
+	--- END OF BLOCK #233 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #234 2008-2019, warpins: 2 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		hp = hp,
+		maxhp = maxHp
+	})
+	--- END OF BLOCK #234 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #235 2020-2022, warpins: 1 ---
+	--- END OF BLOCK #235 ---
+
+	if SM_OPENHEALTH == ident then
+	JUMP TO BLOCK #236
+	else
+	JUMP TO BLOCK #238
+	end
+
+
+	--- BLOCK #236 2023-2027, warpins: 1 ---
+	--- END OF BLOCK #236 ---
+
+	if self.player.roleid ~= msg.recog then
+	JUMP TO BLOCK #237
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #237 2028-2041, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		hp = hp,
+		maxhp = maxHp
+	})
+	--- END OF BLOCK #237 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #238 2042-2044, warpins: 1 ---
+	--- END OF BLOCK #238 ---
+
+	if SM_CLOSEHEALTH == ident then
+	JUMP TO BLOCK #239
+	else
+	JUMP TO BLOCK #240
+	end
+
+
+	--- BLOCK #239 2045-2048, warpins: 1 ---
+	print("SM_CLOSEHEALTH")
+
+	--- END OF BLOCK #239 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #240 2049-2051, warpins: 1 ---
+	--- END OF BLOCK #240 ---
+
+	if SM_COMMON_INFORMATION == ident then
+	JUMP TO BLOCK #241
+	else
+	JUMP TO BLOCK #248
+	end
+
+
+	--- BLOCK #241 2052-2054, warpins: 1 ---
+	--- END OF BLOCK #241 ---
+
+	if msg.param == 6 then
+	JUMP TO BLOCK #242
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #242 2055-2062, warpins: 1 ---
+	slot7 = g_data.player
+	slot6 = g_data.player.setIsUnlimitedMove
+	--- END OF BLOCK #242 ---
+
+	if msg.tag ~= 1 then
+	JUMP TO BLOCK #243
+	else
+	JUMP TO BLOCK #244
+	end
+
+
+	--- BLOCK #243 2063-2064, warpins: 1 ---
+	slot8 = false
+	--- END OF BLOCK #243 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #245
+
+
+	--- BLOCK #244 2065-2065, warpins: 1 ---
+	slot8 = true
+
+	--- END OF BLOCK #244 ---
+
+	FLOW; TARGET BLOCK #245
+
+
+	--- BLOCK #245 2066-2069, warpins: 2 ---
+	slot6(slot7, slot8)
+	--- END OF BLOCK #245 ---
+
+	if msg.tag == 1 then
+	JUMP TO BLOCK #246
+	else
+	JUMP TO BLOCK #247
+	end
+
+
+	--- BLOCK #246 2070-2080, warpins: 1 ---
+	common.addMsg("进入安全区!", display.COLOR_WHITE, display.COLOR_RED)
+	--- END OF BLOCK #246 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #247 2081-2091, warpins: 1 ---
+	common.addMsg("离开安全区!", display.COLOR_WHITE, display.COLOR_RED)
+	--- END OF BLOCK #247 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #248 2092-2098, warpins: 1 ---
+	--- END OF BLOCK #248 ---
+
+	slot6 = if checkExist(ident, SM_SPACEMOVE_SHOW, SM_SPACEMOVE_SHOW2)
+
+	 then
+	JUMP TO BLOCK #249
+	else
+	JUMP TO BLOCK #258
+	end
+
+
+	--- BLOCK #249 2099-2104, warpins: 1 ---
+	local feature = nil
+
+	--- END OF BLOCK #249 ---
+
+	if bufLen == getRecordSize("TCharDesc")
+
+	 then
+	JUMP TO BLOCK #250
+	else
+	JUMP TO BLOCK #251
+	end
+
+
+	--- BLOCK #250 2105-2116, warpins: 1 ---
+	feature = net.record("TCharDesc", buf, bufLen):get("feature")
+
+	--- END OF BLOCK #250 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #254
+
+
+	--- BLOCK #251 2117-2121, warpins: 1 ---
+	--- END OF BLOCK #251 ---
+
+	if bufLen == getRecordSize("TNewCharDesc")
+
+	 then
+	JUMP TO BLOCK #252
+	else
+	JUMP TO BLOCK #253
+	end
+
+
+	--- BLOCK #252 2122-2133, warpins: 1 ---
+	feature = net.record("TNewCharDesc", buf, bufLen):get("feature")
+
+	--- END OF BLOCK #252 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #254
+
+
+	--- BLOCK #253 2134-2136, warpins: 1 ---
+	return true
+
+	--- END OF BLOCK #253 ---
+
+	FLOW; TARGET BLOCK #254
+
+
+	--- BLOCK #254 2137-2156, warpins: 3 ---
+	slot8 = self.map
+	slot7 = self.map.addMsg
+	slot9 = {
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		feature = feature
+	}
+	slot10 = {}
+	--- END OF BLOCK #254 ---
+
+	if SM_SPACEMOVE_SHOW == ident then
+	JUMP TO BLOCK #255
+	else
+	JUMP TO BLOCK #256
+	end
+
+
+	--- BLOCK #255 2157-2158, warpins: 1 ---
+	slot11 = "spaceMoveShow"
+	--- END OF BLOCK #255 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #257
+
+
+	--- BLOCK #256 2159-2159, warpins: 1 ---
+	slot11 = "spaceMoveShow2"
+	--- END OF BLOCK #256 ---
+
+	FLOW; TARGET BLOCK #257
+
+
+	--- BLOCK #257 2160-2167, warpins: 2 ---
+	slot10[1] = slot11
+	slot10[2] = {
+		roleid = msg.recog
+	}
+	slot9.effect = slot10
+
+	slot7(slot8, slot9)
+	--- END OF BLOCK #257 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #258 2168-2174, warpins: 1 ---
+	--- END OF BLOCK #258 ---
+
+	slot6 = if checkExist(ident, SM_SPACEMOVE_HIDE, SM_SPACEMOVE_HIDE2)
+
+	 then
+	JUMP TO BLOCK #259
+	else
+	JUMP TO BLOCK #263
+	end
+
+
+	--- BLOCK #259 2175-2182, warpins: 1 ---
+	slot7 = self.map
+	slot6 = self.map.addMsg
+	slot8 = {}
+	slot9 = {}
+	--- END OF BLOCK #259 ---
+
+	if SM_SPACEMOVE_HIDE == ident then
+	JUMP TO BLOCK #260
+	else
+	JUMP TO BLOCK #261
+	end
+
+
+	--- BLOCK #260 2183-2184, warpins: 1 ---
+	slot10 = "spaceMoveHide"
+	--- END OF BLOCK #260 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #262
+
+
+	--- BLOCK #261 2185-2185, warpins: 1 ---
+	slot10 = "spaceMoveHide2"
+	--- END OF BLOCK #261 ---
+
+	FLOW; TARGET BLOCK #262
+
+
+	--- BLOCK #262 2186-2193, warpins: 2 ---
+	slot9[1] = slot10
+	slot9[2] = {
+		roleid = msg.recog
+	}
+	slot8.effect = slot9
+
+	slot6(slot7, slot8)
+	--- END OF BLOCK #262 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #263 2194-2196, warpins: 1 ---
+	--- END OF BLOCK #263 ---
+
+	if SM_BIGMONMAGIC == ident then
+	JUMP TO BLOCK #264
+	else
+	JUMP TO BLOCK #265
+	end
+
+
+	--- BLOCK #264 2197-2214, warpins: 1 ---
+	self.map:addMsg({
+		effect = {
+			"effectNum" .. msg.series,
+			{
+				x = msg.param,
+				y = msg.tag
+			}
+		}
+	})
+	--- END OF BLOCK #264 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #265 2215-2217, warpins: 1 ---
+	--- END OF BLOCK #265 ---
+
+	if SM_DRINKEXP_STATUS == ident then
+	JUMP TO BLOCK #266
+	else
+	JUMP TO BLOCK #274
+	end
+
+
+	--- BLOCK #266 2218-2223, warpins: 1 ---
+	--- END OF BLOCK #266 ---
+
+	if msg.recog == g_data.player.roleid then
+	JUMP TO BLOCK #267
+	else
+	JUMP TO BLOCK #270
+	end
+
+
+	--- BLOCK #267 2224-2238, warpins: 1 ---
+	g_data.player:setWineExp(msg.param, msg.tag)
+	--- END OF BLOCK #267 ---
+
+	slot6 = if main_scene.ui.panels.equip then
+	JUMP TO BLOCK #268
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #268 2239-2247, warpins: 1 ---
+	--- END OF BLOCK #268 ---
+
+	if main_scene.ui.panels.equip.page == "state" then
+	JUMP TO BLOCK #269
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #269 2248-2258, warpins: 1 ---
+	main_scene.ui.panels.equip:showContent("state")
+	--- END OF BLOCK #269 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #270 2259-2265, warpins: 1 ---
+	--- END OF BLOCK #270 ---
+
+	if msg.recog == g_data.hero.roleid then
+	JUMP TO BLOCK #271
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #271 2266-2281, warpins: 1 ---
+	g_data.hero:setWineExp(msg.param, msg.tag)
+	--- END OF BLOCK #271 ---
+
+	slot6 = if main_scene.ui.panels.heroEquip then
+	JUMP TO BLOCK #272
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #272 2282-2290, warpins: 1 ---
+	--- END OF BLOCK #272 ---
+
+	if main_scene.ui.panels.heroEquip.page == "state" then
+	JUMP TO BLOCK #273
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #273 2291-2301, warpins: 1 ---
+	main_scene.ui.panels.heroEquip:showContent("state")
+	--- END OF BLOCK #273 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #274 2302-2304, warpins: 1 ---
+	--- END OF BLOCK #274 ---
+
+	if SM_DRINK_STATUS == ident then
+	JUMP TO BLOCK #275
+	else
+	JUMP TO BLOCK #285
+	end
+
+
+	--- BLOCK #275 2305-2310, warpins: 1 ---
+	--- END OF BLOCK #275 ---
+
+	if msg.recog == g_data.player.roleid then
+	JUMP TO BLOCK #276
+	else
+	JUMP TO BLOCK #279
+	end
+
+
+	--- BLOCK #276 2311-2325, warpins: 1 ---
+	g_data.player:setdrinkStatus(msg.param, msg.tag)
+	--- END OF BLOCK #276 ---
+
+	slot6 = if main_scene.ui.panels.equip then
+	JUMP TO BLOCK #277
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #277 2326-2334, warpins: 1 ---
+	--- END OF BLOCK #277 ---
+
+	if main_scene.ui.panels.equip.page == "state" then
+	JUMP TO BLOCK #278
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #278 2335-2345, warpins: 1 ---
+	main_scene.ui.panels.equip:showContent("state")
+	--- END OF BLOCK #278 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #279 2346-2352, warpins: 1 ---
+	--- END OF BLOCK #279 ---
+
+	if msg.recog == g_data.hero.roleid then
+	JUMP TO BLOCK #280
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #280 2353-2368, warpins: 1 ---
+	g_data.hero:setdrinkStatus(msg.param, msg.tag)
+	--- END OF BLOCK #280 ---
+
+	slot6 = if main_scene.ui.panels.heroEquip then
+	JUMP TO BLOCK #281
+	else
+	JUMP TO BLOCK #283
+	end
+
+
+	--- BLOCK #281 2369-2377, warpins: 1 ---
+	--- END OF BLOCK #281 ---
+
+	if main_scene.ui.panels.heroEquip.page == "state" then
+	JUMP TO BLOCK #282
+	else
+	JUMP TO BLOCK #283
+	end
+
+
+	--- BLOCK #282 2378-2387, warpins: 1 ---
+	main_scene.ui.panels.heroEquip:showContent("state")
+	--- END OF BLOCK #282 ---
+
+	FLOW; TARGET BLOCK #283
+
+
+	--- BLOCK #283 2388-2394, warpins: 3 ---
+	--- END OF BLOCK #283 ---
+
+	slot6 = if main_scene.ui.panels.heroHead then
+	JUMP TO BLOCK #284
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #284 2395-2404, warpins: 1 ---
+	main_scene.ui.panels.heroHead:upt()
+	--- END OF BLOCK #284 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #285 2405-2407, warpins: 1 ---
+	--- END OF BLOCK #285 ---
+
+	if SM_DRINK_DRUG_STATUS == ident then
+	JUMP TO BLOCK #286
+	else
+	JUMP TO BLOCK #296
+	end
+
+
+	--- BLOCK #286 2408-2413, warpins: 1 ---
+	--- END OF BLOCK #286 ---
+
+	if msg.recog == g_data.player.roleid then
+	JUMP TO BLOCK #287
+	else
+	JUMP TO BLOCK #290
+	end
+
+
+	--- BLOCK #287 2414-2428, warpins: 1 ---
+	g_data.player:setdrinkDrugStatus(msg.param, msg.tag)
+	--- END OF BLOCK #287 ---
+
+	slot6 = if main_scene.ui.panels.equip then
+	JUMP TO BLOCK #288
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #288 2429-2437, warpins: 1 ---
+	--- END OF BLOCK #288 ---
+
+	if main_scene.ui.panels.equip.page == "state" then
+	JUMP TO BLOCK #289
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #289 2438-2448, warpins: 1 ---
+	main_scene.ui.panels.equip:showContent("state")
+	--- END OF BLOCK #289 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #290 2449-2455, warpins: 1 ---
+	--- END OF BLOCK #290 ---
+
+	if msg.recog == g_data.hero.roleid then
+	JUMP TO BLOCK #291
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #291 2456-2471, warpins: 1 ---
+	g_data.hero:setdrinkDrugStatus(msg.param, msg.tag)
+	--- END OF BLOCK #291 ---
+
+	slot6 = if main_scene.ui.panels.heroEquip then
+	JUMP TO BLOCK #292
+	else
+	JUMP TO BLOCK #294
+	end
+
+
+	--- BLOCK #292 2472-2480, warpins: 1 ---
+	--- END OF BLOCK #292 ---
+
+	if main_scene.ui.panels.heroEquip.page == "state" then
+	JUMP TO BLOCK #293
+	else
+	JUMP TO BLOCK #294
+	end
+
+
+	--- BLOCK #293 2481-2490, warpins: 1 ---
+	main_scene.ui.panels.heroEquip:showContent("state")
+	--- END OF BLOCK #293 ---
+
+	FLOW; TARGET BLOCK #294
+
+
+	--- BLOCK #294 2491-2497, warpins: 3 ---
+	--- END OF BLOCK #294 ---
+
+	slot6 = if main_scene.ui.panels.heroHead then
+	JUMP TO BLOCK #295
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #295 2498-2507, warpins: 1 ---
+	main_scene.ui.panels.heroHead:upt()
+	--- END OF BLOCK #295 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #296 2508-2510, warpins: 1 ---
+	--- END OF BLOCK #296 ---
+
+	if SM_HERO_LOGON == ident then
+	JUMP TO BLOCK #297
+	else
+	JUMP TO BLOCK #302
+	end
+
+
+	--- BLOCK #297 2511-2522, warpins: 1 ---
+	sound.playSound(sound.hero_login)
+	--- END OF BLOCK #297 ---
+
+	if getRecordSize("TNewHeroLook")
+
+	 == bufLen then
+	JUMP TO BLOCK #298
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #298 2523-2579, warpins: 1 ---
+	local desc = net.record("TNewHeroLook", buf, bufLen)
+
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series),
+		feature = desc.get(desc, "feature"),
+		state = desc.get(desc, "status")
+	})
+	g_data.hero:setRoleID(msg.recog)
+	g_data.hero:setSex(desc.get(desc, "feature"):get("sex"))
+
+	--- END OF BLOCK #298 ---
+
+	slot7 = if self.map.player then
+	JUMP TO BLOCK #299
+	else
+	JUMP TO BLOCK #301
+	end
+
+
+	--- BLOCK #299 2580-2585, warpins: 1 ---
+	--- END OF BLOCK #299 ---
+
+	slot7 = if not self.map.player.hero then
+	JUMP TO BLOCK #300
+	else
+	JUMP TO BLOCK #301
+	end
+
+
+	--- BLOCK #300 2586-2594, warpins: 1 ---
+	self.map.player.hero = self.map:findRole(msg.recog)
+
+	--- END OF BLOCK #300 ---
+
+	FLOW; TARGET BLOCK #301
+
+
+	--- BLOCK #301 2595-2601, warpins: 3 ---
+	main_scene.ui:showPanel("heroHead")
+	--- END OF BLOCK #301 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #302 2602-2604, warpins: 1 ---
+	--- END OF BLOCK #302 ---
+
+	if SM_HERO_LOGOUT == ident then
+	JUMP TO BLOCK #303
+	else
+	JUMP TO BLOCK #304
+	end
+
+
+	--- BLOCK #303 2605-2651, warpins: 1 ---
+	sound.playSound(sound.hero_logout)
+
+	self.player.hero = nil
+
+	g_data.hero:_data_reset()
+	g_data.heroBag:_data_reset()
+	g_data.heroEquip:_data_reset()
+	main_scene.ui.console:call("btnHeroSkill", "hero_upt_union")
+	main_scene.ui:hidePanel("heroHead")
+	--- END OF BLOCK #303 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #304 2652-2654, warpins: 1 ---
+	--- END OF BLOCK #304 ---
+
+	if SM_HERO_LOGMAGIC == ident then
+	JUMP TO BLOCK #305
+	else
+	JUMP TO BLOCK #306
+	end
+
+
+	--- BLOCK #305 2655-2668, warpins: 1 ---
+	self.map:addMsg({
+		effect = {
+			"heroBorn",
+			{
+				x = msg.param,
+				y = msg.tag
+			}
+		}
+	})
+	--- END OF BLOCK #305 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #306 2669-2671, warpins: 1 ---
+	--- END OF BLOCK #306 ---
+
+	if SM_HERO_QUITMAGIC == ident then
+	JUMP TO BLOCK #307
+	else
+	JUMP TO BLOCK #308
+	end
+
+
+	--- BLOCK #307 2672-2685, warpins: 1 ---
+	self.map:addMsg({
+		effect = {
+			"heroHide",
+			{
+				x = msg.param,
+				y = msg.tag
+			}
+		}
+	})
+
+	--- END OF BLOCK #307 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #308 2686-2688, warpins: 1 ---
+	--- END OF BLOCK #308 ---
+
+	if SM_HERO_NAME == ident then
+	JUMP TO BLOCK #309
+	else
+	JUMP TO BLOCK #310
+	end
+
+
+	--- BLOCK #309 2689-2704, warpins: 1 ---
+	local name = net.str(buf)
+	local heroType = msg.param
+	local heroRank = msg.tag
+
+	g_data.hero:setName(name, heroType, heroRank)
+	--- END OF BLOCK #309 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #310 2705-2712, warpins: 1 ---
+	--- END OF BLOCK #310 ---
+
+	slot6 = if checkExist(ident, SM_UNITEHIT0, SM_UNITEHIT1, SM_UNITEHIT2)
+	 then
+	JUMP TO BLOCK #311
+	else
+	JUMP TO BLOCK #312
+	end
+
+
+	--- BLOCK #311 2713-2729, warpins: 1 ---
+	self.map:addMsg({
+		roleid = msg.recog,
+		ident = ident,
+		x = msg.param,
+		y = msg.tag,
+		dir = Lobyte(msg.series)
+	})
+	--- END OF BLOCK #311 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #312 2730-2732, warpins: 1 ---
+	--- END OF BLOCK #312 ---
+
+	if SM_HERO_SPLITSHADOW == ident then
+	JUMP TO BLOCK #313
+	else
+	JUMP TO BLOCK #314
+	end
+
+
+	--- BLOCK #313 2733-2748, warpins: 1 ---
+	self.map:addMsg({
+		effect = {
+			"heroSplistShadow",
+			{
+				roleid = msg.recog,
+				x = msg.param,
+				y = msg.tag
+			}
+		}
+	})
+	--- END OF BLOCK #313 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #314 2749-2751, warpins: 1 ---
+	--- END OF BLOCK #314 ---
+
+	if SM_HERO_HELPOP_OK == ident then
+	JUMP TO BLOCK #315
+	else
+	JUMP TO BLOCK #321
+	end
+
+
+	--- BLOCK #315 2752-2754, warpins: 1 ---
+	--- END OF BLOCK #315 ---
+
+	if msg.recog == 1 then
+	JUMP TO BLOCK #316
+	else
+	JUMP TO BLOCK #318
+	end
+
+
+	--- BLOCK #316 2755-2762, warpins: 1 ---
+	--- END OF BLOCK #316 ---
+
+	slot6 = if main_scene.ui.console.controller.heroLock then
+	JUMP TO BLOCK #317
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #317 2763-2785, warpins: 1 ---
+	main_scene.ui.console.controller:toggleHeroLock()
+	main_scene.ui.console:setWidgetSelect("btnHeroLock", main_scene.ui.console.controller.heroLock)
+	--- END OF BLOCK #317 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #318 2786-2788, warpins: 1 ---
+	--- END OF BLOCK #318 ---
+
+	if msg.recog == 2 then
+	JUMP TO BLOCK #319
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #319 2789-2796, warpins: 1 ---
+	--- END OF BLOCK #319 ---
+
+	slot6 = if main_scene.ui.console.controller.heroGuard then
+	JUMP TO BLOCK #320
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #320 2797-2819, warpins: 1 ---
+	main_scene.ui.console.controller:toggleHeroGuard()
+	main_scene.ui.console:setWidgetSelect("btnHeroGuard", main_scene.ui.console.controller.heroGuard)
+	--- END OF BLOCK #320 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #321 2820-2822, warpins: 1 ---
+	--- END OF BLOCK #321 ---
+
+	if SM_SHOWHELPER == ident then
+	JUMP TO BLOCK #322
+	else
+	JUMP TO BLOCK #326
+	end
+
+
+	--- BLOCK #322 2823-2825, warpins: 1 ---
+	--- END OF BLOCK #322 ---
+
+	if msg.recog == 1 then
+	JUMP TO BLOCK #323
+	else
+	JUMP TO BLOCK #324
+	end
+
+
+	--- BLOCK #323 2826-2826, warpins: 1 ---
+	--- END OF BLOCK #323 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #324 2827-2829, warpins: 1 ---
+	--- END OF BLOCK #324 ---
+
+	if msg.recog == 2 then
+	JUMP TO BLOCK #325
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #325 2830-2840, warpins: 1 ---
+	self.helper.runner.onKilledMonster(net.str(buf))
+	--- END OF BLOCK #325 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #326 2841-2843, warpins: 1 ---
+	--- END OF BLOCK #326 ---
+
+	if SM_SLAVE_BORN == ident then
+	JUMP TO BLOCK #327
+	else
+	JUMP TO BLOCK #329
+	end
+
+
+	--- BLOCK #327 2844-2845, warpins: 1 ---
+	--- END OF BLOCK #327 ---
+
+	slot2 = if buf then
+	JUMP TO BLOCK #328
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #328 2846-2856, warpins: 1 ---
+	g_data.player:addSlave(net.str(buf))
+	--- END OF BLOCK #328 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #329 2857-2859, warpins: 1 ---
+	--- END OF BLOCK #329 ---
+
+	if SM_SLAVE_VANISH == ident then
+	JUMP TO BLOCK #330
+	else
+	JUMP TO BLOCK #332
+	end
+
+
+	--- BLOCK #330 2860-2861, warpins: 1 ---
+	--- END OF BLOCK #330 ---
+
+	slot2 = if buf then
+	JUMP TO BLOCK #331
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #331 2862-2872, warpins: 1 ---
+	g_data.player:removeSlave(net.str(buf))
+
+	--- END OF BLOCK #331 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #332 2873-2875, warpins: 1 ---
+	--- END OF BLOCK #332 ---
+
+	if SM_EXEC_FRESHMAN_TASK_CMD == ident then
+	JUMP TO BLOCK #333
+	else
+	JUMP TO BLOCK #335
+	end
+
+
+	--- BLOCK #333 2876-2880, warpins: 1 ---
+	local errorMsg = {
+		[-3.0] = "不能再次使用",
+		[-2.0] = "无此任务",
+		[-1.0] = "未知错误"
+	}
+
+	--- END OF BLOCK #333 ---
+
+	slot7 = if errorMsg[msg.recog] then
+	JUMP TO BLOCK #334
+	else
+	JUMP TO BLOCK #336
+	end
+
+
+	--- BLOCK #334 2881-2888, warpins: 1 ---
+	main_scene.ui:tip(errorMsg[msg.recog])
+
+	--- END OF BLOCK #334 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #336
+
+
+	--- BLOCK #335 2889-2891, warpins: 1 ---
+	return false
+	--- END OF BLOCK #335 ---
+
+	FLOW; TARGET BLOCK #336
+
+
+	--- BLOCK #336 2892-2894, warpins: 117 ---
+	return true
+	--- END OF BLOCK #336 ---
+
+	FLOW; TARGET BLOCK #337
+
+
+	--- BLOCK #337 2895-2895, warpins: 2 ---
+	--- END OF BLOCK #337 ---
+
+
+
+end
+
+return ground
+--- END OF BLOCK #0 ---
+
+
+

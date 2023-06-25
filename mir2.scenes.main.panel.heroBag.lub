@@ -1,0 +1,908 @@
+--- BLOCK #0 1-42, warpins: 1 ---
+local item = import("..common.item")
+local heroBag = class("heroBag", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(heroBag, {})
+
+heroBag.resetPanelPosition = function (self, type)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type == "left" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-15, warpins: 1 ---
+	self.anchor(self, 0, 1):pos(100, display.height - 16)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 16-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type == "right" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-31, warpins: 1 ---
+	self.anchor(self, 1, 1):pos(display.width - 60, display.height - 16)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 32-34, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.setFocus then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 35-37, warpins: 1 ---
+	self.setFocus(self)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 38-38, warpins: 2 ---
+	return self
+	--- END OF BLOCK #6 ---
+
+
+
+end
+heroBag.ctor = function (self, from)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	self._scale = self.getScale(self)
+	self._supportMove = true
+
+	self.reloadAll(self, g_data.hero.bagSize, true, from)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ui.panels then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 20-25, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 26-53, warpins: 1 ---
+	local posX = main_scene.ui.panels.bag:getPositionX() + main_scene.ui.panels.bag:getCascadeBoundingBox().width
+
+	self.anchor(self, 0, 1):pos(posX - 16, display.height - 16)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 54-54, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+heroBag.bagsize2row = function (self, bagSize)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return math.ceil(bagSize/5)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+heroBag.reloadAll = function (self, bagSize, first, from)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.bagSize == bagSize then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 1 ---
+	self.bagSize = bagSize
+
+	--- END OF BLOCK #2 ---
+
+	slot4 = if self.content then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-12, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-67, warpins: 2 ---
+	self.content = display.newNode():add2(self)
+	local space = 45
+	local itemTotalHeight = self.bagsize2row(self, bagSize)*space
+	local bg1 = res.get2("pic/panels/heroBag/bg1.png")
+	local bg2 = res.get2("pic/panels/heroBag/bg2.png")
+	local bg3 = res.get2("pic/panels/heroBag/bg3.png")
+	slot10 = self.size(self, cc.size(bg1.getw(bg1), (bg1.geth(bg1) + bg3.geth(bg3) + itemTotalHeight) - 12)):scale(g_data.client.lastScale.heroBag)
+	slot9 = self.size(self, cc.size(bg1.getw(bg1), (bg1.geth(bg1) + bg3.geth(bg3) + itemTotalHeight) - 12)).scale(g_data.client.lastScale.heroBag).resetPanelPosition
+	--- END OF BLOCK #4 ---
+
+	if from == "bag" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 68-69, warpins: 1 ---
+	slot11 = "right"
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 70-70, warpins: 1 ---
+	slot11 = "left"
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 71-73, warpins: 2 ---
+	slot9(slot10, slot11)
+	--- END OF BLOCK #7 ---
+
+	slot2 = if not first then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 74-92, warpins: 1 ---
+	self.removeTouchFrame(self, "main")
+	self.addTouchFrame(self, cc.rect(0, 0, self.getw(self), self.geth(self)), "main")
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 93-243, warpins: 2 ---
+	bg1.anchor(bg1, 0, 1):pos(0, self.geth(self)):add2(self.content)
+	bg2.anchor(bg2, 0, 0):scaley((self.geth(self) - bg1.geth(bg1) - bg3.geth(bg3))/bg2.geth(bg2)):pos(0, bg3.geth(bg3)):add2(self.content)
+	bg3.anchor(bg3, 0, 0):add2(self.content)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(self.getw(self) - 6, self.geth(self) - 5):addto(self.content)
+
+	local scaleBtn = nil
+	scaleBtn = an.newBtn(res.gettex2("pic/common/scaleBig20.png"), function ()
+		--- BLOCK #0 1-16, warpins: 1 ---
+		sound.playSound("103")
+		self:stopAllActions()
+
+		local scale = self:getScale() + 0.1
+		--- END OF BLOCK #0 ---
+
+		if 1.6 < scale then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 17-17, warpins: 1 ---
+		scale = 1
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 18-47, warpins: 2 ---
+		self._scale = scale
+
+		self:scaleTo(0.3, scale)
+		g_data.client:setLastScale("heroBag", scale)
+		scaleBtn.label:setString("x" .. string.format("%01d", (scale - 1)*10 + 1))
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/scaleBig21.png"),
+		label = {
+			"x" .. string.format("%01d", (self.getScale(self) - 1)*10 + 1),
+			20,
+			1,
+			{
+				color = def.colors.btn40
+			}
+		},
+		labelOffset = {
+			x = 13,
+			y = -12
+		}
+	}):pos(255, 28):add2(self.content)
+	--- END OF BLOCK #9 ---
+
+	for i=1, bagSize, 1
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #11
+
+	--- BLOCK #10 244-270, warpins: 2 ---
+	local col = (i - 1)%5
+	local line = math.modf((i - 1)/5)
+
+	res.get2("pic/common/itembg2.png"):pos(col*space + 47, self.geth(self) - 78 - line*space):add2(self.content)
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #11 271-277, warpins: 1 ---
+	self.items = {}
+
+	self.reload(self)
+
+	return 
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 278-278, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+
+
+end
+heroBag.reload = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	v.removeSelf(v)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 10-15, warpins: 1 ---
+	self.items = {}
+	--- END OF BLOCK #3 ---
+
+	for i=1, 40, 1
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #4 16-21, warpins: 2 ---
+	local v = g_data.heroBag.items[i]
+	--- END OF BLOCK #4 ---
+
+	slot5 = if v then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 22-45, warpins: 1 ---
+	self.items[i] = item.new(v, self, {
+		idx = i
+	}):addto(self.content):pos(self.idx2pos(self, i))
+	self.items[i].owner = "heroBag"
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 46-46, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #7 47-47, warpins: 1 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+heroBag.idx2pos = function (self, idx)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	idx = idx - 1
+	local h = idx%5
+	local v = math.modf(idx/5)
+
+	return h*item.w + 47, self.geth(self) - 78 - v*item.h
+	--- END OF BLOCK #0 ---
+
+
+
+end
+heroBag.pos2idx = function (self, x, y)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	local h = (x - 47)/item.w + 0.5
+	local v = (self.geth(self) - 78 - y)/item.h + 0.5
+
+	--- END OF BLOCK #0 ---
+
+	if 0 < h then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 18-20, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if h < 5 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 21-23, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 0 < v then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 24-26, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v < 8 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-38, warpins: 1 ---
+	return math.floor(v)*5 + math.floor(h) + 1
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 39-40, warpins: 5 ---
+	return -1
+	--- END OF BLOCK #5 ---
+
+
+
+end
+heroBag.addItem = function (self, makeIndex)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local i, v = g_data.heroBag:getItem(makeIndex)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if v then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 9-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if self.items[i] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-17, warpins: 1 ---
+	self.items[i]:removeSelf()
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-41, warpins: 2 ---
+	self.items[i] = item.new(v, self, {
+		idx = i
+	}):addto(self.content):pos(self.idx2pos(self, i))
+	self.items[i].owner = "heroBag"
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 42-42, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+heroBag.delItem = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.data:get("makeIndex")
+	 == tonumber(makeIndex)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-23, warpins: 1 ---
+	self.items[k]:removeSelf()
+
+	self.items[k] = nil
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 24-25, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 26-26, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+heroBag.uptItem = function (self, makeIndex)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local i, v = g_data.heroBag:getItem(makeIndex)
+	--- END OF BLOCK #0 ---
+
+	slot3 = if v then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 9-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if self.items[i] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-15, warpins: 1 ---
+	self.items[i].data = v
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-16, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+heroBag.putInItem = function (self, item)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not g_data.client.heroPutInItem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	local data = item.data
+
+	--- END OF BLOCK #1 ---
+
+	slot3 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-23, warpins: 1 ---
+	main_scene.ui.panels.bag:delItem(data.get(data, "makeIndex"))
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 24-54, warpins: 2 ---
+	g_data.bag:delItem(data.get(data, "makeIndex"))
+	g_data.client:setHeroPutInItem(data)
+
+	local makeIndex = data.get(data, "makeIndex")
+
+	net.send({
+		CM_HERO_TOHEROBAG,
+		recog = makeIndex
+	}, {
+		data.getVar("name")
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 55-55, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+heroBag.getBackItem = function (self, item)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not g_data.client.heroGetBackItem then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-44, warpins: 1 ---
+	local data = item.data
+
+	self.delItem(self, data.get(data, "makeIndex"))
+	g_data.heroBag:delItem(data.get(data, "makeIndex"))
+	g_data.client:setHeroGetBackItem(data)
+
+	local makeIndex = data.get(data, "makeIndex")
+
+	net.send({
+		CM_HERO_TOHUMBAG,
+		recog = makeIndex
+	}, {
+		data.getVar("name")
+	})
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 45-45, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+heroBag.putItem = function (self, item, x, y)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local form = item.formPanel.__cname
+
+	--- END OF BLOCK #0 ---
+
+	if form == "bag" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	self.putInItem(self, item)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #2 10-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if form == "heroEquip" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-15, warpins: 1 ---
+	item.takeOff(item)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #4 16-17, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if form == "heroBag" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #5 18-30, warpins: 1 ---
+	local putIdx = self.pos2idx(self, x/self.getScale(self), y/self.getScale(self))
+
+	--- END OF BLOCK #5 ---
+
+	if putIdx ~= -1 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 31-34, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if item.params.idx == putIdx then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 35-35, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 36-46, warpins: 2 ---
+	local srcIdx = item.params.idx
+
+	--- END OF BLOCK #8 ---
+
+	slot7 = if g_data.heroBag:isAallCanPileUp(srcIdx, putIdx)
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #9 47-63, warpins: 1 ---
+	local item1 = self.items[putIdx].data
+	local makeIndex2 = self.items[srcIdx].data:get("makeIndex")
+
+	--- END OF BLOCK #9 ---
+
+	slot9 = if item1.isNeedResetPos(self.items[srcIdx].data)
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 64-81, warpins: 1 ---
+	self.items[putIdx]:pos(self.idx2pos(self, putIdx))
+	self.items[srcIdx]:pos(self.idx2pos(self, srcIdx))
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 82-107, warpins: 2 ---
+	net.send({
+		CM_PILEUPITEM,
+		series = 1,
+		recog = item1.get(item1, "makeIndex"),
+		param = Loword(makeIndex2),
+		tag = Hiword(makeIndex2)
+	})
+	g_data.player:setIsinPileUping(true)
+
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #12 108-120, warpins: 1 ---
+	item.params.idx = putIdx
+
+	item.pos(item, self.idx2pos(self, putIdx))
+
+	local target = self.items[putIdx]
+	--- END OF BLOCK #12 ---
+
+	slot7 = if target then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 121-129, warpins: 1 ---
+	target.params.idx = srcIdx
+
+	target.pos(target, self.idx2pos(self, srcIdx))
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 130-141, warpins: 2 ---
+	self.items[putIdx] = item
+	self.items[srcIdx] = target
+
+	g_data.heroBag:changePos(srcIdx, putIdx)
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 142-143, warpins: 2 ---
+	return true
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 144-144, warpins: 4 ---
+	return 
+	--- END OF BLOCK #16 ---
+
+
+
+end
+heroBag.duraChange = function (self, makeindex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if makeindex == v.data:get("makeIndex")
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-15, warpins: 1 ---
+	v.duraChange(v)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-17, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 18-18, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return heroBag
+--- END OF BLOCK #0 ---
+
+
+

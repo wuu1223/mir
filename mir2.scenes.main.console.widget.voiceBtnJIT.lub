@@ -1,0 +1,643 @@
+--- BLOCK #0 1-38, warpins: 1 ---
+local common = import("...common.common")
+local voiceBtnJIT = class("voiceBtnJIT", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(voiceBtnJIT, {
+	bg,
+	stateChanged,
+	isloading,
+	loadingspr,
+	issaying,
+	sayingspr
+})
+
+voiceBtnJIT.ctor = function (self)
+	--- BLOCK #0 1-36, warpins: 1 ---
+	self.size(self, 60, 60)
+
+	self.bg = res.get2("pic/console/btn_voice_normal.png"):pos(self.centerPos(self)):add2(self)
+
+	self.refreshIcon(self)
+
+	local function setScale(b)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		slot2 = self.bg
+		slot1 = self.bg.scaleTo
+		slot3 = 0.1
+		--- END OF BLOCK #0 ---
+
+		slot0 = if b then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-9, warpins: 1 ---
+		slot4 = 1.3
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 10-10, warpins: 1 ---
+		slot4 = 1
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-12, warpins: 2 ---
+		slot1(slot2, slot3, slot4)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	self.setTouchEnabled(self, true)
+	self.addNodeEventListener(self, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if self.isloading then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 8-14, warpins: 1 ---
+		main_scene.ui:tip("语音控件初始化中...")
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 15-22, warpins: 2 ---
+		setScale(true)
+
+		self.stateChanged = nil
+
+		return true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 23-26, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot1 = if self.stateChanged then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 27-30, warpins: 1 ---
+		setScale(false)
+
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 31-45, warpins: 2 ---
+		local touchIn = self:getCascadeBoundingBox():containsPoint(cc.p(event.x, event.y))
+
+		--- END OF BLOCK #6 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 46-49, warpins: 1 ---
+		setScale(touchIn)
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #8 50-52, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #9 53-57, warpins: 1 ---
+		setScale(false)
+		--- END OF BLOCK #9 ---
+
+		slot1 = if touchIn then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #10 58-62, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		slot2 = if not g_data.voice.roomData then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 63-69, warpins: 1 ---
+		main_scene.ui:tip("未加入任何语音频道.")
+		--- END OF BLOCK #11 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #12 70-78, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if g_data.voice.roomData:get("mode")
+		 == 1 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #13 79-83, warpins: 1 ---
+		--- END OF BLOCK #13 ---
+
+		slot2 = if g_data.voice.playerData then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #14 84-92, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		if g_data.voice.playerData:get("isAdmin")
+		 == 1 then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 93-102, warpins: 1 ---
+		yaya.mic(not yaya.isonMic, common.getPlayerName())
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #16 103-109, warpins: 2 ---
+		main_scene.ui:tip("你没有指挥权限..")
+		--- END OF BLOCK #16 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #17 110-118, warpins: 1 ---
+		--- END OF BLOCK #17 ---
+
+		if g_data.voice.roomData:get("mode")
+		 == 0 then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #18 119-123, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		slot2 = if g_data.voice.playerData then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #19 124-132, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		if g_data.voice.playerData:get("isMute")
+		 == 0 then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 133-142, warpins: 1 ---
+		yaya.mic(not yaya.isonMic, common.getPlayerName())
+		--- END OF BLOCK #20 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #21 143-148, warpins: 2 ---
+		main_scene.ui:tip("你被禁言了..")
+
+		--- END OF BLOCK #21 ---
+
+		FLOW; TARGET BLOCK #22
+
+
+		--- BLOCK #22 149-149, warpins: 9 ---
+		return 
+		--- END OF BLOCK #22 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voiceBtnJIT.stateHasChanged = function (self)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.stateChanged = true
+
+	self.refreshIcon(self)
+	self.setSaying(self)
+	self.loadingCheck(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+voiceBtnJIT.loadingCheck = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	slot2 = self
+	slot1 = self.setLoading
+	--- END OF BLOCK #0 ---
+
+	slot3 = if g_data.voice.roomData then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 8-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if not yaya.logined then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	slot3 = yaya.freeMode
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #3 15-16, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 17-17, warpins: 0 ---
+	slot3 = true
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 18-19, warpins: 4 ---
+	slot1(slot2, slot3)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+voiceBtnJIT.refreshIcon = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not g_data.voice.roomData then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	self.bg:setTex(res.gettex2("pic/console/btn_voice_normal.png"))
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-23, warpins: 2 ---
+	local mode = g_data.voice.roomData:get("mode")
+
+	--- END OF BLOCK #2 ---
+
+	if mode == 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 24-28, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if g_data.voice.playerData then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 29-37, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if g_data.voice.playerData:get("isMute")
+	 == 0 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 38-46, warpins: 1 ---
+	self.bg:setTex(res.gettex2("pic/console/btn_voice_free.png"))
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #6 47-55, warpins: 2 ---
+	self.bg:setTex(res.gettex2("pic/console/btn_voice_free_mute.png"))
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #7 56-60, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if g_data.voice.playerData then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 61-69, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if g_data.voice.playerData:get("isAdmin")
+	 == 1 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 70-78, warpins: 1 ---
+	self.bg:setTex(res.gettex2("pic/console/btn_voice_command.png"))
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 79-86, warpins: 2 ---
+	self.bg:setTex(res.gettex2("pic/console/btn_voice_command2.png"))
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 87-87, warpins: 4 ---
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+voiceBtnJIT.setLoading = function (self, isloading)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform ~= "mac" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if device.platform == "windows" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	isloading = nil
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-13, warpins: 2 ---
+	self.isloading = isloading
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.isloading then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 14-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not self.loadingspr then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-48, warpins: 1 ---
+	local ani = res.getani2("pic/effect/loading/%d.png", 1, 12, 0.06)
+	self.loadingspr = res.get2("pic/effect/loading/1.png"):pos(self.centerPos(self)):add2(self):runForever(cc.Animate:create(ani))
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #6 49-51, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if not self.isloading then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 52-54, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if self.loadingspr then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 55-60, warpins: 1 ---
+	self.loadingspr:removeSelf()
+
+	self.loadingspr = nil
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 61-61, warpins: 4 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+voiceBtnJIT.setSaying = function (self, issaying)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.issaying = issaying
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.issaying then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not self.sayingspr then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-39, warpins: 1 ---
+	local ani = res.getani2("pic/effect/btnselect/%d.png", 1, 15, 0.06)
+	self.sayingspr = res.get2("pic/effect/btnselect/1.png"):pos(self.centerPos(self)):add2(self):runForever(cc.Animate:create(ani))
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #3 40-42, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not self.issaying then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 43-45, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.sayingspr then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 46-51, warpins: 1 ---
+	self.sayingspr:removeSelf()
+
+	self.sayingspr = nil
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 52-52, warpins: 4 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+return voiceBtnJIT
+--- END OF BLOCK #0 ---
+
+
+

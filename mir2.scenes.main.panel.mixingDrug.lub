@@ -1,0 +1,1299 @@
+--- BLOCK #0 1-45, warpins: 1 ---
+local common = import("..common.common")
+local item = import("..common.item")
+local mixingDrug = class("mixingDrug", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(mixingDrug, {})
+
+mixingDrug.resetPanelPosition = function (self, type)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type == "center" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-10, warpins: 1 ---
+	self.anchor(self, 0.5, 0.5):center()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return self
+	--- END OF BLOCK #2 ---
+
+
+
+end
+mixingDrug.ctor = function (self)
+	--- BLOCK #0 1-164, warpins: 1 ---
+	self._supportMove = true
+
+	self.setNodeEventEnabled(self, true)
+
+	local bg = res.get2("pic/common/black_2.png"):addTo(self):pos(0, 0):anchor(0, 0)
+
+	res.get2("pic/panels/mixingDrug/title.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 14):anchor(0.5, 1)
+	self.size(self, cc.size(bg.getw(bg), bg.geth(bg))):resetPanelPosition("center")
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):addTo(bg):anchor(1, 1):pos(bg.getw(bg) - 5, bg.geth(bg) - 8)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale26.png")):size(127, 390):addTo(bg):pos(12, 15):anchor(0, 0)
+	an.newBtn(res.gettex2("pic/common/help.png"), function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true
+	}):addTo(bg):anchor(0, 1):pos(6, bg.geth(bg) - 8)
+
+	local sprs = {}
+	local datas = {}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(g_data.mixingDrug.lst)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 165-177, warpins: 1 ---
+	local cfg = g_data.mixingDrug:getConfig(v.id)
+	sprs[#sprs + 1] = "pic/panels/mixingDrug/tab_" .. cfg.resid .. ".png"
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 178-179, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 180-215, warpins: 1 ---
+	self.tabs = common.tabs(bg, {
+		oy = 10,
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-19, warpins: 1 ---
+		self:stopHandler()
+
+		self.idx = idx
+
+		net.send({
+			CM_MAKEDRUG_STATUS_QUERY,
+			recog = btn.data.id
+		})
+		--- END OF BLOCK #0 ---
+
+		if btn.data.state == 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 20-27, warpins: 1 ---
+		self:showDetail("learn", nil, btn.data.id)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 28-28, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		tabTp = 2,
+		repeatClk = true,
+		pos = {
+			offset = 50,
+			x = 18,
+			y = self.geth(self) - 85,
+			anchor = cc.p(0, 0.5)
+		},
+		datas = setmetatable({}, {
+			__index = g_data.mixingDrug.lst
+		})
+	})
+
+	--- END OF BLOCK #3 ---
+
+	for _, v in ipairs(self.tabs.btns)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 216-239, warpins: 1 ---
+	v.text = an.newLabel("", 15, 2):addTo(v):pos(v.getw(v)/2, 2):anchor(0.5, 0)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 240-241, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 242-246, warpins: 1 ---
+	self.updateTabsLabel(self)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+mixingDrug.onCleanup = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.stopHandler(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mixingDrug.updateTabsLabel = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, v in ipairs(self.tabs.btns)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 6-40, warpins: 1 ---
+	local str = ({
+		"（未学习）",
+		"（未炼制）",
+		"（炼制中）",
+		"（已完成）"
+	})[v.data.state + 1]
+	local color = ({
+		def.colors.labelGray,
+		def.colors.labelGray,
+		def.colors.labelYellow,
+		display.COLOR_GREEN
+	})[v.data.state + 1]
+
+	v.text:setString(str)
+	v.text:setColor(color)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 41-42, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 43-43, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+mixingDrug.getLayer = function (self, mask)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.layer:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-12, warpins: 2 ---
+	slot2 = res.get2
+	slot3 = "pic/panels/mixingDrug/"
+	--- END OF BLOCK #2 ---
+
+	slot1 = if mask then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-14, warpins: 1 ---
+	slot4 = "bg1.png"
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 15-15, warpins: 1 ---
+	slot4 = "bg2.png"
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 16-57, warpins: 2 ---
+	self.layer = slot2(slot3 .. slot4):addTo(self):pos(144, 17):anchor(0, 0)
+
+	display.newScale9Sprite(res.getframe2("pic/scale/scale27.png")):size(480, 390):addTo(self.layer):pos(self.layer:centerPos())
+
+	return self.layer
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mixingDrug.showDetail = function (self, action, data, id)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if action ~= "learn" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-5, warpins: 1 ---
+	self.updateTabsLabel(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-15, warpins: 2 ---
+	local act = string.ucfirst(action)
+
+	--- END OF BLOCK #2 ---
+
+	slot5 = if self["showMixing" .. act] then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-23, warpins: 1 ---
+	self["showMixing" .. act](self, data, id)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 24-24, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+mixingDrug.showDesc = function (self, str)
+	--- BLOCK #0 1-76, warpins: 1 ---
+	local layer = self.layer
+	local desc = display.newScale9Sprite(res.getframe2("pic/panels/mixingDrug/strip.png")):size(layer.getw(layer) - 20, 70):addTo(layer):pos(layer.getw(layer)/2, layer.geth(layer) - 8):anchor(0.5, 1)
+
+	an.newLabelM(desc.getw(desc) - 30, 20, 1):addTo(desc):pos(15, desc.geth(desc) - 10):anchor(0, 1):nextLine():addLabel(str, cc.c3b(196, 186, 137))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mixingDrug.showMixingLv = function (self, lv, curExp, maxExp)
+	--- BLOCK #0 1-71, warpins: 1 ---
+	local layer = self.layer
+	local w = 15
+	local h = 5
+	local label = an.newLabel("熟练度:" .. curExp .. "/" .. maxExp, 18, 1, {
+		color = cc.c3b(196, 186, 137)
+	}):addTo(layer):pos(w, 5):anchor(0, 0)
+	h = h + label.geth(label) + 5
+
+	an.newLabel("炼制等级:" .. lv, 18, 1, {
+		color = cc.c3b(196, 186, 137)
+	}):addTo(layer):pos(w, h):anchor(0, 0)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mixingDrug.showMixingLearn = function (self, data, id)
+	--- BLOCK #0 1-76, warpins: 1 ---
+	local cfg = g_data.mixingDrug:getConfig(id)
+	local layer = self.getLayer(self, true)
+
+	self.showDesc(self, cfg.name .. "：" .. cfg.desc)
+	an.newLabel("配方未学习", 24, 1, {
+		color = def.colors.labelGray
+	}):addTo(layer):pos(layer.centerPos(layer)):anchor(0.5, 0.5)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		net.send({
+			CM_LEARN_LIVINGSKILL,
+			recog = id
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mixingDrug/learn.png")
+	}):addTo(layer):pos(layer.getw(layer)/2, 50)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mixingDrug.showMixingBegin = function (self, data, id)
+	--- BLOCK #0 1-30, warpins: 1 ---
+	local cfg = g_data.mixingDrug:getConfig(id)
+	local layer = self.getLayer(self, true)
+	local consumeNum = g_data.bag:getItemCount(def.items[cfg.consume].getVar("name"))
+	local max = math.floor(consumeNum/cfg.input)
+	--- END OF BLOCK #0 ---
+
+	if 0 < consumeNum then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 31-32, warpins: 1 ---
+	slot7 = 1
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 33-33, warpins: 1 ---
+	local cnt = 0
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 34-399, warpins: 2 ---
+	local price = data.price
+
+	self.showDesc(self, cfg.name .. "：" .. cfg.desc)
+	an.newLabel("炼制选项", 20, 2, {
+		color = def.colors.labelYellow
+	}):addTo(layer):pos(layer.getw(layer)/2, 270):anchor(0.5, 0.5)
+
+	local itembg = res.get2("pic/panels/mixingDrug/frame.png"):addTo(layer):pos(layer.getw(layer)/2, 200)
+
+	an.newLabel("材料", 18, 2, {
+		color = def.colors.labelYellow
+	}):addTo(itembg):pos(32, itembg.geth(itembg) + 5):anchor(0.5, 0)
+	an.newLabel("成品药", 18, 2, {
+		color = def.colors.labelYellow
+	}):addTo(itembg):pos(itembg.getw(itembg) - 30, itembg.geth(itembg) + 5):anchor(0.5, 0)
+
+	local time = an.newLabel(data.time*cnt .. "分钟", 18, 1):addTo(itembg):pos(itembg.getw(itembg)/2, itembg.geth(itembg)/2 + 9):anchor(0.5, 0)
+	local gold = an.newLabel("需要金币" .. data.price*cnt, 18, 1, {
+		color = cc.c3b(225, 98, 13)
+	}):addTo(layer):pos(layer.getw(layer)/2, 65):anchor(0.5, 0)
+	local lGrid = res.get2("pic/common/itembg3.png"):addTo(itembg):pos(32, itembg.geth(itembg)/2)
+	local rGrid = res.get2("pic/common/itembg3.png"):addTo(itembg):pos(itembg.getw(itembg) - 30, itembg.geth(itembg)/2)
+
+	item.new(def.items[cfg.consume], self, {
+		donotMove = true
+	}):addTo(lGrid):pos(lGrid.centerPos(lGrid))
+	item.new(def.items[cfg.generate], self, {
+		donotMove = true
+	}):addTo(rGrid):pos(rGrid.centerPos(rGrid))
+	an.newLabel("背包中材料可炼制" .. max .. "次", 18, 1, {
+		color = cc.c3b(0, 124, 182)
+	}):addTo(layer):pos(layer.getw(layer)/2, 150):anchor(0.5, 0.5)
+
+	local modify, input = nil
+	input = an.newInput(layer.getw(layer)/2, 110, 75, 40, 3, {
+		bg = {
+			h = 40,
+			tex = res.gettex2("pic/scale/scale23.png")
+		},
+		label = {
+			"" .. cnt,
+			18
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			local text = input:getText()
+
+			--- END OF BLOCK #0 ---
+
+			slot0 = if text then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #1 7-8, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if text ~= "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #2 9-13, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			slot1 = if tonumber(text)
+			 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #3 14-19, warpins: 1 ---
+			--- END OF BLOCK #3 ---
+
+			if tonumber(text)
+			 <= max then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 20-25, warpins: 1 ---
+			modify(tonumber(text))
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+			--- BLOCK #5 26-31, warpins: 4 ---
+			main_scene.ui:tip("输入次数有误,请重新输入")
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 32-32, warpins: 2 ---
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+	}):addTo(layer):anchor(0.5, 0.5)
+
+	function modify(num)
+		--- BLOCK #0 1-29, warpins: 1 ---
+		cnt = num
+
+		input:setText(cnt .. "")
+		time:setText(data.time*cnt .. "分钟")
+		gold:setText("需要金币" .. data.price*cnt)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local cfg = {}
+	cfg[1] = {
+		select = "btn71.png",
+		sprite = "pic/panels/mixingDrug/min.png",
+		normal = "btn70.png",
+		x = layer.getw(layer)/2 - 150,
+		callback = function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			modify(math.min(1, max))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	cfg[2] = {
+		select = "btn71.png",
+		sprite = "pic/panels/mixingDrug/max.png",
+		normal = "btn70.png",
+		x = layer.getw(layer)/2 + 150,
+		callback = function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			modify(max)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	cfg[3] = {
+		select = "btn101.png",
+		sprite = "pic/common/minus.png",
+		normal = "btn100.png",
+		x = layer.getw(layer)/2 - 75,
+		callback = function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			slot0 = modify
+
+			--- END OF BLOCK #0 ---
+
+			if cnt == math.min(1, max)
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-12, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot1 = if not cnt then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 13-14, warpins: 2 ---
+			slot1 = cnt - 1
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 15-16, warpins: 2 ---
+			slot0(slot1)
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+	}
+	cfg[4] = {
+		select = "btn101.png",
+		sprite = "pic/common/plus.png",
+		normal = "btn100.png",
+		x = layer.getw(layer)/2 + 75,
+		callback = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			slot0 = modify
+			--- END OF BLOCK #0 ---
+
+			if cnt == max then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 6-8, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot1 = if not cnt then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 9-10, warpins: 2 ---
+			slot1 = cnt + 1
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 11-12, warpins: 2 ---
+			slot0(slot1)
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+	}
+
+	--- END OF BLOCK #3 ---
+
+	for _, v in ipairs(cfg)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 400-432, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/" .. v.normal), function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		v.callback()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/" .. v.select),
+		sprite = res.gettex2(v.sprite)
+	}):addTo(layer):pos(v.x, 110)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 433-434, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 435-473, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if 0 < cnt then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 5-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if g_data.player.gold < cnt*price then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 13-19, warpins: 1 ---
+		main_scene.ui:tip("金币不足")
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #3 20-30, warpins: 1 ---
+		net.send({
+			CM_CAN_MAKEDRUG_QUERY,
+			recog = id,
+			param = cnt
+		})
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 31-36, warpins: 1 ---
+		main_scene.ui:tip("没有足够的材料")
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 37-37, warpins: 3 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mixingDrug/mix.png")
+	}):addTo(layer):pos(layer.getw(layer)/2, 35)
+	self.showMixingLv(self, data.lv, data.curExp, data.maxExp)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+mixingDrug.showMixingDuring = function (self, data, id)
+	--- BLOCK #0 1-55, warpins: 1 ---
+	local cfg = g_data.mixingDrug:getConfig(id)
+	local layer = self.getLayer(self)
+
+	self.showDesc(self, cfg.name .. "：" .. cfg.desc)
+	an.newLabel("炼制" .. data.cnt .. "个材料", 18, 1, {
+		color = cc.c3b(0, 173, 254)
+	}):addTo(layer):pos(15, 280):anchor(0, 0.5)
+
+	slot5 = an.newLabel
+	slot6 = "剩余"
+	slot7 = math.ceil
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not data.time then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 56-56, warpins: 1 ---
+	slot8 = 1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 57-102, warpins: 2 ---
+	local time = slot5(slot6 .. slot7(slot8/60) .. "分钟", 18, 1, {
+		color = cc.c3b(225, 98, 13)
+	}):addTo(layer):pos(15, 250):anchor(0, 0.5)
+	self.handler = scheduler.scheduleGlobal(function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		data.time = data.time - 1
+		--- END OF BLOCK #0 ---
+
+		if 0 < data.time then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 11-20, warpins: 1 ---
+		slot1 = time
+		slot0 = time.setString
+		slot2 = "剩余"
+		slot3 = math.ceil
+		--- END OF BLOCK #1 ---
+
+		slot4 = if not data.time then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 21-21, warpins: 1 ---
+		slot4 = 1
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 22-27, warpins: 2 ---
+		slot0(slot1, slot2 .. slot3(slot4/60) .. "分钟")
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 28-35, warpins: 1 ---
+		self:stopHandler()
+		self:refresh()
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 36-36, warpins: 2 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end, 1)
+
+	self.showMixingLv(self, data.lv, data.curExp, data.maxExp)
+
+	local frames = {}
+	--- END OF BLOCK #2 ---
+
+	for i=1, 20, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 103-113, warpins: 2 ---
+	local frame = res.getframe2("pic/panels/mixingDrug/effect_" .. i .. ".png")
+	frames[#frames + 1] = frame
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 114-142, warpins: 1 ---
+	local effect = res.get2("pic/panels/mixingDrug/effect_1.png"):addTo(layer):pos(layer.centerPos(layer)):anchor(0.5, 0.5)
+
+	effect.playAnimationForever(effect, display.newAnimation(frames, 0.125))
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+mixingDrug.showMixingEnded = function (self, data, id)
+	--- BLOCK #0 1-60, warpins: 1 ---
+	local cfg = g_data.mixingDrug:getConfig(id)
+	local layer = self.getLayer(self, true)
+
+	self.showDesc(self, cfg.name .. "：" .. cfg.desc)
+	self.showMixingLv(self, data.lv, data.curExp, data.maxExp)
+	an.newLabel("炼制结果", 20, 1, {
+		color = def.colors.labelYellow
+	}):addTo(layer):pos(layer.getw(layer)/2, 285):anchor(0.5, 0.5)
+
+	local second = false
+
+	local function showitem(info, cnt)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not info then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-3, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 4-21, warpins: 2 ---
+		slot3 = res.get2("pic/common/itembg3.png"):addTo(layer)
+		slot2 = res.get2("pic/common/itembg3.png").addTo(layer).pos
+		slot4 = layer:getw()/2
+		--- END OF BLOCK #2 ---
+
+		slot5 = if second then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 22-23, warpins: 1 ---
+		slot5 = 145
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 24-24, warpins: 1 ---
+		slot5 = 235
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 25-55, warpins: 2 ---
+		local itembg = slot2(slot3, slot4, slot5)
+
+		item.new(info, self, {
+			donotMove = true
+		}):addTo(itembg):pos(itembg.centerPos(itembg))
+
+		slot3 = an.newLabel
+		slot4 = info.getVar("name") .. "x" .. cnt
+		slot5 = 18
+		slot6 = 1
+		slot7 = {}
+
+		--- END OF BLOCK #5 ---
+
+		slot8 = if second then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 56-63, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot8 = if not cc.c3b(225, 98, 13)
+
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 64-69, warpins: 2 ---
+		slot8 = cc.c3b(0, 173, 254)
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 70-85, warpins: 2 ---
+		slot7.color = slot8
+		slot4 = slot3(slot4, slot5, slot6, slot7):addTo(layer)
+		slot3 = slot3(slot4, slot5, slot6, slot7).addTo(layer).pos
+		slot5 = layer:getw()/2
+		--- END OF BLOCK #8 ---
+
+		slot6 = if second then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 86-87, warpins: 1 ---
+		slot6 = 105
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #10 88-88, warpins: 1 ---
+		slot6 = 195
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 89-96, warpins: 2 ---
+		slot3(slot4, slot5, slot6):anchor(0.5, 0.5)
+
+		second = true
+
+		return 
+		--- END OF BLOCK #11 ---
+
+
+
+	end
+
+	local generate, fail = nil
+	local g_cnt = 0
+	local f_cnt = 0
+	slot11 = pairs
+	--- END OF BLOCK #0 ---
+
+	slot12 = if not data.items then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 61-61, warpins: 1 ---
+	slot12 = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 62-63, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for _, v in slot11(slot12)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #3 64-75, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.getVar("name")
+	 == def.items[cfg.generate].getVar("name")
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #4 76-77, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot7 = if not generate then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 78-78, warpins: 1 ---
+	generate = v
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 79-84, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if v.get(v, "dura")
+	 ~= 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 85-90, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot16 = if not v.get(v, "dura")
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 91-91, warpins: 2 ---
+	slot16 = 1
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 92-93, warpins: 2 ---
+	g_cnt = g_cnt + slot16
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #10 94-95, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot8 = if not fail then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 96-96, warpins: 1 ---
+	fail = v
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 97-102, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	if v.get(v, "dura")
+	 ~= 0 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 103-108, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot16 = if not v.get(v, "dura")
+
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 109-109, warpins: 2 ---
+	slot16 = 1
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 110-110, warpins: 2 ---
+	f_cnt = f_cnt + slot16
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 111-112, warpins: 3 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #17 113-186, warpins: 1 ---
+	showitem(generate, g_cnt)
+	showitem(fail, f_cnt)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		net.send({
+			CM_GAIN_MAKEDDRUG,
+			param = 0,
+			recog = id
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mixingDrug/savestorage.png")
+	}):addTo(layer):pos(layer.getw(layer)/2 - 65, 55)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		net.send({
+			CM_GAIN_MAKEDDRUG,
+			param = 1,
+			recog = id
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mixingDrug/savebag.png")
+	}):addTo(layer):pos(layer.getw(layer)/2 + 65, 55)
+
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+mixingDrug.refresh = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.tabs.click(self.idx)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mixingDrug.stopHandler = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.handler then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.handler)
+
+	self.handler = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return mixingDrug
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,2329 @@
+--- BLOCK #0 1-68, warpins: 1 ---
+local common = import("..common.common")
+local item = import("..common.item")
+local itemInfo = import("..common.itemInfo")
+local mail = class("mail", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(mail, {
+	container = {}
+})
+
+local function getStateStr(mailState, attachState)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local str = "未读"
+	--- END OF BLOCK #0 ---
+
+	if mailState ~= 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if attachState == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	str = "已读"
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #3 8-9, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if attachState == 2 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 10-11, warpins: 1 ---
+	str = "已领"
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 12-12, warpins: 1 ---
+	str = "空"
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 13-13, warpins: 4 ---
+	return str
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+local function getStateColor(mailState, attachState)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local color = display.COLOR_RED
+	--- END OF BLOCK #0 ---
+
+	if mailState ~= 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if attachState == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-9, warpins: 1 ---
+	color = display.COLOR_GREEN
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #3 10-11, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if attachState == 2 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 12-19, warpins: 1 ---
+	color = cc.c3b(100, 100, 100)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 20-26, warpins: 1 ---
+	color = cc.c3b(100, 100, 100)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 27-27, warpins: 4 ---
+	return color
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+mail.operatorMail = function (self, action, id)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if action == "list" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-11, warpins: 1 ---
+	net.send({
+		CM_FETCH_MAIL_LIST,
+		param = self.tag
+	})
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #2 12-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if action == "get" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-23, warpins: 1 ---
+	net.send({
+		CM_FETCH_MAIL_INFO,
+		recog = id,
+		param = self.tag
+	})
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #4 24-25, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if action == "attach" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 26-41, warpins: 1 ---
+	g_data.client:setLastMail(id)
+	net.send({
+		CM_FETCH_ATTACH,
+		recog = id,
+		param = self.tag
+	})
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #6 42-43, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if action == "attachOfftm" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 44-53, warpins: 1 ---
+	net.send({
+		CM_FETCH_ATTACH_OFFTM,
+		recog = id,
+		param = self.tag
+	})
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 54-55, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if action == "del" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 56-71, warpins: 1 ---
+	g_data.client:setLastMail(id)
+	net.send({
+		CM_DEL_MAIL,
+		recog = id,
+		param = self.tag
+	})
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 72-73, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if action == "clear" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 74-81, warpins: 1 ---
+	net.send({
+		CM_CLEAR_ALLMAIL,
+		param = self.tag
+	})
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 82-82, warpins: 7 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+mail.startAuto = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.auto then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 4-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.tag == g_data.mail:cfg()
+
+	.sell then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 13-19, warpins: 1 ---
+	local find = nil
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(g_data.mail.sell)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 20-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.attachState == 1 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-29, warpins: 1 ---
+	self.operatorMail(self, "get", v.id)
+
+	find = true
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 30-31, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 32-32, warpins: 2 ---
+	self.auto = find
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 33-33, warpins: 3 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+mail.stopAuto = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.auto = false
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mail.ctor = function (self, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self._supportMove = true
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-146, warpins: 2 ---
+	params.tag = g_data.mail:tag2Var(params.tag)
+	local bg = res.get2("pic/common/black_0.png"):addTo(self):anchor(0, 0)
+
+	self.size(self, bg.getContentSize(bg)):anchor(0.5, 0.5):center()
+	res.get2("pic/panels/mail/title.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 10):anchor(0.5, 1)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):addTo(bg):pos(bg.getw(bg) - 5, bg.geth(bg) - 9):anchor(1, 1)
+
+	local cfg = g_data.mail:cfg()
+	local sprs = {
+		"pic/panels/mail/tab_sys.png",
+		"pic/panels/mail/tab_sell.png",
+		"pic/panels/mail/tab_stall.png",
+		"pic/panels/mail/tab_msg.png"
+	}
+	self.tabs = common.tabs(bg, {
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		self:stopAuto()
+
+		self.tag = btn.data
+
+		self:operatorMail("list")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		tabTp = 2,
+		repeatClk = true,
+		pos = {
+			offset = 50,
+			x = 18,
+			y = self.geth(self) - 85,
+			anchor = cc.p(0, 0.5)
+		},
+		datas = {
+			cfg.sys,
+			cfg.sell,
+			cfg.offtm,
+			cfg.msg
+		}
+	})
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(self.tabs.btns)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 147-150, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.data == params.tag then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 151-155, warpins: 1 ---
+	self.tabs.click(v)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 156-157, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 158-165, warpins: 2 ---
+	main_scene.ui.notice:removeMailCnt()
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+mail.refresh = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.tabs.btns)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.data == self.tag then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-14, warpins: 1 ---
+	self.tabs.click(v)
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 15-16, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+mail.newLayer = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.container = {}
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	self.layer:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-19, warpins: 2 ---
+	self.layer = display.newNode():addTo(self)
+
+	return self.layer
+	--- END OF BLOCK #2 ---
+
+
+
+end
+mail.showContentByTag = function (self, tag)
+	--- BLOCK #0 1-21, warpins: 1 ---
+	local layer = self.newLayer(self)
+	local cfg = g_data.mail:cfg()
+	local msgs = {}
+	msgs[1] = {
+		tag = "sys",
+		str = "当前暂无系统邮件。"
+	}
+	msgs[2] = {
+		tag = "sell",
+		str = "当前暂无物品售卖信息。"
+	}
+	msgs[3] = {
+		tag = "offtm",
+		str = "当前暂无摊位退回物品。"
+	}
+	msgs[4] = {
+		tag = "msg",
+		str = "当前暂无玩家留言。"
+	}
+
+	--- END OF BLOCK #0 ---
+
+	for i=1, #msgs, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #1 22-26, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	if tag == cfg[msgs[i].tag] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 27-36, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if table.nums(g_data.mail[msgs[i].tag])
+	 == 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 37-63, warpins: 1 ---
+	an.newLabel(msgs[i].str, 24, 1, {
+		color = def.colors.labelGray
+	}):addTo(layer):pos(380, 235):anchor(0.5, 0.5)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 64-70, warpins: 1 ---
+	self[msgs[i].tag .. "MailShow"](self)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 71-71, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 72-72, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+mail.sysMailShow = function (self)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	local layer = self.layer
+	local scroll = an.newScroll(142, 68, 483, 334):addTo(layer):anchor(0, 0)
+	local w = 484
+	local h = 60
+	local y, node, sy = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, #g_data.mail.sys, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+	--- BLOCK #1 28-49, warpins: 2 ---
+	local data = setmetatable({}, {
+		__index = g_data.mail.sys[i]
+	})
+	y = (i - 1)*h - 334 - h/2
+	slot13 = display.newScale9Sprite
+	slot14 = res.getframe2
+	slot15 = "pic/scale/scale"
+	--- END OF BLOCK #1 ---
+
+	if i%2 == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 50-51, warpins: 1 ---
+	slot16 = 18
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 52-52, warpins: 1 ---
+	slot16 = 19
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 53-198, warpins: 2 ---
+	node = slot13(slot14(slot15 .. slot16 .. ".png"), 0, 0, cc.size(w, h)):addTo(scroll):pos(0, y):anchor(0, 0.5)
+	node.data = data
+
+	self.extendNode(self, node, "sys")
+	an.newLabel(data.title, 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(node):pos(15, h/2):anchor(0, 0.5)
+	an.newLabel(os.date("%Y-%m-%d", data.time), 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(node):pos(195, h/2):anchor(0, 0.5)
+	an.newLabel(os.date("%X", data.time), 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(node):pos(320, h/2):anchor(0, 0.5)
+
+	local str = getStateStr(data.mailState, data.attachState)
+	local color = getStateColor(data.mailState, data.attachState)
+
+	an.newLabel(str, 20, 1, {
+		color = color
+	}):addTo(node):pos(420, h/2):anchor(0, 0.5)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 199-228, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:operatorMail("clear")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mail/clear.png")
+	}):addTo(layer):pos(565, 38)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mail.sellMailShow = function (self)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	local layer = self.layer
+	local scroll = an.newScroll(142, 68, 483, 334):addTo(layer):anchor(0, 0)
+	local w = 483
+	local h = 60
+	local y, node, sy = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, #g_data.mail.sell, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+	--- BLOCK #1 28-49, warpins: 2 ---
+	local data = setmetatable({}, {
+		__index = g_data.mail.sell[i]
+	})
+	y = (i - 1)*h - 334 - h/2
+	slot13 = display.newScale9Sprite
+	slot14 = res.getframe2
+	slot15 = "pic/scale/scale"
+	--- END OF BLOCK #1 ---
+
+	if i%2 == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 50-51, warpins: 1 ---
+	slot16 = 18
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 52-52, warpins: 1 ---
+	slot16 = 19
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 53-272, warpins: 2 ---
+	node = slot13(slot14(slot15 .. slot16 .. ".png"), 0, 0, cc.size(w, h)):addTo(scroll):pos(0, y):anchor(0, 0.5)
+	node.data = data
+
+	self.extendNode(self, node, "sell")
+	self.addMail2Container(self, node)
+	an.newLabel(os.date("%Y-%m-%d", data.time), 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(node):pos(75, 42):anchor(0.5, 0.5)
+	an.newLabel(os.date("%X", data.time), 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(node):pos(75, 18):anchor(0.5, 0.5)
+
+	local name = an.newLabel(data.sender, 20, 1, {
+		color = cc.c3b(212, 100, 63)
+	}):addTo(node):pos(155, h/2):anchor(0, 0.5)
+
+	an.newLabel("购买了", 20, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(node):pos(name.getw(name) + 160, h/2):anchor(0, 0.5)
+
+	local itembg = res.get2("pic/common/itembg3.png"):addTo(node):pos(400, h/2):anchor(0.5, 0.5)
+
+	item.new(data.itemEx, self, {
+		donotMove = true
+	}):addTo(itembg):pos(itembg.centerPos(itembg)):anchor(0.5, 0.5)
+
+	local str = getStateStr(data.mailState, data.attachState)
+	local color = getStateColor(data.mailState, data.attachState)
+	node.stateStr = an.newLabel(str, 20, 1, {
+		color = color
+	}):addTo(node):pos(430, h/2):anchor(0, 0.5)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 273-330, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:operatorMail("clear")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mail/clear.png")
+	}):addTo(layer):pos(565, 38)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		self.auto = true
+
+		self:startAuto()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mail/getall.png")
+	}):addTo(layer):pos(445, 38)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mail.offtmMailShow = function (self)
+	--- BLOCK #0 1-37, warpins: 1 ---
+	local layer = self.layer
+	local bg = display.newNode():size(483, 334):addTo(layer):pos(142, self.geth(self) - 54):anchor(0, 1)
+	local data = g_data.mail.offtm[1]
+	local sw = 11
+	local sh = 16
+	local w, h = nil
+	--- END OF BLOCK #0 ---
+
+	for j=1, 4, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #7
+
+	--- BLOCK #1 38-41, warpins: 2 ---
+	--- END OF BLOCK #1 ---
+
+	for i=1, 5, 1
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #2 42-81, warpins: 2 ---
+	w = bg.getw(bg)/2 - sw*2 - 117.5 + (i - 1)*(sw + 47)
+	h = bg.geth(bg) - 22 - (j - 1)*(sh + 47)
+	local itembg = res.get2("pic/common/itembg3.png"):addTo(bg):pos(w, h):anchor(0, 1)
+
+	--- END OF BLOCK #2 ---
+
+	slot17 = if data.items then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 82-88, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot17 = if data.items[(j - 1)*5 + i] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 89-113, warpins: 1 ---
+	item.new(data.items[(j - 1)*5 + i], self, {
+		donotMove = true
+	}):addTo(itembg):pos(itembg.centerPos(itembg)):anchor(0.5, 0.5)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 114-114, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 115-115, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #7 116-194, warpins: 1 ---
+	res.get2("pic/panels/mail/line.png"):addTo(bg):pos(bg.getw(bg)/2, 65):anchor(0.5, 0.5)
+	an.newLabel("您的摊位已过期,物品已退回", 20, 1):addTo(bg):pos(bg.getw(bg)/2, 35):anchor(0.5, 0.5)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		slot1 = if data.id then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-16, warpins: 1 ---
+		self:operatorMail("attachOfftm", data.id)
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 17-22, warpins: 1 ---
+		main_scene.ui:tip("没有过期摊位物品.")
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 23-23, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mail/getall.png")
+	}):addTo(layer):pos(575, 35):anchor(0.5, 0.5)
+
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+mail.msgMailShow = function (self)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	local layer = self.layer
+	local scroll = an.newScroll(142, 68, 483, 334):addTo(layer):anchor(0, 0)
+	local w = 483
+	local h = 80
+	local y, node, sx, sy = nil
+	--- END OF BLOCK #0 ---
+
+	for i=1, #g_data.mail.msg, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+	--- BLOCK #1 28-44, warpins: 2 ---
+	local data = g_data.mail.msg[i]
+	y = (i - 1)*h - 334 - h/2
+	slot14 = display.newScale9Sprite
+	slot15 = res.getframe2
+	slot16 = "pic/scale/scale"
+	--- END OF BLOCK #1 ---
+
+	if i%2 == 1 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 45-46, warpins: 1 ---
+	slot17 = 18
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 47-47, warpins: 1 ---
+	slot17 = 19
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 48-227, warpins: 2 ---
+	node = slot14(slot15(slot16 .. slot17 .. ".png"), 0, 0, cc.size(w, h)):addTo(scroll):pos(0, y):anchor(0, 0.5)
+	sx = 15
+	local label = an.newLabel(data.name, 20, 1, {
+		color = cc.c3b(212, 100, 63)
+	}):addTo(node):pos(sx, 65):anchor(0, 0.5):enableClick(function ()
+		--- BLOCK #0 1-12, warpins: 1 ---
+		common.changeChatStyle({
+			{
+				"target",
+				data.name
+			},
+			{
+				"channel",
+				"私聊"
+			}
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	sx = sx + label.getw(label) + 2
+	label = an.newLabel("在", 20, 1):addTo(node):pos(sx, 65):anchor(0, 0.5)
+	sx = sx + label.getw(label) + 2
+	label = an.newLabel(os.date("%Y-%m-%d", TDateTimeToUnixDate(data.time)), 20, 1, {
+		color = cc.c3b(212, 100, 63)
+	}):addTo(node):pos(sx, 65):anchor(0, 0.5)
+	sx = sx + label.getw(label) + 2
+	lable = an.newLabel("给你留言:", 20, 1):addTo(node):pos(sx, 65):anchor(0, 0.5)
+
+	an.newLabelM(450, 20, 1):addTo(node):pos(15, 52):anchor(0, 1):nextLine():addLabel(data.msg)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 228-228, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mail.showMail = function (self, id, from)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if from == "sys" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	self.sysMail(self, id)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #2 8-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if from == "sell" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-14, warpins: 1 ---
+	self.sellMail(self, id)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 15-18, warpins: 1 ---
+	p2("error", "[Sys mail] function showMail: Invalid mail id, the mail from is unknow !")
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-19, warpins: 3 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+mail.delMail = function (self, id, from)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if from == "sell" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	self.delMailFromContainer(self, id)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	p2("error", "[Sys mail] function delMail: Invalid mail id, the mail from is unknow !")
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-12, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+mail.sysMail = function (self, id)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not id then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-13, warpins: 1 ---
+	main_scene.ui:tip("已经是最后一封邮件.")
+	self.operatorMail(self, "list")
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-20, warpins: 1 ---
+	local data = g_data.mail.infos.sys[id]
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not data then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-26, warpins: 1 ---
+	self.operatorMail(self, "get", id)
+
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 27-136, warpins: 1 ---
+	local layer = self.newLayer(self)
+	local bg = display.newNode():size(483, 334):addTo(layer):pos(142, self.geth(self) - 53):anchor(0, 1)
+
+	res.get2("pic/panels/mail/line.png"):addTo(bg):pos(bg.getw(bg)/2, 140):anchor(0.5, 0.5)
+	an.newLabel(data.title, 20, 1):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 15):anchor(0.5, 0.5)
+	an.newLabelM(460, 20, 1):addTo(bg):pos(15, bg.geth(bg) - 30):anchor(0, 1):nextLine():addLabel(data.context)
+
+	local items = {}
+	--- END OF BLOCK #4 ---
+
+	for i=1, 6, 1
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #12
+
+	--- BLOCK #5 137-151, warpins: 2 ---
+	slot10 = #items + 1
+	slot12 = res.get2("pic/common/itembg3.png"):addTo(bg)
+	slot11 = res.get2("pic/common/itembg3.png").addTo(bg).pos
+
+	--- END OF BLOCK #5 ---
+
+	if i <= 3 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 152-161, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot13 = if not (bg.getw(bg)
+
+	/2 - 5 - (i - 3)*57) then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 162-169, warpins: 2 ---
+	slot13 = bg.getw(bg)/2 + 5 + (i - 4)*57
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 170-176, warpins: 2 ---
+	slot12 = slot11(slot12, slot13, 100)
+	slot11 = slot11(slot12, slot13, 100).anchor
+	--- END OF BLOCK #8 ---
+
+	if i <= 3 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 177-178, warpins: 1 ---
+	slot13 = 1
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 179-179, warpins: 1 ---
+	slot13 = 0
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 180-183, warpins: 2 ---
+	items[slot10] = slot11(slot12, slot13, 0.5)
+
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #12 184-186, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if data.attachState == 1 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #13 187-191, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	for i=1, #data.items, 1
+	LOOP BLOCK #14
+	GO OUT TO BLOCK #15
+
+	--- BLOCK #14 192-215, warpins: 2 ---
+	item.new(data.items[i], self, {
+		donotMove = true
+	}):addTo(items[i]):pos(items[i]:centerPos()):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #15 216-219, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if 0 >= data.gold then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 220-223, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if 0 < data.yb then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #17 224-230, warpins: 2 ---
+	slot6 = res.get2
+	slot7 = "pic/console/infobar/"
+	--- END OF BLOCK #17 ---
+
+	if 0 < data.gold then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 231-232, warpins: 1 ---
+	slot8 = "gold"
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 233-233, warpins: 1 ---
+	slot8 = "yb"
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 234-256, warpins: 2 ---
+	slot6(slot7 .. slot8 .. ".png"):addTo(bg):pos(160, 35):anchor(0.5, 0.5)
+
+	slot6 = an.newLabel
+	--- END OF BLOCK #20 ---
+
+	if 0 < data.gold then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 257-259, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot7 = if not data.gold then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 260-262, warpins: 2 ---
+	slot7 = data.yb .. ""
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 263-284, warpins: 2 ---
+	slot6(slot7, 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(bg):pos(183, 35):anchor(0, 0.5)
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 285-289, warpins: 3 ---
+	local imgs = {
+		"pic/panels/mail/return.png",
+		"pic/panels/mail/getall.png",
+		"pic/panels/mail/delete.png"
+	}
+
+	--- END OF BLOCK #24 ---
+
+	for i=1, #imgs, 1
+	LOOP BLOCK #25
+	GO OUT TO BLOCK #26
+
+	--- BLOCK #25 290-326, warpins: 2 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		if i == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-13, warpins: 1 ---
+		self:operatorMail("list")
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #2 14-16, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if i == 2 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 17-20, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if data.attachState ~= 1 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 21-27, warpins: 1 ---
+		main_scene.ui:tip("没有奖励可以领取.")
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #5 28-34, warpins: 1 ---
+		self:operatorMail("attach", id)
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #6 35-38, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if data.attachState == 1 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 39-45, warpins: 1 ---
+		an.newMsgbox("还有未领取的附件,删除后无法恢复。\n确认是否删除邮件?", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-8, warpins: 1 ---
+			self:operatorMail("del", id)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 9-9, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			center = true,
+			hasCancel = true
+		})
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #8 46-51, warpins: 1 ---
+		self:operatorMail("del", id)
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 52-52, warpins: 5 ---
+		return 
+		--- END OF BLOCK #9 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2(imgs[i])
+	}):addTo(layer):pos((i - 1)*110 + 350, 35):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #26 327-328, warpins: 1 ---
+	return 
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 329-329, warpins: 2 ---
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 330-330, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+
+
+end
+mail.sellMail = function (self, id)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, v in ipairs(self.container)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if v.show then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	self.hideSellInfo(self, v)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-13, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 14-17, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	for _, v in ipairs(self.container)
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #5 18-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if id == v.data.id then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-26, warpins: 1 ---
+	self.showSellInfo(self, v)
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 27-28, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #8 29-29, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+mail.showSellInfo = function (self, node)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local data = g_data.mail.infos.sell[node.data.id]
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not data then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	p2("assert", "Can not get data from mail info, mail id:", node.data.id)
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-17, warpins: 0 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #3 18-56, warpins: 1 ---
+	node.stateStr:setText(getStateStr(data.mailState, data.attachState))
+	node.stateStr:setColor(getStateColor(data.mailState, data.attachState))
+
+	local h = nil
+	local info = display.newScale9Sprite(res.getframe2("pic/scale/scale26.png"), 2, 0):addTo(node):anchor(0, 1)
+	node.info = info
+	--- END OF BLOCK #3 ---
+
+	if data.attachState == 1 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #4 57-60, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if 0 >= data.gold then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 61-64, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if 0 < data.yb then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #6 65-71, warpins: 2 ---
+	slot5 = res.get2
+	slot6 = "pic/console/infobar/"
+	--- END OF BLOCK #6 ---
+
+	if 0 < data.gold then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 72-73, warpins: 1 ---
+	slot7 = "gold"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 74-74, warpins: 1 ---
+	slot7 = "yb"
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 75-97, warpins: 2 ---
+	local icon = slot5(slot6 .. slot7 .. ".png"):addTo(info):pos(20, 30):anchor(0, 0.5)
+	slot6 = an.newLabel
+	--- END OF BLOCK #9 ---
+
+	if 0 < data.gold then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 98-100, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot7 = if not data.gold then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 101-103, warpins: 2 ---
+	slot7 = data.yb .. ""
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 104-159, warpins: 2 ---
+	slot6(slot7, 20, 1):addTo(info):pos(icon.getw(icon) + 25, 30):anchor(0, 0.5)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		self:operatorMail("attach", data.id)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mail/get.png")
+	}):addTo(info):pos(300, 30):anchor(0.5, 0.5)
+	--- END OF BLOCK #12 ---
+
+	slot6 = if self.auto then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #13 160-165, warpins: 1 ---
+	self.operatorMail(self, "attach", data.id)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #14 166-168, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	slot5 = if self.auto then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 169-171, warpins: 1 ---
+	self.startAuto(self)
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 172-257, warpins: 4 ---
+	local btn = an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if data.attachState == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-11, warpins: 1 ---
+		an.newMsgbox("还有未领取的附件,删除后无法恢复,\n确认是否删除邮件?", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-9, warpins: 1 ---
+			self:operatorMail("del", data.id)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 10-10, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			center = true,
+			hasCancel = true
+		})
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 12-18, warpins: 1 ---
+		self:operatorMail("del", data.id)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 19-19, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/mail/delete.png")
+	}):addTo(info):pos(420, 30):anchor(0.5, 0.5)
+	h = btn.getPositionY(btn) + btn.geth(btn)/2 + 5
+	local text = an.newLabelM(node.getw(node) - 40, 20, 1):addTo(info):pos(20, h):anchor(0, 0):nextLine():addLabel(data.context)
+	h = h + text.geth(text) + 5
+	local idx = self.idxOfNode(self, node)
+	--- END OF BLOCK #16 ---
+
+	for i=idx + 1, #self.container, 1
+	LOOP BLOCK #17
+	GO OUT TO BLOCK #18
+
+	--- BLOCK #17 258-267, warpins: 2 ---
+	local v = self.container[i]
+
+	v.setPositionY(v, v.getPositionY(v) - h)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #18 268-277, warpins: 1 ---
+	info.size(info, node.getw(node) - 4, h)
+
+	node.state = true
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 278-279, warpins: 2 ---
+	return 
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 280-280, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+
+
+end
+mail.hideSellInfo = function (self, node)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local h = nil
+	--- END OF BLOCK #0 ---
+
+	slot1 = if node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if node.info then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-18, warpins: 1 ---
+	h = node.info:geth()
+
+	node.info:removeSelf()
+
+	node.info = nil
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 19-19, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-28, warpins: 2 ---
+	local idx = self.idxOfNode(self, node)
+	--- END OF BLOCK #4 ---
+
+	for i=idx + 1, #self.container, 1
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #5 29-38, warpins: 2 ---
+	local v = self.container[i]
+
+	v.setPositionY(v, v.getPositionY(v) + h)
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #6 39-41, warpins: 1 ---
+	node.state = false
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+mail.extendNode = function (self, node, type)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	node.setTouchEnabled(node, true)
+	node.setTouchSwallowEnabled(node, false)
+
+	local y, move = nil
+
+	node.addNodeEventListener(node, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-40, warpins: 1 ---
+		node.select = display.newScale9Sprite(res.getframe2("pic/scale/scale17.png"), 0, 0, cc.size(node:getw(), node:geth())):anchor(0, 0):addTo(node)
+		y = event.y
+		move = false
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+		--- BLOCK #2 41-43, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 44-52, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if 10 < math.abs(y - event.y)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #4 53-57, warpins: 1 ---
+		move = true
+
+		--- END OF BLOCK #4 ---
+
+		slot1 = if node.select then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #5 58-66, warpins: 1 ---
+		node.select:removeSelf()
+
+		node.select = nil
+
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+		--- BLOCK #6 67-69, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #7 70-72, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot1 = if not move then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #8 73-75, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		if type == "sys" then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #9 76-85, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		slot1 = if g_data.mail.infos.sys[node.data.id] then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 86-94, warpins: 1 ---
+		self:showMail(node.data.id, type)
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #11 95-103, warpins: 1 ---
+		self:operatorMail("get", node.data.id)
+		--- END OF BLOCK #11 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #12 104-107, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		slot1 = if node.state then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 108-113, warpins: 1 ---
+		self:hideSellInfo(node)
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #14 114-123, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		slot1 = if g_data.mail.infos.sell[node.data.id] then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 124-132, warpins: 1 ---
+		self:showMail(node.data.id, type)
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #16 133-140, warpins: 1 ---
+		self:operatorMail("get", node.data.id)
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 141-144, warpins: 6 ---
+		--- END OF BLOCK #17 ---
+
+		slot1 = if node.select then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #18 145-152, warpins: 1 ---
+		node.select:removeSelf()
+
+		node.select = nil
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 153-154, warpins: 2 ---
+		y = nil
+		move = false
+
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 155-155, warpins: 6 ---
+		return 
+		--- END OF BLOCK #20 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mail.addMail2Container = function (self, node)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.container[#self.container + 1] = node
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+mail.delMailFromContainer = function (self, id)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local h, idx = nil
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.container)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if id == v.data.id then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 10-17, warpins: 1 ---
+	idx = i
+	h = v.geth(v)
+	--- END OF BLOCK #2 ---
+
+	slot9 = if v.state then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-22, warpins: 1 ---
+	h = h + v.info:geth()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-31, warpins: 2 ---
+	v.removeSelf(v)
+	table.remove(self.container, i)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 32-33, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 34-35, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if idx then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #7 36-40, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if 0 < #self.container then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #8 41-45, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	for i=idx, #self.container, 1
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #10
+
+	--- BLOCK #9 46-55, warpins: 2 ---
+	local v = self.container[i]
+
+	v.setPositionY(v, v.getPositionY(v) + h)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #10 56-56, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 57-59, warpins: 1 ---
+	self.refresh(self)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 60-60, warpins: 3 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+mail.idxOfNode = function (self, node)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.container)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == node then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-7, warpins: 1 ---
+	return i
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-9, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 10-10, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+mail.nodeOfidx = function (self, idx)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return mail
+--- END OF BLOCK #0 ---
+
+
+

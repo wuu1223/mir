@@ -1,0 +1,666 @@
+--- BLOCK #0 1-35, warpins: 1 ---
+local widgetDef = import("..console.widget._def")
+local detail = import("..console.detail")
+local iconFunc = import("..console.iconFunc")
+local common = import("..common.common")
+local magic = import("..common.magic")
+local diySave = class("diySave", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+diySave.onEnter = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+diySave.onExit = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+diySave.ctor = function (self, name)
+	--- BLOCK #0 1-200, warpins: 1 ---
+	self._supportMove = true
+
+	self.setNodeEventEnabled(self, true)
+	self.size(self, 481, 341):anchor(0.5, 1):pos(display.width*0.5, display.height - 30)
+
+	local bg = res.get2("pic/panels/diy/archivebg.png"):anchor(0.5, 0.5):pos(self.getw(self)*0.5, self.geth(self)*0.5):addto(self)
+
+	res.get2("pic/panels/diy/archive.png"):pos(bg.getw(bg)*0.5, bg.geth(bg) - 24):addto(bg)
+
+	local cel = res.get2("pic/panels/diy/archivecell.png"):pos(self.getw(self)*0.5, self.geth(self)*0.5 + 10):addto(self)
+
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(self.getw(self) - 8, self.geth(self) - 8):addto(self)
+
+	local heightDefine = 70
+	local chatView, curSelectIndex = nil
+	local eventCells = {}
+	local titleConfig = {}
+
+	local function refushArchive()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		eventCells = {}
+		titleConfig = {}
+		curSelectIndex = nil
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if chatView then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-12, warpins: 1 ---
+		chatView:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 13-36, warpins: 2 ---
+		chatView = an.newScroll(4, 4, 440, 204):pos(20, 78):add2(self, 100)
+		local listInfo = self:getArchive()
+		--- END OF BLOCK #2 ---
+
+		slot0 = if not listInfo then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 37-37, warpins: 1 ---
+		listInfo = {}
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 38-64, warpins: 2 ---
+		table.insert(listInfo, 1, {
+			"系统默认",
+			color = def.colors.labelYellow
+		})
+		chatView:setScrollSize(443, math.max(210, #listInfo*heightDefine))
+
+		local index = 1
+
+		--- END OF BLOCK #4 ---
+
+		for i, v in ipairs(listInfo)
+
+
+		LOOP BLOCK #5
+		GO OUT TO BLOCK #11
+
+
+		--- BLOCK #5 65-107, warpins: 1 ---
+		titleConfig[index] = v[1]
+		local cellindex = index
+		local cellback = res.get2("pic/panels/diy/btn0.png")
+
+		cellback.anchor(cellback, 0.5, 0.5):pos(chatView:getw()*0.5, (chatView:getScrollSize().height + 35) - index*heightDefine):add2(chatView)
+
+		slot9 = an.newLabel
+		slot10 = v[1]
+		slot11 = 20
+		slot12 = 1
+		slot13 = {}
+		--- END OF BLOCK #5 ---
+
+		slot14 = if not v.color then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 108-110, warpins: 1 ---
+		slot14 = def.colors.labelGray
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 111-132, warpins: 2 ---
+		slot13.color = slot14
+
+		slot9(slot10, slot11, slot12, slot13):anchor(0, 0.5):addto(cellback):pos(30, cellback.geth(cellback)*0.5)
+		--- END OF BLOCK #7 ---
+
+		slot9 = if v[2] then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 133-188, warpins: 1 ---
+		an.newLabel("时间:", 20, 1, {
+			color = def.colors.labelGray
+		}):anchor(0, 0.5):addto(cellback):pos(170, cellback.geth(cellback)*0.5)
+		an.newLabel(v[2], 20, 1, {
+			color = def.colors.labelGray
+		}):anchor(0, 0.5):addto(cellback):pos(220, cellback.geth(cellback)*0.5)
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 189-206, warpins: 2 ---
+		cellback.setTouchEnabled(cellback, true)
+		cellback.setTouchSwallowEnabled(cellback, false)
+		cellback.addNodeEventListener(cellback, cc.NODE_TOUCH_EVENT, function (event)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if event.name == "began" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-12, warpins: 1 ---
+			cellback.offsetBeginX = event.x
+			cellback.offsetBeginY = event.y
+
+			return true
+
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+			--- BLOCK #2 13-15, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if event.name == "ended" then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #3 16-30, warpins: 1 ---
+			local offsetX = event.x - cellback.offsetBeginX
+			local offsetY = event.y - cellback.offsetBeginY
+
+			--- END OF BLOCK #3 ---
+
+			if math.abs(offsetX)
+			 < 5 then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #4 31-37, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			if math.abs(offsetY)
+			 < 5 then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #5 38-41, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			if curSelectIndex ~= cellindex then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #6 42-44, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			slot3 = if curSelectIndex then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 45-54, warpins: 1 ---
+			eventCells[curSelectIndex]:setTex(res.gettex2("pic/panels/diy/btn0.png"))
+
+			--- END OF BLOCK #7 ---
+
+			FLOW; TARGET BLOCK #8
+
+
+			--- BLOCK #8 55-66, warpins: 2 ---
+			curSelectIndex = cellindex
+
+			eventCells[curSelectIndex]:setTex(res.gettex2("pic/panels/diy/btn1.png"))
+
+			--- END OF BLOCK #8 ---
+
+			FLOW; TARGET BLOCK #9
+
+
+			--- BLOCK #9 67-67, warpins: 6 ---
+			return 
+			--- END OF BLOCK #9 ---
+
+
+
+		end)
+
+		eventCells[index] = cellback
+		index = index + 1
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 207-208, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #11 209-209, warpins: 1 ---
+		return 
+		--- END OF BLOCK #11 ---
+
+
+
+	end
+
+	refushArchive()
+
+	local function clickBtn(idx)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #1 7-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if curSelectIndex then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #2 10-24, warpins: 1 ---
+		self:reuseArchive(titleConfig[curSelectIndex])
+		main_scene.ui:loadConsole()
+		--- END OF BLOCK #2 ---
+
+		if curSelectIndex == 1 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 25-31, warpins: 1 ---
+		main_scene.ui.console.skills:defLayout()
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 32-46, warpins: 2 ---
+		main_scene.ui.panels.diy:setFocus()
+		main_scene.ui.panels.diy:ready()
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+		--- BLOCK #5 47-54, warpins: 1 ---
+		main_scene.ui.leftTopTip:show("请选择想应用的配置..")
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+		--- BLOCK #6 55-56, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #7 57-59, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot1 = if curSelectIndex then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #8 60-62, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		if curSelectIndex == 1 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 63-70, warpins: 1 ---
+		main_scene.ui.leftTopTip:show("系统默认配置不能删除..")
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+		--- BLOCK #10 71-80, warpins: 1 ---
+		self:delArchive(titleConfig[curSelectIndex])
+		refushArchive()
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+		--- BLOCK #11 81-87, warpins: 1 ---
+		main_scene.ui.leftTopTip:show("请选择待删除的配置..")
+
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 88-88, warpins: 6 ---
+		return 
+		--- END OF BLOCK #12 ---
+
+
+
+	end
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		clickBtn(1)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/yingyong.png")
+	}):pos(bg.getw(bg)*0.75, 42):addTo(bg)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		clickBtn(2)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/shanchu.png")
+	}):pos(bg.getw(bg)*0.25, 42):addTo(bg)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+diySave.getArchive = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local datas = cache.getDiy(common.getPlayerName(), "_list")
+
+	return datas
+	--- END OF BLOCK #0 ---
+
+
+
+end
+diySave.reuseArchive = function (self, key)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local datas = cache.getDiy(common.getPlayerName(), key)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if datas then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-25, warpins: 1 ---
+	cache.removeDiy(common.getPlayerName(), "_current")
+	cache.saveDiy(common.getPlayerName(), "_current", datas)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 26-27, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if key == "系统默认" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 28-34, warpins: 1 ---
+	cache.removeDiy(common.getPlayerName(), "_current")
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 35-35, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+diySave.resetArchive = function (self, key)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local listDatas = cache.getDiy(common.getPlayerName(), "_list")
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not listDatas then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-15, warpins: 2 ---
+	local canReset = false
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(listDatas)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 16-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v[1] == key then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-20, warpins: 1 ---
+	canReset = true
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 21-22, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 23-24, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not canReset then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 25-25, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 26-40, warpins: 2 ---
+	cache.removeDiy(common.getPlayerName(), key)
+	main_scene.ui.console:saveEdit(key)
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+diySave.delArchive = function (self, key)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local listDatas = cache.getDiy(common.getPlayerName(), "_list")
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not listDatas then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	listDatas = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-21, warpins: 2 ---
+	cache.removeDiy(common.getPlayerName(), key)
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(listDatas)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 22-24, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v[1] == key then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 25-29, warpins: 1 ---
+	table.remove(listDatas, i)
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 30-31, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 32-40, warpins: 1 ---
+	cache.saveDiy(common.getPlayerName(), "_list", listDatas)
+
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+return diySave
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,102 @@
+--- BLOCK #0 1-18, warpins: 1 ---
+local equip = import(".equip")
+local heroEquip = class("heroEquip", equip)
+
+table.merge(heroEquip, {
+	isHero = true
+})
+
+heroEquip.ctor = function (self, params)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	heroEquip.super.ctor(self, params)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ui.panels.heroBag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-20, warpins: 1 ---
+	main_scene.ui.panels.heroBag:resetPanelPosition("left")
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-21, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+heroEquip.putItem = function (self, item, x, y)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local form = item.formPanel.__cname
+	--- END OF BLOCK #0 ---
+
+	if self.page == "main" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if form == "heroBag" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 8-53, warpins: 1 ---
+	local anchor = self.content.bg:getAnchorPoint()
+	local offset = cc.p(self.content.bg:getw()*anchor.x, self.content.bg:geth()*anchor.y)
+	y = y - self.content.bg:getPositionY() + offset.y
+	x = x - self.content.bg:getPositionX() + offset.x
+	local putIdx = self.pos2idx(self, x, y)
+
+	--- END OF BLOCK #2 ---
+
+	if putIdx == "-1" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 54-54, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 55-58, warpins: 2 ---
+	item.use(item, putIdx)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 59-59, warpins: 3 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return heroEquip
+--- END OF BLOCK #0 ---
+
+
+
