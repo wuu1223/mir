@@ -1,0 +1,1312 @@
+--- BLOCK #0 1-12, warpins: 1 ---
+local items = {}
+
+scheduler.performWithDelayGlobal(function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local file = nil
+	--- END OF BLOCK #0 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 6-16, warpins: 1 ---
+	local fu = cc.FileUtils:getInstance()
+
+	--- END OF BLOCK #1 ---
+
+	slot2 = if fu.isFileExist(fu, "wupin.txt")
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-26, warpins: 1 ---
+	p2("debug", "使用了未打包的道具表")
+
+	file = fu.getStringFromFile(fu, "wupin.txt")
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #3 27-32, warpins: 1 ---
+	file = res.getfile("config/wupin.txt")
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 33-37, warpins: 1 ---
+	file = res.getfile("config/wupin.txt")
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 38-47, warpins: 3 ---
+	local datas = string.split(file, "\n")
+
+	local function initItem(dataStr)
+		--- BLOCK #0 1-11, warpins: 1 ---
+		local data = string.split(dataStr, ",")
+		local record = {}
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not tonumber(data[2])
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 12-12, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 13-16, warpins: 2 ---
+		record.allowFlag = slot3
+		--- END OF BLOCK #2 ---
+
+		slot3 = if not data[3] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 17-17, warpins: 1 ---
+		slot3 = ""
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 18-23, warpins: 2 ---
+		record.name = slot3
+
+		--- END OF BLOCK #4 ---
+
+		slot3 = if not tonumber(data[4])
+
+		 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 24-24, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 25-34, warpins: 2 ---
+		record.stdMode = slot3
+		record.shape = tonumber(data[5])
+
+		--- END OF BLOCK #6 ---
+
+		slot3 = if not tonumber(data[6])
+
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 35-35, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 36-45, warpins: 2 ---
+		record.source = slot3
+		record.outlook = tonumber(data[7])
+
+		--- END OF BLOCK #8 ---
+
+		slot3 = if not tonumber(data[8])
+
+		 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 46-46, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 47-52, warpins: 2 ---
+		record.looks = slot3
+
+		--- END OF BLOCK #10 ---
+
+		slot3 = if not tonumber(data[9])
+
+		 then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 53-53, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 54-59, warpins: 2 ---
+		record.weight = slot3
+
+		--- END OF BLOCK #12 ---
+
+		slot3 = if not tonumber(data[10])
+
+		 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 60-60, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 61-66, warpins: 2 ---
+		record.duraMax = slot3
+
+		--- END OF BLOCK #14 ---
+
+		slot3 = if not tonumber(data[11])
+
+		 then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 67-67, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #15 ---
+
+		FLOW; TARGET BLOCK #16
+
+
+		--- BLOCK #16 68-73, warpins: 2 ---
+		record.aniCount = slot3
+
+		--- END OF BLOCK #16 ---
+
+		slot3 = if not tonumber(data[12])
+
+		 then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 74-74, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 75-80, warpins: 2 ---
+		record.needConf = slot3
+
+		--- END OF BLOCK #18 ---
+
+		slot3 = if not tonumber(data[13])
+
+		 then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 81-81, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 82-87, warpins: 2 ---
+		record.AC = slot3
+
+		--- END OF BLOCK #20 ---
+
+		slot3 = if not tonumber(data[14])
+
+		 then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 88-88, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #21 ---
+
+		FLOW; TARGET BLOCK #22
+
+
+		--- BLOCK #22 89-94, warpins: 2 ---
+		record.maxAC = slot3
+
+		--- END OF BLOCK #22 ---
+
+		slot3 = if not tonumber(data[15])
+
+		 then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 95-95, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 96-101, warpins: 2 ---
+		record.MAC = slot3
+
+		--- END OF BLOCK #24 ---
+
+		slot3 = if not tonumber(data[16])
+
+		 then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #25 102-102, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 103-108, warpins: 2 ---
+		record.maxMAC = slot3
+
+		--- END OF BLOCK #26 ---
+
+		slot3 = if not tonumber(data[17])
+
+		 then
+		JUMP TO BLOCK #27
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #27 109-109, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #27 ---
+
+		FLOW; TARGET BLOCK #28
+
+
+		--- BLOCK #28 110-115, warpins: 2 ---
+		record.DC = slot3
+
+		--- END OF BLOCK #28 ---
+
+		slot3 = if not tonumber(data[18])
+
+		 then
+		JUMP TO BLOCK #29
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #29 116-116, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #29 ---
+
+		FLOW; TARGET BLOCK #30
+
+
+		--- BLOCK #30 117-122, warpins: 2 ---
+		record.maxDC = slot3
+
+		--- END OF BLOCK #30 ---
+
+		slot3 = if not tonumber(data[19])
+
+		 then
+		JUMP TO BLOCK #31
+		else
+		JUMP TO BLOCK #32
+		end
+
+
+		--- BLOCK #31 123-123, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #31 ---
+
+		FLOW; TARGET BLOCK #32
+
+
+		--- BLOCK #32 124-129, warpins: 2 ---
+		record.MC = slot3
+
+		--- END OF BLOCK #32 ---
+
+		slot3 = if not tonumber(data[20])
+
+		 then
+		JUMP TO BLOCK #33
+		else
+		JUMP TO BLOCK #34
+		end
+
+
+		--- BLOCK #33 130-130, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #33 ---
+
+		FLOW; TARGET BLOCK #34
+
+
+		--- BLOCK #34 131-136, warpins: 2 ---
+		record.maxMC = slot3
+
+		--- END OF BLOCK #34 ---
+
+		slot3 = if not tonumber(data[21])
+
+		 then
+		JUMP TO BLOCK #35
+		else
+		JUMP TO BLOCK #36
+		end
+
+
+		--- BLOCK #35 137-137, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #35 ---
+
+		FLOW; TARGET BLOCK #36
+
+
+		--- BLOCK #36 138-143, warpins: 2 ---
+		record.SC = slot3
+
+		--- END OF BLOCK #36 ---
+
+		slot3 = if not tonumber(data[22])
+
+		 then
+		JUMP TO BLOCK #37
+		else
+		JUMP TO BLOCK #38
+		end
+
+
+		--- BLOCK #37 144-144, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #37 ---
+
+		FLOW; TARGET BLOCK #38
+
+
+		--- BLOCK #38 145-150, warpins: 2 ---
+		record.maxSC = slot3
+
+		--- END OF BLOCK #38 ---
+
+		slot3 = if not tonumber(data[23])
+
+		 then
+		JUMP TO BLOCK #39
+		else
+		JUMP TO BLOCK #40
+		end
+
+
+		--- BLOCK #39 151-151, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #39 ---
+
+		FLOW; TARGET BLOCK #40
+
+
+		--- BLOCK #40 152-157, warpins: 2 ---
+		record.CC = slot3
+
+		--- END OF BLOCK #40 ---
+
+		slot3 = if not tonumber(data[24])
+
+		 then
+		JUMP TO BLOCK #41
+		else
+		JUMP TO BLOCK #42
+		end
+
+
+		--- BLOCK #41 158-158, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #41 ---
+
+		FLOW; TARGET BLOCK #42
+
+
+		--- BLOCK #42 159-164, warpins: 2 ---
+		record.maxCC = slot3
+
+		--- END OF BLOCK #42 ---
+
+		slot3 = if not tonumber(data[25])
+
+		 then
+		JUMP TO BLOCK #43
+		else
+		JUMP TO BLOCK #44
+		end
+
+
+		--- BLOCK #43 165-165, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #43 ---
+
+		FLOW; TARGET BLOCK #44
+
+
+		--- BLOCK #44 166-171, warpins: 2 ---
+		record.need = slot3
+
+		--- END OF BLOCK #44 ---
+
+		slot3 = if not tonumber(data[26])
+
+		 then
+		JUMP TO BLOCK #45
+		else
+		JUMP TO BLOCK #46
+		end
+
+
+		--- BLOCK #45 172-172, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #45 ---
+
+		FLOW; TARGET BLOCK #46
+
+
+		--- BLOCK #46 173-178, warpins: 2 ---
+		record.needLevel = slot3
+
+		--- END OF BLOCK #46 ---
+
+		slot3 = if not tonumber(data[27])
+
+		 then
+		JUMP TO BLOCK #47
+		else
+		JUMP TO BLOCK #48
+		end
+
+
+		--- BLOCK #47 179-179, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #47 ---
+
+		FLOW; TARGET BLOCK #48
+
+
+		--- BLOCK #48 180-185, warpins: 2 ---
+		record.antiqueLv = slot3
+
+		--- END OF BLOCK #48 ---
+
+		slot3 = if not tonumber(data[28])
+
+		 then
+		JUMP TO BLOCK #49
+		else
+		JUMP TO BLOCK #50
+		end
+
+
+		--- BLOCK #49 186-186, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #49 ---
+
+		FLOW; TARGET BLOCK #50
+
+
+		--- BLOCK #50 187-192, warpins: 2 ---
+		record.wParam1 = slot3
+
+		--- END OF BLOCK #50 ---
+
+		slot3 = if not tonumber(data[29])
+
+		 then
+		JUMP TO BLOCK #51
+		else
+		JUMP TO BLOCK #52
+		end
+
+
+		--- BLOCK #51 193-193, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #51 ---
+
+		FLOW; TARGET BLOCK #52
+
+
+		--- BLOCK #52 194-199, warpins: 2 ---
+		record.wParam2 = slot3
+
+		--- END OF BLOCK #52 ---
+
+		slot3 = if not tonumber(data[30])
+
+		 then
+		JUMP TO BLOCK #53
+		else
+		JUMP TO BLOCK #54
+		end
+
+
+		--- BLOCK #53 200-200, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #53 ---
+
+		FLOW; TARGET BLOCK #54
+
+
+		--- BLOCK #54 201-206, warpins: 2 ---
+		record.intParam = slot3
+
+		--- END OF BLOCK #54 ---
+
+		slot3 = if not tonumber(data[31])
+
+		 then
+		JUMP TO BLOCK #55
+		else
+		JUMP TO BLOCK #56
+		end
+
+
+		--- BLOCK #55 207-207, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #55 ---
+
+		FLOW; TARGET BLOCK #56
+
+
+		--- BLOCK #56 208-213, warpins: 2 ---
+		record.itemScore = slot3
+
+		--- END OF BLOCK #56 ---
+
+		slot3 = if not tonumber(data[32])
+
+		 then
+		JUMP TO BLOCK #57
+		else
+		JUMP TO BLOCK #58
+		end
+
+
+		--- BLOCK #57 214-214, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #57 ---
+
+		FLOW; TARGET BLOCK #58
+
+
+		--- BLOCK #58 215-220, warpins: 2 ---
+		record.price = slot3
+
+		--- END OF BLOCK #58 ---
+
+		slot3 = if not tonumber(data[33])
+
+		 then
+		JUMP TO BLOCK #59
+		else
+		JUMP TO BLOCK #60
+		end
+
+
+		--- BLOCK #59 221-221, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #59 ---
+
+		FLOW; TARGET BLOCK #60
+
+
+		--- BLOCK #60 222-227, warpins: 2 ---
+		record.itemType1 = slot3
+
+		--- END OF BLOCK #60 ---
+
+		slot3 = if not tonumber(data[34])
+
+		 then
+		JUMP TO BLOCK #61
+		else
+		JUMP TO BLOCK #62
+		end
+
+
+		--- BLOCK #61 228-228, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #61 ---
+
+		FLOW; TARGET BLOCK #62
+
+
+		--- BLOCK #62 229-234, warpins: 2 ---
+		record.itemType2 = slot3
+
+		--- END OF BLOCK #62 ---
+
+		slot3 = if not tonumber(data[35])
+
+		 then
+		JUMP TO BLOCK #63
+		else
+		JUMP TO BLOCK #64
+		end
+
+
+		--- BLOCK #63 235-235, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #63 ---
+
+		FLOW; TARGET BLOCK #64
+
+
+		--- BLOCK #64 236-241, warpins: 2 ---
+		record.itemType3 = slot3
+
+		--- END OF BLOCK #64 ---
+
+		slot3 = if not tonumber(data[36])
+
+		 then
+		JUMP TO BLOCK #65
+		else
+		JUMP TO BLOCK #66
+		end
+
+
+		--- BLOCK #65 242-242, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #65 ---
+
+		FLOW; TARGET BLOCK #66
+
+
+		--- BLOCK #66 243-248, warpins: 2 ---
+		record.itemLevel = slot3
+
+		--- END OF BLOCK #66 ---
+
+		slot3 = if not tonumber(data[37])
+
+		 then
+		JUMP TO BLOCK #67
+		else
+		JUMP TO BLOCK #68
+		end
+
+
+		--- BLOCK #67 249-249, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #67 ---
+
+		FLOW; TARGET BLOCK #68
+
+
+		--- BLOCK #68 250-255, warpins: 2 ---
+		record.suitEquipType = slot3
+
+		--- END OF BLOCK #68 ---
+
+		slot3 = if not tonumber(data[38])
+
+		 then
+		JUMP TO BLOCK #69
+		else
+		JUMP TO BLOCK #70
+		end
+
+
+		--- BLOCK #69 256-256, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #69 ---
+
+		FLOW; TARGET BLOCK #70
+
+
+		--- BLOCK #70 257-262, warpins: 2 ---
+		record.intparam2 = slot3
+
+		--- END OF BLOCK #70 ---
+
+		slot3 = if not tonumber(data[39])
+
+		 then
+		JUMP TO BLOCK #71
+		else
+		JUMP TO BLOCK #72
+		end
+
+
+		--- BLOCK #71 263-263, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #71 ---
+
+		FLOW; TARGET BLOCK #72
+
+
+		--- BLOCK #72 264-269, warpins: 2 ---
+		record.intparam3 = slot3
+
+		--- END OF BLOCK #72 ---
+
+		slot3 = if not tonumber(data[40])
+
+		 then
+		JUMP TO BLOCK #73
+		else
+		JUMP TO BLOCK #74
+		end
+
+
+		--- BLOCK #73 270-270, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #73 ---
+
+		FLOW; TARGET BLOCK #74
+
+
+		--- BLOCK #74 271-276, warpins: 2 ---
+		record.maxSteelLv = slot3
+
+		--- END OF BLOCK #74 ---
+
+		slot3 = if not tonumber(data[41])
+
+		 then
+		JUMP TO BLOCK #75
+		else
+		JUMP TO BLOCK #76
+		end
+
+
+		--- BLOCK #75 277-277, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #75 ---
+
+		FLOW; TARGET BLOCK #76
+
+
+		--- BLOCK #76 278-283, warpins: 2 ---
+		record.maxVeinsLv = slot3
+
+		--- END OF BLOCK #76 ---
+
+		slot3 = if not tonumber(data[42])
+
+		 then
+		JUMP TO BLOCK #77
+		else
+		JUMP TO BLOCK #78
+		end
+
+
+		--- BLOCK #77 284-284, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #77 ---
+
+		FLOW; TARGET BLOCK #78
+
+
+		--- BLOCK #78 285-292, warpins: 2 ---
+		record.baseEffectID = slot3
+		record.itemExtAbil = data[43]
+
+		--- END OF BLOCK #78 ---
+
+		slot3 = if not tonumber(data[44])
+
+		 then
+		JUMP TO BLOCK #79
+		else
+		JUMP TO BLOCK #80
+		end
+
+
+		--- BLOCK #79 293-293, warpins: 1 ---
+		slot3 = 7
+		--- END OF BLOCK #79 ---
+
+		FLOW; TARGET BLOCK #80
+
+
+		--- BLOCK #80 294-299, warpins: 2 ---
+		record.needJob = slot3
+
+		--- END OF BLOCK #80 ---
+
+		slot3 = if not tonumber(data[45])
+
+		 then
+		JUMP TO BLOCK #81
+		else
+		JUMP TO BLOCK #82
+		end
+
+
+		--- BLOCK #81 300-300, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #81 ---
+
+		FLOW; TARGET BLOCK #82
+
+
+		--- BLOCK #82 301-311, warpins: 2 ---
+		record.ItemConf = slot3
+		record.get = function (self, k)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			return self[k]
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+		record.getVar = function (k)
+			--- BLOCK #0 1-5, warpins: 1 ---
+			return record:get(k)
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		return record, tonumber(data[1])
+		--- END OF BLOCK #82 ---
+
+
+
+	end
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(datas)
+
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #6 48-49, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v ~= "" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 50-54, warpins: 1 ---
+	local record, idx = initItem(v)
+	items[idx] = record
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 55-56, warpins: 3 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #9 57-77, warpins: 1 ---
+	items.defaultItem = initItem(",,未知物品")
+	local descfile = res.getfile("config/itemdesc.txt")
+	local descdatas = string.split(descfile, "\n")
+	items.desc = {}
+
+	--- END OF BLOCK #9 ---
+
+	for i, v in ipairs(descdatas)
+
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #10 78-79, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if v ~= "" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 80-89, warpins: 1 ---
+	local data = string.split(v, "=")
+	items.desc[data[1]] = data[2]
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 90-91, warpins: 3 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #13 92-92, warpins: 1 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end, 0)
+
+items.initFilt = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local filtFileName = "config/itemFilt180.txt"
+	--- END OF BLOCK #0 ---
+
+	if def.gameVersionType == "176" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	filtFileName = "config/itemFilt176.txt"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if def.gameVersionType == "185" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-12, warpins: 1 ---
+	filtFileName = "config/itemFilt185.txt"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 13-29, warpins: 3 ---
+	local filterfile = res.getfile(filtFileName)
+	local filterdatas = string.split(filterfile, "\n")
+	items.filt = {}
+	local category = {}
+
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(filterdatas)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #5 30-31, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if v ~= "" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #6 32-49, warpins: 1 ---
+	local data = string.split(v, ",")
+	slot10 = items.filt
+	slot11 = data[1]
+	slot12 = {
+		category = data[2]
+	}
+
+	--- END OF BLOCK #6 ---
+
+	if string.find(data[3], "1")
+
+	 == nil then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 50-51, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 52-52, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 53-60, warpins: 2 ---
+	slot12.pickOnRatting = slot13
+
+	--- END OF BLOCK #9 ---
+
+	if string.find(data[4], "1")
+
+	 == nil then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 61-62, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 63-63, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 64-71, warpins: 2 ---
+	slot12.pickUp = slot13
+
+	--- END OF BLOCK #12 ---
+
+	if string.find(data[5], "1")
+
+	 == nil then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 72-73, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 74-74, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 75-82, warpins: 2 ---
+	slot12.hintName = slot13
+
+	--- END OF BLOCK #15 ---
+
+	if string.find(data[6], "1")
+
+	 == nil then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 83-84, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 85-85, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 86-90, warpins: 2 ---
+	slot12.isGood = slot13
+	slot10[slot11] = slot12
+	category[data[2]] = true
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 91-92, warpins: 3 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #20 93-99, warpins: 1 ---
+	items.category = {}
+
+	--- END OF BLOCK #20 ---
+
+	for k, v in pairs(category)
+
+	LOOP BLOCK #21
+	GO OUT TO BLOCK #23
+
+
+	--- BLOCK #21 100-105, warpins: 1 ---
+	table.insert(items.category, k)
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 106-107, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #23 108-108, warpins: 1 ---
+	return 
+	--- END OF BLOCK #23 ---
+
+
+
+end
+items.valueType2Key = {
+	[0] = "AC",
+	"maxAC",
+	"MAC",
+	"maxMAC",
+	"DC",
+	"maxDC",
+	"MC",
+	"maxMC",
+	"SC",
+	"maxSC",
+	"CC",
+	"maxCC",
+	"normalStateSet",
+	"need",
+	"needLevel",
+	"antiqueLv",
+	"maxDura",
+	"hitSpeed",
+	"quickRate",
+	"accurate",
+	"posiAC",
+	"HP",
+	"MP",
+	"price",
+	"strength",
+	"AttributeDC",
+	"AttributeAC",
+	"AttributeMAC",
+	"AttributeMaxMC",
+	"AttributeMaxSC",
+	"AttributeLucky",
+	"AttributeStrength",
+	"AttributeHitSpeed",
+	"AttributeSTONE_DEF",
+	"AttributePOIS_RESUME",
+	"AttributeAccurate",
+	"AttributeDura",
+	"AttributeQuickRate",
+	"AttributeMaxDura",
+	"AttributeMcAvoid",
+	"JewelType",
+	"JewelAbil",
+	"JewelDC",
+	"JewelMC",
+	"JewelSC",
+	"JewelAC",
+	"JewelMAC",
+	"JewelDura",
+	"JewelHitSpeed",
+	"JewelQuickRate",
+	"JewelAccurate",
+	"JewelPoisAc",
+	"JewelDownSpeed",
+	"JewelStrength",
+	"VTGiftProp"
+}
+
+return items
+--- END OF BLOCK #0 ---
+
+
+

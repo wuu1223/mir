@@ -1,0 +1,92 @@
+--- BLOCK #0 1-3, warpins: 1 ---
+function main(level)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if tonumber(level)
+	 == 3 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-12, warpins: 1 ---
+	print("levelUp level_3")
+	mod.newbee("level_3")
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-17, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if tonumber(level)
+	 == 7 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-24, warpins: 1 ---
+	print("levelUp level_7")
+	mod.newbee("level_7")
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 25-29, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if tonumber(level)
+	 == 9 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 30-36, warpins: 1 ---
+	print("levelUp level_9")
+	mod.newbee("level_9")
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 37-41, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if tonumber(level)
+	 == 10 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 42-48, warpins: 1 ---
+	print("levelUp level_10")
+	mod.newbee("level_10")
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 49-49, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

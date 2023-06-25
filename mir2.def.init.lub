@@ -1,0 +1,190 @@
+--- BLOCK #0 1-102, warpins: 1 ---
+local current = ...
+
+import(".globa1")
+import(".globa2")
+import(".globa3")
+
+def = {}
+
+print("init def")
+
+def.colors = import(".colors")
+def.cmds = import(".cmds")
+def.perload = import(".perload")
+def.guild = import(".guild")
+def.magic = import(".magic")
+def.operate = import(".operate")
+def.font = "STHeitiSC"
+def.gameName = "ÈÈÑª´«Ææ"
+def.gameVersionType = "185"
+def.useIGW = 1
+def.gameType = "gametea"
+def.MIR_VERSION_NUMBER = 131532307
+def.lazyLoadConfig = function ()
+	--- BLOCK #0 1-53, warpins: 1 ---
+	def.role = import(".role", current)
+
+	def.role.init()
+
+	def.items = import(".items", current)
+	def.map = import(".map", current)
+	def.skill = import(".skill", current)
+	def.titledesc = import(".titledesc", current)
+	def.wordfilter = import(".wordfilter", current)
+	def.gmCmd = import(".gmCmd", current)
+	def.bigmap = import(".bigmap", current)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+def.setSF = function (ip, port, password, notice)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	def.sfIp = ip
+	def.sfPort = pert
+	def.sfPassword = password
+	def.sfAuthUrl = "http://" .. ip .. ":" .. port .. "/serverlist?password=" .. password
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+def.setSF("1234.sydjscc.top", 8088, "7g9egjkew")
+
+def.setSFNotice = function (notice)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	def.sfNotice = notice
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+def.setLoginCenter = function (ip, port, serverName, serverid)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	def.loginCenter = "http://" .. ip .. ":" .. port
+	def.loginCenterIP = ip
+	def.loginCenterPort = port
+	def.serverName = serverName
+	def.serverId = serverid
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+def.setLoginCenter("center.peibanmir2.com", 8088, "Åã°é´«Ææ", "peibanmir2.com")
+
+def.resetLoginCenter = function ()
+	--- BLOCK #0 1-16, warpins: 1 ---
+	def.loginCenter = nil
+	def.loginCenterIP = nil
+	def.loginCenterPort = nil
+	def.serverName = nil
+	def.serverId = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+def.setGameServer = function (zoneid, ip, areaID, gameVersion, info, configName, configVer)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	def.zoneid = zoneid
+	def.ip = ip
+	slot7 = def
+
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not tonumber(areaID)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-11, warpins: 1 ---
+	slot8 = 0
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-16, warpins: 2 ---
+	slot7.areaID = slot8
+	slot7 = def
+	slot8 = tostring
+	--- END OF BLOCK #2 ---
+
+	slot9 = if not gameVersion then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-17, warpins: 1 ---
+	slot9 = "185"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 18-29, warpins: 2 ---
+	slot7.gameVersionType = slot8(slot9)
+	def.isSelectServer = true
+	def.serverinfo = info
+	def.configName = configName
+	def.configVer = configVer
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+def.resetGameServer = function ()
+	--- BLOCK #0 1-25, warpins: 1 ---
+	def.zoneid = nil
+	def.ip = nil
+	def.areaID = nil
+	def.gameVersionType = nil
+	def.isSelectServer = false
+	def.serverinfo = nil
+	def.configName = nil
+	def.configVer = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+def.setIsLazyLoadConfig = function (b)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	def.bLazyLoadConfig = b
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

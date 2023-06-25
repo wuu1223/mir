@@ -1,0 +1,25 @@
+--- BLOCK #0 1-19, warpins: 1 ---
+Region = {
+	0 = {
+		pos(330, 260),
+		pos(200, 200)
+	}
+}
+MinLevel = {
+	["0,330,260"] = 2
+}
+
+function main(region)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

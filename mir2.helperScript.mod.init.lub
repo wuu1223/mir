@@ -1,0 +1,12 @@
+--- BLOCK #0 1-16, warpins: 1 ---
+reg("skill")
+reg("equip")
+reg("test")
+reg("CG")
+reg("newbee")
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

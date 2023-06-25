@@ -1,0 +1,4181 @@
+--- BLOCK #0 1-3, warpins: 1 ---
+function main(stageIndex)
+	--- BLOCK #0 1-41, warpins: 1 ---
+	sound.playMusic("CG2", true)
+
+	function focus(img, x, y, w, h, dur)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot5 = if not dur then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-3, warpins: 1 ---
+		dur = 2
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 4-33, warpins: 2 ---
+		local scale = math.min(display.width/w, display.height/h)
+		local newAnchorX = x/img.getw(img)
+		local newAnchorY = y/img.geth(img)
+		local oleAnchor = img.getAnchorPoint(img)
+		local oleAX = oleAnchor.x
+		local oleAY = oleAnchor.y
+		local oleScale = img.getScale(img)
+		local proc = 0
+		local act = nil
+
+		local function upt(act, per)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			local dt = getDeltaTime()
+			proc = proc + dt
+			--- END OF BLOCK #0 ---
+
+			slot3 = if not per then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 8-10, warpins: 1 ---
+			local per = proc/dur
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-13, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			if 1 <= per then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #3 14-16, warpins: 1 ---
+			per = 1
+
+			--- END OF BLOCK #3 ---
+
+			slot0 = if act then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 17-19, warpins: 1 ---
+			act.stop(act)
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 20-49, warpins: 3 ---
+			local ax = oleAX + (newAnchorX - oleAX)*per
+			local ay = oleAY + (newAnchorY - oleAY)*per
+
+			img:anchor(ax, ay)
+
+			local sc = oleScale + (scale - oleScale)*per
+
+			img:setScale(sc)
+
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end
+
+		--- END OF BLOCK #2 ---
+
+		if dur == 0 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 34-38, warpins: 1 ---
+		upt(nil, 1)
+
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 39-44, warpins: 1 ---
+		act = img.schedule(img, upt, 0)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 45-46, warpins: 2 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	local tDelay = delay
+
+	function delay(...)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		tDelay(...)
+		--- END OF BLOCK #0 ---
+
+		slot0 = if SKIP_PLAY()
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-14, warpins: 1 ---
+		sound.stopAllSounds()
+		exitStage()
+
+		return true
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 15-15, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	function playSound(filename)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		sound.setPriority(filename, 10)
+		sound.playSound(filename)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	fsdress = 329
+	fsweapon = 210
+	dsdress = 330
+	dsweapon = 326
+	zsdress = 328
+	zsweapon = 208
+	ad = action.delay
+	acb = action.callFunc
+	rs = action.removeSelf
+
+	function showText(text)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if la then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		la:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-38, warpins: 2 ---
+		la = createLabel(text, 32, 1):pos(display.cx, 75):anchor(0.5, 0.5)
+
+		la:setLocalZOrder(999)
+		la:setNodeEventEnabled(true)
+
+		la.onCleanup = function ()
+			--- BLOCK #0 1-3, warpins: 1 ---
+			la = nil
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local tCreateRole = createRole
+
+	local function createRole(...)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		local role = tCreateRole(...)
+		role.say_default_duration = 3
+		role.say_default_strWidth = 316
+		role.say_default_fontSize = 24
+
+		return role
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	function noInfoRole(...)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		local role = createRole(...)
+		role.role.noInfo = true
+
+		return role
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not stageIndex then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 42-42, warpins: 1 ---
+	stageIndex = "stage0"
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 43-49, warpins: 2 ---
+	enterStage(nil, 0, 0)
+	--- END OF BLOCK #2 ---
+
+	if stageIndex == "stage0" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #3 50-95, warpins: 1 ---
+	enterStage("image", 0, 0, "")
+
+	worldImg = createImage("helperScript/world.jpg"):center()
+
+	worldImg:setLocalZOrder(-1)
+
+	scale = math.max(display.width/worldImg:getw(), display.height/worldImg:geth())
+
+	worldImg:scale(scale)
+	--- END OF BLOCK #3 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 96-97, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 98-117, warpins: 2 ---
+	focus(worldImg, 1250, 890, 960, 640, 2)
+	showText("玛法大陆南地——")
+	playSound("dubbing/1", true)
+	--- END OF BLOCK #5 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 118-119, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 120-227, warpins: 2 ---
+	showText("两千年前，虹魔教内部分裂")
+	playSound("dubbing/2", true)
+
+	role1 = createRole("虹魔教主", 37, 182, 0, 0, 0, nil, pos(0, 1))
+
+	role1.role.node:opacity(0):run(action.fadeIn(0.8))
+
+	role1.dir = DIR.bottom
+	role2 = createRole("沃玛教主", 21, 34, 0, 0, 0, nil, pos(-2, 3))
+	role2.dir = DIR.bottom
+
+	role2.role.node:opacity(0):run(action.fadeIn(0.8))
+
+	role3 = createRole("祖玛教主", 49, 63, 0, 0, 0, nil, pos(2, 3))
+	role3.dir = DIR.bottom
+
+	role3.role.node:opacity(0):run(action.fadeIn(0.5))
+	--- END OF BLOCK #7 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 228-229, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 230-230, warpins: 2 ---
+	stageIndex = "stage1"
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 231-232, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if stageIndex == "stage1" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #11 233-258, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(1.5)
+	})
+	--- END OF BLOCK #11 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 259-260, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 261-815, warpins: 2 ---
+	enterStage("image", 0, 0, "stage1.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(1.5),
+		action.removeSelf()
+	})
+	showText("虹魔、祖玛、沃玛，三教之间恶战不休")
+	playSound("dubbing/3", true)
+
+	one1 = noInfoRole("白野猪", 19, 112, 0, 0, 0, nil, pos(-6, -4))
+	one1.dir = DIR.rightBottom
+	one2 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-4, -3))
+	one2.dir = DIR.leftUp
+	one3 = noInfoRole("虹魔蝎卫尸体", 53, 180, 0, 0, 0, nil, pos(-2, -2))
+	one3.dir = DIR.rightBottom
+
+	one3:playAct(ACTS.DEATH)
+
+	one4 = noInfoRole("沃玛卫士", 19, 151, 0, 0, 0, nil, pos(-1, -4))
+	one4.dir = DIR.leftBottom
+	one5 = noInfoRole("祖玛卫士", 47, 62, 0, 0, 0, nil, pos(1, -1))
+	one5.dir = DIR.leftBottom
+	one6 = noInfoRole("半兽勇士", 19, 102, 0, 0, 0, nil, pos(0, 0))
+	one6.dir = DIR.rightUp
+	one7 = noInfoRole("黑野猪", 19, 111, 0, 0, 0, nil, pos(6, -4))
+	one7.dir = DIR.leftUp
+	one8 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(3, -4))
+	one8.dir = DIR.right
+	one9 = noInfoRole("火焰沃玛", 20, 31, 0, 0, 0, nil, pos(4, -3))
+	one9.dir = DIR.bottom
+	one10 = noInfoRole("白野猪尸体", 19, 112, 0, 0, 0, nil, pos(6, -2))
+	one10.dir = DIR.leftUp
+
+	one10:playAct(ACTS.DEATH)
+
+	one12 = noInfoRole("白野猪", 19, 112, 0, 0, 0, nil, pos(-1, 4))
+	one12.dir = DIR.rightUp
+	one13 = noInfoRole("白野猪", 19, 112, 0, 0, 0, nil, pos(4, 1))
+	one13.dir = DIR.up
+
+	one13:playAct(ACTS.NowDEATH)
+
+	one14 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-4, 1))
+	one14.dir = DIR.rightUp
+	one15 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(-4, 2))
+	one15.dir = DIR.leftBottom
+
+	one15:playAct(ACTS.DEATH)
+
+	one16 = noInfoRole("虹魔猪卫", 19, 181, 0, 0, 0, nil, pos(-5, 2))
+	one16.dir = DIR.rightBottom
+	one17 = noInfoRole("红野猪", 19, 110, 0, 0, 0, nil, pos(-5, -2))
+	one17.dir = DIR.up
+
+	one17:playAct(ACTS.DEATH)
+
+	one19 = noInfoRole("半兽勇士", 19, 102, 0, 0, 0, nil, pos(0, 3))
+	one19.dir = DIR.leftBottom
+	one20 = noInfoRole("火焰沃玛", 20, 31, 0, 0, 0, nil, pos(-4, 4))
+	one20.dir = DIR.leftUp
+	one21 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(4, 4))
+	one21.dir = DIR.rightBottom
+	one22 = noInfoRole("祖玛卫士", 47, 62, 0, 0, 0, nil, pos(3, 2))
+	one22.dir = DIR.leftBottom
+
+	one22:playAct(ACTS.DEATH)
+
+	one23 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(5, 2))
+	one23.dir = DIR.leftBottom
+
+	one23:playAct(ACTS.DEATH)
+
+	one24 = noInfoRole("白野猪尸体", 19, 112, 0, 0, 0, nil, pos(5, 5))
+	one24.dir = DIR.leftUp
+
+	one24:playAct(ACTS.DEATH)
+
+	one25 = noInfoRole("火焰沃玛", 20, 31, 0, 0, 0, nil, pos(4, 3))
+	one25.dir = DIR.rightUp
+
+	one25:playAct(ACTS.DEATH)
+
+	one26 = noInfoRole("白野猪尸体", 19, 112, 0, 0, 0, nil, pos(-6, 4))
+	one26.dir = DIR.leftBottom
+
+	one26:playAct(ACTS.DEATH)
+
+	one27 = createRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(1, -4))
+	one27.dir = DIR.rightBottom
+
+	one27:playAct(ACTS.DEATH)
+	--- END OF BLOCK #13 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 816-817, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 818-892, warpins: 2 ---
+	runActs({
+		one1:actAssign("dir", DIR.right),
+		one1:actPlayAct(ACTS.WALK, pos(1, 0)),
+		one1:actDelay(0.8),
+		one1:actAssign("dir", DIR.rightBottom),
+		action.rep(action.seq({
+			one1:actAttack(3),
+			one1:actDelay(0.5),
+			one2:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #15 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 893-894, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 895-944, warpins: 2 ---
+	runActs({
+		one6:actAssign("dir", DIR.rightUp),
+		action.rep(action.seq({
+			one6:actAttack(3),
+			one6:actDelay(0.5),
+			one5:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #17 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 945-946, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 947-1021, warpins: 2 ---
+	runActs({
+		one7:actAssign("dir", DIR.leftBottom),
+		one7:actPlayAct(ACTS.WALK, pos(-1, 0)),
+		one7:actDelay(0.8),
+		one7:actAssign("dir", DIR.left),
+		action.rep(action.seq({
+			one7:actAttack(3),
+			one7:actDelay(0.5),
+			one8:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #19 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 1022-1023, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 1024-1098, warpins: 2 ---
+	runActs({
+		one9:actAssign("dir", DIR.bottom),
+		one9:actPlayAct(ACTS.WALK, pos(0, 1)),
+		one9:actDelay(0.8),
+		one9:actAssign("dir", DIR.bottom),
+		action.rep(action.seq({
+			one9:actAttack(3),
+			one9:actDelay(0.5),
+			one13:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #21 ---
+
+	slot4 = if delay(0.4)
+
+	 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 1099-1100, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 1101-1150, warpins: 2 ---
+	runActs({
+		one16:actAssign("dir", DIR.rightBottom),
+		action.rep(action.seq({
+			one16:actAttack(3),
+			one16:actDelay(0.5),
+			one20:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #23 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 1151-1152, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 1153-1202, warpins: 2 ---
+	runActs({
+		one14:actAssign("dir", DIR.rightUp),
+		action.rep(action.seq({
+			one14:actAttack(3),
+			one14:actDelay(0.5),
+			one4:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #25 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 1203-1204, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 1205-1255, warpins: 2 ---
+	runActs({
+		one12:actAssign("dir", DIR.rightUp),
+		action.rep(action.seq({
+			one12:actAttack(3),
+			one12:actDelay(0.5),
+			one19:actPlayAct(ACTS.STRUCK),
+			one26:actDelay(1)
+		}), 100)
+	})
+
+	stageIndex = "stage2"
+
+	--- END OF BLOCK #27 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 1256-1257, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 1258-1259, warpins: 3 ---
+	--- END OF BLOCK #29 ---
+
+	if stageIndex == "stage2" then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #30 1260-1285, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #30 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 1286-1287, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 1288-1599, warpins: 2 ---
+	enterStage("image", 0, 0, "stage1.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("千年后，血腥的教派之争，以祖玛教获胜告终")
+	playSound("dubbing/4", true)
+
+	role = noInfoRole("祖玛教主", 49, 63, 0, 0, 0, nil, pos(0, -1))
+
+	role:sayDR("哇哈哈，把它们拿去献祭了")
+
+	one1 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-6, -3))
+	one1.dir = DIR.rightBottom
+	one2 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-5, -4))
+	one2.dir = DIR.rightBottom
+	one3 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-4, -2))
+	one3.dir = DIR.rightBottom
+	one4 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-5, -1))
+	one4.dir = DIR.rightBottom
+	one1 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(6, -3))
+	one1.dir = DIR.leftBottom
+	one2 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(5, -4))
+	one2.dir = DIR.leftBottom
+	one3 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(4, -2))
+	one3.dir = DIR.leftBottom
+	one4 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(5, -1))
+	one4.dir = DIR.leftBottom
+	one2 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-3, -4))
+	one2.dir = DIR.bottom
+	one2 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-2, -3))
+	one2.dir = DIR.bottom
+	one2 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(3, -4))
+	one2.dir = DIR.bottom
+	one2 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(2, -3))
+	one2.dir = DIR.bottom
+	one5 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(0, 10))
+	one5.dir = DIR.up
+	local randomBodys = {}
+	randomBodys[1] = {
+		19,
+		112
+	}
+	randomBodys[2] = {
+		53,
+		180
+	}
+	randomBodys[3] = {
+		19,
+		151
+	}
+	randomBodys[4] = {
+		19,
+		102
+	}
+	randomBodys[5] = {
+		19,
+		111
+	}
+	randomBodys[6] = {
+		20,
+		31
+	}
+	randomBodys[7] = {
+		19,
+		33
+	}
+	randomBodys[8] = {
+		19,
+		181
+	}
+	randomBodys[9] = {
+		19,
+		110
+	}
+	randomBodys[10] = {
+		19,
+		102
+	}
+	--- END OF BLOCK #32 ---
+
+	for k=0, 20, 1
+	LOOP BLOCK #33
+	GO OUT TO BLOCK #34
+
+	--- BLOCK #33 1600-1638, warpins: 2 ---
+	local body = randomBodys[math.random(1, #randomBodys)]
+	local role = noInfoRole("", body[1], body[2], 0, 0, 0, nil, pos(math.random(-5, 5), math.random(2, 5)))
+	role.dir = math.random(0, 7)
+
+	role.playAct(role, ACTS.DEATH)
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #34 1639-1643, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	slot5 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 1644-1645, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 1646-1684, warpins: 2 ---
+	runActs({
+		one5:actPlayAct(ACTS.WALK, pos(0, -7)),
+		one5:actDelay(0.5),
+		one5:actAssign("dir", DIR.up),
+		one5:actDelay(0.5)
+	})
+	--- END OF BLOCK #36 ---
+
+	slot5 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 1685-1686, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 1687-1696, warpins: 2 ---
+	one5:sayDL("人、人类…从北面打过来了！")
+	--- END OF BLOCK #38 ---
+
+	slot5 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 1697-1698, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 1699-1709, warpins: 2 ---
+	role:sayDR("来得好，祭品从不嫌多")
+
+	stageIndex = "stage3"
+
+	--- END OF BLOCK #40 ---
+
+	slot5 = if delay(3)
+
+	 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 1710-1711, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 1712-1713, warpins: 3 ---
+	--- END OF BLOCK #42 ---
+
+	if stageIndex == "stage3" then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #43 1714-1739, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #43 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 1740-1741, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 1742-2649, warpins: 2 ---
+	enterStage("image", 0, 0, "stage3.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("百余年前，神龙帝国初次南征，势如破竹")
+	playSound("dubbing/5", true)
+
+	role = noInfoRole("祖玛教主", 49, 63, 0, 0, 0, nil, pos(0, -1))
+
+	role:sayDL("我竟然输了？!")
+	runActsForever(action.seq({
+		role:actDelay(0.8)
+	}))
+
+	one1 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(4, 4))
+	one1.dir = DIR.leftUp
+	one2 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(3, 4))
+	one2.dir = DIR.rightUp
+	one3 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(2, 5))
+	one3.dir = DIR.leftUp
+	one4 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(1, 5))
+	one4.dir = DIR.leftUp
+	one5 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(0, 5))
+	one5.dir = DIR.up
+	one6 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-4, 4))
+	one6.dir = DIR.rightUp
+	one7 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-3, 4))
+	one7.dir = DIR.rightUp
+	one8 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-2, 5))
+	one8.dir = DIR.rightUp
+	one9 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-1, 5))
+	one9.dir = DIR.up
+	one10 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(5, 4))
+	one10.dir = DIR.leftUp
+	one11 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-5, 4))
+	one11.dir = DIR.rightUp
+	one12 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-6, -4))
+	one12.dir = DIR.bottom
+
+	one12:playAct(ACTS.DEATH)
+
+	one13 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(5, -4))
+	one13.dir = DIR.leftBottom
+
+	one13:playAct(ACTS.DEATH)
+
+	one14 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-3, -3))
+	one14.dir = DIR.rightUp
+
+	one14:playAct(ACTS.DEATH)
+
+	one15 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(1, -3))
+	one15.dir = DIR.rightBottom
+
+	one15:playAct(ACTS.DEATH)
+
+	one16 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(0, -3))
+	one16.dir = DIR.left
+
+	one16:playAct(ACTS.DEATH)
+
+	one17 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-5, -4))
+	one17.dir = DIR.rightBottom
+
+	one17:playAct(ACTS.DEATH)
+
+	one18 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(3, -3))
+	one18.dir = DIR.rightBottom
+
+	one18:playAct(ACTS.DEATH)
+
+	one19 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(0, -4))
+	one19.dir = DIR.up
+
+	one19:playAct(ACTS.DEATH)
+
+	one20 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-4, -4))
+	one20.dir = DIR.up
+
+	one20:playAct(ACTS.DEATH)
+
+	one21 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(3, -4))
+	one21.dir = DIR.leftUp
+
+	one21:playAct(ACTS.DEATH)
+
+	one22 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(1, 1))
+	one22.dir = DIR.leftBottom
+
+	one22:playAct(ACTS.DEATH)
+
+	one23 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(3, 2))
+	one23.dir = DIR.bottom
+	one24 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-4, 2))
+	one24.dir = DIR.rightBottom
+
+	one24:playAct(ACTS.DEATH)
+
+	one25 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(5, 1))
+	one25.dir = DIR.leftUp
+
+	one25:playAct(ACTS.DEATH)
+
+	one26 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(3, 0))
+	one26.dir = DIR.left
+
+	one26:playAct(ACTS.DEATH)
+
+	one27 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-5, 0))
+	one27.dir = DIR.rightBottom
+
+	one27:playAct(ACTS.DEATH)
+
+	one28 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-1, 1))
+	one28.dir = DIR.leftBottom
+
+	one28:playAct(ACTS.DEATH)
+
+	one29 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-3, 2))
+	one29.dir = DIR.right
+
+	one29:playAct(ACTS.DEATH)
+
+	one30 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-4, 2))
+	one30.dir = DIR.rightBottom
+
+	one30:playAct(ACTS.DEATH)
+
+	one31 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-1, 0))
+	one31.dir = DIR.leftUp
+
+	one31:playAct(ACTS.DEATH)
+
+	one32 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-3, 0))
+	one32.dir = DIR.leftUp
+
+	one32:playAct(ACTS.DEATH)
+
+	one33 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(6, 3))
+	one33.dir = DIR.leftUp
+	one34 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-6, 3))
+	one34.dir = DIR.rightUp
+	one35 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(-6, -1))
+	one35.dir = DIR.rightUp
+	one36 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(5, -1))
+	one36.dir = DIR.left
+	one37 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(2, -1))
+	one37.dir = DIR.leftBottom
+
+	runActs({
+		one2:actAssign("dir", DIR.up),
+		action.rep(action.seq({
+			one2:actAttack(3),
+			one2:actDelay(0.5),
+			one23:actPlayAct(ACTS.STRUCK),
+			one23:actPlayAct(ACTS.NOWDEATH),
+			one23:actDelay(0.3)
+		}), 1)
+	})
+	--- END OF BLOCK #45 ---
+
+	slot4 = if delay(2.5)
+
+	 then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #46 2650-2651, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #46 ---
+
+	FLOW; TARGET BLOCK #47
+
+
+	--- BLOCK #47 2652-2695, warpins: 2 ---
+	role:sayDL("给我记住！")
+	runActs({
+		role:actPlayAct(ACTS.WALK, pos(0, -1)),
+		role:actDelay(0.7),
+		role:actAssign("dir", DIR.leftUp),
+		role:actDelay(0.5)
+	})
+	--- END OF BLOCK #47 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #48
+	else
+	JUMP TO BLOCK #49
+	end
+
+
+	--- BLOCK #48 2696-2697, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 2698-2701, warpins: 2 ---
+	--- END OF BLOCK #49 ---
+
+	for k=1, 3, 1
+	LOOP BLOCK #50
+	GO OUT TO BLOCK #53
+
+	--- BLOCK #50 2702-2716, warpins: 2 ---
+	role:playAct(ACTS.WALK, pos(-4, -4))
+	--- END OF BLOCK #50 ---
+
+	slot8 = if delay(0.4)
+
+	 then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #52
+	end
+
+
+	--- BLOCK #51 2717-2718, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 2719-2719, warpins: 2 ---
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #53 2720-2725, warpins: 1 ---
+	stageIndex = "stage4"
+
+	--- END OF BLOCK #53 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #54 2726-2727, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #54 ---
+
+	FLOW; TARGET BLOCK #55
+
+
+	--- BLOCK #55 2728-2729, warpins: 3 ---
+	--- END OF BLOCK #55 ---
+
+	if stageIndex == "stage4" then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #56 2730-2755, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #56 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #57
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #57 2756-2757, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #57 ---
+
+	FLOW; TARGET BLOCK #58
+
+
+	--- BLOCK #58 2758-2796, warpins: 2 ---
+	enterStage("image", 0, 0, "stage1.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("神龙远征军大败祖玛，正欲凯旋……")
+	playSound("dubbing/6", true)
+	--- END OF BLOCK #58 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #59
+	else
+	JUMP TO BLOCK #60
+	end
+
+
+	--- BLOCK #59 2797-2798, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #59 ---
+
+	FLOW; TARGET BLOCK #60
+
+
+	--- BLOCK #60 2799-2829, warpins: 2 ---
+	role = noInfoRole("神龙大将军", 50, 31, 0, 0, 0, nil, pos(-2, -2))
+
+	role:sayDR("前面就是雪山，家园不远了")
+
+	solid = {}
+	local position = {}
+	position.tr = function (x, y)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		return pos(x + 1, y - 1)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	position.lb = function (x, y)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		return pos(-x - 1 + 9, -y + 10)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	local index = 0
+
+	--- END OF BLOCK #60 ---
+
+	for k, p in pairs(position)
+
+
+	LOOP BLOCK #61
+	GO OUT TO BLOCK #64
+
+
+	--- BLOCK #61 2830-2833, warpins: 1 ---
+	--- END OF BLOCK #61 ---
+
+	for i=0, 9, 1
+	LOOP BLOCK #62
+	GO OUT TO BLOCK #63
+
+	--- BLOCK #62 2834-2929, warpins: 2 ---
+	solid[index*4] = noInfoRole("士兵", 19, 72, 0, 0, 0, nil, p(i, i))
+	solid[index*4].dir = DIR.leftUp
+	solid[index*4 + 1] = noInfoRole("士兵", 19, 72, 0, 0, 0, nil, p(i + 1, i - 1))
+	solid[index*4 + 1].dir = DIR.leftUp
+	solid[index*4 + 2] = noInfoRole("士兵", 19, 72, 0, 0, 0, nil, p(i + 2, i - 2))
+	solid[index*4 + 2].dir = DIR.leftUp
+	solid[index*4 + 3] = noInfoRole("士兵", 19, 72, 0, 0, 0, nil, p(i + 3, i - 3))
+	solid[index*4 + 3].dir = DIR.leftUp
+	index = index + 1
+
+	--- END OF BLOCK #62 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #61
+
+
+	--- BLOCK #63 2930-2931, warpins: 2 ---
+	--- END OF BLOCK #63 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #60
+
+
+	--- BLOCK #64 2932-2935, warpins: 1 ---
+	--- END OF BLOCK #64 ---
+
+	for k, v in pairs(solid)
+
+	LOOP BLOCK #65
+	GO OUT TO BLOCK #67
+
+
+	--- BLOCK #65 2936-2953, warpins: 1 ---
+	runActsForever({
+		v.actPlayAct(v, ACTS.WALK, pos(-1, -1)),
+		v.actDelay(v, 0.6)
+	})
+
+	--- END OF BLOCK #65 ---
+
+	FLOW; TARGET BLOCK #66
+
+
+	--- BLOCK #66 2954-2955, warpins: 2 ---
+	--- END OF BLOCK #66 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+	--- BLOCK #67 2956-2961, warpins: 1 ---
+	stageIndex = "stage5"
+
+	--- END OF BLOCK #67 ---
+
+	slot6 = if delay(3)
+
+	 then
+	JUMP TO BLOCK #68
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #68 2962-2963, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #68 ---
+
+	FLOW; TARGET BLOCK #69
+
+
+	--- BLOCK #69 2964-2965, warpins: 3 ---
+	--- END OF BLOCK #69 ---
+
+	if stageIndex == "stage5" then
+	JUMP TO BLOCK #70
+	else
+	JUMP TO BLOCK #72
+	end
+
+
+	--- BLOCK #70 2966-2992, warpins: 1 ---
+	enterStage(nil, 0, 0, {
+		trans = {
+			"fade",
+			0.5
+		}
+	})
+	waitEvt("stage_onTransFinish")
+	playVideo("snowMountain")
+	playSound("dubbing/7", true)
+	waitEvt("VideoComplete")
+
+	stageIndex = "stage5_2"
+
+	--- END OF BLOCK #70 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #71
+	else
+	JUMP TO BLOCK #72
+	end
+
+
+	--- BLOCK #71 2993-2994, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #71 ---
+
+	FLOW; TARGET BLOCK #72
+
+
+	--- BLOCK #72 2995-2996, warpins: 3 ---
+	--- END OF BLOCK #72 ---
+
+	if stageIndex == "stage5_2" then
+	JUMP TO BLOCK #73
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #73 2997-3620, warpins: 1 ---
+	enterStage("image", 0, 0, "stage4.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("又遭三教围攻，落井下石")
+	playSound("dubbing/8", true)
+
+	one1 = noInfoRole("沃玛教主", 21, 34, 0, 0, 0, nil, pos(3, -1))
+	one1.dir = DIR.leftBottom
+	one2 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(4, -4))
+	one2.dir = DIR.leftBottom
+	one9 = noInfoRole("虹魔猪卫", 19, 181, 0, 0, 0, nil, pos(6, 5))
+	one9.dir = DIR.leftUp
+	one3 = noInfoRole("红野猪", 19, 110, 0, 0, 0, nil, pos(-4, -3))
+	one3.dir = DIR.rightBottom
+	one4 = noInfoRole("黑野猪", 19, 112, 0, 0, 0, nil, pos(5, -5))
+	one4.dir = DIR.leftBottom
+	one5 = noInfoRole("半兽勇士", 19, 102, 0, 0, 0, nil, pos(-2, -4))
+	one5.dir = DIR.rightBottom
+	one6 = noInfoRole("火焰沃玛", 20, 31, 0, 0, 0, nil, pos(5, 2))
+	one6.dir = DIR.leftBottom
+	one7 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-4, 1))
+	one7.dir = DIR.rightUp
+	one8 = noInfoRole("祖玛卫士", 47, 62, 0, 0, 0, nil, pos(-3, -1))
+	one8.dir = DIR.rightBottom
+	one10 = noInfoRole("白野猪", 19, 112, 0, 0, 0, nil, pos(-6, -2))
+	one10.dir = DIR.rightBottom
+	one11 = noInfoRole("虹魔蝎卫", 53, 180, 0, 0, 0, nil, pos(-4, 4))
+	one11.dir = DIR.rightUp
+	one12 = noInfoRole("白野猪", 19, 111, 0, 0, 0, nil, pos(-6, 2))
+	one12.dir = DIR.rightBottom
+	one13 = noInfoRole("白野猪", 19, 111, 0, 0, 0, nil, pos(6, -2))
+	one13.dir = DIR.leftBottom
+	one14 = noInfoRole("虹魔猪卫", 19, 181, 0, 0, 0, nil, pos(-6, -4))
+	one14.dir = DIR.rightBottom
+	one15 = noInfoRole("沃玛战将", 19, 151, 0, 0, 0, nil, pos(4, 4))
+	one15.dir = DIR.left
+	one16 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(0, 2))
+	one16.dir = DIR.rightBottom
+	one17 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-1, 3))
+	one17.dir = DIR.leftBottom
+	one18 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(2, 1))
+	one18.dir = DIR.rightUp
+	one19 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-3, 0))
+	one19.dir = DIR.leftBottom
+
+	one19:playAct(ACTS.DEATH)
+
+	one20 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(-2, 2))
+	one20.dir = DIR.left
+	one21 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(-1, 0))
+	one21.dir = DIR.leftUp
+	one22 = noInfoRole("神龙大将军", 50, 31, 0, 0, 0, nil, pos(0, -1))
+	one22.dir = DIR.leftUp
+	one23 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(1, 1))
+	one23.dir = DIR.leftUp
+	one24 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(2, 3))
+	one24.dir = DIR.rightBottom
+	one25 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-1, -4))
+	one25.dir = DIR.rightBottom
+
+	one25:playAct(ACTS.DEATH)
+
+	one26 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(1, -1))
+	one26.dir = DIR.rightUp
+	one27 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(1, -4))
+	one27.dir = DIR.right
+	one28 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-1, -2))
+	one28.dir = DIR.leftUp
+	one25 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(0, 4))
+	one25.dir = DIR.rightUp
+
+	one25:playAct(ACTS.DEATH)
+	runActs({
+		one8:actAssign("dir", DIR.rightBottom),
+		action.rep(action.seq({
+			one8:actAttack(3),
+			one8:actDelay(0.8),
+			one21:actPlayAct(ACTS.NOWDEATH),
+			one23:actDelay(0.1)
+		}), 1)
+	})
+	--- END OF BLOCK #73 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #75
+	end
+
+
+	--- BLOCK #74 3621-3622, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #74 ---
+
+	FLOW; TARGET BLOCK #75
+
+
+	--- BLOCK #75 3623-3632, warpins: 2 ---
+	one21:sayDL("保护…将军……")
+	--- END OF BLOCK #75 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #76
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #76 3633-3634, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #76 ---
+
+	FLOW; TARGET BLOCK #77
+
+
+	--- BLOCK #77 3635-3645, warpins: 2 ---
+	one22:sayDR("众将士，和我一起杀出去！")
+
+	stageIndex = "stage6"
+
+	--- END OF BLOCK #77 ---
+
+	slot4 = if delay(3)
+
+	 then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #78 3646-3647, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #78 ---
+
+	FLOW; TARGET BLOCK #79
+
+
+	--- BLOCK #79 3648-3649, warpins: 3 ---
+	--- END OF BLOCK #79 ---
+
+	if stageIndex == "stage6" then
+	JUMP TO BLOCK #80
+	else
+	JUMP TO BLOCK #97
+	end
+
+
+	--- BLOCK #80 3650-3672, warpins: 1 ---
+	enterStage(nil, 0, 0, {
+		trans = {
+			"fade",
+			0.5
+		}
+	})
+	showText("天灾人祸，令神龙远征军损伤大半，归路受阻")
+	playSound("dubbing/9", true)
+	waitEvt("stage_onTransFinish")
+	--- END OF BLOCK #80 ---
+
+	slot4 = if delay(6)
+
+	 then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #82
+	end
+
+
+	--- BLOCK #81 3673-3674, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #81 ---
+
+	FLOW; TARGET BLOCK #82
+
+
+	--- BLOCK #82 3675-3699, warpins: 2 ---
+	buildimg = createImage("helperScript/stage6Build1.jpg"):center()
+
+	buildimg:setOpacity(0)
+	buildimg:run(action.fadeIn(1))
+	--- END OF BLOCK #82 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #83
+	else
+	JUMP TO BLOCK #84
+	end
+
+
+	--- BLOCK #83 3700-3701, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #83 ---
+
+	FLOW; TARGET BLOCK #84
+
+
+	--- BLOCK #84 3702-3713, warpins: 2 ---
+	showText("只得就地建立比奇城，尊神龙国主为宗主")
+	playSound("dubbing/10", true)
+	--- END OF BLOCK #84 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #85
+	else
+	JUMP TO BLOCK #86
+	end
+
+
+	--- BLOCK #85 3714-3715, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #85 ---
+
+	FLOW; TARGET BLOCK #86
+
+
+	--- BLOCK #86 3716-3740, warpins: 2 ---
+	buildimg = createImage("helperScript/stage6Build2.jpg"):center()
+
+	buildimg:setOpacity(0)
+	buildimg:run(action.fadeIn(1))
+	--- END OF BLOCK #86 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #87
+	else
+	JUMP TO BLOCK #88
+	end
+
+
+	--- BLOCK #87 3741-3742, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #87 ---
+
+	FLOW; TARGET BLOCK #88
+
+
+	--- BLOCK #88 3743-3767, warpins: 2 ---
+	buildimg = createImage("helperScript/stage6Build3.jpg"):center()
+
+	buildimg:setOpacity(0)
+	buildimg:run(action.fadeIn(1))
+	--- END OF BLOCK #88 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #89
+	else
+	JUMP TO BLOCK #90
+	end
+
+
+	--- BLOCK #89 3768-3769, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #89 ---
+
+	FLOW; TARGET BLOCK #90
+
+
+	--- BLOCK #90 3770-3804, warpins: 2 ---
+	enterStage("image", 0, 0, {
+		trans = {
+			"fadeBL",
+			1
+		}
+	})
+	showText("自此，在南地休养生息")
+	playSound("dubbing/11", true)
+
+	buildimg = createImage("helperScript/stage6Build4.jpg"):center()
+
+	buildimg:run(action.fadeIn(1))
+	--- END OF BLOCK #90 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #91
+	else
+	JUMP TO BLOCK #92
+	end
+
+
+	--- BLOCK #91 3805-3806, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #91 ---
+
+	FLOW; TARGET BLOCK #92
+
+
+	--- BLOCK #92 3807-3831, warpins: 2 ---
+	buildimg = createImage("helperScript/stage6Build5.jpg"):center()
+
+	buildimg:setOpacity(0)
+	buildimg:run(action.fadeIn(1))
+	--- END OF BLOCK #92 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #93
+	else
+	JUMP TO BLOCK #94
+	end
+
+
+	--- BLOCK #93 3832-3833, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #93 ---
+
+	FLOW; TARGET BLOCK #94
+
+
+	--- BLOCK #94 3834-3858, warpins: 2 ---
+	buildimg = createImage("helperScript/stage6Build6.jpg"):center()
+
+	buildimg:setOpacity(0)
+	buildimg:run(action.fadeIn(1))
+	--- END OF BLOCK #94 ---
+
+	slot4 = if delay(3)
+
+	 then
+	JUMP TO BLOCK #95
+	else
+	JUMP TO BLOCK #96
+	end
+
+
+	--- BLOCK #95 3859-3860, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #95 ---
+
+	FLOW; TARGET BLOCK #96
+
+
+	--- BLOCK #96 3861-3861, warpins: 2 ---
+	stageIndex = "stage7"
+
+	--- END OF BLOCK #96 ---
+
+	FLOW; TARGET BLOCK #97
+
+
+	--- BLOCK #97 3862-3863, warpins: 2 ---
+	--- END OF BLOCK #97 ---
+
+	if stageIndex == "stage7" then
+	JUMP TO BLOCK #98
+	else
+	JUMP TO BLOCK #115
+	end
+
+
+	--- BLOCK #98 3864-3889, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(1.5)
+	})
+	--- END OF BLOCK #98 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #99
+	else
+	JUMP TO BLOCK #100
+	end
+
+
+	--- BLOCK #99 3890-3891, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #99 ---
+
+	FLOW; TARGET BLOCK #100
+
+
+	--- BLOCK #100 3892-4373, warpins: 2 ---
+	enterStage("0", 276, 317)
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(1.5),
+		action.removeSelf()
+	})
+	showText("——然而，繁荣富饶的比奇，让蛮族垂涎不已")
+	playSound("dubbing/12", true)
+	showEffect(EFFIDS.ET_FIRE, pos(273, 323), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(274, 316), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(272, 316), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(279, 315), 10)
+
+	one1 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(281, 323))
+	one1.dir = DIR.left
+
+	one1:playAct(ACTS.DEATH)
+
+	one2 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(270, 313))
+	one2.dir = DIR.rightUp
+	one9 = noInfoRole("红野猪", 19, 110, 0, 0, 0, nil, pos(281, 315))
+	one9.dir = DIR.rightUp
+	one4 = noInfoRole("黑野猪", 19, 111, 0, 0, 0, nil, pos(281, 322))
+	one4.dir = DIR.left
+	one5 = noInfoRole("半兽勇士", 19, 102, 0, 0, 0, nil, pos(274, 319))
+	one5.dir = DIR.bottom
+	one7 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(276, 320))
+	one7.dir = DIR.rightBottom
+
+	one7:playAct(ACTS.DEATH)
+
+	one10 = noInfoRole("红野猪尸体", 19, 111, 0, 0, 0, nil, pos(282, 316))
+	one10.dir = DIR.leftUp
+
+	one10:playAct(ACTS.DEATH)
+
+	one12 = noInfoRole("虹魔猪卫", 19, 181, 0, 0, 0, nil, pos(275, 313))
+	one12.dir = DIR.rightBottom
+	one15 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(278, 318))
+	one15.dir = DIR.rightBottom
+	one19 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(275, 320))
+	one19.dir = DIR.leftBottom
+
+	one19:playAct(ACTS.DEATH)
+
+	one18 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(279, 322))
+	one18.dir = DIR.right
+	one20 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(276, 315))
+	one20.dir = DIR.leftUp
+	one22 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(280, 320))
+	one22.dir = DIR.leftUp
+	one23 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(273, 312))
+	one23.dir = DIR.leftBottom
+	one24 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(279, 316))
+	one24.dir = DIR.rightBottom
+
+	one24:playAct(ACTS.DEATH)
+
+	one26 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(274, 314))
+	one26.dir = DIR.rightBottom
+
+	one26:playAct(ACTS.DEATH)
+
+	one27 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(272, 313))
+	one27.dir = DIR.left
+
+	one27:playAct(ACTS.DEATH)
+
+	one28 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(274, 320))
+	one28.dir = DIR.up
+	one29 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(282, 314))
+	one29.dir = DIR.leftBottom
+	one31 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(276, 317))
+	one31.dir = DIR.leftBottom
+
+	one31:playAct(ACTS.DEATH)
+	--- END OF BLOCK #100 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #101
+	else
+	JUMP TO BLOCK #102
+	end
+
+
+	--- BLOCK #101 4374-4375, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #101 ---
+
+	FLOW; TARGET BLOCK #102
+
+
+	--- BLOCK #102 4376-4425, warpins: 2 ---
+	runActs({
+		one23:actAssign("dir", DIR.leftBottom),
+		action.rep(action.seq({
+			one23:actAttack(3),
+			one23:actDelay(0.5),
+			one2:actPlayAct(ACTS.STRUCK),
+			one23:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #102 ---
+
+	slot4 = if delay(0.4)
+
+	 then
+	JUMP TO BLOCK #103
+	else
+	JUMP TO BLOCK #104
+	end
+
+
+	--- BLOCK #103 4426-4427, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #103 ---
+
+	FLOW; TARGET BLOCK #104
+
+
+	--- BLOCK #104 4428-4477, warpins: 2 ---
+	runActs({
+		one9:actAssign("dir", DIR.rightUp),
+		action.rep(action.seq({
+			one9:actAttack(3),
+			one9:actDelay(0.5),
+			one29:actPlayAct(ACTS.STRUCK),
+			one9:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #104 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #105
+	else
+	JUMP TO BLOCK #106
+	end
+
+
+	--- BLOCK #105 4478-4479, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #105 ---
+
+	FLOW; TARGET BLOCK #106
+
+
+	--- BLOCK #106 4480-4529, warpins: 2 ---
+	runActs({
+		one12:actAssign("dir", DIR.rightBottom),
+		action.rep(action.seq({
+			one12:actAttack(3),
+			one12:actDelay(0.5),
+			one20:actPlayAct(ACTS.STRUCK),
+			one12:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #106 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #107
+	else
+	JUMP TO BLOCK #108
+	end
+
+
+	--- BLOCK #107 4530-4531, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #107 ---
+
+	FLOW; TARGET BLOCK #108
+
+
+	--- BLOCK #108 4532-4581, warpins: 2 ---
+	runActs({
+		one15:actAssign("dir", DIR.rightBottom),
+		action.rep(action.seq({
+			one15:actAttack(3),
+			one15:actDelay(0.5),
+			one22:actPlayAct(ACTS.STRUCK),
+			one15:actDelay(1)
+		}), 100)
+	})
+	--- END OF BLOCK #108 ---
+
+	slot4 = if delay(0.4)
+
+	 then
+	JUMP TO BLOCK #109
+	else
+	JUMP TO BLOCK #110
+	end
+
+
+	--- BLOCK #109 4582-4583, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #109 ---
+
+	FLOW; TARGET BLOCK #110
+
+
+	--- BLOCK #110 4584-4658, warpins: 2 ---
+	runActs({
+		one4:actAssign("dir", DIR.left),
+		action.rep(action.seq({
+			one4:actAttack(3),
+			one4:actDelay(0.5),
+			one18:actPlayAct(ACTS.NOWDEATH),
+			one4:actDelay(1),
+			one4:actAssign("dir", DIR.up),
+			one4:actDelay(0.5),
+			one4:actPlayAct(ACTS.WALK, pos(0, -4))
+		}), 1)
+	})
+	--- END OF BLOCK #110 ---
+
+	slot4 = if delay(0.4)
+
+	 then
+	JUMP TO BLOCK #111
+	else
+	JUMP TO BLOCK #112
+	end
+
+
+	--- BLOCK #111 4659-4660, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #111 ---
+
+	FLOW; TARGET BLOCK #112
+
+
+	--- BLOCK #112 4661-4710, warpins: 2 ---
+	runActs({
+		one5:actAssign("dir", DIR.bottom),
+		action.rep(action.seq({
+			one5:actAttack(3),
+			one5:actDelay(0.5),
+			one28:actPlayAct(ACTS.STRUCK),
+			one5:actDelay(1)
+		}), 10)
+	})
+	--- END OF BLOCK #112 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #113
+	else
+	JUMP TO BLOCK #114
+	end
+
+
+	--- BLOCK #113 4711-4712, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #113 ---
+
+	FLOW; TARGET BLOCK #114
+
+
+	--- BLOCK #114 4713-4713, warpins: 2 ---
+	stageIndex = "stage7-1"
+
+	--- END OF BLOCK #114 ---
+
+	FLOW; TARGET BLOCK #115
+
+
+	--- BLOCK #115 4714-4715, warpins: 2 ---
+	--- END OF BLOCK #115 ---
+
+	if stageIndex == "stage7-1" then
+	JUMP TO BLOCK #116
+	else
+	JUMP TO BLOCK #127
+	end
+
+
+	--- BLOCK #116 4716-4741, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.75)
+	})
+	--- END OF BLOCK #116 ---
+
+	slot4 = if delay(0.75)
+
+	 then
+	JUMP TO BLOCK #117
+	else
+	JUMP TO BLOCK #118
+	end
+
+
+	--- BLOCK #117 4742-4743, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #117 ---
+
+	FLOW; TARGET BLOCK #118
+
+
+	--- BLOCK #118 4744-5032, warpins: 2 ---
+	enterStage("0", 270, 276)
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.75),
+		action.removeSelf()
+	})
+
+	function toff(x, y)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		return pos(x + 313, y + 278)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	showText("比奇军民上下一心")
+	playSound("dubbing/13", true)
+	showEffect(EFFIDS.ET_FIRE, pos(272, 275), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(271, 278), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(265, 278), 10)
+
+	one1 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(270, 275))
+	one1.dir = DIR.left
+
+	one1:playAct(ACTS.DEATH)
+
+	one2 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(260, 271))
+	one2.dir = DIR.rightBottom
+	one3 = noInfoRole("黑野猪", 19, 111, 0, 0, 0, nil, pos(275, 280))
+	one3.dir = DIR.up
+
+	one3:playAct(ACTS.DEATH)
+
+	one4 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(270, 276))
+	one4.dir = DIR.leftUp
+
+	one4:playAct(ACTS.DEATH)
+
+	one5 = noInfoRole("火焰沃玛", 20, 31, 0, 0, 0, nil, pos(276, 276))
+	one5.dir = DIR.leftBottom
+	one6 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(270, 279))
+	one6.dir = DIR.leftBottom
+
+	one6:playAct(ACTS.DEATH)
+
+	one7 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(269, 271))
+	one7.dir = DIR.left
+
+	one7:playAct(ACTS.DEATH)
+
+	one8 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(268, 275))
+	one8.dir = DIR.up
+
+	one8:playAct(ACTS.DEATH)
+
+	one9 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(274, 278))
+	one9.dir = DIR.rightUp
+	one10 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(268, 275))
+	one10.dir = DIR.up
+
+	one10:playAct(ACTS.DEATH)
+	--- END OF BLOCK #118 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #119
+	else
+	JUMP TO BLOCK #120
+	end
+
+
+	--- BLOCK #119 5033-5034, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #119 ---
+
+	FLOW; TARGET BLOCK #120
+
+
+	--- BLOCK #120 5035-5084, warpins: 2 ---
+	runActs({
+		one5:actAssign("dir", DIR.leftBottom),
+		action.rep(action.seq({
+			one5:actAttack(3),
+			one5:actDelay(0.5),
+			one9:actPlayAct(ACTS.STRUCK),
+			one5:actDelay(1)
+		}), 10)
+	})
+	--- END OF BLOCK #120 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #121
+	else
+	JUMP TO BLOCK #122
+	end
+
+
+	--- BLOCK #121 5085-5086, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #121 ---
+
+	FLOW; TARGET BLOCK #122
+
+
+	--- BLOCK #122 5087-5112, warpins: 2 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.75)
+	})
+	--- END OF BLOCK #122 ---
+
+	slot4 = if delay(0.75)
+
+	 then
+	JUMP TO BLOCK #123
+	else
+	JUMP TO BLOCK #124
+	end
+
+
+	--- BLOCK #123 5113-5114, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #123 ---
+
+	FLOW; TARGET BLOCK #124
+
+
+	--- BLOCK #124 5115-5409, warpins: 2 ---
+	enterStage("0", 306, 319)
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.75),
+		action.removeSelf()
+	})
+
+	function toff(x, y)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		return pos(x + 306, y + 319)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	showText("却抵不住蛮族来势汹汹")
+	playSound("dubbing/14", true)
+	showEffect(EFFIDS.ET_FIRE, pos(303, 317), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(300, 319), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(308, 323), 10)
+
+	one1 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(309, 312))
+	one1.dir = DIR.leftUp
+
+	one1:playAct(ACTS.DEATH)
+
+	one2 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(306, 318))
+	one2.dir = DIR.leftBottom
+	one3 = noInfoRole("黑野猪", 19, 111, 0, 0, 0, nil, pos(310, 323))
+	one3.dir = DIR.leftUp
+
+	one3:playAct(ACTS.DEATH)
+
+	one4 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(308, 316))
+	one4.dir = DIR.left
+
+	one4:playAct(ACTS.DEATH)
+
+	one5 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(301, 318))
+	one5.dir = DIR.up
+
+	one5:playAct(ACTS.DEATH)
+
+	one6 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(303, 315))
+	one6.dir = DIR.left
+
+	one6:playAct(ACTS.DEATH)
+
+	one7 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(307, 319))
+	one7.dir = DIR.left
+
+	one7:playAct(ACTS.DEATH)
+
+	one8 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(303, 322))
+	one8.dir = DIR.up
+
+	one8:playAct(ACTS.DEATH)
+
+	one9 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(305, 320))
+	one9.dir = DIR.rightUp
+	one10 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(307, 318))
+	one10.dir = DIR.up
+
+	one10:playAct(ACTS.DEATH)
+	--- END OF BLOCK #124 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #125
+	else
+	JUMP TO BLOCK #126
+	end
+
+
+	--- BLOCK #125 5410-5411, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #125 ---
+
+	FLOW; TARGET BLOCK #126
+
+
+	--- BLOCK #126 5412-5482, warpins: 2 ---
+	runActs({
+		one2:actAssign("dir", DIR.leftBottom),
+		action.rep(action.seq({
+			one2:actAttack(3),
+			one2:actDelay(0.5),
+			one9:actPlayAct(ACTS.NOWDEATH),
+			one9:actDelay(1),
+			one2:actAssign("dir", DIR.right),
+			one2:actDelay(0.5),
+			one2:actPlayAct(ACTS.WALK, pos(5, 0))
+		}), 1)
+	})
+
+	stageIndex = "stage7-2"
+
+	--- END OF BLOCK #126 ---
+
+	FLOW; TARGET BLOCK #127
+
+
+	--- BLOCK #127 5483-5484, warpins: 2 ---
+	--- END OF BLOCK #127 ---
+
+	if stageIndex == "stage7-2" then
+	JUMP TO BLOCK #128
+	else
+	JUMP TO BLOCK #166
+	end
+
+
+	--- BLOCK #128 5485-5489, warpins: 1 ---
+	--- END OF BLOCK #128 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #129
+	else
+	JUMP TO BLOCK #130
+	end
+
+
+	--- BLOCK #129 5490-5491, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #129 ---
+
+	FLOW; TARGET BLOCK #130
+
+
+	--- BLOCK #130 5492-5517, warpins: 2 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.75)
+	})
+	--- END OF BLOCK #130 ---
+
+	slot4 = if delay(0.75)
+
+	 then
+	JUMP TO BLOCK #131
+	else
+	JUMP TO BLOCK #132
+	end
+
+
+	--- BLOCK #131 5518-5519, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #131 ---
+
+	FLOW; TARGET BLOCK #132
+
+
+	--- BLOCK #132 5520-5823, warpins: 2 ---
+	enterStage("0", 314, 276)
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.75),
+		action.removeSelf()
+	})
+
+	function toff(x, y)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		return pos(x + 313, y + 278)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	showText("眼看比奇即将宣告失守")
+	playSound("dubbing/15", true)
+	showEffect(EFFIDS.ET_FIRE, pos(-5, -4), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(5, 4), 10)
+
+	one1 = noInfoRole("沃玛教主", 21, 34, 0, 0, 0, nil, toff(0, -1))
+	one1.dir = DIR.rightUp
+	one2 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, toff(-2, 1))
+	one2.dir = DIR.rightUp
+	one3 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, toff(1, 1))
+	one3.dir = DIR.rightUp
+	one4 = noInfoRole("沃玛战将", 19, 33, 0, 0, 0, nil, toff(-2, -2))
+	one4.dir = DIR.rightUp
+	one5 = noInfoRole("林小姐", 50, 13, 0, 0, 0, nil, toff(5, -4))
+	one5.dir = DIR.up
+	one6 = noInfoRole("何小姐", 50, 12, 0, 0, 0, nil, toff(3, -3))
+	one6.dir = DIR.leftBottom
+	one7 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, toff(4, -2))
+	one7.dir = DIR.rightUp
+
+	one7:playAct(ACTS.DEATH)
+
+	one8 = noInfoRole("老爷爷", 50, 9, 0, 0, 0, nil, toff(2, -3))
+	one8.dir = DIR.leftBottom
+	one9 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, toff(1, 5))
+	one9.dir = DIR.leftBottom
+
+	one9:playAct(ACTS.DEATH)
+
+	one10 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, toff(-2, -5))
+	one10.dir = DIR.rightBottom
+
+	one10:playAct(ACTS.DEATH)
+
+	one11 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, toff(-6, -3))
+	one11.dir = DIR.leftBottom
+
+	one11:playAct(ACTS.DEATH)
+
+	one12 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, toff(-2, 4))
+	one12.dir = DIR.leftBottom
+
+	one12:playAct(ACTS.DEATH)
+	--- END OF BLOCK #132 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #133
+	else
+	JUMP TO BLOCK #134
+	end
+
+
+	--- BLOCK #133 5824-5825, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #133 ---
+
+	FLOW; TARGET BLOCK #134
+
+
+	--- BLOCK #134 5826-5835, warpins: 2 ---
+	one6:sayDR("别，不要过来…")
+	--- END OF BLOCK #134 ---
+
+	slot4 = if delay(0.8)
+
+	 then
+	JUMP TO BLOCK #135
+	else
+	JUMP TO BLOCK #136
+	end
+
+
+	--- BLOCK #135 5836-5837, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #135 ---
+
+	FLOW; TARGET BLOCK #136
+
+
+	--- BLOCK #136 5838-5847, warpins: 2 ---
+	one1:sayDL("全给我抓起来")
+	--- END OF BLOCK #136 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #137
+	else
+	JUMP TO BLOCK #138
+	end
+
+
+	--- BLOCK #137 5848-5849, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #137 ---
+
+	FLOW; TARGET BLOCK #138
+
+
+	--- BLOCK #138 5850-5923, warpins: 2 ---
+	showText("——三位英雄有如神祇，力挽狂澜")
+	playSound("dubbing/16", true)
+	stage:moveTo(307, 283, true, 1)
+
+	hero1 = noInfoRole("无名法师", "hero", fsdress, fsweapon, 1, 1, nil, pos(303, 285))
+	hero1.dir = DIR.rightUp
+	hero2 = noInfoRole("无名道士", "hero", dsdress, dsweapon, 0, 1, nil, pos(306, 287))
+	hero2.dir = DIR.rightUp
+	hero3 = noInfoRole("无名战士", "hero", zsdress, zsweapon, 0, 1, nil, pos(305, 285))
+	hero3.dir = DIR.rightUp
+
+	--- END OF BLOCK #138 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #139
+	else
+	JUMP TO BLOCK #140
+	end
+
+
+	--- BLOCK #139 5924-5925, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #139 ---
+
+	FLOW; TARGET BLOCK #140
+
+
+	--- BLOCK #140 5926-5935, warpins: 2 ---
+	hero3:sayDL("住手！")
+	--- END OF BLOCK #140 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #141
+	else
+	JUMP TO BLOCK #142
+	end
+
+
+	--- BLOCK #141 5936-5937, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #141 ---
+
+	FLOW; TARGET BLOCK #142
+
+
+	--- BLOCK #142 5938-5949, warpins: 2 ---
+	stage:moveTo(311, 279, true, 1.2)
+	--- END OF BLOCK #142 ---
+
+	for k=1, 2, 1
+	LOOP BLOCK #143
+	GO OUT TO BLOCK #146
+
+	--- BLOCK #143 5950-5993, warpins: 2 ---
+	hero1:playAct(ACTS.RUN, pos(2, -2), DIR.rightUp)
+	hero2:playAct(ACTS.RUN, pos(2, -2), DIR.rightUp)
+	hero3:playAct(ACTS.RUN, pos(2, -2), DIR.rightUp)
+	--- END OF BLOCK #143 ---
+
+	slot8 = if delay(0.6)
+
+	 then
+	JUMP TO BLOCK #144
+	else
+	JUMP TO BLOCK #145
+	end
+
+
+	--- BLOCK #144 5994-5995, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #144 ---
+
+	FLOW; TARGET BLOCK #145
+
+
+	--- BLOCK #145 5996-5996, warpins: 2 ---
+	--- END OF BLOCK #145 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #142
+
+
+	--- BLOCK #146 5997-6006, warpins: 1 ---
+	hero3:playBigSkill1()
+	--- END OF BLOCK #146 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #147
+	else
+	JUMP TO BLOCK #148
+	end
+
+
+	--- BLOCK #147 6007-6008, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #147 ---
+
+	FLOW; TARGET BLOCK #148
+
+
+	--- BLOCK #148 6009-6012, warpins: 2 ---
+	--- END OF BLOCK #148 ---
+
+	for _=1, 1, 1
+	LOOP BLOCK #149
+	GO OUT TO BLOCK #152
+
+	--- BLOCK #149 6013-6047, warpins: 2 ---
+	one2:playAct(ACTS.STRUCK)
+
+	one2.dir = DIR.rightUp
+
+	one3:playAct(ACTS.STRUCK)
+
+	one3.dir = DIR.rightUp
+
+	one4:playAct(ACTS.STRUCK)
+
+	one4.dir = DIR.rightUp
+
+	--- END OF BLOCK #149 ---
+
+	slot8 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #150
+	else
+	JUMP TO BLOCK #151
+	end
+
+
+	--- BLOCK #150 6048-6049, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #150 ---
+
+	FLOW; TARGET BLOCK #151
+
+
+	--- BLOCK #151 6050-6050, warpins: 2 ---
+	--- END OF BLOCK #151 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #148
+
+
+	--- BLOCK #152 6051-6090, warpins: 1 ---
+	one2:playAct(ACTS.NOWDEATH)
+
+	one2.dir = DIR.rightUp
+
+	one3:playAct(ACTS.NOWDEATH)
+
+	one3.dir = DIR.rightUp
+
+	one4:playAct(ACTS.NOWDEATH)
+
+	one4.dir = DIR.rightUp
+
+	hero3:sayDL("此处交给我！")
+	--- END OF BLOCK #152 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #153
+	else
+	JUMP TO BLOCK #154
+	end
+
+
+	--- BLOCK #153 6091-6092, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #153 ---
+
+	FLOW; TARGET BLOCK #154
+
+
+	--- BLOCK #154 6093-6130, warpins: 2 ---
+	one1:sayDR("嗷！本教主便来会会你！")
+	runActs({
+		one1:actAssign("dir", DIR.leftBottom),
+		one1:actPlayAct(ACTS.WALK, pos(-2, 1)),
+		one1:actDelay(0.8)
+	})
+	--- END OF BLOCK #154 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #155
+	else
+	JUMP TO BLOCK #156
+	end
+
+
+	--- BLOCK #155 6131-6132, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #155 ---
+
+	FLOW; TARGET BLOCK #156
+
+
+	--- BLOCK #156 6133-6178, warpins: 2 ---
+	enterStage("image", 0, 0)
+
+	hero3 = noInfoRole("无名战士", "hero", zsdress, zsweapon, 0, 1, nil, pos(-2, 0))
+	hero3.dir = DIR.right
+	one1 = noInfoRole("沃玛教主", 21, 34, 0, 0, 0, nil, pos(1, 0))
+	one1.dir = DIR.left
+
+	--- END OF BLOCK #156 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #157
+	else
+	JUMP TO BLOCK #158
+	end
+
+
+	--- BLOCK #157 6179-6180, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #157 ---
+
+	FLOW; TARGET BLOCK #158
+
+
+	--- BLOCK #158 6181-6190, warpins: 2 ---
+	hero3:playBigSkill()
+	--- END OF BLOCK #158 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #159
+	else
+	JUMP TO BLOCK #160
+	end
+
+
+	--- BLOCK #159 6191-6192, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #159 ---
+
+	FLOW; TARGET BLOCK #160
+
+
+	--- BLOCK #160 6193-6203, warpins: 2 ---
+	one1:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #160 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #161
+	else
+	JUMP TO BLOCK #162
+	end
+
+
+	--- BLOCK #161 6204-6205, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #161 ---
+
+	FLOW; TARGET BLOCK #162
+
+
+	--- BLOCK #162 6206-6216, warpins: 2 ---
+	one1:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #162 ---
+
+	slot4 = if delay(0.3)
+
+	 then
+	JUMP TO BLOCK #163
+	else
+	JUMP TO BLOCK #164
+	end
+
+
+	--- BLOCK #163 6217-6218, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #163 ---
+
+	FLOW; TARGET BLOCK #164
+
+
+	--- BLOCK #164 6219-6235, warpins: 2 ---
+	one1:playAct(ACTS.NOWDEATH)
+	one1:sayDL("什…么……")
+
+	stageIndex = "stage8"
+
+	--- END OF BLOCK #164 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #165
+	else
+	JUMP TO BLOCK #166
+	end
+
+
+	--- BLOCK #165 6236-6237, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #165 ---
+
+	FLOW; TARGET BLOCK #166
+
+
+	--- BLOCK #166 6238-6239, warpins: 3 ---
+	--- END OF BLOCK #166 ---
+
+	if stageIndex == "stage8" then
+	JUMP TO BLOCK #167
+	else
+	JUMP TO BLOCK #176
+	end
+
+
+	--- BLOCK #167 6240-6265, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #167 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #168
+	else
+	JUMP TO BLOCK #169
+	end
+
+
+	--- BLOCK #168 6266-6267, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #168 ---
+
+	FLOW; TARGET BLOCK #169
+
+
+	--- BLOCK #169 6268-6546, warpins: 2 ---
+	enterStage("image", 0, 0, "stage8fight1.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showEffect(EFFIDS.ET_FIRE, pos(5, 4), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(-4, 6), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(2, 5), 10)
+
+	one1 = noInfoRole("虹魔教主", 37, 182, 0, 0, 0, nil, pos(2, -2))
+	one1.dir = DIR.leftBottom
+
+	one1:sayDR("嗷…你这是自寻死路！")
+
+	one2 = noInfoRole("无名法师", "hero", fsdress, fsweapon, 1, 1, nil, pos(-2, 3))
+	one2.dir = DIR.rightUp
+
+	one2:sayDL("嘿，流星——火雨！")
+
+	one11 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(4, -3))
+	one11.dir = DIR.leftBottom
+
+	one11:playAct(ACTS.DEATH)
+
+	one12 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(-2, 4))
+	one12.dir = DIR.leftBottom
+
+	one12:playAct(ACTS.DEATH)
+
+	one7 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-2, -5))
+	one7.dir = DIR.left
+
+	one7:playAct(ACTS.DEATH)
+
+	one8 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(-3, 0))
+	one8.dir = DIR.left
+
+	one8:playAct(ACTS.DEATH)
+
+	one9 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(-3, 4))
+	one9.dir = DIR.bottom
+
+	one9:playAct(ACTS.DEATH)
+
+	one10 = noInfoRole("白野猪", 19, 112, 0, 0, 0, nil, pos(-4, -3))
+	one10.dir = DIR.bottom
+	one10 = noInfoRole("白野猪", 19, 111, 0, 0, 0, nil, pos(5, 2))
+	one10.dir = DIR.leftUp
+	one10 = noInfoRole("白野猪", 19, 110, 0, 0, 0, nil, pos(3, 4))
+	one10.dir = DIR.leftUp
+
+	--- END OF BLOCK #169 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #170
+	else
+	JUMP TO BLOCK #171
+	end
+
+
+	--- BLOCK #170 6547-6548, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #170 ---
+
+	FLOW; TARGET BLOCK #171
+
+
+	--- BLOCK #171 6549-6560, warpins: 2 ---
+	one2:magic(59, one1)
+	--- END OF BLOCK #171 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #172
+	else
+	JUMP TO BLOCK #173
+	end
+
+
+	--- BLOCK #172 6561-6562, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #172 ---
+
+	FLOW; TARGET BLOCK #173
+
+
+	--- BLOCK #173 6563-6578, warpins: 2 ---
+	one1:playAct(ACTS.STRUCK)
+	one1:sayDR("烫、好烫啊")
+	--- END OF BLOCK #173 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #174
+	else
+	JUMP TO BLOCK #175
+	end
+
+
+	--- BLOCK #174 6579-6580, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #174 ---
+
+	FLOW; TARGET BLOCK #175
+
+
+	--- BLOCK #175 6581-6581, warpins: 2 ---
+	stageIndex = "stage9"
+
+	--- END OF BLOCK #175 ---
+
+	FLOW; TARGET BLOCK #176
+
+
+	--- BLOCK #176 6582-6583, warpins: 2 ---
+	--- END OF BLOCK #176 ---
+
+	if stageIndex == "stage9" then
+	JUMP TO BLOCK #177
+	else
+	JUMP TO BLOCK #186
+	end
+
+
+	--- BLOCK #177 6584-6609, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #177 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #178
+	else
+	JUMP TO BLOCK #179
+	end
+
+
+	--- BLOCK #178 6610-6611, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #178 ---
+
+	FLOW; TARGET BLOCK #179
+
+
+	--- BLOCK #179 6612-6889, warpins: 2 ---
+	enterStage("image", 0, 0, "stage8fight2.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showEffect(EFFIDS.ET_FIRE, pos(5, -5), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(3, 6), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(4, -4), 10)
+	showEffect(EFFIDS.ET_FIRE, pos(5, 6), 10)
+
+	one1 = noInfoRole("祖玛教主", 49, 63, 0, 0, 0, nil, pos(-2, -2))
+	one1.dir = DIR.rightBottom
+	one4 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(-5, -4))
+	one4.dir = DIR.rightBottom
+	one5 = noInfoRole("祖玛弓箭手", 45, 47, 0, 0, 0, nil, pos(0, -4))
+	one5.dir = DIR.bottom
+	one6 = noInfoRole("祖玛雕像", 47, 61, 0, 0, 0, nil, pos(-6, -1))
+	one6.dir = DIR.rightBottom
+	one11 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(4, -3))
+	one11.dir = DIR.leftBottom
+
+	one11:playAct(ACTS.DEATH)
+
+	one12 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(-2, 4))
+	one12.dir = DIR.leftBottom
+
+	one12:playAct(ACTS.DEATH)
+
+	one7 = noInfoRole("带刀护卫", 19, 72, 0, 0, 0, nil, pos(-2, -5))
+	one7.dir = DIR.left
+
+	one7:playAct(ACTS.DEATH)
+
+	one8 = noInfoRole("弓箭护卫", 45, 71, 0, 0, 0, nil, pos(-4, 0))
+	one8.dir = DIR.bottom
+
+	one8:playAct(ACTS.DEATH)
+
+	one8 = noInfoRole("狼", 19, 70, 0, 0, 0, nil, pos(3, 0))
+	one8.dir = DIR.bottom
+
+	one8:playAct(ACTS.DEATH)
+
+	one2 = noInfoRole("无名道士", "hero", dsdress, dsweapon, 0, 1, nil, pos(2, 3))
+	one2.dir = DIR.leftUp
+
+	--- END OF BLOCK #179 ---
+
+	slot4 = if delay(0.8)
+
+	 then
+	JUMP TO BLOCK #180
+	else
+	JUMP TO BLOCK #181
+	end
+
+
+	--- BLOCK #180 6890-6891, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #180 ---
+
+	FLOW; TARGET BLOCK #181
+
+
+	--- BLOCK #181 6892-6906, warpins: 2 ---
+	one1:sayDL("嘎哦，我要挖出你的心脏")
+	one2:sayDR("呵，困魔咒！")
+	--- END OF BLOCK #181 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #182
+	else
+	JUMP TO BLOCK #183
+	end
+
+
+	--- BLOCK #182 6907-6908, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #182 ---
+
+	FLOW; TARGET BLOCK #183
+
+
+	--- BLOCK #183 6909-6925, warpins: 2 ---
+	one2:magic(16, one1)
+	one1:sayDL("怎、怎么动不了……")
+	--- END OF BLOCK #183 ---
+
+	slot4 = if delay(3)
+
+	 then
+	JUMP TO BLOCK #184
+	else
+	JUMP TO BLOCK #185
+	end
+
+
+	--- BLOCK #184 6926-6927, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #184 ---
+
+	FLOW; TARGET BLOCK #185
+
+
+	--- BLOCK #185 6928-6928, warpins: 2 ---
+	stageIndex = "stage10"
+
+	--- END OF BLOCK #185 ---
+
+	FLOW; TARGET BLOCK #186
+
+
+	--- BLOCK #186 6929-6930, warpins: 2 ---
+	--- END OF BLOCK #186 ---
+
+	if stageIndex == "stage10" then
+	JUMP TO BLOCK #187
+	else
+	JUMP TO BLOCK #194
+	end
+
+
+	--- BLOCK #187 6931-6956, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #187 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #188
+	else
+	JUMP TO BLOCK #189
+	end
+
+
+	--- BLOCK #188 6957-6958, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #188 ---
+
+	FLOW; TARGET BLOCK #189
+
+
+	--- BLOCK #189 6959-6997, warpins: 2 ---
+	enterStage("image", 0, 0, "stage7fight1.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("比奇守住了，而三位英雄也决定留下")
+	playSound("dubbing/17", true)
+	--- END OF BLOCK #189 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #190
+	else
+	JUMP TO BLOCK #191
+	end
+
+
+	--- BLOCK #190 6998-6999, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #190 ---
+
+	FLOW; TARGET BLOCK #191
+
+
+	--- BLOCK #191 7000-7063, warpins: 2 ---
+	hero1 = noInfoRole("无名法师", "hero", fsdress, fsweapon, 1, 1, nil, pos(-1, -2))
+	hero1.dir = DIR.leftBottom
+	hero2 = noInfoRole("无名道士", "hero", dsdress, dsweapon, 0, 1, nil, pos(1, 0))
+	hero2.dir = DIR.leftBottom
+	hero3 = noInfoRole("无名战士", "hero", zsdress, zsweapon, 0, 1, nil, pos(0, -1))
+	hero3.dir = DIR.leftBottom
+
+	hero3:sayDR("让我们一起守护比奇！")
+	--- END OF BLOCK #191 ---
+
+	slot4 = if delay(4)
+
+	 then
+	JUMP TO BLOCK #192
+	else
+	JUMP TO BLOCK #193
+	end
+
+
+	--- BLOCK #192 7064-7065, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #192 ---
+
+	FLOW; TARGET BLOCK #193
+
+
+	--- BLOCK #193 7066-7066, warpins: 2 ---
+	stageIndex = "stage11"
+
+	--- END OF BLOCK #193 ---
+
+	FLOW; TARGET BLOCK #194
+
+
+	--- BLOCK #194 7067-7068, warpins: 2 ---
+	--- END OF BLOCK #194 ---
+
+	if stageIndex == "stage11" then
+	JUMP TO BLOCK #195
+	else
+	JUMP TO BLOCK #198
+	end
+
+
+	--- BLOCK #195 7069-7098, warpins: 1 ---
+	enterStage(nil, 0, 0, {
+		trans = {
+			"fade",
+			0.4
+		}
+	})
+	waitEvt("stage_onTransFinish")
+	playVideo("flower", false)
+	waitEvt("VideoComplete")
+	showText("安稳的日子没有持续太久")
+	playSound("dubbing/18", true)
+	--- END OF BLOCK #195 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #196
+	else
+	JUMP TO BLOCK #197
+	end
+
+
+	--- BLOCK #196 7099-7100, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #196 ---
+
+	FLOW; TARGET BLOCK #197
+
+
+	--- BLOCK #197 7101-7101, warpins: 2 ---
+	stageIndex = "stage12"
+
+	--- END OF BLOCK #197 ---
+
+	FLOW; TARGET BLOCK #198
+
+
+	--- BLOCK #198 7102-7103, warpins: 2 ---
+	--- END OF BLOCK #198 ---
+
+	if stageIndex == "stage12" then
+	JUMP TO BLOCK #199
+	else
+	JUMP TO BLOCK #209
+	end
+
+
+	--- BLOCK #199 7104-7129, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #199 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #200
+	else
+	JUMP TO BLOCK #201
+	end
+
+
+	--- BLOCK #200 7130-7131, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #200 ---
+
+	FLOW; TARGET BLOCK #201
+
+
+	--- BLOCK #201 7132-7246, warpins: 2 ---
+	enterStage("image", 0, 0, "stage12.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("比奇朝野权贵斗争愈演愈烈")
+	playSound("dubbing/19", true)
+
+	one1 = noInfoRole("高大人", 50, 16, 0, 0, 0, nil, pos(2, -2))
+	one1.dir = DIR.leftBottom
+	hero1 = noInfoRole("无名法师", "hero", fsdress, fsweapon, 1, 1, nil, pos(-2, 1))
+	hero1.dir = DIR.leftBottom
+	hero2 = noInfoRole("无名道士", "hero", dsdress, dsweapon, 0, 1, nil, pos(0, 3))
+	hero2.dir = DIR.leftBottom
+	hero3 = noInfoRole("无名战士", "hero", zsdress, zsweapon, 0, 1, nil, pos(-1, 2))
+	hero3.dir = DIR.leftBottom
+
+	one1:sayDR("哎呀，瞧我，忘上茶了")
+	--- END OF BLOCK #201 ---
+
+	for k=1, 6, 1
+	LOOP BLOCK #202
+	GO OUT TO BLOCK #205
+
+	--- BLOCK #202 7247-7281, warpins: 2 ---
+	hero1:playAct(ACTS.WALK, pos(-2, 2))
+	hero2:playAct(ACTS.WALK, pos(-2, 2))
+	hero3:playAct(ACTS.WALK, pos(-2, 2))
+	--- END OF BLOCK #202 ---
+
+	slot8 = if delay(0.55)
+
+	 then
+	JUMP TO BLOCK #203
+	else
+	JUMP TO BLOCK #204
+	end
+
+
+	--- BLOCK #203 7282-7283, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #203 ---
+
+	FLOW; TARGET BLOCK #204
+
+
+	--- BLOCK #204 7284-7284, warpins: 2 ---
+	--- END OF BLOCK #204 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #201
+
+
+	--- BLOCK #205 7285-7289, warpins: 1 ---
+	--- END OF BLOCK #205 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #206
+	else
+	JUMP TO BLOCK #207
+	end
+
+
+	--- BLOCK #206 7290-7291, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #206 ---
+
+	FLOW; TARGET BLOCK #207
+
+
+	--- BLOCK #207 7292-7302, warpins: 2 ---
+	one1:sayDR("三个武痞，可算走了，呸！")
+
+	stageIndex = "stage13"
+
+	--- END OF BLOCK #207 ---
+
+	slot4 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #208
+	else
+	JUMP TO BLOCK #209
+	end
+
+
+	--- BLOCK #208 7303-7304, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #208 ---
+
+	FLOW; TARGET BLOCK #209
+
+
+	--- BLOCK #209 7305-7306, warpins: 3 ---
+	--- END OF BLOCK #209 ---
+
+	if stageIndex == "stage13" then
+	JUMP TO BLOCK #210
+	else
+	JUMP TO BLOCK #237
+	end
+
+
+	--- BLOCK #210 7307-7360, warpins: 1 ---
+	enterStage(nil)
+	showText("出身民间的三英雄，不堪权贵打压，于白日门一带归隐")
+	playSound("dubbing/20", true)
+
+	worldImg = createImage("helperScript/world_building.jpg"):center()
+	scale = math.min(display.width/worldImg:getw(), display.height/worldImg:geth())
+
+	worldImg:scale(scale)
+	focus(worldImg, 1250, 990, 960, 640, 0)
+	--- END OF BLOCK #210 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #211
+	else
+	JUMP TO BLOCK #212
+	end
+
+
+	--- BLOCK #211 7361-7362, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #211 ---
+
+	FLOW; TARGET BLOCK #212
+
+
+	--- BLOCK #212 7363-7375, warpins: 2 ---
+	focus(worldImg, 650, 1220, 960, 640, 2)
+	--- END OF BLOCK #212 ---
+
+	slot4 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #213
+	else
+	JUMP TO BLOCK #214
+	end
+
+
+	--- BLOCK #213 7376-7377, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #213 ---
+
+	FLOW; TARGET BLOCK #214
+
+
+	--- BLOCK #214 7378-7414, warpins: 2 ---
+	local img = "panels/bigmap/labeln-bairi.png"
+
+	createImage(img, worldImg):pos(646, 1180):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #214 ---
+
+	slot5 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #215
+	else
+	JUMP TO BLOCK #216
+	end
+
+
+	--- BLOCK #215 7415-7416, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #215 ---
+
+	FLOW; TARGET BLOCK #216
+
+
+	--- BLOCK #216 7417-7429, warpins: 2 ---
+	focus(worldImg, 1250, 950, 1600, 1400, 2)
+	--- END OF BLOCK #216 ---
+
+	slot5 = if delay(1.5)
+
+	 then
+	JUMP TO BLOCK #217
+	else
+	JUMP TO BLOCK #218
+	end
+
+
+	--- BLOCK #217 7430-7431, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #217 ---
+
+	FLOW; TARGET BLOCK #218
+
+
+	--- BLOCK #218 7432-7475, warpins: 2 ---
+	showText("如今的玛法大陆南地，可谓各方势力混杂……")
+	playSound("dubbing/21", true)
+
+	local img = "panels/bigmap/labeln-mengzhong.png"
+
+	createImage(img, worldImg):pos(1136, 955):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #218 ---
+
+	slot6 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #219
+	else
+	JUMP TO BLOCK #220
+	end
+
+
+	--- BLOCK #219 7476-7477, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #219 ---
+
+	FLOW; TARGET BLOCK #220
+
+
+	--- BLOCK #220 7478-7514, warpins: 2 ---
+	local img = "panels/bigmap/labeln-shabake.png"
+
+	createImage(img, worldImg):pos(1342, 950):scale(1.15):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #220 ---
+
+	slot7 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #221
+	else
+	JUMP TO BLOCK #222
+	end
+
+
+	--- BLOCK #221 7515-7516, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #221 ---
+
+	FLOW; TARGET BLOCK #222
+
+
+	--- BLOCK #222 7517-7553, warpins: 2 ---
+	local img = "panels/bigmap/labeln-zuma.png"
+
+	createImage(img, worldImg):pos(1480, 1010):scale(1.15):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #222 ---
+
+	slot8 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #223
+	else
+	JUMP TO BLOCK #224
+	end
+
+
+	--- BLOCK #223 7554-7555, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #223 ---
+
+	FLOW; TARGET BLOCK #224
+
+
+	--- BLOCK #224 7556-7592, warpins: 2 ---
+	local img = "panels/bigmap/labeln-dushe.png"
+
+	createImage(img, worldImg):pos(1140, 780):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #224 ---
+
+	slot9 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #225
+	else
+	JUMP TO BLOCK #226
+	end
+
+
+	--- BLOCK #225 7593-7594, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #225 ---
+
+	FLOW; TARGET BLOCK #226
+
+
+	--- BLOCK #226 7595-7631, warpins: 2 ---
+	local img = "panels/bigmap/labeln-biqi.png"
+
+	createImage(img, worldImg):pos(867, 570):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #226 ---
+
+	slot10 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #227
+	else
+	JUMP TO BLOCK #228
+	end
+
+
+	--- BLOCK #227 7632-7633, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #227 ---
+
+	FLOW; TARGET BLOCK #228
+
+
+	--- BLOCK #228 7634-7670, warpins: 2 ---
+	local img = "panels/bigmap/labeln-woma.png"
+
+	createImage(img, worldImg):pos(690, 915):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #228 ---
+
+	slot11 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #229
+	else
+	JUMP TO BLOCK #230
+	end
+
+
+	--- BLOCK #229 7671-7672, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #229 ---
+
+	FLOW; TARGET BLOCK #230
+
+
+	--- BLOCK #230 7673-7709, warpins: 2 ---
+	local img = "panels/bigmap/labeln-fengmo.png"
+
+	createImage(img, worldImg):pos(416, 1040):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #230 ---
+
+	slot12 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #231
+	else
+	JUMP TO BLOCK #232
+	end
+
+
+	--- BLOCK #231 7710-7711, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #231 ---
+
+	FLOW; TARGET BLOCK #232
+
+
+	--- BLOCK #232 7712-7748, warpins: 2 ---
+	local img = "panels/bigmap/labeln-cangyue.png"
+
+	createImage(img, worldImg):pos(613, 1510):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #232 ---
+
+	slot13 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #233
+	else
+	JUMP TO BLOCK #234
+	end
+
+
+	--- BLOCK #233 7749-7750, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #233 ---
+
+	FLOW; TARGET BLOCK #234
+
+
+	--- BLOCK #234 7751-7787, warpins: 2 ---
+	local img = "panels/bigmap/labeln-bianjie.png"
+
+	createImage(img, worldImg):pos(989, 285):scale(1.7):runs({
+		action.delay(0.1),
+		action.fadeIn(0.5)
+	}):setOpacity(0)
+	--- END OF BLOCK #234 ---
+
+	slot14 = if delay(2)
+
+	 then
+	JUMP TO BLOCK #235
+	else
+	JUMP TO BLOCK #236
+	end
+
+
+	--- BLOCK #235 7788-7789, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #235 ---
+
+	FLOW; TARGET BLOCK #236
+
+
+	--- BLOCK #236 7790-7790, warpins: 2 ---
+	stageIndex = "stage14"
+
+	--- END OF BLOCK #236 ---
+
+	FLOW; TARGET BLOCK #237
+
+
+	--- BLOCK #237 7791-7792, warpins: 2 ---
+	--- END OF BLOCK #237 ---
+
+	if stageIndex == "stage14" then
+	JUMP TO BLOCK #238
+	else
+	JUMP TO BLOCK #239
+	end
+
+
+	--- BLOCK #238 7793-7814, warpins: 1 ---
+	enterStage(nil, 0, 0, {
+		trans = {
+			"fade",
+			0.5
+		}
+	})
+	waitEvt("stage_onTransFinish")
+	playVideo("bird")
+	playSound("dubbing/22", true)
+	waitEvt("VideoComplete")
+
+	stageIndex = "stage15"
+
+	--- END OF BLOCK #238 ---
+
+	FLOW; TARGET BLOCK #239
+
+
+	--- BLOCK #239 7815-7816, warpins: 2 ---
+	--- END OF BLOCK #239 ---
+
+	if stageIndex == "stage15" then
+	JUMP TO BLOCK #240
+	else
+	JUMP TO BLOCK #249
+	end
+
+
+	--- BLOCK #240 7817-7842, warpins: 1 ---
+	createColorLayer(color(0, 0, 0, 255)):opacity(0):runs({
+		action.fadeIn(0.5)
+	})
+	--- END OF BLOCK #240 ---
+
+	slot4 = if delay(0.5)
+
+	 then
+	JUMP TO BLOCK #241
+	else
+	JUMP TO BLOCK #242
+	end
+
+
+	--- BLOCK #241 7843-7844, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #241 ---
+
+	FLOW; TARGET BLOCK #242
+
+
+	--- BLOCK #242 7845-8160, warpins: 2 ---
+	enterStage("image", 0, 0, "stage15.jpg")
+	createColorLayer(color(0, 0, 0, 255)):runs({
+		action.fadeOut(0.5),
+		action.removeSelf()
+	})
+	showText("神龙国主发布征兵令，欲寻找旧部恢复联系")
+	playSound("dubbing/23", true)
+
+	one5 = noInfoRole("林小姐", 50, 13, 0, 0, 0, nil, pos(-4, 3))
+	one5.dir = 0
+	one6 = noInfoRole("何小姐", 50, 12, 0, 0, 0, nil, pos(-3, 2))
+	one6.dir = 0
+	one7 = noInfoRole("老朱", 50, 4, 0, 0, 0, nil, pos(-3, 1))
+	one7.dir = 0
+	one8 = noInfoRole("平老伯", 50, 1, 0, 0, 0, nil, pos(-1, 3))
+	one8.dir = 0
+	one1 = noInfoRole("何小姐", 50, 2, 0, 0, 0, nil, pos(-2, -2))
+	one1.dir = 0
+	one2 = noInfoRole("武夫", 50, 3, 0, 0, 0, nil, pos(-4, -2))
+	one2.dir = 0
+	one3 = noInfoRole("何小姐", 50, 20, 0, 0, 0, nil, pos(-5, -1))
+	one3.dir = 0
+	one4 = noInfoRole("何小姐", 50, 17, 0, 0, 0, nil, pos(-1, 0))
+	one4.dir = 2
+	one5 = noInfoRole("钱小姐", 50, 13, 0, 0, 0, nil, pos(-2, 0))
+	one5.dir = 0
+	one6 = noInfoRole("何小姐", 50, 12, 0, 0, 0, nil, pos(-3, -2))
+	one6.dir = 0
+	one7 = noInfoRole("何小姐", 50, 4, 0, 0, 0, nil, pos(-3, 0))
+	one7.dir = 0
+	one8 = noInfoRole("何小姐", 50, 1, 0, 0, 0, nil, pos(-1, 2))
+	one8.dir = 2
+	one1 = noInfoRole("朴夫子", 50, 2, 0, 0, 0, nil, pos(-2, -3))
+	one1.dir = 0
+	one2 = noInfoRole("何小姐", 50, 3, 0, 0, 0, nil, pos(-2, -1))
+	one2.dir = 0
+	one3 = noInfoRole("何小姐", 50, 20, 0, 0, 0, nil, pos(-5, -3))
+	one3.dir = 0
+	one4 = noInfoRole("何小姐", 50, 17, 0, 0, 0, nil, pos(-4, 0))
+	one4.dir = 0
+
+	one6:sayDL("你们看布告了吗，征兵令！")
+	--- END OF BLOCK #242 ---
+
+	slot4 = if delay(0.6)
+
+	 then
+	JUMP TO BLOCK #243
+	else
+	JUMP TO BLOCK #244
+	end
+
+
+	--- BLOCK #243 8161-8162, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #243 ---
+
+	FLOW; TARGET BLOCK #244
+
+
+	--- BLOCK #244 8163-8172, warpins: 2 ---
+	one8:sayDL("我要参军，我要参军！")
+	--- END OF BLOCK #244 ---
+
+	slot4 = if delay(0.6)
+
+	 then
+	JUMP TO BLOCK #245
+	else
+	JUMP TO BLOCK #246
+	end
+
+
+	--- BLOCK #245 8173-8174, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #245 ---
+
+	FLOW; TARGET BLOCK #246
+
+
+	--- BLOCK #246 8175-8184, warpins: 2 ---
+	one5:sayDR("当年的远征军，如今何在？")
+	--- END OF BLOCK #246 ---
+
+	slot4 = if delay(4)
+
+	 then
+	JUMP TO BLOCK #247
+	else
+	JUMP TO BLOCK #248
+	end
+
+
+	--- BLOCK #247 8185-8186, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #247 ---
+
+	FLOW; TARGET BLOCK #248
+
+
+	--- BLOCK #248 8187-8187, warpins: 2 ---
+	stageIndex = "stage16"
+
+	--- END OF BLOCK #248 ---
+
+	FLOW; TARGET BLOCK #249
+
+
+	--- BLOCK #249 8188-8189, warpins: 2 ---
+	--- END OF BLOCK #249 ---
+
+	if stageIndex == "stage16" then
+	JUMP TO BLOCK #250
+	else
+	JUMP TO BLOCK #255
+	end
+
+
+	--- BLOCK #250 8190-8261, warpins: 1 ---
+	enterStage(nil, 0, 0, {
+		trans = {
+			"fade",
+			0.5
+		}
+	})
+	waitEvt("stage_onTransFinish")
+	playSound("dubbing/24", true)
+	showText("对故人的思念、对远征的执着、对南地的憧憬……")
+	playSound("CG_bulletin", true)
+
+	local bu = createImage("helperScript/bulletin.png"):scale(display.height/480):pos(display.cx + 40, display.cy + 30)
+	local ani = createFrameAni("bulletin/gaoshi00", 0, 58, 24):center()
+
+	ani.scale(ani, display.height/480)
+	waitEvt("frameAniFinish")
+	bu.run(bu, action.fadeOut(2))
+	--- END OF BLOCK #250 ---
+
+	slot6 = if delay(2.5)
+
+	 then
+	JUMP TO BLOCK #251
+	else
+	JUMP TO BLOCK #252
+	end
+
+
+	--- BLOCK #251 8262-8263, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #251 ---
+
+	FLOW; TARGET BLOCK #252
+
+
+	--- BLOCK #252 8264-8275, warpins: 2 ---
+	showText("各种心思汇成一阵风，吹遍了神龙帝国……")
+	playSound("dubbing/25", true)
+	--- END OF BLOCK #252 ---
+
+	slot6 = if delay(3.8)
+
+	 then
+	JUMP TO BLOCK #253
+	else
+	JUMP TO BLOCK #254
+	end
+
+
+	--- BLOCK #253 8276-8277, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #253 ---
+
+	FLOW; TARGET BLOCK #254
+
+
+	--- BLOCK #254 8278-8278, warpins: 2 ---
+	stageIndex = "stage17"
+
+	--- END OF BLOCK #254 ---
+
+	FLOW; TARGET BLOCK #255
+
+
+	--- BLOCK #255 8279-8280, warpins: 2 ---
+	--- END OF BLOCK #255 ---
+
+	if stageIndex == "stage17" then
+	JUMP TO BLOCK #256
+	else
+	JUMP TO BLOCK #258
+	end
+
+
+	--- BLOCK #256 8281-8313, warpins: 1 ---
+	enterStage(nil, 0, 0, {
+		trans = {
+			"fade",
+			1.5
+		}
+	})
+	waitEvt("stage_onTransFinish")
+	sound.stopMusic()
+	showText("")
+	playVideo("LOGO")
+	playSound("dubbing/26", true)
+	waitEvt("VideoComplete")
+	--- END OF BLOCK #256 ---
+
+	slot4 = if delay(1)
+
+	 then
+	JUMP TO BLOCK #257
+	else
+	JUMP TO BLOCK #258
+	end
+
+
+	--- BLOCK #257 8314-8315, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #257 ---
+
+	FLOW; TARGET BLOCK #258
+
+
+	--- BLOCK #258 8316-8319, warpins: 3 ---
+	exitStage()
+
+	return 
+	--- END OF BLOCK #258 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

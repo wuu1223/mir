@@ -1,0 +1,45 @@
+--- BLOCK #0 1-7, warpins: 1 ---
+local operate = {}
+operate.getConfig = function (key)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not operate[key] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	operate[key] = parseJson("config/" .. key .. ".json")
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-15, warpins: 2 ---
+	return operate[key]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+operate.init = function ()
+	--- BLOCK #0 1-15, warpins: 1 ---
+	operate.hotKey = def.operate.getConfig("hotKey")
+	operate.hotKeySet = def.operate.getConfig("hotKeySet")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return operate
+--- END OF BLOCK #0 ---
+
+
+

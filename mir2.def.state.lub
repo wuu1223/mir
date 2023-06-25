@@ -1,0 +1,594 @@
+--- BLOCK #0 1-10, warpins: 1 ---
+local states = {
+	csNoDieState = 49,
+	csAssCritHit = 64,
+	csAttPoisonMove = 65,
+	csDingShen = 45,
+	StBlueDiamond = 4,
+	stStone = 0,
+	csRelive = 48,
+	stPoisonYellow = 28,
+	csTmpSSk = 50,
+	csTmpStrength = 44,
+	stBloodWarrior = 6,
+	stNil_UsedByClient = 10,
+	csVioletPoision = 53,
+	StSskTaoist = 8,
+	stWEBS = 24,
+	csAttYLB = 67,
+	csTmpHQ = 74,
+	stPoisonRed = 30,
+	csDominateBuf = 61,
+	csSXSL = 56,
+	csNB = 62,
+	stReleaseStone = 18,
+	stDenyMagic = 16,
+	stMACShield = 21,
+	stHeroLongHit = 3,
+	csTmpMAC = 41,
+	csWJD = 59,
+	csWJZQ = 43,
+	csNoDamage = 55,
+	csRealHide = 60,
+	stZeroShield = 17,
+	csNil_48 = 47,
+	csTmpSC = 34,
+	csHMSF = 57,
+	csTmpNearHit = 76,
+	csTmpMaxHP = 36,
+	stACShield = 22,
+	csTmpMC = 33,
+	csAssLK = 69,
+	csHorseRider = 52,
+	csZaiMaShang = 51,
+	csAssXJRS = 71,
+	csNil_47 = 46,
+	stPoisonStone = 26,
+	stHackQuest = 25,
+	stCeleb = 105,
+	stOpenHealth = 1,
+	csTmpDC = 32,
+	stFreeze = 29,
+	stPoisonGreen = 31,
+	stJFBF = 9,
+	stDragonState = 14,
+	csDurativeVioletDmg = 73,
+	StDzxyFull = 11,
+	csTmpUnion = 75,
+	csRevenge = 42,
+	csTmpDCSpeed = 35,
+	StSskWizard = 7,
+	csDecTmpDefence = 54,
+	csBurn = 78,
+	csZLHT = 63,
+	csTmpAM = 39,
+	csJinghun = 81,
+	stPoisonFuchsia = 27,
+	StYellowDiamond = 5,
+	stManaProtected = 15,
+	csPoisonMove = 66,
+	stHidden = 23,
+	csTmpMaxMP = 37,
+	csTmpQR = 38,
+	csDurativeSdsDmg = 72,
+	csBleeding = 80,
+	stMagicShieldEx = 19,
+	stAlwaysShowName = 2,
+	csTmpAC = 40,
+	csAttHLKW = 68,
+	stMagicShield = 20,
+	csAssRXPK = 70,
+	csTmpCC = 77,
+	csLieHun = 79,
+	stAutoLFTrain = 12,
+	csDominaterPet = 58,
+	stPoisonBlue = 13
+}
+local def = {}
+def.stateHas = function (state, key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(state)
+
+	 == "number" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-15, warpins: 1 ---
+	local stateNum = state
+	state = getRecord("TAllBodyState")
+	state.get(state, "state")[1] = stateNum
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-19, warpins: 2 ---
+	local value = states[key]
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not value then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if value <= 31 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 24-40, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if ycFunction:band(state.get(state, "state")[1], ycFunction:lshift(1, value - 0))
+
+	 == 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 41-42, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 43-43, warpins: 1 ---
+	slot3 = true
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 44-45, warpins: 2 ---
+	return slot3
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #9 46-48, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if value <= 63 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #10 49-65, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if ycFunction:band(state.get(state, "state")[2], ycFunction:lshift(1, value - 32))
+
+	 == 0 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 66-67, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 68-68, warpins: 1 ---
+	slot3 = true
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 69-70, warpins: 2 ---
+	return slot3
+
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #14 71-73, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if value <= 95 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #15 74-90, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if ycFunction:band(state.get(state, "state")[3], ycFunction:lshift(1, value - 64))
+
+	 == 0 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 91-92, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 93-93, warpins: 1 ---
+	slot3 = true
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 94-95, warpins: 2 ---
+	return slot3
+
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #19 96-98, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if value <= 127 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #20 99-115, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	if ycFunction:band(state.get(state, "state")[4], ycFunction:lshift(1, value - 96))
+
+	 == 0 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 116-117, warpins: 1 ---
+	slot3 = false
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #22 118-118, warpins: 1 ---
+	slot3 = true
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 119-119, warpins: 2 ---
+	return slot3
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 120-120, warpins: 5 ---
+	return 
+	--- END OF BLOCK #24 ---
+
+
+
+end
+def.addState = function (state, key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(state)
+
+	 == "number" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-15, warpins: 1 ---
+	local stateNum = state
+	state = getRecord("TAllBodyState")
+	state.get(state, "state")[1] = stateNum
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-19, warpins: 2 ---
+	local value = states[key]
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not value then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if value <= 31 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-44, warpins: 1 ---
+	state.get(state, "state")[1] = ycFunction:bor(state.get(state, "state")[1], ycFunction:lshift(1, value - 0))
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #6 45-47, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if value <= 63 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 48-68, warpins: 1 ---
+	state.get(state, "state")[2] = ycFunction:bor(state.get(state, "state")[2], ycFunction:lshift(1, value - 32))
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 69-71, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if value <= 95 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 72-92, warpins: 1 ---
+	state.get(state, "state")[3] = ycFunction:bor(state.get(state, "state")[3], ycFunction:lshift(1, value - 64))
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 93-95, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if value <= 127 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 96-115, warpins: 1 ---
+	state.get(state, "state")[4] = ycFunction:bor(state.get(state, "state")[4], ycFunction:lshift(1, value - 96))
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 116-116, warpins: 5 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+def.removeState = function (state, key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(state)
+
+	 == "number" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-15, warpins: 1 ---
+	local stateNum = state
+	state = getRecord("TAllBodyState")
+	state.get(state, "state")[1] = stateNum
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-19, warpins: 2 ---
+	local value = states[key]
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not value then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-24, warpins: 1 ---
+	local function remove(n, off)
+		--- BLOCK #0 1-20, warpins: 1 ---
+		local value = value - off
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if ycFunction:band(state:get("state")[n], ycFunction:lshift(1, value))
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 21-42, warpins: 1 ---
+		state:get("state")[n] = ycFunction:bxor(state:get("state")[n], ycFunction:lshift(1, value))
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 43-43, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	--- END OF BLOCK #4 ---
+
+	if value <= 31 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 25-29, warpins: 1 ---
+	remove(1, 0)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #6 30-32, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if value <= 63 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 33-37, warpins: 1 ---
+	remove(2, 32)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 38-40, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if value <= 95 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 41-45, warpins: 1 ---
+	remove(3, 64)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 46-48, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if value <= 127 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 49-52, warpins: 1 ---
+	remove(4, 96)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 53-54, warpins: 5 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 55-55, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+
+
+end
+
+return def
+--- END OF BLOCK #0 ---
+
+
+

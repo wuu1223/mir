@@ -1,0 +1,6517 @@
+--- BLOCK #0 1-1996, warpins: 1 ---
+local def = {}
+def.TClientMessage = {
+	{
+		"uint",
+		"sign"
+	},
+	{
+		"byte",
+		"reservationByte"
+	},
+	{
+		"byte",
+		"cmd"
+	},
+	{
+		"short",
+		"dataLength"
+	},
+	{
+		"uint",
+		"dataIndex"
+	}
+}
+def.TDefaultMessage = {
+	{
+		"int",
+		"recog"
+	},
+	{
+		"short",
+		"ident"
+	},
+	{
+		"short",
+		"param"
+	},
+	{
+		"short",
+		"tag"
+	},
+	{
+		"short",
+		"series"
+	}
+}
+def.TGSDateLen = {
+	{
+		"short",
+		"itemLen"
+	},
+	{
+		"short",
+		"magicLen"
+	},
+	{
+		"record",
+		"gsTime",
+		"TDateTime"
+	},
+	{
+		"uint",
+		"gsVersionEx"
+	}
+}
+def.TServerGroupInfo = {
+	{
+		"char*",
+		"groupName",
+		15
+	},
+	{
+		"char*",
+		"groupDesc",
+		23
+	}
+}
+def.TClientNearbyGroupInfo = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"string",
+		"guildName",
+		15
+	}
+}
+def.TClientGroupMemInfo = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"isonline"
+	},
+	{
+		"string",
+		"guildName",
+		31
+	},
+	{
+		"byte",
+		"isCaptain"
+	}
+}
+def.TSelectServerMsg = {
+	{
+		"int",
+		"areaID"
+	},
+	{
+		"int",
+		"groupID"
+	},
+	{
+		"byte",
+		"sdoa"
+	},
+	{
+		"byte",
+		"other1"
+	},
+	{
+		"byte",
+		"other2"
+	},
+	{
+		"byte",
+		"other3"
+	},
+	{
+		"char*",
+		"suffix",
+		7
+	}
+}
+def.TSelectServerMsg2 = {
+	{
+		"record",
+		"oldMsg",
+		"TSelectServerMsg"
+	},
+	{
+		"char*",
+		"serverName",
+		15
+	}
+}
+def.TLoginIdResult = {
+	{
+		"char*",
+		"ptID",
+		20
+	},
+	{
+		"char*",
+		"digitID",
+		20
+	},
+	packed = true
+}
+def.TLoginIdResult2 = {
+	{
+		"char*",
+		"oldMsg",
+		20
+	},
+	{
+		"char*",
+		"serverName",
+		20
+	},
+	{
+		"int",
+		"areaID"
+	},
+	{
+		"int",
+		"groupID"
+	},
+	{
+		"string",
+		"reconnectID",
+		36
+	},
+	packed = true
+}
+def.TLoginIdLast = {
+	{
+		"int",
+		"areaID"
+	},
+	{
+		"int",
+		"groupID"
+	},
+	{
+		"string",
+		"reconnectID",
+		36
+	},
+	packed = true
+}
+def.TMirCharInfo = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"hair"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"byte",
+		"level"
+	}
+}
+def.TMirCharinfoEx = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"hair"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"short",
+		"level"
+	}
+}
+def.TOsVersion3 = {
+	{
+		"int",
+		"major"
+	},
+	{
+		"int",
+		"minor"
+	},
+	{
+		"int",
+		"build"
+	},
+	{
+		"int",
+		"memSize"
+	},
+	{
+		"int",
+		"usingIGW"
+	},
+	{
+		"int",
+		"oemID"
+	},
+	{
+		"char*",
+		"cpuName",
+		47
+	},
+	{
+		"int",
+		"videoMemorySize"
+	},
+	{
+		"int",
+		"isVirtualMachine"
+	},
+	packed = true
+}
+def.TMessageCapitalInfo = {
+	{
+		"int",
+		"linfu"
+	},
+	{
+		"int",
+		"yuanbao"
+	},
+	{
+		"int",
+		"diamon"
+	},
+	{
+		"int",
+		"limitLf"
+	},
+	{
+		"int",
+		"silver"
+	},
+	{
+		"int",
+		"silverExp"
+	}
+}
+def.TFeature = {
+	{
+		"short",
+		"race"
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"byte",
+		"hair"
+	},
+	{
+		"short",
+		"weapon"
+	},
+	{
+		"short",
+		"dress"
+	},
+	{
+		"short",
+		"riding"
+	},
+	packed = true
+}
+def.TAllBodyState = {
+	{
+		"array",
+		"state",
+		4,
+		"int"
+	}
+}
+def.TPlayerState = {
+	{
+		"uint",
+		"outs"
+	},
+	{
+		"record",
+		"allBodyState",
+		"TAllBodyState"
+	},
+	{
+		"int",
+		"state"
+	},
+	{
+		"int",
+		"resv"
+	}
+}
+def.TPlayerStateEx = {
+	{
+		"uint",
+		"outs"
+	},
+	{
+		"record",
+		"allBodyState",
+		"TAllBodyState"
+	},
+	{
+		"int",
+		"state"
+	},
+	{
+		"int",
+		"resv"
+	},
+	{
+		"record",
+		"feature",
+		"TFeature"
+	}
+}
+def.TCharDesc = {
+	{
+		"int",
+		"feature"
+	},
+	{
+		"record",
+		"status",
+		"TAllBodyState"
+	}
+}
+def.TNewCharDesc = {
+	{
+		"uint",
+		"outlook"
+	},
+	{
+		"record",
+		"status",
+		"TAllBodyState"
+	},
+	{
+		"record",
+		"feature",
+		"TFeature"
+	}
+}
+def.TNewStateRec = {
+	{
+		"short",
+		"len"
+	},
+	{
+		"uint",
+		"outlook"
+	},
+	{
+		"record",
+		"status",
+		"TAllBodyState"
+	},
+	{
+		"uint",
+		"nameClr"
+	},
+	{
+		"int",
+		"specState"
+	},
+	{
+		"record",
+		"feature",
+		"TFeature"
+	},
+	{
+		"byte",
+		"job"
+	},
+	packed = true
+}
+def.TClientPhyAttRec = {
+	{
+		"short",
+		"hitMode"
+	},
+	{
+		"short",
+		"skillLv"
+	},
+	{
+		"short",
+		"specEffect"
+	},
+	{
+		"short",
+		"dir"
+	},
+	{
+		"short",
+		"x"
+	},
+	{
+		"short",
+		"y"
+	}
+}
+def.TSubAbility = {
+	{
+		"short",
+		"hitPoint"
+	},
+	{
+		"byte",
+		"speedPoint"
+	},
+	{
+		"short",
+		"antiPoison"
+	},
+	{
+		"short",
+		"poisonRecover"
+	},
+	{
+		"byte",
+		"healthRecover"
+	},
+	{
+		"byte",
+		"spellRecover"
+	},
+	{
+		"byte",
+		"antiMagic"
+	}
+}
+def.TSub2Ability = {
+	{
+		"short",
+		"eqShareRate"
+	},
+	{
+		"short",
+		"equipForceResume"
+	},
+	{
+		"short",
+		"equipForceDC"
+	},
+	{
+		"short",
+		"equipForceAC"
+	}
+}
+def.TSub3Ability = {
+	{
+		"short",
+		"attackLuck"
+	},
+	{
+		"short",
+		"equipHolyVal"
+	},
+	{
+		"int",
+		"suckBloodVal"
+	},
+	{
+		"int",
+		"hpLevel"
+	},
+	{
+		"int",
+		"mpLevel"
+	},
+	{
+		"short",
+		"unBreakVal"
+	},
+	{
+		"short",
+		"breakHitVal"
+	},
+	{
+		"int",
+		"prestige"
+	},
+	{
+		"short",
+		"pkValue"
+	},
+	{
+		"short",
+		"forceDmgVal"
+	},
+	{
+		"int",
+		"unionAttPower"
+	},
+	{
+		"short",
+		"freezeAntiAbil"
+	},
+	{
+		"short",
+		"directAttProb"
+	},
+	{
+		"short",
+		"mp_restore"
+	},
+	{
+		"short",
+		"hp_restore"
+	},
+	{
+		"short",
+		"hpmp_restore"
+	},
+	{
+		"short",
+		"hq_fastness"
+	},
+	{
+		"short",
+		"union_fastness"
+	},
+	{
+		"short",
+		"near_fastness"
+	},
+	{
+		"short",
+		"lj_fastness"
+	},
+	{
+		"int",
+		"cc"
+	},
+	{
+		"int",
+		"maxcc"
+	}
+}
+def.TAbility = {
+	{
+		"short",
+		"level"
+	},
+	{
+		"short",
+		"hitRate"
+	},
+	{
+		"short",
+		"quickRate"
+	},
+	{
+		"short",
+		"hpResume"
+	},
+	{
+		"short",
+		"mpResume"
+	},
+	{
+		"short",
+		"poisAC"
+	},
+	{
+		"short",
+		"poisResume"
+	},
+	{
+		"short",
+		"antiMagic"
+	},
+	{
+		"short",
+		"attSpeed"
+	},
+	{
+		"byte",
+		"age"
+	},
+	{
+		"int",
+		"AC"
+	},
+	{
+		"int",
+		"maxAC"
+	},
+	{
+		"int",
+		"MAC"
+	},
+	{
+		"int",
+		"maxMAC"
+	},
+	{
+		"int",
+		"DC"
+	},
+	{
+		"int",
+		"maxDC"
+	},
+	{
+		"int",
+		"MC"
+	},
+	{
+		"int",
+		"maxMC"
+	},
+	{
+		"int",
+		"SC"
+	},
+	{
+		"int",
+		"maxSC"
+	},
+	{
+		"int",
+		"HP"
+	},
+	{
+		"int",
+		"maxHP"
+	},
+	{
+		"int",
+		"MP"
+	},
+	{
+		"int",
+		"maxMP"
+	},
+	{
+		"uint",
+		"Exp"
+	},
+	{
+		"uint",
+		"maxExp"
+	},
+	{
+		"int",
+		"weight"
+	},
+	{
+		"int",
+		"maxWeight"
+	},
+	{
+		"int",
+		"wearWeight"
+	},
+	{
+		"int",
+		"maxWearWeight"
+	},
+	{
+		"int",
+		"handWeight"
+	},
+	{
+		"int",
+		"maxHandWeight"
+	},
+	{
+		"short",
+		"buPoisResume"
+	}
+}
+def.TAllAbility = {
+	{
+		"short",
+		"level"
+	},
+	{
+		"short",
+		"hitRate"
+	},
+	{
+		"short",
+		"quickRate"
+	},
+	{
+		"short",
+		"hpResume"
+	},
+	{
+		"short",
+		"mpResume"
+	},
+	{
+		"short",
+		"poisAC"
+	},
+	{
+		"short",
+		"poisResume"
+	},
+	{
+		"short",
+		"antiMagic"
+	},
+	{
+		"short",
+		"magHit"
+	},
+	{
+		"short",
+		"attSpeed"
+	},
+	{
+		"byte",
+		"age"
+	},
+	{
+		"int",
+		"AC"
+	},
+	{
+		"int",
+		"maxAC"
+	},
+	{
+		"int",
+		"MAC"
+	},
+	{
+		"int",
+		"maxMAC"
+	},
+	{
+		"int",
+		"DC"
+	},
+	{
+		"int",
+		"maxDC"
+	},
+	{
+		"int",
+		"MC"
+	},
+	{
+		"int",
+		"maxMC"
+	},
+	{
+		"int",
+		"SC"
+	},
+	{
+		"int",
+		"maxSC"
+	},
+	{
+		"int",
+		"HP"
+	},
+	{
+		"int",
+		"maxHP"
+	},
+	{
+		"int",
+		"MP"
+	},
+	{
+		"int",
+		"maxMP"
+	},
+	{
+		"uint",
+		"Exp"
+	},
+	{
+		"uint",
+		"maxExp"
+	},
+	{
+		"int",
+		"weight"
+	},
+	{
+		"int",
+		"maxWeight"
+	},
+	{
+		"int",
+		"wearWeight"
+	},
+	{
+		"int",
+		"maxWearWeight"
+	},
+	{
+		"int",
+		"handWeight"
+	},
+	{
+		"int",
+		"maxHandWeight"
+	},
+	{
+		"short",
+		"buPoisResume"
+	},
+	{
+		"short",
+		"eqShareRate"
+	},
+	{
+		"short",
+		"equipForceResume"
+	},
+	{
+		"short",
+		"equipForceDC"
+	},
+	{
+		"short",
+		"equipForceAC"
+	},
+	{
+		"short",
+		"attackLuck"
+	},
+	{
+		"short",
+		"equipHolyVal"
+	},
+	{
+		"int",
+		"suckBloodVal"
+	},
+	{
+		"int",
+		"hpLevel"
+	},
+	{
+		"int",
+		"mpLevel"
+	},
+	{
+		"short",
+		"unBreakVal"
+	},
+	{
+		"short",
+		"breakHitVal"
+	},
+	{
+		"int",
+		"prestige"
+	},
+	{
+		"short",
+		"pkValue"
+	},
+	{
+		"short",
+		"forceDmgVal"
+	},
+	{
+		"int",
+		"unionAttPower"
+	},
+	{
+		"short",
+		"freezeAntiAbil"
+	},
+	{
+		"short",
+		"directAttProb"
+	},
+	{
+		"short",
+		"mp_restore"
+	},
+	{
+		"short",
+		"hp_restore"
+	},
+	{
+		"short",
+		"hpmp_restore"
+	},
+	{
+		"short",
+		"hq_fastness"
+	},
+	{
+		"short",
+		"union_fastness"
+	},
+	{
+		"short",
+		"near_fastness"
+	},
+	{
+		"short",
+		"lj_fastness"
+	},
+	{
+		"int",
+		"cc"
+	},
+	{
+		"int",
+		"maxcc"
+	}
+}
+def.TOldClientAbility = {
+	{
+		"byte",
+		"level"
+	},
+	{
+		"byte",
+		"hitRate"
+	},
+	{
+		"byte",
+		"quickRate"
+	},
+	{
+		"byte",
+		"hpResume"
+	},
+	{
+		"byte",
+		"mpResume"
+	},
+	{
+		"byte",
+		"poisAC"
+	},
+	{
+		"byte",
+		"poisResume"
+	},
+	{
+		"byte",
+		"antiMagic"
+	},
+	{
+		"short",
+		"attSpeed"
+	},
+	{
+		"byte",
+		"age"
+	},
+	{
+		"short",
+		"AC"
+	},
+	{
+		"short",
+		"maxAC"
+	},
+	{
+		"short",
+		"MAC"
+	},
+	{
+		"short",
+		"maxMAC"
+	},
+	{
+		"short",
+		"DC"
+	},
+	{
+		"short",
+		"maxDC"
+	},
+	{
+		"short",
+		"MC"
+	},
+	{
+		"short",
+		"maxMC"
+	},
+	{
+		"short",
+		"SC"
+	},
+	{
+		"short",
+		"maxSC"
+	},
+	{
+		"int",
+		"HP"
+	},
+	{
+		"int",
+		"maxHP"
+	},
+	{
+		"int",
+		"MP"
+	},
+	{
+		"int",
+		"maxMP"
+	},
+	{
+		"uint",
+		"Exp"
+	},
+	{
+		"uint",
+		"maxExp"
+	},
+	{
+		"short",
+		"weight"
+	},
+	{
+		"short",
+		"maxWeight"
+	},
+	{
+		"short",
+		"wearWeight"
+	},
+	{
+		"short",
+		"maxWearWeight"
+	},
+	{
+		"short",
+		"handWeight"
+	},
+	{
+		"short",
+		"maxHandWeight"
+	},
+	{
+		"short",
+		"eqShareRate"
+	},
+	{
+		"short",
+		"eqiupForceResume"
+	},
+	{
+		"short",
+		"eqiupForceDC"
+	},
+	{
+		"short",
+		"eqiupForceAC"
+	},
+	{
+		"short",
+		"attackLuck"
+	},
+	{
+		"short",
+		"equipHolyVal"
+	},
+	{
+		"short",
+		"suckBloodVal"
+	},
+	{
+		"short",
+		"hpLevel"
+	},
+	{
+		"short",
+		"mpLevel"
+	},
+	{
+		"short",
+		"unBreakVal"
+	},
+	{
+		"short",
+		"breakHitVal"
+	},
+	{
+		"short",
+		"prestige"
+	},
+	{
+		"short",
+		"pkValue"
+	},
+	{
+		"short",
+		"forceDmgVal"
+	},
+	{
+		"short",
+		"unionAttPower"
+	},
+	{
+		"short",
+		"freezeAntiAbil"
+	}
+}
+def.TClientAbility = {
+	{
+		"short",
+		"level"
+	},
+	{
+		"short",
+		"hitRate"
+	},
+	{
+		"short",
+		"quickRate"
+	},
+	{
+		"short",
+		"hpResume"
+	},
+	{
+		"short",
+		"mpResume"
+	},
+	{
+		"short",
+		"poisAC"
+	},
+	{
+		"short",
+		"poisResume"
+	},
+	{
+		"short",
+		"antiMagic"
+	},
+	{
+		"short",
+		"attSpeed"
+	},
+	{
+		"byte",
+		"age"
+	},
+	{
+		"int",
+		"AC"
+	},
+	{
+		"int",
+		"maxAC"
+	},
+	{
+		"int",
+		"MAC"
+	},
+	{
+		"int",
+		"maxMAC"
+	},
+	{
+		"int",
+		"DC"
+	},
+	{
+		"int",
+		"maxDC"
+	},
+	{
+		"int",
+		"MC"
+	},
+	{
+		"int",
+		"maxMC"
+	},
+	{
+		"int",
+		"SC"
+	},
+	{
+		"int",
+		"maxSC"
+	},
+	{
+		"int",
+		"HP"
+	},
+	{
+		"int",
+		"maxHP"
+	},
+	{
+		"int",
+		"MP"
+	},
+	{
+		"int",
+		"maxMP"
+	},
+	{
+		"uint",
+		"Exp"
+	},
+	{
+		"uint",
+		"maxExp"
+	},
+	{
+		"int",
+		"weight"
+	},
+	{
+		"int",
+		"maxWeight"
+	},
+	{
+		"int",
+		"wearWeight"
+	},
+	{
+		"int",
+		"maxWearWeight"
+	},
+	{
+		"int",
+		"handWeight"
+	},
+	{
+		"int",
+		"maxHandWeight"
+	},
+	{
+		"short",
+		"eqShareRate"
+	},
+	{
+		"short",
+		"eqiupForceResume"
+	},
+	{
+		"short",
+		"eqiupForceDC"
+	},
+	{
+		"short",
+		"eqiupForceAC"
+	},
+	{
+		"short",
+		"attackLuck"
+	},
+	{
+		"short",
+		"equipHolyVal"
+	},
+	{
+		"int",
+		"suckBloodVal"
+	},
+	{
+		"int",
+		"hpLevel"
+	},
+	{
+		"int",
+		"mpLevel"
+	},
+	{
+		"short",
+		"unBreakVal"
+	},
+	{
+		"short",
+		"breakHitVal"
+	},
+	{
+		"int",
+		"prestige"
+	},
+	{
+		"short",
+		"pkValue"
+	},
+	{
+		"short",
+		"forceDmgVal"
+	},
+	{
+		"int",
+		"unionAttPower"
+	},
+	{
+		"short",
+		"freezeAntiAbil"
+	}
+}
+def.TStdItem = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"stdMode"
+	},
+	{
+		"byte",
+		"shape"
+	},
+	{
+		"byte",
+		"need"
+	},
+	{
+		"byte",
+		"source"
+	},
+	{
+		"short",
+		"looks"
+	},
+	{
+		"short",
+		"weight"
+	},
+	{
+		"short",
+		"duraMax"
+	},
+	{
+		"short",
+		"aniCount"
+	},
+	{
+		"short",
+		"needIdentify"
+	},
+	{
+		"short",
+		"needLevel"
+	},
+	{
+		"uint",
+		"AC"
+	},
+	{
+		"uint",
+		"MAC"
+	},
+	{
+		"uint",
+		"DC"
+	},
+	{
+		"uint",
+		"MC"
+	},
+	{
+		"uint",
+		"SC"
+	},
+	{
+		"byte",
+		"tPrice1"
+	},
+	{
+		"byte",
+		"tPrice2"
+	},
+	{
+		"byte",
+		"tPrice3"
+	},
+	{
+		"byte",
+		"tPrice4"
+	}
+}
+def.TAbilKeyValue = {
+	{
+		"byte",
+		"abilType"
+	},
+	{
+		"byte",
+		"abilVal"
+	},
+	packed = true
+}
+def.TAbilKeyValue_Word = {
+	{
+		"short",
+		"abilType"
+	},
+	{
+		"short",
+		"abilVal"
+	}
+}
+def.TAssCC = {
+	{
+		"short",
+		"xCC"
+	},
+	{
+		"short",
+		"xMaxCC"
+	}
+}
+def.TDateTime = {
+	{
+		"int",
+		"param1"
+	},
+	{
+		"int",
+		"param2"
+	},
+	double = function (self)
+		--- BLOCK #0 1-20, warpins: 1 ---
+		local ByteArray = require("framework.cc.utils.ByteArray")
+		local src = ByteArray.new():writeInt(self.param1):writeInt(self.param2):setPos(1)
+
+		return src.readDouble(src)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+}
+def.TSteelNewName = {
+	{
+		"string",
+		"newName",
+		15
+	},
+	{
+		"record",
+		"nameChgAbil",
+		"TAbilKeyValue_Word"
+	},
+	packed = true
+}
+def.THunLianRec = {
+	{
+		"byte",
+		"runeId"
+	},
+	{
+		"array",
+		"hunLianAbil",
+		3,
+		"record",
+		"TAbilKeyValue_Word"
+	},
+	packed = true
+}
+def.TELementInfo = {
+	{
+		"byte",
+		"EquipType"
+	},
+	{
+		"byte",
+		"ElementMaxLv"
+	},
+	{
+		"byte",
+		"ElementCurrLv"
+	},
+	{
+		"array",
+		"elementABil",
+		5,
+		"record",
+		"TAbilKeyValue_Word"
+	},
+	packed = true
+}
+def.TClientElementInfo = {
+	{
+		"short",
+		"activeAttElement"
+	},
+	{
+		"short",
+		"activeDefElement"
+	},
+	{
+		"array",
+		"elementAttAbilArr",
+		5,
+		"short"
+	},
+	{
+		"array",
+		"elementAttAbilArr",
+		5,
+		"short"
+	}
+}
+def.TCleverSteel = {
+	{
+		"short",
+		"steelID"
+	},
+	{
+		"array",
+		"stealUpAbils",
+		5,
+		"record",
+		"TAbilKeyValue_Word"
+	},
+	packed = true
+}
+def.TSteelNewShape = {
+	{
+		"short",
+		"newShape"
+	},
+	{
+		"short",
+		"newLooks"
+	},
+	{
+		"array",
+		"addAbils",
+		2,
+		"record",
+		"TAbilKeyValue_Word"
+	},
+	packed = true
+}
+def.TClientSteelInfo = {
+	{
+		"byte",
+		"lv"
+	},
+	{
+		"byte",
+		"maxLv"
+	},
+	{
+		"byte",
+		"veinsLv"
+	},
+	{
+		"byte",
+		"maxVeinsLv"
+	},
+	{
+		"int",
+		"veinsLv"
+	},
+	{
+		"int",
+		"stealVeinsMaxExp"
+	},
+	{
+		"int",
+		"stealDura"
+	},
+	{
+		"record",
+		"newNameInfo",
+		"TSteelNewName"
+	},
+	{
+		"record",
+		"newShapeInfo",
+		"TSteelNewShape"
+	},
+	{
+		"array",
+		"stealUpAbils",
+		14,
+		"record",
+		"TAbilKeyValue_Word"
+	}
+}
+def.TAntiqueAbil = {
+	{
+		"byte",
+		"checkCnt"
+	},
+	{
+		"byte",
+		"checkMaxCnt"
+	},
+	{
+		"byte",
+		"mysteryNum"
+	},
+	{
+		"byte",
+		"maxMysteryNum"
+	},
+	{
+		"byte",
+		"spiritVal"
+	},
+	{
+		"byte",
+		"maxSpiritVal"
+	},
+	{
+		"byte",
+		"normalAbilCnt"
+	},
+	{
+		"byte",
+		"_reserv1"
+	},
+	{
+		"array",
+		"abilValues",
+		8,
+		"record",
+		"TAbilKeyValue"
+	},
+	{
+		"int",
+		"specAbils"
+	}
+}
+def.TClientItem = {
+	{
+		"uint",
+		"makeIndex"
+	},
+	{
+		"short",
+		"Index"
+	},
+	{
+		"short",
+		"dura"
+	},
+	{
+		"short",
+		"duraMax"
+	},
+	{
+		"short",
+		"KeyValueSize"
+	},
+	{
+		"uint",
+		"_Reserved"
+	},
+	{
+		"dynamicArray",
+		"extendFields",
+		0,
+		"record",
+		"TClientKeyValue",
+		function (self)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			return self.get(self, "KeyValueSize")
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	},
+	packed = true,
+	isPileUp = function (self)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if self.getVar("name")
+		 ~= "" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #1 6-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if self.get(self, "makeIndex")
+		 ~= 0 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #2 12-17, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if 150 >= self.getVar("stdMode")
+
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 18-19, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 20-20, warpins: 1 ---
+		slot1 = true
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 21-21, warpins: 2 ---
+		return slot1
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 22-22, warpins: 3 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end,
+	isBinded = function (self)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if self.getVar("normalStateSet")
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #1 6-15, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if ycFunction:band(self.getVar("normalStateSet"), 2)
+
+		 == 0 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 16-17, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 18-18, warpins: 1 ---
+		slot1 = true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 19-20, warpins: 2 ---
+		return slot1
+
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #5 21-25, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if self.getVar("stdMode")
+		 == 2 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #6 26-30, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if self.getVar("shape")
+		 ~= 10 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #7 31-35, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if self.getVar("shape")
+		 ~= 23 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #8 36-40, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		if self.getVar("shape")
+
+		 ~= 31 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 41-42, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #10 43-43, warpins: 3 ---
+		slot1 = true
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 44-45, warpins: 2 ---
+		return slot1
+
+		--- END OF BLOCK #11 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #12 46-50, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if self.getVar("stdMode")
+		 == 3 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #13 51-55, warpins: 1 ---
+		--- END OF BLOCK #13 ---
+
+		if self.getVar("shape")
+
+		 ~= 30 then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 56-57, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+		--- BLOCK #15 58-58, warpins: 1 ---
+		slot1 = true
+
+		--- END OF BLOCK #15 ---
+
+		FLOW; TARGET BLOCK #16
+
+
+		--- BLOCK #16 59-59, warpins: 2 ---
+		return slot1
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 60-60, warpins: 4 ---
+		return 
+		--- END OF BLOCK #17 ---
+
+
+
+	end,
+	isNeedResetPos = function (self, target)
+		--- BLOCK #0 1-15, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if self.get(self, "duraMax")
+		 < self.get(self, "dura")
+		 + target.get(target, "dura")
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 16-17, warpins: 1 ---
+		return true
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 18-18, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end,
+	isCanPileUp = function (self, target)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not target then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-9, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if self.isPileUp(self)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-14, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot2 = if not target.isPileUp(target)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 15-16, warpins: 2 ---
+		return false
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 17-24, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		if self.isBinded(self)
+		 ~= target.isBinded(target)
+
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 25-26, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 27-34, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		if self.getVar("stdMode")
+		 ~= target.getVar("stdMode")
+
+		 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 35-36, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 37-44, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		if self.getVar("shape")
+		 ~= target.getVar("shape")
+
+		 then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 45-46, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 47-54, warpins: 2 ---
+		--- END OF BLOCK #11 ---
+
+		if self.getVar("name")
+		 ~= target.getVar("name")
+
+		 then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 55-56, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 57-66, warpins: 2 ---
+		--- END OF BLOCK #13 ---
+
+		if self.get(self, "makeIndex")
+		 == target.get(target, "makeIndex")
+
+		 then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 67-68, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 69-78, warpins: 2 ---
+		--- END OF BLOCK #15 ---
+
+		if self.get(self, "duraMax")
+		 > self.get(self, "dura")
+		 then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 79-88, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		if target.get(target, "duraMax")
+		 <= target.get(target, "dura")
+
+		 then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 89-90, warpins: 2 ---
+		return false
+
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 91-97, warpins: 2 ---
+		--- END OF BLOCK #18 ---
+
+		if self.get(self, "dura")
+		 > 0 then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 98-104, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		if target.get(target, "dura")
+
+		 <= 0 then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 105-106, warpins: 2 ---
+		return false
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 107-108, warpins: 2 ---
+		return true
+		--- END OF BLOCK #21 ---
+
+
+
+	end,
+	getStd = function (self)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not _G.def.items[tonumber(self.get(self, "Index"))
+
+		] then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 13-16, warpins: 1 ---
+		slot1 = _G.def.items.defaultItem
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 17-17, warpins: 2 ---
+		return slot1
+		--- END OF BLOCK #2 ---
+
+
+
+	end,
+	getVar = function (self, name)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if self.extendField then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-5, warpins: 1 ---
+		local value = self.extendField[name]
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 6-7, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if value == nil then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #3 8-10, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot3 = if not self._item then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 11-13, warpins: 1 ---
+		self._item = self.getStd()
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 14-16, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		slot2 = if self._item then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 17-18, warpins: 1 ---
+		value = self._item[name]
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 19-19, warpins: 3 ---
+		return value
+		--- END OF BLOCK #7 ---
+
+
+
+	end,
+	setIndex = function (self, index)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		self.set(self, "index", index)
+
+		self._item = self.getStd()
+
+		assert(self._item, "item should be exist")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end,
+	decodedCallback = function (self)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self._item = self.getStd()
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not self._item then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-7, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-17, warpins: 2 ---
+		self.extendField = {}
+		local keyValueRecords = self.get(self, "extendFields")
+
+		--- END OF BLOCK #2 ---
+
+		for _, v in ipairs(keyValueRecords)
+
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #6
+
+
+		--- BLOCK #3 18-32, warpins: 1 ---
+		local valueType = v.get(v, "ValueType")
+		local value = v.get(v, "ValueNumber")
+		--- END OF BLOCK #3 ---
+
+		slot9 = if _G.def.items.valueType2Key[valueType] then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 33-39, warpins: 1 ---
+		self.extendField[_G.def.items.valueType2Key[valueType]] = value
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 40-41, warpins: 3 ---
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #6 42-42, warpins: 1 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+}
+def.TClientKeyValue = {
+	{
+		"short",
+		"ValueType"
+	},
+	{
+		"short",
+		"ValueNumber"
+	}
+}
+def.TClientEquip = {
+	{
+		"int",
+		"nPos"
+	},
+	{
+		"record",
+		"cliEquip",
+		"TClientItem"
+	}
+}
+def.PNewMarketInfo = {
+	{
+		"string",
+		"kindName",
+		15
+	},
+	{
+		"int",
+		"nextFlag"
+	},
+	{
+		"int",
+		"mPrice"
+	},
+	{
+		"int",
+		"mCount"
+	},
+	{
+		"int",
+		"itemIndex"
+	}
+}
+def.TNewClientGoods = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"subMenu"
+	},
+	{
+		"int",
+		"price"
+	},
+	{
+		"int",
+		"stock"
+	},
+	{
+		"int",
+		"grade"
+	},
+	{
+		"record",
+		"deatil",
+		"TStdItem"
+	}
+}
+def.TMessageBodyW = {
+	{
+		"short",
+		"param1"
+	},
+	{
+		"short",
+		"param2"
+	},
+	{
+		"short",
+		"tag1"
+	},
+	{
+		"short",
+		"tag2"
+	}
+}
+def.TMessageBodyWL = {
+	{
+		"int",
+		"param1"
+	},
+	{
+		"int",
+		"param2"
+	},
+	{
+		"int",
+		"tag1"
+	},
+	{
+		"int",
+		"tag2"
+	}
+}
+def.TStruckInfo = {
+	{
+		"short",
+		"unUse1"
+	},
+	{
+		"short",
+		"unUse2"
+	},
+	{
+		"int",
+		"state"
+	},
+	{
+		"int",
+		"param"
+	},
+	{
+		"int",
+		"flag"
+	},
+	{
+		"int",
+		"hp"
+	},
+	{
+		"int",
+		"maxHp"
+	},
+	{
+		"int",
+		"mp"
+	},
+	{
+		"int",
+		"maxMp"
+	}
+}
+def.TNewClientMagic = {
+	{
+		"string",
+		"magicName",
+		14
+	},
+	{
+		"byte",
+		"magicType"
+	},
+	{
+		"byte",
+		"effectType"
+	},
+	{
+		"byte",
+		"effect"
+	},
+	{
+		"short",
+		"magicId"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"short",
+		"key"
+	},
+	{
+		"short",
+		"needMp"
+	},
+	{
+		"short",
+		"spellTick"
+	},
+	{
+		"short",
+		"nextNeedLv"
+	},
+	{
+		"int",
+		"coldTick"
+	},
+	{
+		"int",
+		"curTrain"
+	},
+	{
+		"int",
+		"maxTrain"
+	},
+	{
+		"int",
+		"delayTime"
+	},
+	packed = true
+}
+def.TClientSkillExp = {
+	{
+		"short",
+		"skillID"
+	},
+	{
+		"byte",
+		"isSuper"
+	},
+	{
+		"byte",
+		"_reserved"
+	},
+	{
+		"uint",
+		"curExp"
+	},
+	{
+		"uint",
+		"nextExp"
+	},
+	{
+		"int",
+		"skillLv"
+	}
+}
+def.TShortMessage = {
+	{
+		"short",
+		"ident"
+	},
+	{
+		"short",
+		"msg"
+	}
+}
+def.TXinfaNormalOrderItem = {
+	{
+		"string",
+		"charName",
+		15
+	},
+	{
+		"int",
+		"value"
+	},
+	{
+		"int",
+		"xinfaLv"
+	}
+}
+def.THeroOrderItem = {
+	{
+		"string",
+		"masterName",
+		15
+	},
+	{
+		"string",
+		"heroName",
+		14
+	},
+	{
+		"byte",
+		"level"
+	}
+}
+def.THeroOrderItem = {
+	{
+		"string",
+		"masterName",
+		15
+	},
+	{
+		"string",
+		"heroName",
+		14
+	},
+	{
+		"short",
+		"level"
+	}
+}
+def.TXFHeroOrderItem = {
+	{
+		"string",
+		"masterName",
+		15
+	},
+	{
+		"string",
+		"heroName",
+		14
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"int",
+		"xinfaLv"
+	}
+}
+def.TsmGuildInfo = {
+	{
+		"string",
+		"gName",
+		31
+	},
+	{
+		"short",
+		"maxUser"
+	},
+	{
+		"short",
+		"realUser"
+	},
+	{
+		"short",
+		"onlineUser"
+	},
+	{
+		"short",
+		"gLevel"
+	},
+	{
+		"uint",
+		"currExp"
+	},
+	{
+		"uint",
+		"nextExp"
+	},
+	{
+		"record",
+		"gsTime",
+		"TDateTime"
+	},
+	{
+		"short",
+		"rankID"
+	},
+	{
+		"short",
+		"conferRight"
+	},
+	{
+		"uint",
+		"contribution"
+	},
+	{
+		"uint",
+		"etChannelID"
+	},
+	{
+		"byte",
+		"guildFlag"
+	},
+	{
+		"byte",
+		"_bResv"
+	},
+	{
+		"short",
+		"_wResv"
+	},
+	{
+		"uint",
+		"guildScore"
+	},
+	{
+		"uint",
+		"_Resv"
+	},
+	packed = true
+}
+def.TsmGuildRecuritEntry = {
+	{
+		"string",
+		"gName",
+		31
+	},
+	{
+		"short",
+		"onlineCount"
+	},
+	{
+		"short",
+		"memberCount"
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"short",
+		"xfLevel"
+	},
+	packed = true
+}
+def.TGuildPrivilegeSet = {
+	{
+		"short",
+		"rankID"
+	},
+	{
+		"short",
+		"maxUser"
+	},
+	{
+		"string",
+		"rankName",
+		15
+	},
+	packed = true
+}
+def.TsmGuildMemberEntry = {
+	{
+		"string",
+		"chrName",
+		15
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"isOnline"
+	},
+	{
+		"byte",
+		"resvb"
+	},
+	{
+		"short",
+		"rankID"
+	},
+	{
+		"short",
+		"conferRight"
+	},
+	{
+		"short",
+		"sfLevel"
+	},
+	{
+		"uint",
+		"contribution"
+	},
+	{
+		"record",
+		"LogoutTime",
+		"TDateTime"
+	},
+	{
+		"uint",
+		"totalContribution"
+	},
+	{
+		"uint",
+		"castleScore"
+	},
+	packed = true
+}
+def.TOldsmGuildMemberEntry = {
+	{
+		"string",
+		"chrName",
+		15
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"isOnline"
+	},
+	{
+		"byte",
+		"resvb"
+	},
+	{
+		"short",
+		"rankID"
+	},
+	{
+		"short",
+		"conferRight"
+	},
+	{
+		"short",
+		"sfLevel"
+	},
+	{
+		"uint",
+		"contribution"
+	},
+	{
+		"record",
+		"LogoutTime",
+		"TDateTime"
+	},
+	packed = true
+}
+def.TsmGuildRankEntry = {
+	{
+		"short",
+		"rankID"
+	},
+	{
+		"short",
+		"maxUser"
+	},
+	{
+		"string",
+		"rankName",
+		15
+	},
+	packed = true
+}
+def.TRankInfo = {
+	{
+		"short",
+		"memVer"
+	},
+	{
+		"record",
+		"rankEntry",
+		"TsmGuildRankEntry"
+	}
+}
+def.TsmJoinGuildEntry = {
+	{
+		"string",
+		"chrName",
+		15
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"isOnline"
+	},
+	{
+		"record",
+		"logoutTime",
+		"TDateTime"
+	},
+	{
+		"short",
+		"sfLevel"
+	},
+	packed = true
+}
+def.TClientFriendRelation = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"string",
+		"guildName",
+		15
+	},
+	{
+		"byte",
+		"isonline"
+	}
+}
+def.TClientAttentionRelation = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"color"
+	},
+	{
+		"byte",
+		"isonline"
+	}
+}
+def.TClientNormalBlackRelation = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"isonline"
+	}
+}
+def.TClientNearbyPlayerInfo = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"sex"
+	},
+	{
+		"string",
+		"guildName",
+		15
+	}
+}
+def.TBufRec = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"color"
+	}
+}
+def.TGuildDesc = {
+	{
+		"ID",
+		"guildID"
+	},
+	{
+		"string",
+		"gildName",
+		15
+	},
+	{
+		"string",
+		"presidentName",
+		15
+	},
+	{
+		"byte",
+		"corpsCount"
+	},
+	{
+		"byte",
+		"enableUnion"
+	},
+	{
+		"int",
+		"playerCount"
+	},
+	{
+		"int",
+		"onlineCount"
+	}
+}
+def.TCorpsDesc = {
+	{
+		"ID",
+		"corpsID"
+	},
+	{
+		"string",
+		"corpsName",
+		15
+	},
+	{
+		"string",
+		"gildName",
+		15
+	},
+	{
+		"string",
+		"captainName",
+		15
+	},
+	{
+		"byte",
+		"memberCount"
+	},
+	{
+		"byte",
+		"onlineCount"
+	}
+}
+def.TRefuseRequestType = {
+	{
+		"byte",
+		"type"
+	},
+	{
+		"string",
+		"name",
+		15
+	}
+}
+def.TCorpsDescAccept = {
+	{
+		"ID",
+		"corpsID"
+	},
+	{
+		"string",
+		"corpsName",
+		15
+	},
+	{
+		"string",
+		"gildName",
+		15
+	},
+	{
+		"string",
+		"captainName",
+		15
+	},
+	{
+		"ID",
+		"captainID"
+	},
+	{
+		"ID",
+		"viceCaptainID1"
+	},
+	{
+		"ID",
+		"viceCaptainID2"
+	},
+	{
+		"byte",
+		"memberCount"
+	},
+	{
+		"byte",
+		"onlineCount"
+	}
+}
+def.TCorpsMemDesc = {
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"short",
+		"status"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"six"
+	},
+	{
+		"byte",
+		"position"
+	},
+	{
+		"string",
+		"title",
+		15
+	}
+}
+def.TCorpsRequests = {
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"six"
+	}
+}
+def.TGuildMember = {
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"byte",
+		"job"
+	},
+	{
+		"byte",
+		"six"
+	},
+	{
+		"byte",
+		"position"
+	},
+	{
+		"short",
+		"status"
+	},
+	packed = true
+}
+def.TGuildID = {
+	{
+		"ID",
+		"ID"
+	}
+}
+def.TMemberTitle = {
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"title",
+		15
+	}
+}
+def.TRecruitCondition = {
+	{
+		"byte",
+		"job"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"string",
+		"notice",
+		55
+	}
+}
+def.TLogDesc = {
+	{
+		"record",
+		"time",
+		"TDateTime"
+	},
+	{
+		"string",
+		"logInfo",
+		55
+	}
+}
+def.TPresidentDesc = {
+	{
+		"ID",
+		"mainID"
+	},
+	{
+		"ID",
+		"viceID"
+	}
+}
+def.TGuildRequestJoinDesc = {
+	{
+		"ID",
+		"corpsID"
+	},
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"corpsName",
+		15
+	},
+	{
+		"string",
+		"captainName",
+		15
+	},
+	{
+		"byte",
+		"memberCount"
+	}
+}
+def.TGuildSimpleDesc = {
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	}
+}
+def.TGildRelation = {
+	{
+		"ID",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"relation"
+	}
+}
+def.TClientShop = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"string",
+		"typeName",
+		15
+	},
+	{
+		"short",
+		"looks"
+	},
+	{
+		"short",
+		"page"
+	},
+	{
+		"short",
+		"price"
+	},
+	{
+		"short",
+		"curPrice"
+	},
+	{
+		"short",
+		"type"
+	},
+	{
+		"short",
+		"count"
+	},
+	{
+		"short",
+		"effCount"
+	},
+	{
+		"uint",
+		"effOffSet"
+	},
+	{
+		"string",
+		"descStr",
+		127
+	}
+}
+def.TUserStateInfo = {
+	{
+		"int",
+		"feature"
+	},
+	{
+		"string",
+		"userName",
+		15
+	},
+	{
+		"byte",
+		"nameColorIndex"
+	},
+	{
+		"byte",
+		"milrankSW"
+	},
+	{
+		"byte",
+		"b2"
+	},
+	{
+		"byte",
+		"vipFlag"
+	},
+	{
+		"string",
+		"guildName",
+		15
+	},
+	{
+		"string",
+		"clanName",
+		15
+	},
+	{
+		"array",
+		"userItems",
+		16,
+		"record",
+		"TClientItem"
+	},
+	packed = true
+}
+def.TStartPoint = {
+	{
+		"string",
+		"startMap",
+		14
+	},
+	{
+		"short",
+		"x"
+	},
+	{
+		"short",
+		"y"
+	},
+	{
+		"short",
+		"rang"
+	}
+}
+def.TNewHeroLook = {
+	{
+		"int",
+		"outlook"
+	},
+	{
+		"record",
+		"status",
+		"TAllBodyState"
+	},
+	{
+		"int",
+		"state"
+	},
+	{
+		"int",
+		"resv"
+	},
+	{
+		"record",
+		"feature",
+		"TFeature"
+	}
+}
+def.THeroLook = {
+	{
+		"int",
+		"outlook"
+	},
+	{
+		"record",
+		"status",
+		"TAllBodyState"
+	},
+	{
+		"int",
+		"state"
+	},
+	{
+		"int",
+		"resv"
+	}
+}
+def.TClientTitleInfo = {
+	{
+		"short",
+		"ID"
+	},
+	{
+		"byte",
+		"TitleType"
+	},
+	{
+		"string",
+		"TitleName",
+		16
+	},
+	{
+		"uint",
+		"LeftTime"
+	},
+	{
+		"short",
+		"Look"
+	},
+	{
+		"byte",
+		"Add_PerAddForceValue"
+	},
+	{
+		"byte",
+		"Add_MaxMP"
+	},
+	{
+		"byte",
+		"UseTimes"
+	},
+	{
+		"byte",
+		"DisPlayType"
+	},
+	{
+		"short",
+		"Reserve"
+	},
+	{
+		"short",
+		"Add_MaxHP"
+	},
+	{
+		"byte",
+		"Add_MAC"
+	},
+	{
+		"byte",
+		"Add_AC"
+	},
+	{
+		"byte",
+		"Add_DC"
+	},
+	{
+		"byte",
+		"Add_MC"
+	},
+	{
+		"byte",
+		"Add_SC"
+	},
+	{
+		"byte",
+		"Add_MaxMAC"
+	},
+	{
+		"byte",
+		"Add_MaxAC"
+	},
+	{
+		"byte",
+		"Add_MaxDC"
+	},
+	{
+		"byte",
+		"Add_MaxMC"
+	},
+	{
+		"byte",
+		"Add_MaxSC"
+	},
+	{
+		"byte",
+		"Add_QuickRate"
+	},
+	{
+		"byte",
+		"Add_Union_Damage"
+	},
+	{
+		"byte",
+		"Add_Union_Damage_Percent"
+	},
+	{
+		"uint",
+		"Add_Exp"
+	},
+	{
+		"byte",
+		"Add_Exp_Percent"
+	},
+	{
+		"byte",
+		"Add_UnBreakValue"
+	},
+	packed = true
+}
+def.TEventMessage = {
+	{
+		"short",
+		"ident"
+	},
+	{
+		"short",
+		"msg"
+	},
+	{
+		"uint",
+		"tickLapse"
+	},
+	{
+		"string",
+		"desc",
+		3
+	}
+}
+def.TEventMessage2 = {
+	{
+		"short",
+		"ident"
+	},
+	{
+		"short",
+		"msg"
+	},
+	{
+		"uint",
+		"tickLapse"
+	},
+	{
+		"string",
+		"desc",
+		14
+	},
+	{
+		"string",
+		"name",
+		30
+	},
+	{
+		"ID",
+		"id"
+	}
+}
+def.TPlusFocusItemInfo = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"makeIndex"
+	},
+	{
+		"byte",
+		"pos"
+	},
+	{
+		"byte",
+		"state"
+	},
+	packed = true
+}
+def.TStallHeadInfo = {
+	{
+		"ID",
+		"id"
+	},
+	{
+		"string",
+		"player",
+		14
+	},
+	{
+		"string",
+		"name",
+		30
+	},
+	{
+		"int",
+		"level"
+	},
+	{
+		"int",
+		"state"
+	},
+	{
+		"int",
+		"allTm"
+	},
+	{
+		"int",
+		"time"
+	},
+	{
+		"double",
+		"startTm"
+	},
+	{
+		"int",
+		"msgCnt"
+	},
+	{
+		"int",
+		"cnt"
+	}
+}
+def.TStallBodyInfo = {
+	{
+		"uint",
+		"makeIndex"
+	},
+	{
+		"int",
+		"cnt"
+	},
+	{
+		"int",
+		"type"
+	},
+	{
+		"int",
+		"price"
+	}
+}
+def.TStallMsg = {
+	{
+		"ID",
+		"id"
+	},
+	{
+		"string",
+		"msg",
+		50
+	}
+}
+def.TMailListInfo = {
+	{
+		"int",
+		"id"
+	},
+	{
+		"string",
+		"title",
+		20
+	},
+	{
+		"string",
+		"sender",
+		14
+	},
+	{
+		"int",
+		"mailState"
+	},
+	{
+		"int",
+		"attachState"
+	},
+	{
+		"double",
+		"time"
+	}
+}
+def.TMailInfo = {
+	{
+		"int",
+		"id"
+	},
+	{
+		"string",
+		"sender",
+		14
+	},
+	{
+		"string",
+		"title",
+		20
+	},
+	{
+		"string",
+		"context",
+		200
+	},
+	{
+		"int",
+		"mailState"
+	},
+	{
+		"int",
+		"attachState"
+	},
+	{
+		"int",
+		"type"
+	},
+	{
+		"double",
+		"time"
+	},
+	{
+		"int",
+		"gold"
+	},
+	{
+		"int",
+		"yb"
+	},
+	{
+		"int",
+		"cnt"
+	},
+	{
+		"int",
+		"mark"
+	}
+}
+def.TMailMsg = {
+	{
+		"string",
+		"name",
+		14
+	},
+	{
+		"double",
+		"time"
+	},
+	{
+		"string",
+		"msg",
+		50
+	}
+}
+def.TFloorItem = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"owner"
+	},
+	{
+		"byte",
+		"state"
+	}
+}
+def.TYBDealClientItems = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"uint",
+		"id"
+	},
+	{
+		"int",
+		"num"
+	},
+	{
+		"byte",
+		"cnt"
+	},
+	{
+		"byte",
+		"timeOut"
+	},
+	{
+		"byte",
+		"getLost"
+	},
+	{
+		"byte",
+		"cancel"
+	},
+	{
+		"short",
+		"level"
+	},
+	{
+		"double",
+		"time"
+	}
+}
+def.TYBDealDataHead = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"price"
+	}
+}
+def.TYBDealData = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"makeIndex"
+	}
+}
+def.TClientChannelInfo = {
+	{
+		"int",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"memberCount"
+	},
+	{
+		"string",
+		"creatorName",
+		15
+	},
+	{
+		"byte",
+		"channelType"
+	},
+	{
+		"byte",
+		"maxMem"
+	},
+	{
+		"short",
+		"publicID"
+	}
+}
+def.TCnlCreateParam = {
+	{
+		"string",
+		"channelName",
+		15
+	},
+	{
+		"byte",
+		"needPw"
+	},
+	{
+		"string",
+		"pw",
+		6
+	},
+	{
+		"byte",
+		"memberMax"
+	}
+}
+def.TClientChannelHeadInfo = {
+	{
+		"int",
+		"ID"
+	},
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"mode"
+	},
+	{
+		"short",
+		"publicID"
+	}
+}
+def.TClientMemberInfo = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"byte",
+		"isAdmin"
+	},
+	{
+		"byte",
+		"isMute"
+	}
+}
+def.TNpcDesc = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"x"
+	},
+	{
+		"short",
+		"y"
+	}
+}
+def.TGroupMemPosition = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"x"
+	},
+	{
+		"int",
+		"y"
+	}
+}
+def.TMapPathNode = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"short",
+		"x"
+	},
+	{
+		"short",
+		"y"
+	}
+}
+def.TRetTransferAreaInfo = {
+	{
+		"int",
+		"param"
+	},
+	{
+		"int",
+		"param1"
+	},
+	{
+		"int",
+		"param2"
+	},
+	{
+		"string",
+		"areaName",
+		15
+	},
+	{
+		"string",
+		"groupName",
+		15
+	},
+	{
+		"string",
+		"charName",
+		15
+	},
+	{
+		"string",
+		"ptid",
+		20
+	},
+	packed = true
+}
+def.TMixingDrugConfig = {
+	{
+		"short",
+		"id"
+	},
+	{
+		"short",
+		"consume"
+	},
+	{
+		"short",
+		"generate"
+	},
+	{
+		"short",
+		"input"
+	},
+	{
+		"short",
+		"output"
+	},
+	{
+		"short",
+		"resid"
+	},
+	{
+		"string",
+		"name",
+		20
+	},
+	{
+		"string",
+		"desc",
+		100
+	}
+}
+def.TMixingDrugListInfo = {
+	{
+		"short",
+		"id"
+	},
+	{
+		"short",
+		"state"
+	}
+}
+def.TMixingDrugBegin = {
+	{
+		"int",
+		"time"
+	},
+	{
+		"int",
+		"price"
+	}
+}
+def.TMixingDrugDuring = {
+	{
+		"int",
+		"time"
+	},
+	{
+		"int",
+		"cnt"
+	}
+}
+def.TMixingDrugLevelInfo = {
+	{
+		"short",
+		"lv"
+	},
+	{
+		"int",
+		"curExp"
+	},
+	{
+		"int",
+		"maxExp"
+	}
+}
+def.TBox2PrizeItem = {
+	{
+		"string",
+		"name",
+		15
+	},
+	{
+		"int",
+		"looks"
+	},
+	{
+		"int",
+		"amount"
+	}
+}
+local tables = {}
+local configs = {}
+local replaceRecordSizes = {}
+local ioMethodsDef = {}
+ioMethodsDef.byte = {
+	"readByte",
+	"writeByte"
+}
+ioMethodsDef.short = {
+	"readShort",
+	"writeShort"
+}
+ioMethodsDef.int = {
+	"readInt",
+	"writeInt"
+}
+ioMethodsDef.uint = {
+	"readUInt",
+	"writeUInt"
+}
+ioMethodsDef.double = {
+	"readDouble",
+	"writeDouble"
+}
+ioMethodsDef.ID = {
+	"readDouble",
+	"writeDouble"
+}
+ioMethodsDef["char*"] = {
+	"readChars",
+	"writeChars"
+}
+ioMethodsDef.string = {
+	"readString",
+	"writeString"
+}
+
+function baseVarSize(varType, strLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if varType == "byte" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-5, warpins: 1 ---
+	return 1
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #2 6-7, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if varType == "short" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-10, warpins: 1 ---
+	return 2
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #4 11-12, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if varType ~= "int" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 13-14, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if varType == "uint" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 15-17, warpins: 2 ---
+	return 4
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #7 18-19, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if varType ~= "double" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 20-21, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if varType == "ID" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 22-24, warpins: 2 ---
+	return 8
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #10 25-26, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if varType ~= "char*" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 27-28, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if varType == "string" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #12 29-30, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot1 = if not strLen then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 31-34, warpins: 1 ---
+	print("baseVarSize faild string")
+
+	return 
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 35-36, warpins: 2 ---
+	return strLen + 1
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 37-41, warpins: 6 ---
+	print("baseVarSize faild type: ", varType)
+
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+
+local function generateTables(record, name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local hasMemberFuncs = nil
+	local ret = {}
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(record)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v[1] == "record" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 10-22, warpins: 1 ---
+	ret[v[2]] = generateTables(def[v[3]], v[3])
+	--- END OF BLOCK #2 ---
+
+	slot9 = if ret[v[2]]._hasMemberFuncs then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #3 23-24, warpins: 1 ---
+	hasMemberFuncs = true
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #4 25-27, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v[1] == "array" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #5 28-32, warpins: 1 ---
+	local arr = {}
+	--- END OF BLOCK #5 ---
+
+	for i=1, v[3], 1
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #14
+
+	--- BLOCK #6 33-35, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if v[4] == "record" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 36-49, warpins: 1 ---
+	arr[#arr + 1] = generateTables(def[v[5]], v[5])
+	--- END OF BLOCK #7 ---
+
+	slot14 = if arr[#arr]._hasMemberFuncs then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #8 50-51, warpins: 1 ---
+	hasMemberFuncs = true
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #9 52-54, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if v[4] ~= "string" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 55-57, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if v[4] == "char*" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 58-62, warpins: 2 ---
+	arr[#arr + 1] = ""
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 63-66, warpins: 1 ---
+	arr[#arr + 1] = 0
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 67-67, warpins: 4 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #14 68-70, warpins: 1 ---
+	ret[v[2]] = arr
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #15 71-73, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if v[1] ~= "string" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 74-76, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if v[1] == "char*" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 77-80, warpins: 2 ---
+	ret[v[2]] = ""
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #18 81-83, warpins: 1 ---
+	ret[v[2]] = 0
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 84-85, warpins: 6 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #20 86-89, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	for k, v in pairs(record)
+
+	LOOP BLOCK #21
+	GO OUT TO BLOCK #26
+
+
+	--- BLOCK #21 90-94, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if type(v)
+
+	 == "function" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #22 95-97, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot9 = if not ret._member_funcs then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 98-99, warpins: 1 ---
+	ret._member_funcs = {}
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 100-102, warpins: 2 ---
+	ret._member_funcs[k] = v
+	hasMemberFuncs = true
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 103-104, warpins: 3 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #26 105-121, warpins: 1 ---
+	ret.get = function (self, key)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		return self[key]
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	ret.set = function (self, key, value)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		self[key] = value
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	ret.size = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		return getRecordSize(self._name)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	ret.encode = function (self, beginpos)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		local config = configs[self._name]
+		local size = config._size
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not beginpos then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-11, warpins: 1 ---
+		ycByteStream:startWrite(size)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-13, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not beginpos then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 14-14, warpins: 1 ---
+		local pos = 0
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 15-21, warpins: 2 ---
+		local function writeRecord(record, config)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			for _, v in ipairs(config)
+
+
+			LOOP BLOCK #1
+			GO OUT TO BLOCK #18
+
+
+			--- BLOCK #1 5-10, warpins: 1 ---
+			local k = v._key
+
+			--- END OF BLOCK #1 ---
+
+			if type(v)
+			 == "table" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #17
+			end
+
+
+			--- BLOCK #2 11-13, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			slot8 = if v._r then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 14-18, warpins: 1 ---
+			writeRecord(record[k], v)
+
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+			--- BLOCK #4 19-21, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			slot8 = if v._a then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #13
+			end
+
+
+			--- BLOCK #5 22-26, warpins: 1 ---
+			local recordArr = record[k]
+
+			--- END OF BLOCK #5 ---
+
+			for i, v2 in ipairs(v)
+
+			LOOP BLOCK #6
+			GO OUT TO BLOCK #12
+
+
+			--- BLOCK #6 27-29, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			slot14 = if v2._r then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 30-34, warpins: 1 ---
+			writeRecord(recordArr[i], v2)
+			--- END OF BLOCK #7 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+			--- BLOCK #8 35-37, warpins: 1 ---
+			--- END OF BLOCK #8 ---
+
+			slot14 = if v2.strlen then
+			JUMP TO BLOCK #9
+			else
+			JUMP TO BLOCK #10
+			end
+
+
+			--- BLOCK #9 38-47, warpins: 1 ---
+			v2[2](ycByteStream, v2.pos + pos, recordArr[i], #recordArr[i])
+			--- END OF BLOCK #9 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+			--- BLOCK #10 48-54, warpins: 1 ---
+			v2[2](ycByteStream, v2.pos + pos, recordArr[i])
+			--- END OF BLOCK #10 ---
+
+			FLOW; TARGET BLOCK #11
+
+
+			--- BLOCK #11 55-56, warpins: 4 ---
+			--- END OF BLOCK #11 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+			--- BLOCK #12 57-57, warpins: 1 ---
+			--- END OF BLOCK #12 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+			--- BLOCK #13 58-60, warpins: 1 ---
+			--- END OF BLOCK #13 ---
+
+			slot8 = if v._v then
+			JUMP TO BLOCK #14
+			else
+			JUMP TO BLOCK #17
+			end
+
+
+			--- BLOCK #14 61-63, warpins: 1 ---
+			--- END OF BLOCK #14 ---
+
+			slot8 = if v.strlen then
+			JUMP TO BLOCK #15
+			else
+			JUMP TO BLOCK #16
+			end
+
+
+			--- BLOCK #15 64-73, warpins: 1 ---
+			v[2](ycByteStream, v.pos + pos, record[k], #record[k])
+			--- END OF BLOCK #15 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+			--- BLOCK #16 74-80, warpins: 1 ---
+			v[2](ycByteStream, v.pos + pos, record[k])
+
+			--- END OF BLOCK #16 ---
+
+			FLOW; TARGET BLOCK #17
+
+
+			--- BLOCK #17 81-82, warpins: 7 ---
+			--- END OF BLOCK #17 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+			--- BLOCK #18 83-83, warpins: 1 ---
+			return 
+			--- END OF BLOCK #18 ---
+
+
+
+		end
+
+		writeRecord(self, config)
+
+		--- END OF BLOCK #4 ---
+
+		slot1 = if not beginpos then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 22-29, warpins: 1 ---
+		return ycByteStream:endWrite(size), size
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 30-32, warpins: 2 ---
+		return beginpos + size
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local function readRecord(record, config, offset, bufLen)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for _, v in ipairs(config)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #37
+
+
+		--- BLOCK #1 5-10, warpins: 1 ---
+		local k = v._key
+
+		--- END OF BLOCK #1 ---
+
+		if type(v)
+
+		 == "table" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #36
+		end
+
+
+		--- BLOCK #2 11-13, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot10 = if v._r then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 14-21, warpins: 1 ---
+		offset = readRecord(record[k], v, offset, bufLen)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+		--- BLOCK #4 22-24, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot10 = if v._a then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #5 25-29, warpins: 1 ---
+		local recordArr = record[k]
+
+		--- END OF BLOCK #5 ---
+
+		for i, v2 in ipairs(v)
+
+
+		LOOP BLOCK #6
+		GO OUT TO BLOCK #12
+
+
+		--- BLOCK #6 30-32, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot16 = if v2._r then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 33-40, warpins: 1 ---
+		offset = readRecord(recordArr[i], v2, offset, bufLen)
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #8 41-43, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		slot16 = if v2.strlen then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 44-51, warpins: 1 ---
+		recordArr[i] = v2[1](ycByteStream, v2.pos + offset, v2.strlen)
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #10 52-57, warpins: 1 ---
+		recordArr[i] = v2[1](ycByteStream, v2.pos + offset)
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 58-59, warpins: 4 ---
+		--- END OF BLOCK #11 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #12 60-60, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+		--- BLOCK #13 61-63, warpins: 1 ---
+		--- END OF BLOCK #13 ---
+
+		slot10 = if v._v then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #14 64-66, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		slot10 = if v.strlen then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 67-74, warpins: 1 ---
+		record[k] = v[1](ycByteStream, v.pos + offset, v.strlen)
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+		--- BLOCK #16 75-81, warpins: 1 ---
+		record[k] = v[1](ycByteStream, v.pos + offset)
+
+		--- END OF BLOCK #16 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+		--- BLOCK #17 82-84, warpins: 1 ---
+		--- END OF BLOCK #17 ---
+
+		slot10 = if v._d then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #36
+		end
+
+
+		--- BLOCK #18 85-87, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		slot10 = if v.getlen then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 88-92, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		slot10 = if not v.getlen(record)
+
+		 then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 93-93, warpins: 2 ---
+		local len = 9999999
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 94-98, warpins: 2 ---
+		local arr = {}
+		local vType = v.type
+		--- END OF BLOCK #21 ---
+
+		slot13 = if not v.cfg then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #22 99-101, warpins: 1 ---
+		slot13 = configs[v.reType]
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 102-105, warpins: 2 ---
+		v.cfg = slot13
+		local cfg = v.cfg
+		--- END OF BLOCK #23 ---
+
+		slot13 = if cfg then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #29
+		end
+
+
+		--- BLOCK #24 106-109, warpins: 1 ---
+		--- END OF BLOCK #24 ---
+
+		for i=1, len, 1
+		LOOP BLOCK #25
+		GO OUT TO BLOCK #28
+
+		--- BLOCK #25 110-116, warpins: 2 ---
+		local re = getRecord(v.reType)
+		local startOffset = v.offset + offset
+		--- END OF BLOCK #25 ---
+
+		if bufLen <= startOffset then
+		JUMP TO BLOCK #26
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #26 117-117, warpins: 1 ---
+		--- END OF BLOCK #26 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+		--- BLOCK #27 118-129, warpins: 1 ---
+		offset = (offset + readRecord(re, cfg, startOffset, bufLen)) - startOffset
+		offset = offset + cfg._size
+		arr[i] = re
+		--- END OF BLOCK #27 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+		--- BLOCK #28 130-130, warpins: 1 ---
+		--- END OF BLOCK #28 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+		--- BLOCK #29 131-135, warpins: 1 ---
+		local startOffset = v.offset + offset
+		--- END OF BLOCK #29 ---
+
+		slot15 = if v.checkAlign then
+		JUMP TO BLOCK #30
+		else
+		JUMP TO BLOCK #32
+		end
+
+
+		--- BLOCK #30 136-137, warpins: 1 ---
+		--- END OF BLOCK #30 ---
+
+		slot13 = if not cfg then
+		JUMP TO BLOCK #31
+		else
+		JUMP TO BLOCK #32
+		end
+
+
+		--- BLOCK #31 138-142, warpins: 1 ---
+		startOffset = startOffset + v.subSize - startOffset%v.subSize
+		--- END OF BLOCK #31 ---
+
+		FLOW; TARGET BLOCK #32
+
+
+		--- BLOCK #32 143-146, warpins: 3 ---
+		--- END OF BLOCK #32 ---
+
+		for i=1, len, 1
+		LOOP BLOCK #33
+		GO OUT TO BLOCK #34
+
+		--- BLOCK #33 147-155, warpins: 2 ---
+		arr[i] = v[1](ycByteStream, (i - 1)*v.subSize + startOffset)
+		--- END OF BLOCK #33 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+		--- BLOCK #34 156-158, warpins: 1 ---
+		offset = offset + len*v.subSize
+		--- END OF BLOCK #34 ---
+
+		FLOW; TARGET BLOCK #35
+
+
+		--- BLOCK #35 159-159, warpins: 3 ---
+		record[k] = arr
+
+		--- END OF BLOCK #35 ---
+
+		FLOW; TARGET BLOCK #36
+
+
+		--- BLOCK #36 160-161, warpins: 8 ---
+		--- END OF BLOCK #36 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #37 162-164, warpins: 1 ---
+		--- END OF BLOCK #37 ---
+
+		slot4 = if record.decodedCallback then
+		JUMP TO BLOCK #38
+		else
+		JUMP TO BLOCK #39
+		end
+
+
+		--- BLOCK #38 165-167, warpins: 1 ---
+		record.decodedCallback(record)
+
+		--- END OF BLOCK #38 ---
+
+		FLOW; TARGET BLOCK #39
+
+
+		--- BLOCK #39 168-168, warpins: 2 ---
+		return offset
+		--- END OF BLOCK #39 ---
+
+
+
+	end
+
+	ret.decode = function (self, buf, bufLen, returnOther)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		local config = configs[self._name]
+		local size = config._size
+
+		--- END OF BLOCK #0 ---
+
+		slot2 = if bufLen then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 7-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if bufLen < size then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-22, warpins: 1 ---
+		p2("error", "record decode faild!", self._name, bufLen, size)
+		p2("error", debug.traceback())
+
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 23-43, warpins: 3 ---
+		ycByteStream:startRead(buf, bufLen)
+
+		size = size + readRecord(self, config, 0, bufLen)
+
+		ycByteStream:startRead("", 0)
+
+		--- END OF BLOCK #3 ---
+
+		slot3 = if returnOther then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 44-52, warpins: 1 ---
+		return self, string.sub(buf, size + 1, bufLen), bufLen - size
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 53-53, warpins: 2 ---
+		return self
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+	ret._hasMemberFuncs = hasMemberFuncs
+	ret._class = "record"
+	ret._name = name
+
+	return ret
+	--- END OF BLOCK #26 ---
+
+
+
+end
+
+local function generateConfigs(record, beginpos, recordName)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not beginpos then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	beginpos = 0
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-11, warpins: 2 ---
+	local ret = {
+		_r = true
+	}
+	local cnt = 0
+
+	local function fillCheck(num)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if cnt%num ~= 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-10, warpins: 1 ---
+		cnt = cnt + num - cnt%num
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 11-11, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local function findMaxVarSize(r)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		local size = 1
+
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(r)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #25
+
+
+		--- BLOCK #1 6-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v[1] ~= "ID" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-11, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if v[1] == "double" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 12-14, warpins: 2 ---
+		return 8
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #4 15-17, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if v[1] ~= "int" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 18-20, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if v[1] == "uint" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 21-23, warpins: 2 ---
+		return 4
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #7 24-26, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if v[1] == "short" then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 27-33, warpins: 1 ---
+		size = math.max(size, 2)
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #9 34-36, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		if v[1] == "record" then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 37-47, warpins: 1 ---
+		size = math.max(size, findMaxVarSize(def[v[3]]))
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #11 48-50, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		if v[1] == "array" then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #12 51-53, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if v[4] ~= "ID" then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 54-56, warpins: 1 ---
+		--- END OF BLOCK #13 ---
+
+		if v[4] == "double" then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 57-63, warpins: 2 ---
+		size = math.max(size, 8)
+
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #15 64-66, warpins: 1 ---
+		--- END OF BLOCK #15 ---
+
+		if v[4] ~= "int" then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 67-69, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		if v[4] == "uint" then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 70-72, warpins: 2 ---
+		return 4
+
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #18 73-75, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		if v[4] == "short" then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 76-82, warpins: 1 ---
+		size = math.max(size, 2)
+		--- END OF BLOCK #19 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+		--- BLOCK #20 83-85, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		if v[4] == "record" then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 86-95, warpins: 1 ---
+		size = math.max(size, findMaxVarSize(def[v[5]]))
+
+		--- END OF BLOCK #21 ---
+
+		FLOW; TARGET BLOCK #22
+
+
+		--- BLOCK #22 96-97, warpins: 10 ---
+		--- END OF BLOCK #22 ---
+
+		if size == 4 then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 98-98, warpins: 1 ---
+		return size
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 99-100, warpins: 3 ---
+		--- END OF BLOCK #24 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #25 101-101, warpins: 1 ---
+		return size
+		--- END OF BLOCK #25 ---
+
+
+
+	end
+
+	local function new(vType, strlen)
+		--- BLOCK #0 1-20, warpins: 1 ---
+		local reader = ycByteStream[ioMethodsDef[vType][1]]
+		local writter = ycByteStream[ioMethodsDef[vType][2]]
+
+		return {
+			reader,
+			writter,
+			_v = true,
+			vType = vType,
+			pos = cnt + beginpos,
+			strlen = strlen
+		}
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	slot8 = if record.packed then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #3 12-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for i, v in ipairs(record)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v[1] == "record" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-30, warpins: 1 ---
+	ret[i] = generateConfigs(def[v[3]], cnt + beginpos, v[3])
+	cnt = cnt + ret[i]._size
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #6 31-33, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v[1] == "array" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #7 34-38, warpins: 1 ---
+	local arr = {
+		_a = true
+	}
+	--- END OF BLOCK #7 ---
+
+	for i=1, v[3], 1
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #12
+
+	--- BLOCK #8 39-41, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if v[4] == "record" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 42-56, warpins: 1 ---
+	arr[#arr + 1] = generateConfigs(def[v[5]], cnt + beginpos, v[5])
+	cnt = cnt + arr[#arr]._size
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 57-66, warpins: 1 ---
+	arr[#arr + 1] = new(v[4])
+	cnt = cnt + baseVarSize(v[4])
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 67-67, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #12 68-69, warpins: 1 ---
+	ret[i] = arr
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #13 70-72, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if v[1] == "dynamicArray" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #14 73-84, warpins: 1 ---
+	local darr = {
+		_d = true
+	}
+	darr.type = v[4]
+	darr.reType = v[5]
+	darr.getlen = v[6]
+	darr.offset = cnt + beginpos
+	--- END OF BLOCK #14 ---
+
+	if v[4] ~= "record" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 85-102, warpins: 1 ---
+	darr[1] = ycByteStream[ioMethodsDef[v[4]][1]]
+	darr[2] = ycByteStream[ioMethodsDef[v[4]][2]]
+	darr.subSize = baseVarSize(v[4])
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 103-104, warpins: 2 ---
+	ret[i] = darr
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 105-114, warpins: 1 ---
+	ret[i] = new(v[1], v[3])
+	cnt = cnt + baseVarSize(v[1], v[3])
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 115-117, warpins: 4 ---
+	ret[i]._key = v[2]
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 118-119, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #20 120-120, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #55
+
+
+	--- BLOCK #21 121-124, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	for i, v in ipairs(record)
+
+	LOOP BLOCK #22
+	GO OUT TO BLOCK #54
+
+
+	--- BLOCK #22 125-127, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if v[1] == "record" then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 128-146, warpins: 1 ---
+	fillCheck(findMaxVarSize(def[v[3]]))
+
+	ret[i] = generateConfigs(def[v[3]], cnt + beginpos, v[3])
+	cnt = cnt + ret[i]._size
+
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #52
+
+
+	--- BLOCK #24 147-149, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if v[1] == "array" then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #25 150-152, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if v[1] ~= "ID" then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 153-155, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if v[1] == "double" then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 156-159, warpins: 2 ---
+	fillCheck(8)
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #28 160-162, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	if v[4] ~= "int" then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 163-165, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if v[4] == "uint" then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 166-169, warpins: 2 ---
+	fillCheck(4)
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #31 170-172, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if v[4] == "short" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 173-176, warpins: 1 ---
+	fillCheck(2)
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #33 177-179, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if v[4] == "record" then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 180-186, warpins: 1 ---
+	fillCheck(findMaxVarSize(def[v[5]]))
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 187-191, warpins: 5 ---
+	local arr = {
+		_a = true
+	}
+	--- END OF BLOCK #35 ---
+
+	for i=1, v[3], 1
+	LOOP BLOCK #36
+	GO OUT TO BLOCK #40
+
+	--- BLOCK #36 192-194, warpins: 2 ---
+	--- END OF BLOCK #36 ---
+
+	if v[4] == "record" then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 195-209, warpins: 1 ---
+	arr[#arr + 1] = generateConfigs(def[v[5]], cnt + beginpos, v[5])
+	cnt = cnt + arr[#arr]._size
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #39
+
+
+	--- BLOCK #38 210-219, warpins: 1 ---
+	arr[#arr + 1] = new(v[4])
+	cnt = cnt + baseVarSize(v[4])
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 220-220, warpins: 2 ---
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #35
+
+
+	--- BLOCK #40 221-222, warpins: 1 ---
+	ret[i] = arr
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #52
+
+
+	--- BLOCK #41 223-225, warpins: 1 ---
+	--- END OF BLOCK #41 ---
+
+	if v[1] == "dynamicArray" then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #42 226-239, warpins: 1 ---
+	local darr = {
+		_d = true
+	}
+	darr.type = v[4]
+	darr.reType = v[5]
+	darr.getlen = v[6]
+	darr.offset = cnt + beginpos
+	darr.checkAlign = true
+	--- END OF BLOCK #42 ---
+
+	if v[4] ~= "record" then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 240-257, warpins: 1 ---
+	darr[1] = ycByteStream[ioMethodsDef[v[4]][1]]
+	darr[2] = ycByteStream[ioMethodsDef[v[4]][2]]
+	darr.subSize = baseVarSize(v[4])
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 258-259, warpins: 2 ---
+	ret[i] = darr
+	--- END OF BLOCK #44 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #52
+
+
+	--- BLOCK #45 260-266, warpins: 1 ---
+	local size = baseVarSize(v[1], v[3])
+
+	--- END OF BLOCK #45 ---
+
+	if v[1] ~= "short" then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #46 267-269, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if v[1] ~= "int" then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #47 270-272, warpins: 1 ---
+	--- END OF BLOCK #47 ---
+
+	if v[1] ~= "uint" then
+	JUMP TO BLOCK #48
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #48 273-275, warpins: 1 ---
+	--- END OF BLOCK #48 ---
+
+	if v[1] ~= "ID" then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #49 276-278, warpins: 1 ---
+	--- END OF BLOCK #49 ---
+
+	if v[1] == "double" then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #50 279-281, warpins: 5 ---
+	fillCheck(size)
+
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 282-287, warpins: 2 ---
+	ret[i] = new(v[1], v[3])
+	cnt = cnt + size
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 288-290, warpins: 4 ---
+	ret[i]._key = v[2]
+
+	--- END OF BLOCK #52 ---
+
+	FLOW; TARGET BLOCK #53
+
+
+	--- BLOCK #53 291-292, warpins: 2 ---
+	--- END OF BLOCK #53 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #54 293-297, warpins: 1 ---
+	fillCheck(findMaxVarSize(record))
+
+	--- END OF BLOCK #54 ---
+
+	FLOW; TARGET BLOCK #55
+
+
+	--- BLOCK #55 298-301, warpins: 2 ---
+	--- END OF BLOCK #55 ---
+
+	slot8 = if not replaceRecordSizes[recordName] then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #57
+	end
+
+
+	--- BLOCK #56 302-302, warpins: 1 ---
+	slot8 = cnt
+	--- END OF BLOCK #56 ---
+
+	FLOW; TARGET BLOCK #57
+
+
+	--- BLOCK #57 303-305, warpins: 2 ---
+	ret._size = slot8
+
+	return ret
+	--- END OF BLOCK #57 ---
+
+
+
+end
+
+function fillMemberFuncs(record)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not record._hasMemberFuncs then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for k, v in pairs(record)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #3 9-13, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if type(v)
+	 == "table" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #4 14-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v._class == "record" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-20, warpins: 1 ---
+	fillMemberFuncs(v)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #6 21-22, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if k == "_member_funcs" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 23-26, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	for methodName, func in pairs(v)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #8 27-31, warpins: 1 ---
+	record[methodName] = handler(record, func)
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 32-33, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #10 34-36, warpins: 1 ---
+	record[k] = nil
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #11 37-41, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if type(v[1])
+	 == "table" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #12 42-45, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if v[1]._class == "record" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #13 46-49, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	for i, t in ipairs(v)
+
+	LOOP BLOCK #14
+	GO OUT TO BLOCK #16
+
+
+	--- BLOCK #14 50-52, warpins: 1 ---
+	fillMemberFuncs(t)
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 53-54, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #16 55-56, warpins: 7 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #17 57-57, warpins: 1 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+
+function getRecord(name, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local t = tables[name]
+	--- END OF BLOCK #0 ---
+
+	slot2 = if t then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 5-13, warpins: 1 ---
+	t = clone(t)
+
+	fillMemberFuncs(t)
+	--- END OF BLOCK #1 ---
+
+	slot1 = if params then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 14-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for k, v in pairs(params)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 18-18, warpins: 1 ---
+	t[k] = v
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-20, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 21-21, warpins: 3 ---
+	return t
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+function getRecordSize(name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local c = configs[name]
+	--- END OF BLOCK #0 ---
+
+	slot2 = if c then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	slot2 = c._size
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-6, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+function setRecordSize(name, size)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	replaceRecordSizes[name] = size
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+function initRecords()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	tables = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(def)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	tables[k] = generateTables(v, k)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-14, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+function initRecordConfigs()
+	--- BLOCK #0 1-6, warpins: 1 ---
+	configs = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(def)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 7-13, warpins: 1 ---
+	configs[k] = generateConfigs(v, 0, k)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-15, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 16-16, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+initRecords()
+initRecordConfigs()
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

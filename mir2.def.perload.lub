@@ -1,0 +1,823 @@
+--- BLOCK #0 1-254, warpins: 1 ---
+local perload = {}
+perload[1] = {
+	"hair",
+	2400,
+	4,
+	true,
+	4
+}
+perload[2] = {
+	"hair",
+	2464,
+	6,
+	true,
+	2
+}
+perload[3] = {
+	"hair",
+	2528,
+	6,
+	true,
+	2
+}
+perload[4] = {
+	"hair",
+	2592
+}
+perload[5] = {
+	"hair",
+	2600,
+	6,
+	true,
+	2
+}
+perload[6] = {
+	"hair",
+	2792,
+	6,
+	true,
+	2
+}
+perload[7] = {
+	"hair",
+	2872,
+	3,
+	true,
+	5
+}
+perload[8] = {
+	"hair",
+	2936,
+	4,
+	true,
+	4
+}
+perload[9] = {
+	"hair",
+	3000,
+	4,
+	true,
+	4
+}
+perload[10] = {
+	"hair",
+	3064,
+	6,
+	true,
+	2
+}
+perload[11] = {
+	"hair",
+	3128,
+	6,
+	true,
+	2
+}
+perload[12] = {
+	"hair",
+	3192
+}
+perload[13] = {
+	"hair",
+	3200,
+	6,
+	true,
+	2
+}
+perload[14] = {
+	"hair",
+	3392,
+	6,
+	true,
+	2
+}
+perload[15] = {
+	"hair",
+	3472,
+	3,
+	true,
+	5
+}
+perload[16] = {
+	"hair",
+	3536,
+	4,
+	true,
+	4
+}
+perload[17] = {
+	"hum",
+	3600,
+	4,
+	true,
+	4
+}
+perload[18] = {
+	"hum",
+	3664,
+	6,
+	true,
+	2
+}
+perload[19] = {
+	"hum",
+	3728,
+	6,
+	true,
+	2
+}
+perload[20] = {
+	"hum",
+	3792
+}
+perload[21] = {
+	"hum",
+	3800,
+	6,
+	true,
+	2
+}
+perload[22] = {
+	"hum",
+	4072,
+	3,
+	true,
+	5
+}
+perload[23] = {
+	"hum",
+	4136,
+	4,
+	true,
+	4
+}
+perload[24] = {
+	"hum",
+	4200,
+	4,
+	true,
+	4
+}
+perload[25] = {
+	"hum",
+	4264,
+	6,
+	true,
+	2
+}
+perload[26] = {
+	"hum",
+	4328,
+	6,
+	true,
+	2
+}
+perload[27] = {
+	"hum",
+	4392
+}
+perload[28] = {
+	"hum",
+	4400,
+	6,
+	true,
+	2
+}
+perload[29] = {
+	"hum",
+	4672,
+	3,
+	true,
+	5
+}
+perload[30] = {
+	"hum",
+	4736,
+	4,
+	true,
+	4
+}
+perload[31] = {
+	"hum",
+	4800,
+	4,
+	true,
+	4
+}
+perload[32] = {
+	"hum",
+	4864,
+	6,
+	true,
+	2
+}
+perload[33] = {
+	"hum",
+	4928,
+	6,
+	true,
+	2
+}
+perload[34] = {
+	"hum",
+	4992
+}
+perload[35] = {
+	"hum",
+	5192,
+	6,
+	true,
+	2
+}
+perload[36] = {
+	"hum",
+	5272,
+	3,
+	true,
+	5
+}
+perload[37] = {
+	"hum",
+	5336,
+	4,
+	true,
+	4
+}
+perload[38] = {
+	"hum",
+	5400,
+	4,
+	true,
+	4
+}
+perload[39] = {
+	"hum",
+	5464,
+	6,
+	true,
+	2
+}
+perload[40] = {
+	"hum",
+	5528,
+	6,
+	true,
+	2
+}
+perload[41] = {
+	"hum",
+	5592
+}
+perload[42] = {
+	"hum",
+	5792,
+	6,
+	true,
+	2
+}
+perload[43] = {
+	"hum",
+	5872,
+	3,
+	true,
+	5
+}
+perload[44] = {
+	"hum",
+	5936,
+	4,
+	true,
+	4
+}
+perload[45] = {
+	"hum",
+	6000,
+	4,
+	true,
+	4
+}
+perload[46] = {
+	"hum",
+	6064,
+	6,
+	true,
+	2
+}
+perload[47] = {
+	"hum",
+	6128,
+	6,
+	true,
+	2
+}
+perload[48] = {
+	"hum",
+	6192
+}
+perload[49] = {
+	"hum",
+	6392,
+	6,
+	true,
+	2
+}
+perload[50] = {
+	"hum",
+	6472,
+	3,
+	true,
+	5
+}
+perload[51] = {
+	"hum",
+	6536,
+	4,
+	true,
+	4
+}
+perload[52] = {
+	"hum",
+	6600,
+	4,
+	true,
+	4
+}
+perload[53] = {
+	"hum",
+	6664,
+	6,
+	true,
+	2
+}
+perload[54] = {
+	"hum",
+	6728,
+	6,
+	true,
+	2
+}
+perload[55] = {
+	"hum",
+	6792
+}
+perload[56] = {
+	"hum",
+	6992,
+	6,
+	true,
+	2
+}
+perload[57] = {
+	"hum",
+	7072,
+	3,
+	true,
+	5
+}
+perload[58] = {
+	"hum",
+	7136,
+	4,
+	true,
+	4
+}
+perload[59] = {
+	"hum",
+	0,
+	4,
+	true,
+	4
+}
+perload[60] = {
+	"hum",
+	64,
+	6,
+	true,
+	2
+}
+perload[61] = {
+	"hum",
+	128,
+	6,
+	true,
+	2
+}
+perload[62] = {
+	"hum",
+	600,
+	4,
+	true,
+	4
+}
+perload[63] = {
+	"hum",
+	664,
+	6,
+	true,
+	2
+}
+perload[64] = {
+	"hum",
+	728,
+	6,
+	true,
+	2
+}
+perload[65] = {
+	"hum",
+	1200,
+	4,
+	true,
+	4
+}
+perload[66] = {
+	"hum",
+	1264,
+	6,
+	true,
+	2
+}
+perload[67] = {
+	"hum",
+	1328,
+	6,
+	true,
+	2
+}
+perload[68] = {
+	"hum",
+	1800,
+	4,
+	true,
+	4
+}
+perload[69] = {
+	"hum",
+	1864,
+	6,
+	true,
+	2
+}
+perload[70] = {
+	"hum",
+	1928,
+	6,
+	true,
+	2
+}
+perload[71] = {
+	"hum",
+	2400,
+	4,
+	true,
+	4
+}
+perload[72] = {
+	"hum",
+	2464,
+	6,
+	true,
+	2
+}
+perload[73] = {
+	"hum",
+	2528,
+	6,
+	true,
+	2
+}
+perload[74] = {
+	"hum",
+	3000,
+	4,
+	true,
+	4
+}
+perload[75] = {
+	"hum",
+	3064,
+	6,
+	true,
+	2
+}
+perload[76] = {
+	"hum",
+	3128,
+	6,
+	true,
+	2
+}
+perload[77] = {
+	"hum",
+	7200,
+	4,
+	true,
+	4
+}
+perload[78] = {
+	"hum",
+	7264,
+	6,
+	true,
+	2
+}
+perload[79] = {
+	"hum",
+	7328,
+	6,
+	true,
+	2
+}
+perload[80] = {
+	"hum",
+	7800,
+	4,
+	true,
+	4
+}
+perload[81] = {
+	"hum",
+	7864,
+	6,
+	true,
+	2
+}
+perload[82] = {
+	"hum",
+	7928,
+	6,
+	true,
+	2
+}
+perload[83] = {
+	"hum",
+	8400,
+	4,
+	true,
+	4
+}
+perload[84] = {
+	"hum",
+	8464,
+	6,
+	true,
+	2
+}
+perload[85] = {
+	"hum",
+	8528,
+	6,
+	true,
+	2
+}
+perload[86] = {
+	"hum",
+	9000,
+	4,
+	true,
+	4
+}
+perload[87] = {
+	"hum",
+	9064,
+	6,
+	true,
+	2
+}
+perload[88] = {
+	"hum",
+	9128,
+	6,
+	true,
+	2
+}
+perload[89] = {
+	"hum",
+	9600,
+	4,
+	true,
+	4
+}
+perload[90] = {
+	"hum",
+	9664,
+	6,
+	true,
+	2
+}
+perload[91] = {
+	"hum",
+	9728,
+	6,
+	true,
+	2
+}
+perload[92] = {
+	"hum",
+	10200,
+	4,
+	true,
+	4
+}
+perload[93] = {
+	"hum",
+	10264,
+	6,
+	true,
+	2
+}
+perload[94] = {
+	"hum",
+	10328,
+	6,
+	true,
+	2
+}
+perload[95] = {
+	"weapon",
+	31800,
+	4,
+	true,
+	4
+}
+perload[96] = {
+	"weapon",
+	31864,
+	6,
+	true,
+	2
+}
+perload[97] = {
+	"weapon",
+	31928,
+	6,
+	true,
+	2
+}
+perload[98] = {
+	"weapon",
+	31992,
+	1,
+	true
+}
+perload[99] = {
+	"weapon",
+	32000,
+	6,
+	true,
+	2
+}
+perload[100] = {
+	"weapon",
+	32272,
+	3,
+	true,
+	5
+}
+perload[101] = {
+	"weapon",
+	32336,
+	4,
+	true,
+	4
+}
+perload[102] = {
+	"magic",
+	800,
+	6,
+	true,
+	4
+}
+perload[103] = {
+	"magic",
+	1410,
+	6,
+	true,
+	4
+}
+perload[104] = {
+	"magic",
+	1700,
+	6,
+	true,
+	4
+}
+perload[105] = {
+	"magic",
+	3480,
+	6,
+	true,
+	4
+}
+perload[106] = {
+	"magic2",
+	20,
+	3
+}
+perload[107] = {
+	"magic",
+	1620,
+	10
+}
+perload[108] = {
+	"magic",
+	3880,
+	10
+}
+perload[109] = {
+	"magic",
+	3840,
+	10
+}
+perload[110] = {
+	"magic",
+	200,
+	10
+}
+perload[111] = {
+	"magic",
+	600,
+	10
+}
+perload[112] = {
+	"magic2",
+	10,
+	5
+}
+perload[113] = {
+	"magic",
+	970,
+	6
+}
+perload[114] = {
+	"magic",
+	3890,
+	3
+}
+perload[115] = {
+	"magic",
+	3850,
+	20
+}
+perload[116] = {
+	"magic",
+	370,
+	10
+}
+perload[117] = {
+	"magic",
+	1360,
+	10
+}
+perload[118] = {
+	"magic",
+	1320,
+	15
+}
+perload[119] = {
+	"magic",
+	1340,
+	15
+}
+perload[120] = {
+	"magic",
+	770,
+	10
+}
+perload[121] = {
+	"magic",
+	1630,
+	6
+}
+perload[122] = {
+	"magic",
+	1390,
+	10
+}
+perload[123] = {
+	"magic",
+	250,
+	10
+}
+perload[124] = {
+	"magic",
+	1590,
+	10
+}
+perload[125] = {
+	"magic",
+	260,
+	10
+}
+perload[126] = {
+	"magic",
+	1600,
+	10
+}
+
+return perload
+--- END OF BLOCK #0 ---
+
+
+

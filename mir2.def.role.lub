@@ -1,0 +1,1579 @@
+--- BLOCK #0 1-82, warpins: 1 ---
+local role = {}
+
+table.merge(role, import(".state"))
+
+role.humFrame = 600
+role.size = {
+	w = 50,
+	h = 85
+}
+role.speed = {
+	rushKung = 0.3,
+	normal = 0.6,
+	spell = 0.8,
+	rush = 0.3,
+	attack = 0.9,
+	fast = 0.2
+}
+role.EHitStatus = {
+	walk = 2,
+	hit = 4,
+	none = 0,
+	stand = 1,
+	run = 3
+}
+role.state = {}
+role.dir = {
+	leftBottom = 5,
+	up = 0,
+	leftUp = 7,
+	bottom = 4,
+	rightBottom = 3,
+	rightUp = 1,
+	left = 6,
+	right = 2,
+	_0 = {
+		0,
+		-1
+	},
+	_1 = {
+		1,
+		-1
+	},
+	_2 = {
+		1,
+		0
+	},
+	_3 = {
+		1,
+		1
+	},
+	_4 = {
+		0,
+		1
+	},
+	_5 = {
+		-1,
+		1
+	},
+	_6 = {
+		-1,
+		0
+	},
+	_7 = {
+		-1,
+		-1
+	}
+}
+role.namecolorcnt = 9
+role.namecolors = {
+	249,
+	216,
+	250,
+	252,
+	253,
+	255,
+	152,
+	149,
+	70
+}
+role.getConfig = function (key)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return parseJson("config/" .. key .. ".json")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.init = function ()
+	--- BLOCK #0 1-25, warpins: 1 ---
+	role.monster = {}
+	role.npc = {}
+	role.frame = {}
+	role.heroDress = {}
+	role.heroWeapon = {}
+	role.heroHp = {}
+
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(role.getConfig("dress"))
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 26-29, warpins: 1 ---
+	role.heroDress[info.uid] = info
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 30-31, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 32-38, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for _, info in ipairs(role.getConfig("weapon"))
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 39-42, warpins: 1 ---
+	role.heroWeapon[info.Id] = info
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 43-44, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 45-51, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	for _, info in ipairs(role.getConfig("hp"))
+
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 52-55, warpins: 1 ---
+	role.heroHp[info.level] = info
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 56-57, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 58-64, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	for _, info in ipairs(role.getConfig("monster"))
+
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #10 65-68, warpins: 1 ---
+	role.monster[info.id] = info
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 69-70, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #12 71-77, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	for _, info in ipairs(role.getConfig("npc"))
+
+
+	LOOP BLOCK #13
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #13 78-81, warpins: 1 ---
+	role.npc[info.id] = info
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 82-83, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #15 84-90, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	for _, info in ipairs(role.getConfig("frame"))
+
+
+	LOOP BLOCK #16
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #16 91-96, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot5 = if not role.frame[info.id] then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 97-101, warpins: 1 ---
+	role.frame[info.id] = {}
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 102-107, warpins: 2 ---
+	role.frame[info.id][info.state] = info
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 108-109, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #20 110-110, warpins: 1 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+role.hp2level = function (hp, job)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local zstr, dstr, fstr = nil
+	local str = ""
+
+	--- END OF BLOCK #0 ---
+
+	for lv, info in pairs(role.heroHp)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #1 8-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if info.z_hp == tonumber(hp)
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 14-18, warpins: 1 ---
+	zstr = "Z" .. lv
+
+	--- END OF BLOCK #2 ---
+
+	slot1 = if job then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 19-20, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if job == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 21-21, warpins: 1 ---
+	return zstr
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 22-27, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	if info.d_hp == tonumber(hp)
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 28-32, warpins: 1 ---
+	dstr = "D" .. lv
+
+	--- END OF BLOCK #6 ---
+
+	slot1 = if job then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 33-34, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if job == 2 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 35-35, warpins: 1 ---
+	return dstr
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 36-41, warpins: 4 ---
+	--- END OF BLOCK #9 ---
+
+	if info.f_hp == tonumber(hp)
+
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 42-46, warpins: 1 ---
+	fstr = "M" .. lv
+
+	--- END OF BLOCK #10 ---
+
+	slot1 = if job then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 47-48, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if job == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 49-49, warpins: 1 ---
+	return fstr
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 50-51, warpins: 5 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #14 52-53, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot2 = if zstr then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 54-56, warpins: 1 ---
+	str = str .. zstr
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 57-58, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	slot3 = if dstr then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 59-60, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot2 = if zstr then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 61-63, warpins: 1 ---
+	str = str .. "/"
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 64-66, warpins: 2 ---
+	str = str .. dstr
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 67-68, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	slot4 = if fstr then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #21 69-70, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot3 = if not dstr then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 71-72, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot2 = if zstr then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 73-75, warpins: 2 ---
+	str = str .. "/"
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 76-78, warpins: 2 ---
+	str = str .. fstr
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 79-80, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	if str == "" then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 81-81, warpins: 1 ---
+	str = "?"
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 82-82, warpins: 2 ---
+	return str
+	--- END OF BLOCK #27 ---
+
+
+
+end
+role.getHeroDress = function (dressid)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.heroDress[dressid] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	slot1 = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-7, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.getHeroWeapon = function (weapon)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.heroWeapon[weapon] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	slot1 = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-7, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.hair = function (feature)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if feature.get(feature, "sex")
+
+	 == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 7-25, warpins: 1 ---
+	local hairs = {}
+	hairs[1] = {
+		"hair",
+		0
+	}
+	hairs[2] = {
+		"hair",
+		4
+	}
+	hairs[3] = {
+		"hair2",
+		6
+	}
+	hairs[4] = {
+		"hair2",
+		7
+	}
+	hairs[5] = {
+		"hair2",
+		8
+	}
+
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not hairs[feature.get(feature, "hair")
+
+	 + 1] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 26-26, warpins: 1 ---
+	local ret = {
+		"hair",
+		0
+	}
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 27-30, warpins: 2 ---
+	return unpack(ret)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #4 31-47, warpins: 1 ---
+	local hairs = {}
+	hairs[1] = {
+		"hair",
+		3
+	}
+	hairs[2] = {
+		"hair",
+		5
+	}
+	hairs[3] = {
+		"hair2",
+		6
+	}
+	hairs[4] = {
+		"hair2",
+		7
+	}
+
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not hairs[feature.get(feature, "hair")
+
+	 + 1] then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 48-48, warpins: 1 ---
+	local ret = {
+		"hair",
+		0
+	}
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 49-51, warpins: 2 ---
+	return unpack(ret)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 52-52, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+role.makeTFeature = function (feature)
+	--- BLOCK #0 1-29, warpins: 1 ---
+	return getRecord("TFeature", {
+		race = Byte(feature),
+		sex = Hibyte(Hiword(feature))%2,
+		hair = Byte(Hiword(feature)),
+		weapon = Hibyte(feature),
+		dress = Hiword(feature)
+	})
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.getMoveDir = function (destx, desty, x, y)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local offX = x - destx
+	local offY = y - desty
+	local angle = math.atan(offY/offX)
+
+	--- END OF BLOCK #0 ---
+
+	if angle <= math.pi/8 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 12-17, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if -math.pi/8 < angle then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 18-20, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 0 < offX then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-25, warpins: 1 ---
+	return role.dir.right
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #4 26-30, warpins: 1 ---
+	return role.dir.left
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #5 31-36, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if angle < (math.pi*3)/8 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 37-41, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if math.pi/8 < angle then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #7 42-44, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if 0 < offX then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 45-49, warpins: 1 ---
+	return role.dir.rightBottom
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #9 50-54, warpins: 1 ---
+	return role.dir.leftUp
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #10 55-56, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if offX ~= 0 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 57-62, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if (math.pi*3)/8 > angle then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 63-69, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if angle < (-math.pi*3)/8 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #13 70-72, warpins: 3 ---
+	--- END OF BLOCK #13 ---
+
+	if 0 < offY then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 73-77, warpins: 1 ---
+	return role.dir.bottom
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #15 78-82, warpins: 1 ---
+	return role.dir.up
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #16 83-88, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if angle <= -math.pi/8 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #17 89-95, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if (-math.pi*3)/8 < angle then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #18 96-98, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if offY < 0 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 99-103, warpins: 1 ---
+	return role.dir.rightUp
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 104-107, warpins: 1 ---
+	return role.dir.leftBottom
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 108-111, warpins: 10 ---
+	return role.dir.bottom
+	--- END OF BLOCK #21 ---
+
+
+
+end
+role.getAttackDir = function (destx, desty, x, y)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	local disx = math.abs(x - destx)
+	local disy = math.abs(y - desty)
+	local dir = nil
+	--- END OF BLOCK #0 ---
+
+	if disx <= 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 13-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if y < desty then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-19, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot6 = if not role.dir.up then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-22, warpins: 2 ---
+	dir = role.dir.bottom
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #5 24-25, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if x < destx then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #6 26-28, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if disy <= 1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 29-32, warpins: 1 ---
+	dir = role.dir.left
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #8 33-34, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if y < desty then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 35-38, warpins: 1 ---
+	dir = role.dir.leftUp
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #10 39-42, warpins: 1 ---
+	dir = role.dir.leftBottom
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #11 43-44, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if destx < x then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #12 45-47, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if disy <= 1 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 48-51, warpins: 1 ---
+	dir = role.dir.right
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #14 52-53, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if y < desty then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 54-57, warpins: 1 ---
+	dir = role.dir.rightUp
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #16 58-60, warpins: 1 ---
+	dir = role.dir.rightBottom
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 61-61, warpins: 8 ---
+	return dir
+	--- END OF BLOCK #17 ---
+
+
+
+end
+role.getMonster = function (monsterId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.monster[monsterId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "monster:" .. monsterId .. " is nil")
+
+	return {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-18, warpins: 2 ---
+	return role.monster[monsterId]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.getOffset = function (monsterId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.monster[monsterId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "monster:" .. monsterId .. " is nil")
+
+	return 0
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-20, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not role.monster[monsterId].imgIdx then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-29, warpins: 1 ---
+	p2("error", "monster:" .. monsterId .. " img offset is nil")
+
+	return 0
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 30-34, warpins: 2 ---
+	return role.monster[monsterId].imgIdx
+	--- END OF BLOCK #4 ---
+
+
+
+end
+role.getMonImg = function (monsterId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.monster[monsterId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "monster:" .. monsterId .. " is nil")
+
+	return "?"
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-20, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not role.monster[monsterId].img then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-29, warpins: 1 ---
+	p2("error", "monster:" .. monsterId .. " img is nil")
+
+	return "?"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 30-34, warpins: 2 ---
+	return role.monster[monsterId].img
+	--- END OF BLOCK #4 ---
+
+
+
+end
+role.getNpc = function (npdId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.npc[npdId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "npc:" .. npdId .. " is nil")
+
+	return {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-18, warpins: 2 ---
+	return role.npc[npdId]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.getNpcOffset = function (npdId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.npc[npdId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "npc:" .. npdId .. " is nil")
+
+	return 0
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-20, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not role.npc[npdId].imgIdx then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-29, warpins: 1 ---
+	p2("error", "npc:" .. npdId .. " img offset is nil")
+
+	return 0
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 30-34, warpins: 2 ---
+	return role.npc[npdId].imgIdx
+	--- END OF BLOCK #4 ---
+
+
+
+end
+role.getRoleId = function (race, appr)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return race*1000 + appr
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.getFrame = function (roleId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.frame[roleId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "role:" .. roleId .. " frame config is nil")
+
+	return {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-18, warpins: 2 ---
+	return role.frame[roleId]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.getDressFrame = function (roleId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.frame[roleId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "role:" .. roleId .. " frame config is nil")
+
+	return {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-21, warpins: 2 ---
+	local dressFrame = {}
+
+	--- END OF BLOCK #2 ---
+
+	for state, info in pairs(role.frame[roleId])
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #3 22-24, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if info.dress then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 25-26, warpins: 1 ---
+	dressFrame[state] = info.dress
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 27-28, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 29-29, warpins: 1 ---
+	return dressFrame
+	--- END OF BLOCK #6 ---
+
+
+
+end
+role.changeStandFrame = function (roleId, i_type, i_state)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if i_type == "dress" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 3-8, warpins: 1 ---
+	local info = role.frame[roleId][i_state]
+	--- END OF BLOCK #1 ---
+
+	slot3 = if info then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #2 9-11, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if info.dress then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #3 12-22, warpins: 1 ---
+	role.frame[roleId].stand.dress = role.frame[roleId][i_state].dress
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #4 23-24, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if i_type == "hair" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #5 25-30, warpins: 1 ---
+	local info = role.frame[roleId][i_state]
+	--- END OF BLOCK #5 ---
+
+	slot3 = if info then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 31-33, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot4 = if info.hair then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 34-43, warpins: 1 ---
+	role.frame[roleId].stand.hair = role.frame[roleId][i_state].hair
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 44-44, warpins: 7 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+role.resetRoleFrame = function (roleId)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, info in ipairs(role.getConfig("frame"))
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 8-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if info.id == roleId then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 11-16, warpins: 1 ---
+	role.frame[info.id][info.state] = info
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-18, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 19-19, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+role.getHairFrame = function (roleId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not role.frame[roleId] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-14, warpins: 1 ---
+	p2("error", "role:" .. roleId .. " frame config is nil")
+
+	return nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-21, warpins: 2 ---
+	local hairFrame = nil
+
+	--- END OF BLOCK #2 ---
+
+	for state, info in pairs(role.frame[roleId])
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #3 22-24, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot7 = if info.hair then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 25-26, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if not hairFrame then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 27-27, warpins: 1 ---
+	hairFrame = {}
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-29, warpins: 2 ---
+	hairFrame[state] = info.hair
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 30-31, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #8 32-32, warpins: 1 ---
+	return hairFrame
+	--- END OF BLOCK #8 ---
+
+
+
+end
+
+return role
+--- END OF BLOCK #0 ---
+
+
+

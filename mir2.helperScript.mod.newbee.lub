@@ -1,0 +1,2602 @@
+--- BLOCK #0 1-3, warpins: 1 ---
+function main(evt)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	print("onNewbee", evt)
+
+	return 
+
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 6-23, warpins: 0 ---
+	function guideTouch(nodeName, hightLight, twinkle, tipText, params)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot5 = if not GUIDE:isNodeExist(nodeName)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #1 8-8, warpins: 1 ---
+		local time = 0
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-15, warpins: 3 ---
+		--- END OF BLOCK #2 ---
+
+		slot6 = if not GUIDE:isNodeExist(name)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 16-16, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 17-23, warpins: 1 ---
+		delay(0.1)
+
+		time = time + 0.1
+
+		--- END OF BLOCK #4 ---
+
+		if 5 < time then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #5 24-26, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #6 27-28, warpins: 2 ---
+		--- END OF BLOCK #6 ---
+
+		slot1 = if hightLight then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 29-33, warpins: 1 ---
+		GUIDE:hightLightNode(nodeName)
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 34-35, warpins: 2 ---
+		--- END OF BLOCK #8 ---
+
+		slot2 = if twinkle then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 36-41, warpins: 1 ---
+		slot5 = GUIDE:twinkleNodeWidthName(nodeName, twinkle)
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 42-43, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		slot3 = if tipText then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #29
+		end
+
+
+		--- BLOCK #11 44-54, warpins: 1 ---
+		local align = "right"
+		local off = pos(-30, 0)
+		local text = tipText
+
+		--- END OF BLOCK #11 ---
+
+		if type(tipText)
+
+		 == "table" then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 55-57, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		slot8 = if not tipText.align then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #13 58-64, warpins: 2 ---
+		local n = GUIDE:getNodeByName(nodeName)
+
+		--- END OF BLOCK #13 ---
+
+		slot8 = if not n then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 65-68, warpins: 1 ---
+		print(nodeName, "not exist")
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 69-70, warpins: 2 ---
+		--- END OF BLOCK #15 ---
+
+		slot8 = if n then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #16 71-83, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		if n.convertToWorldSpace(n, pos(0, 0))
+
+		.x < display.width/2 then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 84-89, warpins: 1 ---
+		align = "left"
+		off = pos(30, 0)
+
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 90-94, warpins: 3 ---
+		--- END OF BLOCK #18 ---
+
+		if type(tipText)
+
+		 == "table" then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #19 95-98, warpins: 1 ---
+		text = tipText.text
+		--- END OF BLOCK #19 ---
+
+		slot9 = if tipText.pos then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #20 99-101, warpins: 1 ---
+		off = tipText.pos
+		--- END OF BLOCK #20 ---
+
+		if align ~= "left" then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #21 102-105, warpins: 1 ---
+		off.x = -off.x
+		--- END OF BLOCK #21 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+		--- BLOCK #22 106-109, warpins: 1 ---
+		text = tipText.text
+		--- END OF BLOCK #22 ---
+
+		slot5 = if not tipText.align then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 109-109, warpins: 1 ---
+		align = align
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 110-112, warpins: 2 ---
+		--- END OF BLOCK #24 ---
+
+		slot6 = if not tipText.pos then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #25 112-112, warpins: 1 ---
+		off = off
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 113-121, warpins: 6 ---
+		slot9 = GUIDE
+		slot8 = GUIDE.showTipText
+		slot10 = nodeName
+		slot11 = {
+			text,
+			nil,
+			1
+		}
+		--- END OF BLOCK #26 ---
+
+		slot12 = if not tipText.fontSize then
+		JUMP TO BLOCK #27
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #27 122-122, warpins: 1 ---
+		slot12 = 22
+		--- END OF BLOCK #27 ---
+
+		FLOW; TARGET BLOCK #28
+
+
+		--- BLOCK #28 123-126, warpins: 2 ---
+		slot11[2] = slot12
+		slot11.align = align
+
+		slot8(slot9, slot10, slot11, off)
+
+		--- END OF BLOCK #28 ---
+
+		FLOW; TARGET BLOCK #29
+
+
+		--- BLOCK #29 127-129, warpins: 2 ---
+		local lockOther = true
+
+		--- END OF BLOCK #29 ---
+
+		slot4 = if params then
+		JUMP TO BLOCK #30
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #30 130-134, warpins: 1 ---
+		--- END OF BLOCK #30 ---
+
+		if type(params.lockOther)
+
+		 == "nil" then
+		JUMP TO BLOCK #31
+		else
+		JUMP TO BLOCK #32
+		end
+
+
+		--- BLOCK #31 135-136, warpins: 2 ---
+		lockOther = true
+		--- END OF BLOCK #31 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #33
+
+
+		--- BLOCK #32 137-137, warpins: 1 ---
+		lockOther = params.lockOther
+		--- END OF BLOCK #32 ---
+
+		FLOW; TARGET BLOCK #33
+
+
+		--- BLOCK #33 138-164, warpins: 2 ---
+		local evt = nil
+
+		GUIDE:focusToNode(nodeName, lockOther, nil, params)
+
+		local endedEvt = "ended," .. nodeName
+		evt = waitEvt({
+			endedEvt,
+			"clean," .. nodeName,
+			"timeout"
+		})
+
+		GUIDE:stop()
+
+		--- END OF BLOCK #33 ---
+
+		if evt ~= endedEvt then
+		JUMP TO BLOCK #34
+		else
+		JUMP TO BLOCK #35
+		end
+
+
+		--- BLOCK #34 165-166, warpins: 1 ---
+		slot8 = false
+		--- END OF BLOCK #34 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+		--- BLOCK #35 167-167, warpins: 1 ---
+		slot8 = true
+
+		--- END OF BLOCK #35 ---
+
+		FLOW; TARGET BLOCK #36
+
+
+		--- BLOCK #36 168-168, warpins: 2 ---
+		return slot8
+		--- END OF BLOCK #36 ---
+
+
+
+	end
+
+	function guideUseItem(itemName, tipText, params)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		local isBook = params
+		local lockOther = true
+		local timeout = 999
+
+		--- END OF BLOCK #0 ---
+
+		if type(params)
+
+		 == "table" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 9-13, warpins: 1 ---
+		isBook = params.isBook
+		lockOther = params.lockOther
+		--- END OF BLOCK #1 ---
+
+		slot5 = if not params.timeout then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 13-13, warpins: 1 ---
+		timeout = timeout
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 14-22, warpins: 3 ---
+		local nodeName = "bag_" .. itemName
+		local cnt = getItemCount(itemName)
+
+		--- END OF BLOCK #3 ---
+
+		if 0 < cnt then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #4 23-27, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot8 = if isPanelOpenning("bag")
+
+		 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #5 28-45, warpins: 1 ---
+		local align = "left"
+		local off = pos(30, 0)
+
+		--- END OF BLOCK #5 ---
+
+		if display.width/2 < GUIDE:getNodeByName(nodeName):getPositionX()
+
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 46-51, warpins: 1 ---
+		align = "right"
+		off = pos(-30, 0)
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 52-53, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		slot4 = if lockOther then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 54-58, warpins: 1 ---
+		GUIDE:hightLightNode(nodeName)
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 59-75, warpins: 2 ---
+		GUIDE:showTipText(nodeName, {
+			tipText,
+			22,
+			1,
+			align = align
+		}, off)
+		GUIDE:twinkleNodeWidthName(nodeName, {
+			circle = true,
+			radio = 35
+		})
+		--- END OF BLOCK #9 ---
+
+		slot3 = if isBook then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #10 76-82, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		slot10 = if not GUIDE:isNodeExist("msgBoxLearnSkill")
+		 then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #11 83-83, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 84-90, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		slot10 = if not GUIDE:isNodeExist(nodeName)
+
+		 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 91-92, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 93-108, warpins: 2 ---
+		GUIDE:focusToNode(nodeName, lockOther, nil, 0.1)
+		waitEvt({
+			"ended," .. nodeName,
+			"timeout"
+		})
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #15 109-112, warpins: 1 ---
+		GUIDE:stop()
+		--- END OF BLOCK #15 ---
+
+		FLOW; TARGET BLOCK #16
+
+
+		--- BLOCK #16 113-119, warpins: 2 ---
+		--- END OF BLOCK #16 ---
+
+		slot10 = if GUIDE:isNodeExist("msgBoxLearnSkill")
+		 then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #17 120-120, warpins: 1 ---
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 121-124, warpins: 1 ---
+		delay(0.1)
+
+		--- END OF BLOCK #18 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+		--- BLOCK #19 125-125, warpins: 0 ---
+		--- END OF BLOCK #19 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #20 126-127, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		slot2 = if not params then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 128-128, warpins: 1 ---
+		params = {}
+		--- END OF BLOCK #21 ---
+
+		FLOW; TARGET BLOCK #22
+
+
+		--- BLOCK #22 129-131, warpins: 2 ---
+		params.timeout = 0.1
+		local t = 0
+
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 132-136, warpins: 3 ---
+		--- END OF BLOCK #23 ---
+
+		if cnt == getItemCount(itemName)
+		 then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #24 137-143, warpins: 1 ---
+		--- END OF BLOCK #24 ---
+
+		slot11 = if GUIDE:isNodeExist(nodeName)
+		 then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #25 144-144, warpins: 1 ---
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 145-164, warpins: 1 ---
+		GUIDE:focusToNode(nodeName, lockOther, nil, params)
+
+		evt = waitEvt({
+			"ended," .. nodeName,
+			"timeout"
+		})
+		t = t + 0.1
+
+		--- END OF BLOCK #26 ---
+
+		if evt == "timeout" then
+		JUMP TO BLOCK #27
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #27 165-166, warpins: 1 ---
+		--- END OF BLOCK #27 ---
+
+		if timeout <= t then
+		JUMP TO BLOCK #28
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #28 167-167, warpins: 1 ---
+		--- END OF BLOCK #28 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #29 168-168, warpins: 0 ---
+		--- END OF BLOCK #29 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+		--- BLOCK #30 169-174, warpins: 6 ---
+		GUIDE:stop()
+
+		return true
+		--- END OF BLOCK #30 ---
+
+		FLOW; TARGET BLOCK #31
+
+
+		--- BLOCK #31 175-175, warpins: 3 ---
+		return 
+		--- END OF BLOCK #31 ---
+
+
+
+	end
+
+	function guideTip(text, hightLight, timeout, btns)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		local tip = GUIDE:showGuideBoard(text, hightLight, btns)
+		local evt = nil
+		--- END OF BLOCK #0 ---
+
+		slot3 = if btns then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 11-15, warpins: 1 ---
+		evt = waitEvt({
+			"GuideBoardEvt_confirm",
+			"GuideBoardEvt_cancel",
+			"timeout"
+		})
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #2 16-17, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot1 = if hightLight then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 18-28, warpins: 1 ---
+		tip.setName(tip, "welcome")
+		guideTouch("welcome", false, nil, nil, {
+			lockOther = true,
+			swallowAnyway = true
+		})
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #4 29-30, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot2 = if timeout then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 31-35, warpins: 1 ---
+		delay(timeout)
+
+		evt = "timeout"
+
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 36-36, warpins: 1 ---
+		return tip
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 37-42, warpins: 4 ---
+		tip.removeSelf(tip)
+
+		slot6 = evt
+		--- END OF BLOCK #7 ---
+
+		if evt ~= "GuideBoardEvt_confirm" then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 43-44, warpins: 1 ---
+		slot7 = false
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 45-45, warpins: 1 ---
+		slot7 = true
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 46-46, warpins: 2 ---
+		return slot6, slot7
+		--- END OF BLOCK #10 ---
+
+
+
+	end
+
+	function untilClosed(target)
+		--- BLOCK #0 1-1, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		FLOW; TARGET BLOCK #1
+
+
+		--- BLOCK #1 2-14, warpins: 1 ---
+		delay(0.1)
+
+		local x, y, mapid = getPlayerLocation()
+
+		--- END OF BLOCK #1 ---
+
+		if math.abs(x - target.x)
+		 <= 2 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 15-22, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if math.abs(y - target.y)
+
+		 <= 2 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 23-25, warpins: 1 ---
+		return true
+
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 26-29, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot4 = if not isPlayerMoving()
+
+		 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #0
+		end
+
+
+		--- BLOCK #5 30-31, warpins: 1 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #6 32-32, warpins: 0 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	function untilNodeExist(name)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		GUIDE:untilNodeExist(name)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	function untilNodeNotExist(name)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if GUIDE:isNodeExist(name)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 8-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-12, warpins: 1 ---
+		delay(0.1)
+
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 13-13, warpins: 1 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	function utilNPCExist(name, timeout)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not timeout then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-3, warpins: 1 ---
+		timeout = 999
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 4-7, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		for k=0.1, 999, 0.1
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #6
+
+		--- BLOCK #3 8-12, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		slot6 = if findNPCWithName(name)
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 13-13, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 14-17, warpins: 1 ---
+		delay(0.1)
+
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #6 18-18, warpins: 2 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	function guideOpenPanel(btnName, panelName, tipText, twinkle, timeout)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot4 = if not timeout then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-3, warpins: 1 ---
+		timeout = 30
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 4-10, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot5 = if GUIDE:isNodeExist(btnName)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 11-15, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot5 = if isPanelOpenning(panelName)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 16-18, warpins: 2 ---
+		return isPanelOpenning(panelName)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 19-20, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		slot2 = if tipText then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #6 21-31, warpins: 1 ---
+		local align = "right"
+		local off = pos(-30, 0)
+		local text = tipText
+
+		--- END OF BLOCK #6 ---
+
+		if type(tipText)
+
+		 == "table" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 32-34, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot8 = if not tipText.align then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #8 35-41, warpins: 2 ---
+		local n = GUIDE:getNodeByName(btnName)
+
+		--- END OF BLOCK #8 ---
+
+		slot8 = if not n then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 42-45, warpins: 1 ---
+		print(btnName, "not exist")
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 46-47, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		slot8 = if n then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #11 48-60, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		if n.convertToWorldSpace(n, pos(0, 0))
+
+		.x < display.width/2 then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 61-66, warpins: 1 ---
+		align = "left"
+		off = pos(30, 0)
+
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 67-71, warpins: 3 ---
+		--- END OF BLOCK #13 ---
+
+		if type(tipText)
+
+		 == "table" then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #14 72-75, warpins: 1 ---
+		text = tipText.text
+		--- END OF BLOCK #14 ---
+
+		slot9 = if tipText.pos then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #15 76-78, warpins: 1 ---
+		off = tipText.pos
+		--- END OF BLOCK #15 ---
+
+		if align ~= "left" then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #16 79-82, warpins: 1 ---
+		off.x = -off.x
+		--- END OF BLOCK #16 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+		--- BLOCK #17 83-86, warpins: 1 ---
+		text = tipText.text
+		--- END OF BLOCK #17 ---
+
+		slot5 = if not tipText.align then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #18 86-86, warpins: 1 ---
+		align = align
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 87-89, warpins: 2 ---
+		--- END OF BLOCK #19 ---
+
+		slot6 = if not tipText.pos then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 89-89, warpins: 1 ---
+		off = off
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 90-98, warpins: 6 ---
+		slot9 = GUIDE
+		slot8 = GUIDE.showTipText
+		slot10 = btnName
+		slot11 = {
+			text,
+			nil,
+			1
+		}
+		--- END OF BLOCK #21 ---
+
+		slot12 = if not tipText.fontSize then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #22 99-99, warpins: 1 ---
+		slot12 = 22
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 100-103, warpins: 2 ---
+		slot11[2] = slot12
+		slot11.align = align
+
+		slot8(slot9, slot10, slot11, off)
+
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 104-109, warpins: 2 ---
+		slot6 = GUIDE
+		slot5 = GUIDE.twinkleNodeWidthName
+		slot7 = btnName
+		--- END OF BLOCK #24 ---
+
+		slot8 = if not twinkle then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #25 110-110, warpins: 1 ---
+		slot8 = {
+			circle = true,
+			radio = 45
+		}
+
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 111-112, warpins: 2 ---
+		slot5(slot6, slot7, slot8)
+
+		local t = 0
+
+		--- END OF BLOCK #26 ---
+
+		FLOW; TARGET BLOCK #27
+
+
+		--- BLOCK #27 113-117, warpins: 3 ---
+		--- END OF BLOCK #27 ---
+
+		slot6 = if not isPanelOpenning(panelName)
+		 then
+		JUMP TO BLOCK #28
+		else
+		JUMP TO BLOCK #33
+		end
+
+
+		--- BLOCK #28 118-118, warpins: 1 ---
+		--- END OF BLOCK #28 ---
+
+		FLOW; TARGET BLOCK #29
+
+
+		--- BLOCK #29 119-129, warpins: 1 ---
+		delay(0.1)
+
+		t = t + 0.1
+
+		--- END OF BLOCK #29 ---
+
+		slot6 = if GUIDE:isNodeExist(btnName)
+		 then
+		JUMP TO BLOCK #30
+		else
+		JUMP TO BLOCK #33
+		end
+
+
+		--- BLOCK #30 130-131, warpins: 1 ---
+		--- END OF BLOCK #30 ---
+
+		if timeout < t then
+		JUMP TO BLOCK #31
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #31 132-132, warpins: 1 ---
+		--- END OF BLOCK #31 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #33
+
+
+		--- BLOCK #32 133-133, warpins: 0 ---
+		--- END OF BLOCK #32 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+		--- BLOCK #33 134-140, warpins: 3 ---
+		GUIDE:stop()
+
+		return isPanelOpenning(panelName)
+		--- END OF BLOCK #33 ---
+
+
+
+	end
+
+	--- END OF BLOCK #1 ---
+
+	if evt == "firstLogin" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #2 24-30, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if GUIDE:isNodeExist("diy_背包")
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #3 31-54, warpins: 1 ---
+	local tip = GUIDE:showGuideBoard("欢迎来到原始版热血传奇。我是你的助手阿妍。让我告诉你一些基本的操作吧。", true)
+
+	tip.setName(tip, "welcome")
+	guideTouch("welcome", false, nil, nil, {
+		swallowAnyway = true
+	})
+	tip.removeSelf(tip)
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 55-61, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not guideOpenPanel("diy_背包", "bag", "点击打开背包")
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 62-63, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 64-66, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	if PLAYERSEX == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 67-69, warpins: 1 ---
+	dressName = "布衣(男)"
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 70-71, warpins: 1 ---
+	dressName = "布衣(女)"
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 72-77, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	for _, dress in pairs({
+		dressName,
+		"木剑"
+	})
+
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #10 78-82, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot7 = if hasItem(dress)
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #11 83-87, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot7 = if not hasEquip(dress)
+	 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 88-98, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot7 = if not guideUseItem(dress, string.format("双击%s进行装备", dress), {
+		lockOther = false
+	})
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 99-99, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 100-101, warpins: 4 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #15 102-106, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot2 = if isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 107-113, warpins: 1 ---
+	guideTouch("bag_close", false, nil, {
+		text = "关闭背包"
+	}, {
+		lockOther = false
+	})
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 114-121, warpins: 2 ---
+	guideTip("已经学习过基本的装备穿戴啦。去和比奇野外的怪物较量一番。", true)
+
+	local x, y, mapid = getPlayerLocation()
+	--- END OF BLOCK #17 ---
+
+	if mapid == "0" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #18 122-131, warpins: 1 ---
+	local npc1 = "银杏老兵"
+	local npc2 = "边界老兵"
+	local npc = nil
+	npcRole = findNPCWithName(npc1)
+	--- END OF BLOCK #18 ---
+
+	slot8 = if not npcRole then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 132-137, warpins: 1 ---
+	npcRole = findNPCWithName(npc2)
+	npc = npc2
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 138-138, warpins: 1 ---
+	npc = npc1
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 139-141, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+	slot8 = if not npcRole then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #22 142-148, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot8 = if GUIDE:isNodeExist("diy_普通攻击")
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 149-155, warpins: 1 ---
+	guideTouch("diy_普通攻击", false, nil, "普通攻击按钮能够帮你自动选择\n最近的怪物作为攻击目标", {
+		lockOther = false,
+		timeout = 5
+	})
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 156-157, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 158-170, warpins: 2 ---
+	playerMoveTo(npcRole.x, npcRole.y, mapid, 2)
+	--- END OF BLOCK #25 ---
+
+	slot8 = if not untilClosed(npcRole)
+	 then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 171-179, warpins: 1 ---
+	guideTouch("diy_普通攻击", false, nil, "普通攻击按钮能够帮你自动选择\n最近的怪物作为攻击目标", {
+		lockOther = false,
+		timeout = 5
+	})
+
+	return 
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 180-188, warpins: 2 ---
+	stopPlayerMove()
+	--- END OF BLOCK #27 ---
+
+	slot8 = if GUIDE:talkWithNPC(npc)
+	 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #28 189-219, warpins: 1 ---
+	untilNodeExist("npc_去周围看看")
+	guideTouch("npc_去周围看看", false, nil, {
+		text = string.format("让%s带你去周围看看吧", npc),
+		pos = pos(65, 0)
+	}, {
+		lockOther = false
+	})
+	untilNodeNotExist("npc_去周围看看")
+	--- END OF BLOCK #28 ---
+
+	slot8 = if GUIDE:isNodeExist("diy_普通攻击")
+	 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 220-226, warpins: 1 ---
+	guideTouch("diy_普通攻击", false, nil, "普通攻击按钮能够帮你自动选择\n最近的怪物作为攻击目标", {
+		lockOther = false,
+		timeout = 5
+	})
+
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 227-228, warpins: 5 ---
+	return 
+
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 229-230, warpins: 2 ---
+	--- END OF BLOCK #31 ---
+
+	if evt == "level_3" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #32 231-235, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot1 = if not hasItem("3级礼盒")
+	 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 236-242, warpins: 1 ---
+	guideTip("新手礼包中有技能书、药品等超值礼品，到达等级后记得开启。", true, 5)
+
+	return 
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 243-247, warpins: 2 ---
+	--- END OF BLOCK #34 ---
+
+	slot1 = if not isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #35 248-254, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot1 = if GUIDE:isNodeExist("diy_背包")
+	 then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #36 255-261, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	slot1 = if not guideOpenPanel("diy_背包", "bag", "您的礼盒可以打开了")
+
+	 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #37 262-264, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #41
+
+
+	--- BLOCK #38 265-271, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	slot1 = if GUIDE:isNodeExist("diyhp")
+	 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 272-290, warpins: 1 ---
+	guideTouch("diyhp", false, nil, {
+		text = "您的礼盒可以打开了"
+	})
+	guideTouch("btnEx_bag", true, nil, {
+		text = "您的礼盒可以打开了"
+	})
+	openPanel("bag")
+	delay(0.5)
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #41
+
+
+	--- BLOCK #40 291-292, warpins: 1 ---
+	faild()
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 293-297, warpins: 5 ---
+	--- END OF BLOCK #41 ---
+
+	slot1 = if hasItem("3级礼盒")
+	 then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #42 298-301, warpins: 1 ---
+	guideUseItem("3级礼盒", "双击打开")
+	--- END OF BLOCK #42 ---
+
+	FLOW; TARGET BLOCK #43
+
+
+	--- BLOCK #43 302-306, warpins: 2 ---
+	--- END OF BLOCK #43 ---
+
+	slot1 = if not hasItem("7级礼盒")
+	 then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #44 307-307, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 308-312, warpins: 1 ---
+	--- END OF BLOCK #45 ---
+
+	slot1 = if not isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #46 313-316, warpins: 1 ---
+	faild()
+
+	return 
+
+	--- END OF BLOCK #46 ---
+
+	FLOW; TARGET BLOCK #47
+
+
+	--- BLOCK #47 317-320, warpins: 2 ---
+	delay(0.1)
+
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #43
+
+
+	--- BLOCK #48 321-322, warpins: 3 ---
+	--- END OF BLOCK #48 ---
+
+	if evt == "level_7" then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #85
+	end
+
+
+	--- BLOCK #49 323-326, warpins: 1 ---
+	local skillName, skillIdx = nil
+	--- END OF BLOCK #49 ---
+
+	if PlayerJob == 0 then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #50 327-329, warpins: 1 ---
+	skillName = "基本剑术"
+	skillIdx = 3
+	--- END OF BLOCK #50 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #54
+
+
+	--- BLOCK #51 330-332, warpins: 1 ---
+	--- END OF BLOCK #51 ---
+
+	if PlayerJob == 1 then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #52 333-335, warpins: 1 ---
+	skillName = "火球术"
+	skillIdx = 1
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #54
+
+
+	--- BLOCK #53 336-337, warpins: 1 ---
+	skillName = "治愈术"
+	skillIdx = 2
+	--- END OF BLOCK #53 ---
+
+	FLOW; TARGET BLOCK #54
+
+
+	--- BLOCK #54 338-350, warpins: 3 ---
+	local skillNodeName = "diyPanel_skill" .. skillIdx
+	local skillQuickNodeName = "diy_skill" .. skillIdx
+
+	function faild()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		guideTip(string.format("7级礼盒中有技能书%s，双击可以学习提升自己。", skillName), true, 5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #54 ---
+
+	slot5 = if not hasItem("3级礼盒")
+	 then
+	JUMP TO BLOCK #55
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #55 351-355, warpins: 1 ---
+	--- END OF BLOCK #55 ---
+
+	slot5 = if not hasItem("7级礼盒")
+	 then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #56 356-360, warpins: 1 ---
+	--- END OF BLOCK #56 ---
+
+	slot5 = if not checkPlayerSkill(skillIdx)
+	 then
+	JUMP TO BLOCK #57
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #57 361-364, warpins: 1 ---
+	faild()
+
+	return 
+
+	--- END OF BLOCK #57 ---
+
+	FLOW; TARGET BLOCK #58
+
+
+	--- BLOCK #58 365-369, warpins: 4 ---
+	--- END OF BLOCK #58 ---
+
+	slot5 = if not isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #59
+	else
+	JUMP TO BLOCK #65
+	end
+
+
+	--- BLOCK #59 370-376, warpins: 1 ---
+	--- END OF BLOCK #59 ---
+
+	slot5 = if GUIDE:isNodeExist("diy_背包")
+	 then
+	JUMP TO BLOCK #60
+	else
+	JUMP TO BLOCK #62
+	end
+
+
+	--- BLOCK #60 377-383, warpins: 1 ---
+	--- END OF BLOCK #60 ---
+
+	slot5 = if not guideOpenPanel("diy_背包", "bag", "您的礼盒可以打开了")
+
+	 then
+	JUMP TO BLOCK #61
+	else
+	JUMP TO BLOCK #65
+	end
+
+
+	--- BLOCK #61 384-386, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #61 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #65
+
+
+	--- BLOCK #62 387-393, warpins: 1 ---
+	--- END OF BLOCK #62 ---
+
+	slot5 = if GUIDE:isNodeExist("diyhp")
+	 then
+	JUMP TO BLOCK #63
+	else
+	JUMP TO BLOCK #64
+	end
+
+
+	--- BLOCK #63 394-412, warpins: 1 ---
+	guideTouch("diyhp", false, nil, {
+		text = "您的礼盒可以打开了"
+	})
+	guideTouch("btnEx_bag", true, nil, {
+		text = "您的礼盒可以打开了"
+	})
+	openPanel("bag")
+	delay(0.5)
+	--- END OF BLOCK #63 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #65
+
+
+	--- BLOCK #64 413-414, warpins: 1 ---
+	faild()
+	--- END OF BLOCK #64 ---
+
+	FLOW; TARGET BLOCK #65
+
+
+	--- BLOCK #65 415-419, warpins: 5 ---
+	--- END OF BLOCK #65 ---
+
+	slot5 = if isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #66 420-424, warpins: 1 ---
+	--- END OF BLOCK #66 ---
+
+	slot5 = if hasItem("3级礼盒")
+	 then
+	JUMP TO BLOCK #67
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #67 425-429, warpins: 1 ---
+	guideUseItem("3级礼盒", "双击打开", {
+		lockOther = false
+	})
+	--- END OF BLOCK #67 ---
+
+	FLOW; TARGET BLOCK #68
+
+
+	--- BLOCK #68 430-434, warpins: 2 ---
+	--- END OF BLOCK #68 ---
+
+	slot5 = if not hasItem("7级礼盒")
+	 then
+	JUMP TO BLOCK #69
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #69 435-435, warpins: 1 ---
+	--- END OF BLOCK #69 ---
+
+	FLOW; TARGET BLOCK #70
+
+
+	--- BLOCK #70 436-440, warpins: 1 ---
+	--- END OF BLOCK #70 ---
+
+	slot5 = if not isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #71
+	else
+	JUMP TO BLOCK #72
+	end
+
+
+	--- BLOCK #71 441-444, warpins: 1 ---
+	faild()
+
+	return 
+
+	--- END OF BLOCK #71 ---
+
+	FLOW; TARGET BLOCK #72
+
+
+	--- BLOCK #72 445-448, warpins: 2 ---
+	delay(0.1)
+	--- END OF BLOCK #72 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #68
+
+
+	--- BLOCK #73 449-453, warpins: 2 ---
+	--- END OF BLOCK #73 ---
+
+	slot5 = if hasItem("7级礼盒")
+	 then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #74 454-457, warpins: 1 ---
+	guideUseItem("7级礼盒", "双击打开")
+	--- END OF BLOCK #74 ---
+
+	FLOW; TARGET BLOCK #75
+
+
+	--- BLOCK #75 458-462, warpins: 2 ---
+	--- END OF BLOCK #75 ---
+
+	slot5 = if not hasItem(skillName)
+	 then
+	JUMP TO BLOCK #76
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #76 463-463, warpins: 1 ---
+	--- END OF BLOCK #76 ---
+
+	FLOW; TARGET BLOCK #77
+
+
+	--- BLOCK #77 464-468, warpins: 1 ---
+	--- END OF BLOCK #77 ---
+
+	slot5 = if not isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #78 469-472, warpins: 1 ---
+	faild()
+
+	return 
+
+	--- END OF BLOCK #78 ---
+
+	FLOW; TARGET BLOCK #79
+
+
+	--- BLOCK #79 473-476, warpins: 2 ---
+	delay(0.1)
+	--- END OF BLOCK #79 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #75
+
+
+	--- BLOCK #80 477-481, warpins: 3 ---
+	--- END OF BLOCK #80 ---
+
+	slot5 = if hasItem(skillName)
+	 then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #83
+	end
+
+
+	--- BLOCK #81 482-486, warpins: 1 ---
+	--- END OF BLOCK #81 ---
+
+	slot5 = if isPanelOpenning("bag")
+	 then
+	JUMP TO BLOCK #82
+	else
+	JUMP TO BLOCK #83
+	end
+
+
+	--- BLOCK #82 487-499, warpins: 1 ---
+	guideUseItem(skillName, "双击学习", {
+		lockOther = false,
+		isBook = true
+	})
+	guideTouch("bag_close", false, {
+		circle = true,
+		radio = 25
+	}, {
+		text = "关闭背包"
+	}, {
+		lockOther = false
+	})
+	--- END OF BLOCK #82 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #84
+
+
+	--- BLOCK #83 500-501, warpins: 2 ---
+	faild()
+	--- END OF BLOCK #83 ---
+
+	FLOW; TARGET BLOCK #84
+
+
+	--- BLOCK #84 502-502, warpins: 2 ---
+	--- END OF BLOCK #84 ---
+
+	FLOW; TARGET BLOCK #85
+
+
+	--- BLOCK #85 503-504, warpins: 2 ---
+	--- END OF BLOCK #85 ---
+
+	if evt == "level_9" then
+	JUMP TO BLOCK #86
+	else
+	JUMP TO BLOCK #89
+	end
+
+
+	--- BLOCK #86 505-511, warpins: 1 ---
+	--- END OF BLOCK #86 ---
+
+	slot1 = if GUIDE:isNodeExist("diy_挂机")
+
+	 then
+	JUMP TO BLOCK #87
+	else
+	JUMP TO BLOCK #88
+	end
+
+
+	--- BLOCK #87 512-513, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #87 ---
+
+	FLOW; TARGET BLOCK #88
+
+
+	--- BLOCK #88 514-575, warpins: 2 ---
+	guideOpenPanel("diy_布局", "diy", "布局功能可以定制游戏界面\n帮助您更高效地应对各种场景", {
+		w = 40,
+		circle = false,
+		h = 75
+	})
+
+	dragHandler = GUIDE:dragGuide("diyPanel_btnAutoRat", "diyPanel_ScrollView", {
+		goalOffset = pos(500, -75)
+	})
+
+	GUIDE:hightLightNode("diyPanel_btnAutoRat")
+	GUIDE:showTipText("diyPanel_btnAutoRat", {
+		"拖动快捷按钮到合适的位置",
+		22,
+		1,
+		align = "left"
+	}, pos(30, 0))
+	GUIDE:focusToNode("diyPanel_btnAutoRat", true)
+	GUIDE:untilNodeExist("diy_挂机")
+	GUIDE:stop()
+	guideTouch("diy_close", true, {
+		circle = true,
+		radio = 25
+	}, {
+		text = "关闭布局界面"
+	})
+	guideTouch("diy_挂机", false, {
+		circle = true,
+		radio = 45
+	}, {
+		text = "使用挂机功能方便轻松升级"
+	}, {
+		lockOther = false,
+		timeout = 60
+	})
+
+	--- END OF BLOCK #88 ---
+
+	FLOW; TARGET BLOCK #89
+
+
+	--- BLOCK #89 576-577, warpins: 2 ---
+	--- END OF BLOCK #89 ---
+
+	if evt == "level_10" then
+	JUMP TO BLOCK #90
+	else
+	JUMP TO BLOCK #107
+	end
+
+
+	--- BLOCK #90 578-590, warpins: 1 ---
+	local function faild1()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		guideTip("引导已取消，通过各个城镇的传送员可以帮您快速到达玛法大陆各个地区，当前建议您通过比奇传送员传送到兽人古墓进行挑战。", true, 5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local function faild2()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		guideTip("引导已取消，兽人古墓传送员可以帮您传送到兽人古墓各个区域。为了养活自己，他也会做一些买卖，价格公道童受无欺。", true, 5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	guideTip("你的等级已经达到了10级，可以挑战游戏中较为强悍的怪物了。接下来我将带领你走到那里。", true, nil)
+
+	local npc = "比奇老兵"
+	local npcRole = findNPCWithName(npc)
+
+	--- END OF BLOCK #90 ---
+
+	slot4 = if not npcRole then
+	JUMP TO BLOCK #91
+	else
+	JUMP TO BLOCK #93
+	end
+
+
+	--- BLOCK #91 591-605, warpins: 1 ---
+	GUIDE:useOnceAct(1)
+	utilNPCExist(npc, 5)
+
+	npcRole = findNPCWithName(npc)
+
+	--- END OF BLOCK #91 ---
+
+	slot4 = if not npcRole then
+	JUMP TO BLOCK #92
+	else
+	JUMP TO BLOCK #93
+	end
+
+
+	--- BLOCK #92 606-607, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #92 ---
+
+	FLOW; TARGET BLOCK #93
+
+
+	--- BLOCK #93 608-618, warpins: 3 ---
+	playerMoveTo(npcRole.x, npcRole.y, "0", 2)
+	--- END OF BLOCK #93 ---
+
+	slot5 = if not untilClosed(npcRole)
+	 then
+	JUMP TO BLOCK #94
+	else
+	JUMP TO BLOCK #95
+	end
+
+
+	--- BLOCK #94 619-622, warpins: 1 ---
+	faild1()
+
+	return 
+
+	--- END OF BLOCK #94 ---
+
+	FLOW; TARGET BLOCK #95
+
+
+	--- BLOCK #95 623-650, warpins: 2 ---
+	stopPlayerMove()
+	GUIDE:stop()
+	GUIDE:talkWithNPC(npc)
+	untilNodeExist("npc_洞穴传送")
+
+	local ret = guideTouch("npc_洞穴传送", false, nil, {
+		text = "点击进行地图传送",
+		pos = pos(45, 0)
+	}, {
+		lockOther = false,
+		timeout = 60
+	})
+
+	--- END OF BLOCK #95 ---
+
+	slot5 = if not ret then
+	JUMP TO BLOCK #96
+	else
+	JUMP TO BLOCK #97
+	end
+
+
+	--- BLOCK #96 651-654, warpins: 1 ---
+	faild1()
+
+	return 
+
+	--- END OF BLOCK #96 ---
+
+	FLOW; TARGET BLOCK #97
+
+
+	--- BLOCK #97 655-672, warpins: 2 ---
+	untilNodeExist("npc_前往兽人古墓")
+
+	ret = guideTouch("npc_前往兽人古墓", false, nil, {
+		text = "传送到兽人古墓",
+		pos = pos(70, 0)
+	}, {
+		lockOther = false,
+		timeout = 60
+	})
+
+	--- END OF BLOCK #97 ---
+
+	slot5 = if not ret then
+	JUMP TO BLOCK #98
+	else
+	JUMP TO BLOCK #99
+	end
+
+
+	--- BLOCK #98 673-676, warpins: 1 ---
+	faild1()
+
+	return 
+
+	--- END OF BLOCK #98 ---
+
+	FLOW; TARGET BLOCK #99
+
+
+	--- BLOCK #99 677-687, warpins: 2 ---
+	npc = "兽人古墓传送员"
+
+	utilNPCExist(npc, 5)
+
+	npcRole = findNPCWithName(npc)
+
+	--- END OF BLOCK #99 ---
+
+	slot4 = if not npcRole then
+	JUMP TO BLOCK #100
+	else
+	JUMP TO BLOCK #101
+	end
+
+
+	--- BLOCK #100 688-695, warpins: 1 ---
+	GUIDE:stop()
+	faild2()
+
+	return 
+
+	--- END OF BLOCK #100 ---
+
+	FLOW; TARGET BLOCK #101
+
+
+	--- BLOCK #101 696-706, warpins: 2 ---
+	playerMoveTo(npcRole.x, npcRole.y, "0", 2)
+	--- END OF BLOCK #101 ---
+
+	slot6 = if not untilClosed(npcRole)
+	 then
+	JUMP TO BLOCK #102
+	else
+	JUMP TO BLOCK #103
+	end
+
+
+	--- BLOCK #102 707-710, warpins: 1 ---
+	faild2()
+
+	return 
+
+	--- END OF BLOCK #102 ---
+
+	FLOW; TARGET BLOCK #103
+
+
+	--- BLOCK #103 711-734, warpins: 2 ---
+	stopPlayerMove()
+	delay(0.6)
+	GUIDE:stop()
+	npcRole.node:setName("newbee_guideTouchRole")
+
+	ret = guideTouch("newbee_guideTouchRole", false, nil, "点击传送员进行对话", {
+		lockOther = false,
+		timeout = 60,
+		swallowAnyway = true
+	})
+
+	--- END OF BLOCK #103 ---
+
+	slot5 = if not ret then
+	JUMP TO BLOCK #104
+	else
+	JUMP TO BLOCK #105
+	end
+
+
+	--- BLOCK #104 735-738, warpins: 1 ---
+	faild2()
+
+	return 
+
+	--- END OF BLOCK #104 ---
+
+	FLOW; TARGET BLOCK #105
+
+
+	--- BLOCK #105 739-760, warpins: 2 ---
+	GUIDE:talkWithNPC(npc)
+	untilNodeExist("npc_前往兽人古墓二层")
+
+	local ret = guideTouch("npc_前往兽人古墓二层", false, nil, {
+		text = "前往兽人古墓二层",
+		pos = pos(70, 0)
+	}, {
+		lockOther = false,
+		timeout = 60
+	})
+
+	--- END OF BLOCK #105 ---
+
+	slot6 = if not ret then
+	JUMP TO BLOCK #106
+	else
+	JUMP TO BLOCK #107
+	end
+
+
+	--- BLOCK #106 761-764, warpins: 1 ---
+	faild2()
+
+	return 
+
+	--- END OF BLOCK #106 ---
+
+	FLOW; TARGET BLOCK #107
+
+
+	--- BLOCK #107 765-766, warpins: 3 ---
+	--- END OF BLOCK #107 ---
+
+	if evt == "low_hp" then
+	JUMP TO BLOCK #108
+	else
+	JUMP TO BLOCK #110
+	end
+
+
+	--- BLOCK #108 767-773, warpins: 1 ---
+	--- END OF BLOCK #108 ---
+
+	slot1 = if GUIDE:isNodeExist("diy_红药")
+	 then
+	JUMP TO BLOCK #109
+	else
+	JUMP TO BLOCK #110
+	end
+
+
+	--- BLOCK #109 774-780, warpins: 1 ---
+	guideTouch("diy_红药", false, {
+		circle = true,
+		radio = 45
+	}, {
+		text = "使用红药回血"
+	}, {
+		lockOther = false,
+		timeout = 35
+	})
+
+	--- END OF BLOCK #109 ---
+
+	FLOW; TARGET BLOCK #110
+
+
+	--- BLOCK #110 781-782, warpins: 3 ---
+	return 
+	--- END OF BLOCK #110 ---
+
+	FLOW; TARGET BLOCK #111
+
+
+	--- BLOCK #111 783-783, warpins: 2 ---
+	--- END OF BLOCK #111 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

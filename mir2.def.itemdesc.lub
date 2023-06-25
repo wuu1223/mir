@@ -1,0 +1,55 @@
+--- BLOCK #0 1-8, warpins: 1 ---
+local itemdesc = {}
+
+scheduler.performWithDelayGlobal(function ()
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local file = res.getfile("config/itemdesc.txt")
+	local datas = string.split(file, "\n")
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(datas)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 14-15, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v ~= "" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 16-24, warpins: 1 ---
+	local data = string.split(v, "=")
+	itemdesc[data[1]] = data[2]
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 25-26, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 27-27, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end, 0)
+
+return itemdesc
+--- END OF BLOCK #0 ---
+
+
+

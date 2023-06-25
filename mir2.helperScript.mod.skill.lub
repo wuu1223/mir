@@ -1,0 +1,2896 @@
+--- BLOCK #0 1-3, warpins: 1 ---
+function main(skillIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	skillName = {
+		"火球术",
+		"治愈术",
+		"基本剑术",
+		"精神力战法",
+		"大火球",
+		"施毒术",
+		"攻杀剑术",
+		"抗拒火环",
+		"地狱火",
+		"疾光电影",
+		"雷电术",
+		"刺杀剑术",
+		"灵魂火符",
+		"幽灵盾",
+		"神圣战甲术",
+		"困魔咒",
+		"召唤骷髅",
+		"隐身术",
+		"集体隐身术",
+		"诱惑之光",
+		"瞬息移动",
+		"火墙",
+		"爆裂火焰",
+		"地狱雷光",
+		"半月弯刀",
+		"烈火剑法",
+		"野蛮冲撞",
+		"心灵启示",
+		"群体治疗术",
+		"召唤神兽",
+		"魔法盾",
+		"圣言术",
+		"冰咆哮",
+		nil,
+		"灭天火",
+		"无极真气",
+		"气功波",
+		nil,
+		"寒冰掌",
+		nil,
+		nil,
+		nil,
+		"狮子吼",
+		nil,
+		nil,
+		nil,
+		nil,
+		"噬血术",
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		"逐日剑法",
+		"流星火雨"
+	}
+	--- END OF BLOCK #0 ---
+
+	if skillIndex == 3 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-23, warpins: 1 ---
+	actor = createRole("小哥", "hero", 5, 55, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 24-38, warpins: 1 ---
+	actor = createRole("小妹", "hero", 6, 55, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 39-66, warpins: 2 ---
+	鸡 = createRole("鸡", 11, 160, 0, 0, 0, nil, off2p(-1, 1), 7)
+
+	actor:say("快学基本剑术吧，这个被动技能得等级提升可以增加你的准确属性。", nil)
+	delay(0.5)
+	--- END OF BLOCK #4 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #5 67-79, warpins: 2 ---
+	actor:magic(3, 鸡, nil, DIR.right)
+	delay(2)
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #6 80-80, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #7 81-82, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if skillIndex == 7 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #8 83-85, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 86-101, warpins: 1 ---
+	actor = createRole("小战士", "hero", 10, 57, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 102-116, warpins: 1 ---
+	actor = createRole("小战士", "hero", 11, 57, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 117-144, warpins: 2 ---
+	骷髅战士 = createRole("骷髅战士", 14, 22, 0, 0, 0, nil, off2p(-1, 1), 7)
+
+	actor:say("攻杀剑术可以提高攻击的伤害，等级提升还能增加准确。", nil)
+	delay(0.5)
+	--- END OF BLOCK #11 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #13
+
+	--- BLOCK #12 145-170, warpins: 2 ---
+	actor:magic(7, 骷髅战士, nil, DIR.right)
+	delay(1)
+
+	骷髅战士.dir = DIR.left
+
+	骷髅战士:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #13 171-171, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #14 172-173, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if skillIndex == 12 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #15 174-176, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 177-192, warpins: 1 ---
+	actor = createRole("战士", "hero", 25, 35, 0, 0, nil, off2p(-2, 1), 8.3)
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 193-207, warpins: 1 ---
+	actor = createRole("战士", "hero", 22, 35, 1, 1, nil, off2p(-2, 1), 8.3)
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 208-258, warpins: 2 ---
+	红野猪 = createRole("红野猪", 19, 110, 0, 0, 0, nil, off2p(-1, 1), 4)
+	红野猪.dir = DIR.left
+	红野猪1 = createRole("红野猪", 19, 110, 0, 0, 0, nil, off2p(0, 1), 4)
+	红野猪1.dir = DIR.left
+
+	actor:say("25级可以学习刺杀剑术，它能对隔位的敌人造成伤害，不过你得学会如何走位。", nil)
+	delay(0.5)
+	--- END OF BLOCK #18 ---
+
+	for i=1, 6, 1
+	LOOP BLOCK #19
+	GO OUT TO BLOCK #25
+
+	--- BLOCK #19 259-261, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	if i < 4 then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 262-286, warpins: 1 ---
+	actor:magic(12, 红野猪, nil, DIR.right)
+	delay(0.7)
+	红野猪:playAct(ACTS.STRUCK)
+	红野猪1:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #21 287-288, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if i == 4 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 289-336, warpins: 1 ---
+	actor:say("今后你还会发现，使用隔位刺杀来对付魔法盾和一些特别的怪物会有奇效。", nil)
+
+	actor1 = createRole("男法师", "hero", 243, 56, 0, 0, nil, pos(actor.x + 2, actor.y), 4)
+
+	actor1:addState("stMagicShield")
+	actor:magic(12, actor1, nil, DIR.right)
+	delay(0.7)
+	actor1:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #23 337-354, warpins: 1 ---
+	actor:magic(12, actor1, nil, DIR.right)
+	delay(0.7)
+	actor1:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 355-358, warpins: 3 ---
+	delay(0.5)
+
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #25 359-359, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #26 360-361, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if skillIndex == 25 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #27 362-364, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 365-380, warpins: 1 ---
+	actor = createRole("战士", "hero", 246, 36, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #29 381-395, warpins: 1 ---
+	actor = createRole("战士", "hero", 247, 36, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 396-503, warpins: 2 ---
+	黑野猪 = createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(-1, 0), 7)
+	黑野猪1 = createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(-1, 1), 7)
+	黑野猪2 = createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(-1, 2), 7)
+	黑野猪3 = createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(-2, 2), 7)
+	黑野猪4 = createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(-3, 2), 7)
+	黑野猪.dir = DIR.left
+	黑野猪1.dir = DIR.left
+	黑野猪2.dir = DIR.leftUp
+	黑野猪3.dir = DIR.up
+	黑野猪4.dir = DIR.up
+
+	actor:say("28级就可以学习半月弯刀，它可以同时攻击环绕在你周围的所有敌人。", nil)
+	delay(0.5)
+	--- END OF BLOCK #30 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #31
+	GO OUT TO BLOCK #32
+
+	--- BLOCK #31 504-549, warpins: 2 ---
+	actor:magic(25, 黑野猪, nil, DIR.right)
+	delay(0.7)
+	黑野猪:playAct(ACTS.STRUCK)
+	黑野猪1:playAct(ACTS.STRUCK)
+	黑野猪2:playAct(ACTS.STRUCK)
+	黑野猪3:playAct(ACTS.STRUCK)
+	黑野猪4:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #32 550-550, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #33 551-552, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if skillIndex == 27 then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #34 553-555, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 556-571, warpins: 1 ---
+	actor = createRole("战士", "hero", 246, 32, 0, 0, nil, off2p(-2, 1), 8)
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #36 572-586, warpins: 1 ---
+	actor = createRole("战士", "hero", 247, 32, 1, 1, nil, off2p(-2, 1), 8)
+
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 587-796, warpins: 2 ---
+	actor:say("30级可以练习野蛮冲撞，撞开级别低于你的敌人。你可要小心别撞到障碍物上。", nil)
+
+	actor.dir = DIR.right
+	稻草人 = createRole("稻草人", 17, 27, 19, 1, 0, nil, pos(actor.x + 1, actor.y), 8)
+	稻草人.dir = DIR.left
+
+	delay(1.5)
+	actor:magic(skillIndex, nil, pos(3, 0), DIR.right)
+	稻草人:playAct(ACTS.ACT_BACKSTEP, pos(3, 0), DIR.left)
+	稻草人:playAct(ACTS.STRUCK)
+	delay(1.5)
+	actor:say("如果你把这个技能练到3级，你会发现更多惊喜，当然前提是你要把等级提升到38级。", nil)
+
+	稻草人1 = createRole("稻草人", 17, 27, 19, 1, 0, nil, pos(actor.x + 2, actor.y), 4.8)
+	稻草人1.dir = DIR.right
+	稻草人.dir = DIR.right
+	actor.dir = DIR.bottom
+
+	actor:playAct(ACT_WALK, pos(0, 1), DIR.bottom)
+	delay(0.5)
+
+	actor.dir = DIR.right
+
+	actor:playAct(ACT_WALK, pos(3, 0), DIR.right)
+	delay(0.5)
+
+	actor.dir = DIR.up
+
+	actor:playAct(ACT_WALK, pos(0, -1), DIR.up)
+	delay(0.5)
+
+	actor.dir = DIR.left
+
+	delay(2)
+	actor:magic(skillIndex, nil, pos(-3, 0), DIR.left)
+	稻草人:playAct(ACTS.ACT_BACKSTEP, pos(-3, 0), DIR.right)
+	稻草人:playAct(ACTS.STRUCK)
+	稻草人1:playAct(ACTS.ACT_BACKSTEP, pos(-3, 0), DIR.right)
+	稻草人1:playAct(ACTS.STRUCK)
+
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #38 797-798, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	if skillIndex == 26 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #39 799-801, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 802-817, warpins: 1 ---
+	actor = createRole("威武圣战", "hero", 328, 325, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #42
+
+
+	--- BLOCK #41 818-832, warpins: 1 ---
+	actor = createRole("威武圣战", "hero", 331, 325, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 833-860, warpins: 2 ---
+	白野猪 = createRole("白野猪", 19, 112, 0, 0, 0, nil, off2p(-1, 1), 7)
+
+	actor:say("达到35级你已经可以学习烈火剑法了。这是战士重要的伤害技能，有7秒的冷却时间。", nil)
+	delay(0.5)
+	--- END OF BLOCK #42 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #43
+	GO OUT TO BLOCK #44
+
+	--- BLOCK #43 861-886, warpins: 2 ---
+	actor:magic(26, 白野猪, nil, DIR.right)
+
+	白野猪.dir = DIR.left
+
+	delay(1)
+	白野猪:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #42
+
+
+	--- BLOCK #44 887-887, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #45 888-889, warpins: 1 ---
+	--- END OF BLOCK #45 ---
+
+	if skillIndex == 43 then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #46 890-892, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 893-908, warpins: 1 ---
+	actor = createRole("威武圣战", "hero", 352, 208, 0, 0, nil, off2p(-3, 2), 7)
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #48 909-923, warpins: 1 ---
+	actor = createRole("威武圣战", "hero", 353, 208, 1, 1, nil, off2p(-3, 2), 7)
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 924-1289, warpins: 2 ---
+	红野猪 = createRole("红野猪", 19, 110, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 3)
+	红野猪1 = createRole("红野猪", 19, 110, 0, 0, 0, nil, pos(actor.x - 1, actor.y), 3)
+	红野猪2 = createRole("红野猪", 19, 110, 0, 0, 0, nil, pos(actor.x, actor.y + 1), 3)
+	红野猪3 = createRole("红野猪", 19, 110, 0, 0, 0, nil, pos(actor.x, actor.y - 1), 3)
+	红野猪.dir = DIR.left
+	红野猪1.dir = DIR.right
+	红野猪2.dir = DIR.up
+
+	actor:say("你可以学习狮子吼了，使用它能让怪物暂时麻痹。", nil)
+	delay(1)
+	actor:magic(43, 红野猪, nil, DIR.left)
+	delay(1)
+	红野猪:addState("stPoisonStone")
+	红野猪1:addState("stPoisonStone")
+	红野猪2:addState("stPoisonStone")
+	红野猪3:addState("stPoisonStone")
+	delay(1)
+
+	沃玛战将 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x + 2, actor.y + 2), 4)
+	沃玛战将1 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x + 2, actor.y), 4)
+	沃玛战将2 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x + 2, actor.y - 2), 4)
+	沃玛战将3 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x, actor.y + 2), 4)
+	沃玛战将4 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x, actor.y - 2), 4)
+	沃玛战将5 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x - 2, actor.y + 2), 4)
+	沃玛战将6 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x - 2, actor.y), 4)
+	沃玛战将7 = createRole("沃玛战将", 19, 33, 0, 0, 0, nil, pos(actor.x - 2, actor.y - 2), 4)
+	沃玛战将.dir = DIR.leftUp
+	沃玛战将1.dir = DIR.left
+	沃玛战将2.dir = DIR.leftBottom
+	沃玛战将3.dir = DIR.up
+	沃玛战将5.dir = DIR.rightUp
+	沃玛战将6.dir = DIR.right
+	沃玛战将7.dir = DIR.rightBottom
+
+	actor:say("随着你等级的提升，你能够麻痹更多更强的怪物。", nil)
+	delay(1)
+	actor:magic(43, 沃玛战将, nil, DIR.left)
+	delay(1)
+	沃玛战将:addState("stPoisonStone")
+	沃玛战将1:addState("stPoisonStone")
+	沃玛战将2:addState("stPoisonStone")
+	沃玛战将3:addState("stPoisonStone")
+	沃玛战将4:addState("stPoisonStone")
+	沃玛战将5:addState("stPoisonStone")
+	沃玛战将6:addState("stPoisonStone")
+	沃玛战将7:addState("stPoisonStone")
+
+	--- END OF BLOCK #49 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #50 1290-1291, warpins: 1 ---
+	--- END OF BLOCK #50 ---
+
+	if skillIndex == 58 then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #57
+	end
+
+
+	--- BLOCK #51 1292-1294, warpins: 1 ---
+	--- END OF BLOCK #51 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #52 1295-1310, warpins: 1 ---
+	actor = createRole("威武圣战", "hero", 350, 347, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #54
+
+
+	--- BLOCK #53 1311-1325, warpins: 1 ---
+	actor = createRole("威武圣战", "hero", 351, 347, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #53 ---
+
+	FLOW; TARGET BLOCK #54
+
+
+	--- BLOCK #54 1326-1426, warpins: 2 ---
+	牛魔将军 = createRole("牛魔将军", 19, 204, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 7)
+	牛魔将军1 = createRole("牛魔将军", 19, 204, 0, 0, 0, nil, pos(actor.x + 2, actor.y), 7)
+	牛魔将军2 = createRole("牛魔将军", 19, 204, 0, 0, 0, nil, pos(actor.x + 3, actor.y), 7)
+	牛魔将军3 = createRole("牛魔将军", 19, 204, 0, 0, 0, nil, pos(actor.x + 4, actor.y), 7)
+	牛魔将军.dir = DIR.left
+	牛魔将军1.dir = DIR.left
+	牛魔将军2.dir = DIR.left
+	牛魔将军3.dir = DIR.left
+
+	actor:say("47级可以学习战士高级技能逐日剑法，它能攻击直线上4格的敌人，有10秒的冷却时间。", nil)
+	delay(0.5)
+	--- END OF BLOCK #54 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #55
+	GO OUT TO BLOCK #56
+
+	--- BLOCK #55 1427-1466, warpins: 2 ---
+	actor:magic(58, 牛魔将军, nil, DIR.right)
+	delay(0.5)
+	牛魔将军:playAct(ACTS.STRUCK)
+	牛魔将军1:playAct(ACTS.STRUCK)
+	牛魔将军2:playAct(ACTS.STRUCK)
+	牛魔将军3:playAct(ACTS.STRUCK)
+	delay(1.5)
+
+	--- END OF BLOCK #55 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #54
+
+
+	--- BLOCK #56 1467-1467, warpins: 1 ---
+	--- END OF BLOCK #56 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #57 1468-1469, warpins: 1 ---
+	--- END OF BLOCK #57 ---
+
+	if skillIndex == 1 then
+	JUMP TO BLOCK #58
+	else
+	JUMP TO BLOCK #64
+	end
+
+
+	--- BLOCK #58 1470-1472, warpins: 1 ---
+	--- END OF BLOCK #58 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #59
+	else
+	JUMP TO BLOCK #60
+	end
+
+
+	--- BLOCK #59 1473-1488, warpins: 1 ---
+	actor = createRole("小哥", "hero", 5, 55, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #59 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #61
+
+
+	--- BLOCK #60 1489-1503, warpins: 1 ---
+	actor = createRole("小妹", "hero", 6, 55, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #60 ---
+
+	FLOW; TARGET BLOCK #61
+
+
+	--- BLOCK #61 1504-1531, warpins: 2 ---
+	鸡 = createRole("鸡", 11, 160, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("火球术是法师的基础法术，能对远处的敌人造成单体伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #61 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #62
+	GO OUT TO BLOCK #63
+
+	--- BLOCK #62 1532-1553, warpins: 2 ---
+	actor:magic(1, 鸡, nil, DIR.left)
+	delay(1)
+	鸡:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #62 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #61
+
+
+	--- BLOCK #63 1554-1554, warpins: 1 ---
+	--- END OF BLOCK #63 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #64 1555-1556, warpins: 1 ---
+	--- END OF BLOCK #64 ---
+
+	if skillIndex == 8 then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #71
+	end
+
+
+	--- BLOCK #65 1557-1559, warpins: 1 ---
+	--- END OF BLOCK #65 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #67
+	end
+
+
+	--- BLOCK #66 1560-1575, warpins: 1 ---
+	actor = createRole("小哥", "hero", 5, 55, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #66 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #68
+
+
+	--- BLOCK #67 1576-1590, warpins: 1 ---
+	actor = createRole("小妹", "hero", 6, 55, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #67 ---
+
+	FLOW; TARGET BLOCK #68
+
+
+	--- BLOCK #68 1591-1603, warpins: 2 ---
+	actor:say("12级可以学习抗拒火环，可以推开四周的敌人，前提是他们级别比你低。", nil)
+	delay(0.5)
+
+	--- END OF BLOCK #68 ---
+
+	for i=1, 2, 1
+	LOOP BLOCK #69
+	GO OUT TO BLOCK #70
+
+	--- BLOCK #69 1604-1679, warpins: 2 ---
+	钉耙猫 = createRole("钉耙猫", 17, 26, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 3)
+	钉耙猫1 = createRole("钉耙猫", 17, 26, 0, 0, 0, nil, pos(actor.x - 1, actor.y), 3)
+
+	delay(1)
+	actor:magic(8, 钉耙猫, nil, DIR.left)
+	钉耙猫:playAct(ACTS.ACT_BACKSTEP, pos(2, 0), DIR.left)
+	钉耙猫1:playAct(ACTS.ACT_BACKSTEP, pos(-2, 0), DIR.right)
+	delay(2)
+
+	--- END OF BLOCK #69 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #68
+
+
+	--- BLOCK #70 1680-1680, warpins: 1 ---
+	--- END OF BLOCK #70 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #71 1681-1682, warpins: 1 ---
+	--- END OF BLOCK #71 ---
+
+	if skillIndex == 20 then
+	JUMP TO BLOCK #72
+	else
+	JUMP TO BLOCK #76
+	end
+
+
+	--- BLOCK #72 1683-1685, warpins: 1 ---
+	--- END OF BLOCK #72 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #73
+	else
+	JUMP TO BLOCK #74
+	end
+
+
+	--- BLOCK #73 1686-1701, warpins: 1 ---
+	actor = createRole("小法师", "hero", 10, 34, 0, 0, nil, off2p(-2, 1), 9)
+	--- END OF BLOCK #73 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #75
+
+
+	--- BLOCK #74 1702-1716, warpins: 1 ---
+	actor = createRole("小法师", "hero", 11, 34, 1, 1, nil, off2p(-2, 1), 9)
+	--- END OF BLOCK #74 ---
+
+	FLOW; TARGET BLOCK #75
+
+
+	--- BLOCK #75 1717-1832, warpins: 2 ---
+	半兽人 = createRole("半兽人", 19, 100, 0, 0, 0, nil, off2p(2, 1), 9)
+	半兽人.dir = DIR.left
+
+	delay(1)
+
+	x, y, mapid = getPlayerLocation()
+
+	actor:say("13级可以学习诱惑之光。你能干扰怪物使他们无法动弹，甚至能诱惑他们成为你的宝宝。", nil)
+	actor:magic(20, 半兽人, nil, DIR.left)
+	delay(1)
+	半兽人:playAct(ACT_WALK, pos(-1, 0), DIR.left)
+	delay(1)
+	actor:magic(20, 半兽人, nil, DIR.left)
+	delay(1)
+	半兽人:setNameColor(color(175, 105, 47))
+	delay(1)
+	actor:magic(20, 半兽人, nil, DIR.left)
+	delay(1)
+	半兽人.role.info:setName("半兽人(" .. actor.name .. ")")
+	delay(1)
+	actor:say("现在去诱惑一个半兽人试试吧，随着你等级的提升，你将能够诱惑更多强力的怪物。", nil)
+
+	--- END OF BLOCK #75 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #76 1833-1834, warpins: 1 ---
+	--- END OF BLOCK #76 ---
+
+	if skillIndex == 9 then
+	JUMP TO BLOCK #77
+	else
+	JUMP TO BLOCK #83
+	end
+
+
+	--- BLOCK #77 1835-1837, warpins: 1 ---
+	--- END OF BLOCK #77 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #78 1838-1853, warpins: 1 ---
+	actor = createRole("小法师", "hero", 10, 34, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #78 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #80
+
+
+	--- BLOCK #79 1854-1868, warpins: 1 ---
+	actor = createRole("小法师", "hero", 11, 34, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #79 ---
+
+	FLOW; TARGET BLOCK #80
+
+
+	--- BLOCK #80 1869-1969, warpins: 2 ---
+	森林雪人 = createRole("森林雪人", 10, 1, 0, 0, 0, nil, pos(actor.x + 5, actor.y), 7)
+	森林雪人1 = createRole("森林雪人", 10, 1, 0, 0, 0, nil, pos(actor.x + 2, actor.y), 7)
+	森林雪人2 = createRole("森林雪人", 10, 1, 0, 0, 0, nil, pos(actor.x + 3, actor.y), 7)
+	森林雪人3 = createRole("森林雪人", 10, 1, 0, 0, 0, nil, pos(actor.x + 4, actor.y), 7)
+	森林雪人.dir = DIR.left
+	森林雪人1.dir = DIR.left
+	森林雪人2.dir = DIR.left
+	森林雪人3.dir = DIR.left
+
+	actor:say("16级可以学习地狱火，这是法师第一个群攻技能，可以对前排5格的敌人造成伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #80 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #81
+	GO OUT TO BLOCK #82
+
+	--- BLOCK #81 1970-2009, warpins: 2 ---
+	actor:magic(9, 森林雪人, nil, DIR.right)
+	delay(1)
+	森林雪人:playAct(ACTS.STRUCK)
+	森林雪人1:playAct(ACTS.STRUCK)
+	森林雪人2:playAct(ACTS.STRUCK)
+	森林雪人3:playAct(ACTS.STRUCK)
+	delay(0.5)
+
+	--- END OF BLOCK #81 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #80
+
+
+	--- BLOCK #82 2010-2010, warpins: 1 ---
+	--- END OF BLOCK #82 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #83 2011-2012, warpins: 1 ---
+	--- END OF BLOCK #83 ---
+
+	if skillIndex == 11 then
+	JUMP TO BLOCK #84
+	else
+	JUMP TO BLOCK #90
+	end
+
+
+	--- BLOCK #84 2013-2015, warpins: 1 ---
+	--- END OF BLOCK #84 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #85
+	else
+	JUMP TO BLOCK #86
+	end
+
+
+	--- BLOCK #85 2016-2031, warpins: 1 ---
+	actor = createRole("小法师", "hero", 10, 34, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #85 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #87
+
+
+	--- BLOCK #86 2032-2046, warpins: 1 ---
+	actor = createRole("小法师", "hero", 11, 34, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #86 ---
+
+	FLOW; TARGET BLOCK #87
+
+
+	--- BLOCK #87 2047-2074, warpins: 2 ---
+	沃玛战士 = createRole("沃玛战士", 19, 30, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("17级可以学习法师的核心技能雷电术，可以造成强大的单体伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #87 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #88
+	GO OUT TO BLOCK #89
+
+	--- BLOCK #88 2075-2096, warpins: 2 ---
+	actor:magic(11, 沃玛战士, nil, DIR.left)
+	delay(1)
+	沃玛战士:playAct(ACTS.STRUCK)
+	delay(1)
+	--- END OF BLOCK #88 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #87
+
+
+	--- BLOCK #89 2097-2103, warpins: 1 ---
+	actor:say("这个技能是不死系怪物的恶梦，你不用再怕骷髅和僵尸的骚扰了。", nil)
+
+	--- END OF BLOCK #89 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #90 2104-2105, warpins: 1 ---
+	--- END OF BLOCK #90 ---
+
+	if skillIndex == 21 then
+	JUMP TO BLOCK #91
+	else
+	JUMP TO BLOCK #95
+	end
+
+
+	--- BLOCK #91 2106-2108, warpins: 1 ---
+	--- END OF BLOCK #91 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #92
+	else
+	JUMP TO BLOCK #93
+	end
+
+
+	--- BLOCK #92 2109-2124, warpins: 1 ---
+	actor = createRole("法师", "hero", 26, 82, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #92 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #94
+
+
+	--- BLOCK #93 2125-2139, warpins: 1 ---
+	actor = createRole("法师", "hero", 23, 82, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #93 ---
+
+	FLOW; TARGET BLOCK #94
+
+
+	--- BLOCK #94 2140-2233, warpins: 2 ---
+	actor:say("19级可以学习瞬息移动，使用技能会随机飞到上次路过的主城所在的地图。", nil)
+	delay(0.5)
+	actor:magic(21, nil, nil, DIR.left)
+	delay(0.5)
+	actor:playAct(ACTS.SPACEMOVE_SHOW, pos(3, 3), DIR.bottom)
+	delay(1.5)
+	actor:magic(21, nil, nil, DIR.left)
+	delay(0.5)
+	actor:playAct(ACTS.SPACEMOVE_SHOW, pos(-1, -3), DIR.bottom)
+	delay(1.5)
+	actor:magic(21, nil, nil, DIR.left)
+	delay(0.5)
+	actor:playAct(ACTS.SPACEMOVE_SHOW, pos(-2, -2), DIR.bottom)
+	delay(1.5)
+	actor:say("好好使用，可以帮你省下很多地牢逃脱卷。", nil)
+
+	--- END OF BLOCK #94 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #95 2234-2235, warpins: 1 ---
+	--- END OF BLOCK #95 ---
+
+	if skillIndex == 5 then
+	JUMP TO BLOCK #96
+	else
+	JUMP TO BLOCK #102
+	end
+
+
+	--- BLOCK #96 2236-2238, warpins: 1 ---
+	--- END OF BLOCK #96 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #97
+	else
+	JUMP TO BLOCK #98
+	end
+
+
+	--- BLOCK #97 2239-2254, warpins: 1 ---
+	actor = createRole("法师", "hero", 26, 82, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #97 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #99
+
+
+	--- BLOCK #98 2255-2269, warpins: 1 ---
+	actor = createRole("法师", "hero", 23, 82, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #98 ---
+
+	FLOW; TARGET BLOCK #99
+
+
+	--- BLOCK #99 2270-2297, warpins: 2 ---
+	沃玛战士 = createRole("沃玛战士", 19, 151, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("19级别忘了学习大火球，这可比小火球厉害多了。", nil)
+	delay(0.5)
+	--- END OF BLOCK #99 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #100
+	GO OUT TO BLOCK #101
+
+	--- BLOCK #100 2298-2319, warpins: 2 ---
+	actor:magic(5, 沃玛战士, nil, DIR.left)
+	delay(1)
+	沃玛战士:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #100 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #99
+
+
+	--- BLOCK #101 2320-2320, warpins: 1 ---
+	--- END OF BLOCK #101 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #102 2321-2322, warpins: 1 ---
+	--- END OF BLOCK #102 ---
+
+	if skillIndex == 23 then
+	JUMP TO BLOCK #103
+	else
+	JUMP TO BLOCK #111
+	end
+
+
+	--- BLOCK #103 2323-2325, warpins: 1 ---
+	--- END OF BLOCK #103 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #104
+	else
+	JUMP TO BLOCK #105
+	end
+
+
+	--- BLOCK #104 2326-2341, warpins: 1 ---
+	actor = createRole("法师", "hero", 243, 56, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #104 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #106
+
+
+	--- BLOCK #105 2342-2356, warpins: 1 ---
+	actor = createRole("法师", "hero", 242, 56, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #105 ---
+
+	FLOW; TARGET BLOCK #106
+
+
+	--- BLOCK #106 2357-2506, warpins: 2 ---
+	沃玛战将 = {
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(3, 1), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(1, 1), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(2, 0), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(2, 2), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(3, 2), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(1, 0), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(3, 0), 7),
+		createRole("沃玛战将", 19, 33, 0, 0, 0, nil, off2p(1, 2), 7)
+	}
+
+	actor:say("22级可以学习爆裂火焰，它能对3X3的范围造成伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #106 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #107
+	GO OUT TO BLOCK #110
+
+	--- BLOCK #107 2507-2523, warpins: 2 ---
+	actor:magic(23, 沃玛战将[1], nil, DIR.left)
+	delay(0.5)
+	--- END OF BLOCK #107 ---
+
+	for i=1, 9, 1
+	LOOP BLOCK #108
+	GO OUT TO BLOCK #109
+
+	--- BLOCK #108 2524-2531, warpins: 2 ---
+	沃玛战将[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #108 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #107
+
+
+	--- BLOCK #109 2532-2535, warpins: 1 ---
+	delay(1.5)
+
+	--- END OF BLOCK #109 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #106
+
+
+	--- BLOCK #110 2536-2536, warpins: 1 ---
+	--- END OF BLOCK #110 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #111 2537-2538, warpins: 1 ---
+	--- END OF BLOCK #111 ---
+
+	if skillIndex == 22 then
+	JUMP TO BLOCK #112
+	else
+	JUMP TO BLOCK #122
+	end
+
+
+	--- BLOCK #112 2539-2541, warpins: 1 ---
+	--- END OF BLOCK #112 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #113
+	else
+	JUMP TO BLOCK #114
+	end
+
+
+	--- BLOCK #113 2542-2557, warpins: 1 ---
+	actor = createRole("法师", "hero", 243, 166, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #113 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #115
+
+
+	--- BLOCK #114 2558-2572, warpins: 1 ---
+	actor = createRole("法师", "hero", 242, 166, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #114 ---
+
+	FLOW; TARGET BLOCK #115
+
+
+	--- BLOCK #115 2573-2780, warpins: 2 ---
+	黑色恶蛆 = {
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(1, 1), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(3, 1), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 2), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 5), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 4), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 6), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(3, 5), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(-3, -3), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(-3, -4), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(-3, -2), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(-2, -3), 7)
+	}
+
+	actor:say("24级你可以学习火墙了，释放之后会持续燃烧，火墙中的敌人会受到持续伤害。", nil)
+	delay(0.5)
+	actor:magic(22, 黑色恶蛆[1], nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #115 ---
+
+	for i=1, 4, 1
+	LOOP BLOCK #116
+	GO OUT TO BLOCK #117
+
+	--- BLOCK #116 2781-2788, warpins: 2 ---
+	黑色恶蛆[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #116 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #115
+
+
+	--- BLOCK #117 2789-2808, warpins: 1 ---
+	delay(1)
+	actor:magic(22, 黑色恶蛆[5], nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #117 ---
+
+	for i=1, 8, 1
+	LOOP BLOCK #118
+	GO OUT TO BLOCK #119
+
+	--- BLOCK #118 2809-2816, warpins: 2 ---
+	黑色恶蛆[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #118 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #117
+
+
+	--- BLOCK #119 2817-2836, warpins: 1 ---
+	delay(1)
+	actor:magic(22, 黑色恶蛆[9], nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #119 ---
+
+	for i=1, 12, 1
+	LOOP BLOCK #120
+	GO OUT TO BLOCK #121
+
+	--- BLOCK #120 2837-2844, warpins: 2 ---
+	黑色恶蛆[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #120 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #119
+
+
+	--- BLOCK #121 2845-2854, warpins: 1 ---
+	delay(1)
+	actor:say("随着你魔法力和技能等级的提升，你施放的火墙会越来越炽热。", nil)
+
+	--- END OF BLOCK #121 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #122 2855-2856, warpins: 1 ---
+	--- END OF BLOCK #122 ---
+
+	if skillIndex == 10 then
+	JUMP TO BLOCK #123
+	else
+	JUMP TO BLOCK #131
+	end
+
+
+	--- BLOCK #123 2857-2859, warpins: 1 ---
+	--- END OF BLOCK #123 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #124
+	else
+	JUMP TO BLOCK #125
+	end
+
+
+	--- BLOCK #124 2860-2875, warpins: 1 ---
+	actor = createRole("法师", "hero", 243, 166, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #124 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #126
+
+
+	--- BLOCK #125 2876-2890, warpins: 1 ---
+	actor = createRole("法师", "hero", 242, 166, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #125 ---
+
+	FLOW; TARGET BLOCK #126
+
+
+	--- BLOCK #126 2891-2980, warpins: 2 ---
+	黑野猪 = {
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(3, 1), 7),
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(4, 1), 7),
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(5, 1), 7),
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(6, 1), 7)
+	}
+
+	actor:say("26级可以学习疾光电影，能够对对直线上的敌人造成伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #126 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #127
+	GO OUT TO BLOCK #130
+
+	--- BLOCK #127 2981-2997, warpins: 2 ---
+	actor:magic(10, 黑野猪[1], nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #127 ---
+
+	for i=1, 5, 1
+	LOOP BLOCK #128
+	GO OUT TO BLOCK #129
+
+	--- BLOCK #128 2998-3005, warpins: 2 ---
+	黑野猪[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #128 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #127
+
+
+	--- BLOCK #129 3006-3009, warpins: 1 ---
+	delay(1)
+
+	--- END OF BLOCK #129 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #126
+
+
+	--- BLOCK #130 3010-3010, warpins: 1 ---
+	--- END OF BLOCK #130 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #131 3011-3012, warpins: 1 ---
+	--- END OF BLOCK #131 ---
+
+	if skillIndex == 24 then
+	JUMP TO BLOCK #132
+	else
+	JUMP TO BLOCK #140
+	end
+
+
+	--- BLOCK #132 3013-3015, warpins: 1 ---
+	--- END OF BLOCK #132 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #133
+	else
+	JUMP TO BLOCK #134
+	end
+
+
+	--- BLOCK #133 3016-3031, warpins: 1 ---
+	actor = createRole("法师", "hero", 243, 221, 0, 0, nil, off2p(2, 2), 7)
+	--- END OF BLOCK #133 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #135
+
+
+	--- BLOCK #134 3032-3046, warpins: 1 ---
+	actor = createRole("法师", "hero", 242, 221, 1, 1, nil, off2p(2, 2), 7)
+	--- END OF BLOCK #134 ---
+
+	FLOW; TARGET BLOCK #135
+
+
+	--- BLOCK #135 3047-3181, warpins: 2 ---
+	僵尸 = {
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(1, 3), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(2, 3), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(1, 2), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(3, 1), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(3, 2), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(1, 1), 7),
+		createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(3, 3), 7)
+	}
+
+	actor:say("30级可以学习地狱雷光，这个技能能够对四周多个不死系敌人造成伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #135 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #136
+	GO OUT TO BLOCK #139
+
+	--- BLOCK #136 3182-3195, warpins: 2 ---
+	actor:magic(24, 僵尸[1], nil, DIR.left)
+	--- END OF BLOCK #136 ---
+
+	for i=1, 8, 1
+	LOOP BLOCK #137
+	GO OUT TO BLOCK #138
+
+	--- BLOCK #137 3196-3209, warpins: 2 ---
+	僵尸[i]:dirTo(actor)
+	僵尸[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #137 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #136
+
+
+	--- BLOCK #138 3210-3213, warpins: 1 ---
+	delay(2)
+	--- END OF BLOCK #138 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #135
+
+
+	--- BLOCK #139 3214-3220, warpins: 1 ---
+	actor:say("和你的朋友们一起使用这个技能，让怪物们毫无还手之力吧。", nil)
+
+	--- END OF BLOCK #139 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #140 3221-3222, warpins: 1 ---
+	--- END OF BLOCK #140 ---
+
+	if skillIndex == 31 then
+	JUMP TO BLOCK #141
+	else
+	JUMP TO BLOCK #147
+	end
+
+
+	--- BLOCK #141 3223-3225, warpins: 1 ---
+	--- END OF BLOCK #141 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #142
+	else
+	JUMP TO BLOCK #143
+	end
+
+
+	--- BLOCK #142 3226-3241, warpins: 1 ---
+	actor = createRole("法师", "hero", 243, 221, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #142 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #144
+
+
+	--- BLOCK #143 3242-3256, warpins: 1 ---
+	actor = createRole("法师", "hero", 242, 221, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #143 ---
+
+	FLOW; TARGET BLOCK #144
+
+
+	--- BLOCK #144 3257-3269, warpins: 2 ---
+	actor:say("31级能够学习魔法盾，这是法师最重要的防御技能。", nil)
+	delay(0.5)
+	--- END OF BLOCK #144 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #145
+	GO OUT TO BLOCK #146
+
+	--- BLOCK #145 3270-3289, warpins: 2 ---
+	actor:magic(31, nil, nil, DIR.left)
+	delay(0.5)
+	actor:addState("stMagicShield")
+	delay(1.5)
+	--- END OF BLOCK #145 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #144
+
+
+	--- BLOCK #146 3290-3296, warpins: 1 ---
+	actor:say("别忘了在“设置”中开启自动魔法盾。", nil)
+
+	--- END OF BLOCK #146 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #147 3297-3298, warpins: 1 ---
+	--- END OF BLOCK #147 ---
+
+	if skillIndex == 32 then
+	JUMP TO BLOCK #148
+	else
+	JUMP TO BLOCK #154
+	end
+
+
+	--- BLOCK #148 3299-3301, warpins: 1 ---
+	--- END OF BLOCK #148 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #149
+	else
+	JUMP TO BLOCK #150
+	end
+
+
+	--- BLOCK #149 3302-3317, warpins: 1 ---
+	actor = createRole("法师", "hero", 243, 221, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #149 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #151
+
+
+	--- BLOCK #150 3318-3332, warpins: 1 ---
+	actor = createRole("法师", "hero", 242, 221, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #150 ---
+
+	FLOW; TARGET BLOCK #151
+
+
+	--- BLOCK #151 3333-3392, warpins: 2 ---
+	黑野猪 = {
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(1, 2), 7),
+		createRole("黑野猪", 19, 111, 0, 0, 0, nil, off2p(2, 0), 7)
+	}
+
+	actor:say("32级可以学习圣言术，有一定几率能够秒杀不死系怪物。", nil)
+	delay(0.5)
+	--- END OF BLOCK #151 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #152
+	GO OUT TO BLOCK #153
+
+	--- BLOCK #152 3393-3416, warpins: 2 ---
+	actor:magic(32, 黑野猪[i], nil, DIR.left)
+	delay(1)
+	黑野猪[i]:playAct(ACTS.NOWDEATH)
+	delay(1)
+
+	--- END OF BLOCK #152 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #151
+
+
+	--- BLOCK #153 3417-3417, warpins: 1 ---
+	--- END OF BLOCK #153 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #154 3418-3419, warpins: 1 ---
+	--- END OF BLOCK #154 ---
+
+	if skillIndex == 33 then
+	JUMP TO BLOCK #155
+	else
+	JUMP TO BLOCK #163
+	end
+
+
+	--- BLOCK #155 3420-3422, warpins: 1 ---
+	--- END OF BLOCK #155 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #156
+	else
+	JUMP TO BLOCK #157
+	end
+
+
+	--- BLOCK #156 3423-3438, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 329, 324, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #156 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #158
+
+
+	--- BLOCK #157 3439-3453, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 332, 324, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #157 ---
+
+	FLOW; TARGET BLOCK #158
+
+
+	--- BLOCK #158 3454-3603, warpins: 2 ---
+	黑色恶蛆 = {
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 2), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(1, 3), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(2, 3), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(1, 2), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(3, 1), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(3, 2), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(1, 1), 7),
+		createRole("黑色恶蛆", 19, 74, 0, 0, 0, nil, off2p(3, 3), 7)
+	}
+
+	actor:say("达到35级你已经可以学习冰咆哮了，它能对3X3范围的敌人造成极大的伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #158 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #159
+	GO OUT TO BLOCK #162
+
+	--- BLOCK #159 3604-3620, warpins: 2 ---
+	actor:magic(33, 黑色恶蛆[1], nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #159 ---
+
+	for i=1, 9, 1
+	LOOP BLOCK #160
+	GO OUT TO BLOCK #161
+
+	--- BLOCK #160 3621-3628, warpins: 2 ---
+	黑色恶蛆[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #160 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #159
+
+
+	--- BLOCK #161 3629-3632, warpins: 1 ---
+	delay(1)
+
+	--- END OF BLOCK #161 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #158
+
+
+	--- BLOCK #162 3633-3633, warpins: 1 ---
+	--- END OF BLOCK #162 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #163 3634-3635, warpins: 1 ---
+	--- END OF BLOCK #163 ---
+
+	if skillIndex == 39 then
+	JUMP TO BLOCK #164
+	else
+	JUMP TO BLOCK #170
+	end
+
+
+	--- BLOCK #164 3636-3638, warpins: 1 ---
+	--- END OF BLOCK #164 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #165
+	else
+	JUMP TO BLOCK #166
+	end
+
+
+	--- BLOCK #165 3639-3654, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 402, 210, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #165 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #167
+
+
+	--- BLOCK #166 3655-3669, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 403, 210, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #166 ---
+
+	FLOW; TARGET BLOCK #167
+
+
+	--- BLOCK #167 3670-3697, warpins: 2 ---
+	红野猪 = createRole("红野猪", 19, 110, 0, 0, 0, nil, off2p(1, 1), 7)
+
+	actor:say("你可以学习寒冰掌了，它不仅能够造成伤害，还有几率推动级别低于你的敌人。", nil)
+	delay(0.5)
+	--- END OF BLOCK #167 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #168
+	GO OUT TO BLOCK #169
+
+	--- BLOCK #168 3698-3725, warpins: 2 ---
+	actor:magic(39, 红野猪, nil, DIR.left)
+	delay(1)
+	红野猪:playAct(ACTS.ACT_BACKSTEP, pos(1, 0), DIR.left)
+	delay(1)
+
+	--- END OF BLOCK #168 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #167
+
+
+	--- BLOCK #169 3726-3726, warpins: 1 ---
+	--- END OF BLOCK #169 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #170 3727-3728, warpins: 1 ---
+	--- END OF BLOCK #170 ---
+
+	if skillIndex == 35 then
+	JUMP TO BLOCK #171
+	else
+	JUMP TO BLOCK #177
+	end
+
+
+	--- BLOCK #171 3729-3731, warpins: 1 ---
+	--- END OF BLOCK #171 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #172
+	else
+	JUMP TO BLOCK #173
+	end
+
+
+	--- BLOCK #172 3732-3747, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 402, 210, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #172 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #174
+
+
+	--- BLOCK #173 3748-3762, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 403, 210, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #173 ---
+
+	FLOW; TARGET BLOCK #174
+
+
+	--- BLOCK #174 3763-3790, warpins: 2 ---
+	白野猪 = createRole("白野猪", 19, 112, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("你可以学习灭天火了，它不仅能够造成伤害，还能够灼烧敌人的魔法值。", nil)
+	delay(0.5)
+	--- END OF BLOCK #174 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #175
+	GO OUT TO BLOCK #176
+
+	--- BLOCK #175 3791-3812, warpins: 2 ---
+	actor:magic(35, 白野猪, nil, DIR.left)
+	delay(0.5)
+	白野猪:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #175 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #174
+
+
+	--- BLOCK #176 3813-3813, warpins: 1 ---
+	--- END OF BLOCK #176 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #177 3814-3815, warpins: 1 ---
+	--- END OF BLOCK #177 ---
+
+	if skillIndex == 59 then
+	JUMP TO BLOCK #178
+	else
+	JUMP TO BLOCK #186
+	end
+
+
+	--- BLOCK #178 3816-3818, warpins: 1 ---
+	--- END OF BLOCK #178 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #179
+	else
+	JUMP TO BLOCK #180
+	end
+
+
+	--- BLOCK #179 3819-3834, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 350, 348, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #179 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #181
+
+
+	--- BLOCK #180 3835-3849, warpins: 1 ---
+	actor = createRole("飘逸法神", "hero", 351, 348, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #180 ---
+
+	FLOW; TARGET BLOCK #181
+
+
+	--- BLOCK #181 3850-3999, warpins: 2 ---
+	火焰沃玛 = {
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(2, 2), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(2, 1), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(1, 3), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(2, 3), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(1, 2), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(3, 1), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(3, 2), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(1, 1), 7),
+		createRole("火焰沃玛", 20, 31, 0, 0, 0, nil, off2p(3, 3), 7)
+	}
+
+	actor:say("47级可以学习法师高级技能流星火雨。高伤害、3X3的范围，群体技能的不二之选。", nil)
+	delay(0.5)
+	--- END OF BLOCK #181 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #182
+	GO OUT TO BLOCK #185
+
+	--- BLOCK #182 4000-4016, warpins: 2 ---
+	actor:magic(59, 火焰沃玛[1], nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #182 ---
+
+	for i=1, 9, 1
+	LOOP BLOCK #183
+	GO OUT TO BLOCK #184
+
+	--- BLOCK #183 4017-4024, warpins: 2 ---
+	火焰沃玛[i]:playAct(ACTS.STRUCK)
+	--- END OF BLOCK #183 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #182
+
+
+	--- BLOCK #184 4025-4028, warpins: 1 ---
+	delay(1)
+
+	--- END OF BLOCK #184 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #181
+
+
+	--- BLOCK #185 4029-4029, warpins: 1 ---
+	--- END OF BLOCK #185 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #186 4030-4031, warpins: 1 ---
+	--- END OF BLOCK #186 ---
+
+	if skillIndex == 2 then
+	JUMP TO BLOCK #187
+	else
+	JUMP TO BLOCK #193
+	end
+
+
+	--- BLOCK #187 4032-4034, warpins: 1 ---
+	--- END OF BLOCK #187 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #188
+	else
+	JUMP TO BLOCK #189
+	end
+
+
+	--- BLOCK #188 4035-4050, warpins: 1 ---
+	actor = createRole("小哥", "hero", 5, 55, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #188 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #190
+
+
+	--- BLOCK #189 4051-4065, warpins: 1 ---
+	actor = createRole("小妹", "hero", 6, 55, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #189 ---
+
+	FLOW; TARGET BLOCK #190
+
+
+	--- BLOCK #190 4066-4078, warpins: 2 ---
+	actor:say("快学习治愈术吧，这样你就可以给自己和队友回复血量了。", nil)
+	delay(0.5)
+	--- END OF BLOCK #190 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #191
+	GO OUT TO BLOCK #192
+
+	--- BLOCK #191 4079-4091, warpins: 2 ---
+	actor:magic(2, "player", nil, DIR.left)
+	delay(2)
+
+	--- END OF BLOCK #191 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #190
+
+
+	--- BLOCK #192 4092-4092, warpins: 1 ---
+	--- END OF BLOCK #192 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #193 4093-4094, warpins: 1 ---
+	--- END OF BLOCK #193 ---
+
+	if skillIndex == 4 then
+	JUMP TO BLOCK #194
+	else
+	JUMP TO BLOCK #198
+	end
+
+
+	--- BLOCK #194 4095-4097, warpins: 1 ---
+	--- END OF BLOCK #194 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #195
+	else
+	JUMP TO BLOCK #196
+	end
+
+
+	--- BLOCK #195 4098-4113, warpins: 1 ---
+	actor = createRole("小哥", "hero", 5, 55, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #195 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #197
+
+
+	--- BLOCK #196 4114-4128, warpins: 1 ---
+	actor = createRole("小妹", "hero", 6, 55, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #196 ---
+
+	FLOW; TARGET BLOCK #197
+
+
+	--- BLOCK #197 4129-4135, warpins: 2 ---
+	actor:say("精神力战法是被动技能，它能够大幅提高你的准确。", nil)
+
+	--- END OF BLOCK #197 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #198 4136-4137, warpins: 1 ---
+	--- END OF BLOCK #198 ---
+
+	if skillIndex == 6 then
+	JUMP TO BLOCK #199
+	else
+	JUMP TO BLOCK #208
+	end
+
+
+	--- BLOCK #199 4138-4140, warpins: 1 ---
+	--- END OF BLOCK #199 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #200
+	else
+	JUMP TO BLOCK #201
+	end
+
+
+	--- BLOCK #200 4141-4156, warpins: 1 ---
+	actor = createRole("小道士", "hero", 10, 68, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #200 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #202
+
+
+	--- BLOCK #201 4157-4171, warpins: 1 ---
+	actor = createRole("小道士", "hero", 11, 68, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #201 ---
+
+	FLOW; TARGET BLOCK #202
+
+
+	--- BLOCK #202 4172-4199, warpins: 2 ---
+	骷髅 = createRole("骷髅", 14, 20, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("14级可以学习施毒术，不过使用技能时必须佩戴红毒或者绿毒。", nil)
+	delay(0.5)
+	--- END OF BLOCK #202 ---
+
+	for i=1, 2, 1
+	LOOP BLOCK #203
+	GO OUT TO BLOCK #207
+
+	--- BLOCK #203 4200-4213, warpins: 2 ---
+	actor:magic(6, 骷髅, nil, DIR.left)
+	delay(1)
+	--- END OF BLOCK #203 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #204
+	else
+	JUMP TO BLOCK #205
+	end
+
+
+	--- BLOCK #204 4214-4219, warpins: 1 ---
+	骷髅:addState("stPoisonGreen")
+	--- END OF BLOCK #204 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #206
+
+
+	--- BLOCK #205 4220-4224, warpins: 1 ---
+	骷髅:addState("stPoisonRed")
+	--- END OF BLOCK #205 ---
+
+	FLOW; TARGET BLOCK #206
+
+
+	--- BLOCK #206 4225-4228, warpins: 2 ---
+	delay(2)
+	--- END OF BLOCK #206 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #202
+
+
+	--- BLOCK #207 4229-4235, warpins: 1 ---
+	actor:say("红毒可以加成伤害效果，绿毒可以限制体力回复。", nil)
+
+	--- END OF BLOCK #207 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #208 4236-4237, warpins: 1 ---
+	--- END OF BLOCK #208 ---
+
+	if skillIndex == 13 then
+	JUMP TO BLOCK #209
+	else
+	JUMP TO BLOCK #215
+	end
+
+
+	--- BLOCK #209 4238-4240, warpins: 1 ---
+	--- END OF BLOCK #209 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #210
+	else
+	JUMP TO BLOCK #211
+	end
+
+
+	--- BLOCK #210 4241-4256, warpins: 1 ---
+	actor = createRole("小道士", "hero", 10, 68, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #210 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #212
+
+
+	--- BLOCK #211 4257-4271, warpins: 1 ---
+	actor = createRole("小道士", "hero", 11, 68, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #211 ---
+
+	FLOW; TARGET BLOCK #212
+
+
+	--- BLOCK #212 4272-4299, warpins: 2 ---
+	僵尸 = createRole("僵尸", 41, 50, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("18级你就可以学习灵魂火符了，这样你就能远程攻击敌人，别忘了佩戴护身符。", nil)
+	delay(0.5)
+	--- END OF BLOCK #212 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #213
+	GO OUT TO BLOCK #214
+
+	--- BLOCK #213 4300-4321, warpins: 2 ---
+	actor:magic(13, 僵尸, nil, DIR.left)
+	delay(1)
+	僵尸:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #213 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #212
+
+
+	--- BLOCK #214 4322-4322, warpins: 1 ---
+	--- END OF BLOCK #214 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #215 4323-4324, warpins: 1 ---
+	--- END OF BLOCK #215 ---
+
+	if skillIndex == 17 then
+	JUMP TO BLOCK #216
+	else
+	JUMP TO BLOCK #220
+	end
+
+
+	--- BLOCK #216 4325-4327, warpins: 1 ---
+	--- END OF BLOCK #216 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #217
+	else
+	JUMP TO BLOCK #218
+	end
+
+
+	--- BLOCK #217 4328-4343, warpins: 1 ---
+	actor = createRole("小道士", "hero", 10, 68, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #217 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #219
+
+
+	--- BLOCK #218 4344-4358, warpins: 1 ---
+	actor = createRole("小道士", "hero", 11, 68, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #218 ---
+
+	FLOW; TARGET BLOCK #219
+
+
+	--- BLOCK #219 4359-4406, warpins: 2 ---
+	actor:say("19级可以学习召唤骷髅，技能等级越高，骷髅宝宝的等级也会越高。", nil)
+	delay(0.5)
+	actor:magic(17, nil, nil, DIR.left)
+	delay(0.5)
+
+	变异骷髅 = createRole("变异骷髅", 23, 37, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 6)
+
+	delay(3)
+	actor:say("想要快速提升召唤熟练度，可以去大刀守卫那儿练习技能。", nil)
+
+	--- END OF BLOCK #219 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #220 4407-4408, warpins: 1 ---
+	--- END OF BLOCK #220 ---
+
+	if skillIndex == 18 then
+	JUMP TO BLOCK #221
+	else
+	JUMP TO BLOCK #227
+	end
+
+
+	--- BLOCK #221 4409-4411, warpins: 1 ---
+	--- END OF BLOCK #221 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #222
+	else
+	JUMP TO BLOCK #223
+	end
+
+
+	--- BLOCK #222 4412-4427, warpins: 1 ---
+	actor = createRole("道士", "hero", 27, 83, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #222 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #224
+
+
+	--- BLOCK #223 4428-4442, warpins: 1 ---
+	actor = createRole("道士", "hero", 24, 83, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #223 ---
+
+	FLOW; TARGET BLOCK #224
+
+
+	--- BLOCK #224 4443-4455, warpins: 2 ---
+	actor:say("20级可以学习隐身术，使用技能能够使大部分怪物都无法洞察你。", nil)
+	delay(0.5)
+	--- END OF BLOCK #224 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #225
+	GO OUT TO BLOCK #226
+
+	--- BLOCK #225 4456-4475, warpins: 2 ---
+	actor:magic(18, nil, nil, DIR.left)
+	delay(0.5)
+	actor:addState("stHidden")
+	delay(1.5)
+
+	--- END OF BLOCK #225 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #224
+
+
+	--- BLOCK #226 4476-4476, warpins: 1 ---
+	--- END OF BLOCK #226 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #227 4477-4478, warpins: 1 ---
+	--- END OF BLOCK #227 ---
+
+	if skillIndex == 19 then
+	JUMP TO BLOCK #228
+	else
+	JUMP TO BLOCK #234
+	end
+
+
+	--- BLOCK #228 4479-4481, warpins: 1 ---
+	--- END OF BLOCK #228 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #229
+	else
+	JUMP TO BLOCK #230
+	end
+
+
+	--- BLOCK #229 4482-4497, warpins: 1 ---
+	actor = createRole("道士", "hero", 27, 83, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #229 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #231
+
+
+	--- BLOCK #230 4498-4512, warpins: 1 ---
+	actor = createRole("道士", "hero", 24, 83, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #230 ---
+
+	FLOW; TARGET BLOCK #231
+
+
+	--- BLOCK #231 4513-4585, warpins: 2 ---
+	actor_1 = createRole("法师", "hero", 243, 56, 0, 0, nil, off2p(2, 1), 7)
+	actor_2 = createRole("法师", "hero", 242, 56, 1, 1, nil, off2p(3, 1), 7)
+	actor_3 = createRole("战士", "hero", 25, 35, 0, 0, nil, off2p(2, 2), 7)
+	actor_4 = createRole("战士", "hero", 22, 35, 1, 1, nil, off2p(1, 1), 7)
+
+	actor:say("21级可以学习集体隐身术，这样你也可以帮助队友实现隐身效果了。", nil)
+	delay(1)
+	--- END OF BLOCK #231 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #232
+	GO OUT TO BLOCK #233
+
+	--- BLOCK #232 4586-4621, warpins: 2 ---
+	actor:magic(19, actor_1, nil, DIR.left)
+	delay(1)
+	actor_1:addState("stHidden")
+	actor_2:addState("stHidden")
+	actor_3:addState("stHidden")
+	actor_4:addState("stHidden")
+	delay(1)
+
+	--- END OF BLOCK #232 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #231
+
+
+	--- BLOCK #233 4622-4622, warpins: 1 ---
+	--- END OF BLOCK #233 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #234 4623-4624, warpins: 1 ---
+	--- END OF BLOCK #234 ---
+
+	if skillIndex == 14 then
+	JUMP TO BLOCK #235
+	else
+	JUMP TO BLOCK #241
+	end
+
+
+	--- BLOCK #235 4625-4627, warpins: 1 ---
+	--- END OF BLOCK #235 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #236
+	else
+	JUMP TO BLOCK #237
+	end
+
+
+	--- BLOCK #236 4628-4643, warpins: 1 ---
+	actor = createRole("道士", "hero", 245, 33, 0, 0, nil, off2p(-2, 0), 7)
+	--- END OF BLOCK #236 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #238
+
+
+	--- BLOCK #237 4644-4658, warpins: 1 ---
+	actor = createRole("道士", "hero", 244, 33, 1, 1, nil, off2p(-2, 0), 7)
+
+	--- END OF BLOCK #237 ---
+
+	FLOW; TARGET BLOCK #238
+
+
+	--- BLOCK #238 4659-4675, warpins: 2 ---
+	actor:say("22级可以学习幽灵盾，能够帮助范围内队友提高魔御。", nil)
+
+	actor.dir = DIR.right
+
+	delay(0.5)
+
+	--- END OF BLOCK #238 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #239
+	GO OUT TO BLOCK #240
+
+	--- BLOCK #239 4676-4692, warpins: 2 ---
+	x, y = getPlayerLocation()
+
+	actor:magic(14, "player", nil, DIR.right)
+	delay(2)
+
+	--- END OF BLOCK #239 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #238
+
+
+	--- BLOCK #240 4693-4693, warpins: 1 ---
+	--- END OF BLOCK #240 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #241 4694-4695, warpins: 1 ---
+	--- END OF BLOCK #241 ---
+
+	if skillIndex == 15 then
+	JUMP TO BLOCK #242
+	else
+	JUMP TO BLOCK #248
+	end
+
+
+	--- BLOCK #242 4696-4698, warpins: 1 ---
+	--- END OF BLOCK #242 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #243
+	else
+	JUMP TO BLOCK #244
+	end
+
+
+	--- BLOCK #243 4699-4714, warpins: 1 ---
+	actor = createRole("道士", "hero", 245, 33, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #243 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #245
+
+
+	--- BLOCK #244 4715-4729, warpins: 1 ---
+	actor = createRole("道士", "hero", 244, 33, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #244 ---
+
+	FLOW; TARGET BLOCK #245
+
+
+	--- BLOCK #245 4730-4742, warpins: 2 ---
+	actor:say("25级可以学习神圣战甲术，能够帮助范围内队友提高防御。", nil)
+	delay(0.5)
+	--- END OF BLOCK #245 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #246
+	GO OUT TO BLOCK #247
+
+	--- BLOCK #246 4743-4755, warpins: 2 ---
+	actor:magic(15, "player", nil, DIR.right)
+	delay(2)
+
+	--- END OF BLOCK #246 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #245
+
+
+	--- BLOCK #247 4756-4756, warpins: 1 ---
+	--- END OF BLOCK #247 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #248 4757-4758, warpins: 1 ---
+	--- END OF BLOCK #248 ---
+
+	if skillIndex == 28 then
+	JUMP TO BLOCK #249
+	else
+	JUMP TO BLOCK #255
+	end
+
+
+	--- BLOCK #249 4759-4761, warpins: 1 ---
+	--- END OF BLOCK #249 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #250
+	else
+	JUMP TO BLOCK #251
+	end
+
+
+	--- BLOCK #250 4762-4777, warpins: 1 ---
+	actor = createRole("道士", "hero", 245, 165, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #250 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #252
+
+
+	--- BLOCK #251 4778-4792, warpins: 1 ---
+	actor = createRole("道士", "hero", 244, 165, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #251 ---
+
+	FLOW; TARGET BLOCK #252
+
+
+	--- BLOCK #252 4793-4820, warpins: 2 ---
+	变异骷髅 = createRole("变异骷髅", 23, 37, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("26级可以学习心灵启示，利用这个技能能在一定时间内查看目标的体力值。", nil)
+	delay(0.5)
+	--- END OF BLOCK #252 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #253
+	GO OUT TO BLOCK #254
+
+	--- BLOCK #253 4821-4833, warpins: 2 ---
+	actor:magic(28, 变异骷髅, nil, DIR.left)
+	delay(2)
+
+	--- END OF BLOCK #253 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #252
+
+
+	--- BLOCK #254 4834-4834, warpins: 1 ---
+	--- END OF BLOCK #254 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #255 4835-4836, warpins: 1 ---
+	--- END OF BLOCK #255 ---
+
+	if skillIndex == 16 then
+	JUMP TO BLOCK #256
+	else
+	JUMP TO BLOCK #262
+	end
+
+
+	--- BLOCK #256 4837-4839, warpins: 1 ---
+	--- END OF BLOCK #256 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #257
+	else
+	JUMP TO BLOCK #258
+	end
+
+
+	--- BLOCK #257 4840-4855, warpins: 1 ---
+	actor = createRole("道士", "hero", 245, 209, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #257 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #259
+
+
+	--- BLOCK #258 4856-4870, warpins: 1 ---
+	actor = createRole("道士", "hero", 244, 209, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #258 ---
+
+	FLOW; TARGET BLOCK #259
+
+
+	--- BLOCK #259 4871-4898, warpins: 2 ---
+	角蝇 = createRole("角蝇", 43, 41, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("28级可以学习困魔咒，能困住范围内的怪物，升级后还可以对付更加强力的怪物。", nil)
+	delay(0.5)
+	--- END OF BLOCK #259 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #260
+	GO OUT TO BLOCK #261
+
+	--- BLOCK #260 4899-4911, warpins: 2 ---
+	actor:magic(16, 角蝇, nil, DIR.left)
+	delay(2)
+
+	--- END OF BLOCK #260 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #259
+
+
+	--- BLOCK #261 4912-4912, warpins: 1 ---
+	--- END OF BLOCK #261 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #262 4913-4914, warpins: 1 ---
+	--- END OF BLOCK #262 ---
+
+	if skillIndex == 29 then
+	JUMP TO BLOCK #263
+	else
+	JUMP TO BLOCK #269
+	end
+
+
+	--- BLOCK #263 4915-4917, warpins: 1 ---
+	--- END OF BLOCK #263 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #264
+	else
+	JUMP TO BLOCK #265
+	end
+
+
+	--- BLOCK #264 4918-4933, warpins: 1 ---
+	actor = createRole("道士", "hero", 245, 209, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #264 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #266
+
+
+	--- BLOCK #265 4934-4948, warpins: 1 ---
+	actor = createRole("道士", "hero", 244, 209, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #265 ---
+
+	FLOW; TARGET BLOCK #266
+
+
+	--- BLOCK #266 4949-5021, warpins: 2 ---
+	actor_1 = createRole("法师", "hero", 243, 56, 0, 0, nil, off2p(2, 1), 7)
+	actor_2 = createRole("法师", "hero", 242, 56, 1, 1, nil, off2p(3, 1), 7)
+	actor_3 = createRole("战士", "hero", 25, 35, 0, 0, nil, off2p(2, 2), 7)
+	actor_4 = createRole("战士", "hero", 22, 35, 1, 1, nil, off2p(1, 1), 7)
+
+	actor:say("33级可以学习群体治愈术，可恢复施放范围内所有玩家的体力值。", nil)
+	delay(0.5)
+	--- END OF BLOCK #266 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #267
+	GO OUT TO BLOCK #268
+
+	--- BLOCK #267 5022-5034, warpins: 2 ---
+	actor:magic(29, actor_1, nil, DIR.left)
+	delay(2)
+
+	--- END OF BLOCK #267 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #266
+
+
+	--- BLOCK #268 5035-5035, warpins: 1 ---
+	--- END OF BLOCK #268 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #269 5036-5037, warpins: 1 ---
+	--- END OF BLOCK #269 ---
+
+	if skillIndex == 30 then
+	JUMP TO BLOCK #270
+	else
+	JUMP TO BLOCK #274
+	end
+
+
+	--- BLOCK #270 5038-5040, warpins: 1 ---
+	--- END OF BLOCK #270 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #271
+	else
+	JUMP TO BLOCK #272
+	end
+
+
+	--- BLOCK #271 5041-5056, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 330, 326, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #271 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #273
+
+
+	--- BLOCK #272 5057-5071, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 333, 326, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #272 ---
+
+	FLOW; TARGET BLOCK #273
+
+
+	--- BLOCK #273 5072-5140, warpins: 2 ---
+	delay(0.5)
+	actor:say("达到35级你已经可以学习召唤神兽了，你的神兽宝宝非常强大。", nil)
+	actor:magic(30, nil, nil, DIR.left)
+	delay(0.5)
+
+	神兽 = createRole("神兽", 54, 170, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 2)
+
+	delay(2)
+
+	神兽 = createRole("神兽", 55, 171, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 4)
+
+	神兽:playAct(ACTS.DIGUP)
+	delay(1)
+
+	--- END OF BLOCK #273 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #274 5141-5142, warpins: 1 ---
+	--- END OF BLOCK #274 ---
+
+	if skillIndex == 37 then
+	JUMP TO BLOCK #275
+	else
+	JUMP TO BLOCK #281
+	end
+
+
+	--- BLOCK #275 5143-5145, warpins: 1 ---
+	--- END OF BLOCK #275 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #276
+	else
+	JUMP TO BLOCK #277
+	end
+
+
+	--- BLOCK #276 5146-5161, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 404, 326, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #276 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #278
+
+
+	--- BLOCK #277 5162-5176, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 405, 326, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #277 ---
+
+	FLOW; TARGET BLOCK #278
+
+
+	--- BLOCK #278 5177-5189, warpins: 2 ---
+	actor:say("你可以学习气功波了，只要是等级不比你高的敌人，你就能推开。", nil)
+	delay(0.5)
+
+	--- END OF BLOCK #278 ---
+
+	for i=1, 2, 1
+	LOOP BLOCK #279
+	GO OUT TO BLOCK #280
+
+	--- BLOCK #279 5190-5264, warpins: 2 ---
+	神兽 = createRole("神兽", 54, 170, 0, 0, 0, nil, pos(actor.x + 1, actor.y), 3)
+	神兽1 = createRole("神兽", 54, 170, 0, 0, 0, nil, pos(actor.x - 1, actor.y), 3)
+
+	delay(1)
+	actor:magic(37, nil, nil, DIR.left)
+	神兽:playAct(ACTS.ACT_BACKSTEP, pos(2, 0), DIR.left)
+	神兽1:playAct(ACTS.ACT_BACKSTEP, pos(-2, 0), DIR.right)
+	delay(2)
+
+	--- END OF BLOCK #279 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #278
+
+
+	--- BLOCK #280 5265-5265, warpins: 1 ---
+	--- END OF BLOCK #280 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #281 5266-5267, warpins: 1 ---
+	--- END OF BLOCK #281 ---
+
+	if skillIndex == 36 then
+	JUMP TO BLOCK #282
+	else
+	JUMP TO BLOCK #288
+	end
+
+
+	--- BLOCK #282 5268-5270, warpins: 1 ---
+	--- END OF BLOCK #282 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #283
+	else
+	JUMP TO BLOCK #284
+	end
+
+
+	--- BLOCK #283 5271-5286, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 404, 326, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #283 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #285
+
+
+	--- BLOCK #284 5287-5301, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 405, 326, 1, 1, nil, off2p(-2, 1), 7)
+
+	--- END OF BLOCK #284 ---
+
+	FLOW; TARGET BLOCK #285
+
+
+	--- BLOCK #285 5302-5314, warpins: 2 ---
+	actor:say("你可以学习无极真气了，能够在大量提高自身的道术。", nil)
+	delay(0.5)
+	--- END OF BLOCK #285 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #286
+	GO OUT TO BLOCK #287
+
+	--- BLOCK #286 5315-5326, warpins: 2 ---
+	actor:magic(36, nil, nil, DIR.left)
+	delay(2)
+
+	--- END OF BLOCK #286 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #285
+
+
+	--- BLOCK #287 5327-5327, warpins: 1 ---
+	--- END OF BLOCK #287 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #294
+
+
+	--- BLOCK #288 5328-5329, warpins: 1 ---
+	--- END OF BLOCK #288 ---
+
+	if skillIndex == 48 then
+	JUMP TO BLOCK #289
+	else
+	JUMP TO BLOCK #294
+	end
+
+
+	--- BLOCK #289 5330-5332, warpins: 1 ---
+	--- END OF BLOCK #289 ---
+
+	if PlayerSex == 0 then
+	JUMP TO BLOCK #290
+	else
+	JUMP TO BLOCK #291
+	end
+
+
+	--- BLOCK #290 5333-5348, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 350, 349, 0, 0, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #290 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #292
+
+
+	--- BLOCK #291 5349-5363, warpins: 1 ---
+	actor = createRole("逍遥天尊", "hero", 351, 349, 1, 1, nil, off2p(-2, 1), 7)
+	--- END OF BLOCK #291 ---
+
+	FLOW; TARGET BLOCK #292
+
+
+	--- BLOCK #292 5364-5391, warpins: 2 ---
+	沃玛卫士 = createRole("沃玛卫士", 19, 151, 0, 0, 0, nil, off2p(2, 1), 7)
+
+	actor:say("47级可以学习道士高级技能噬血书。可以无视地形对敌人造成伤害。", nil)
+	delay(0.5)
+	--- END OF BLOCK #292 ---
+
+	for i=1, 3, 1
+	LOOP BLOCK #293
+	GO OUT TO BLOCK #294
+
+	--- BLOCK #293 5392-5413, warpins: 2 ---
+	actor:magic(48, 沃玛卫士, nil, DIR.left)
+	delay(1)
+	沃玛卫士:playAct(ACTS.STRUCK)
+	delay(1)
+
+	--- END OF BLOCK #293 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #292
+
+
+	--- BLOCK #294 5414-5414, warpins: 42 ---
+	return 
+	--- END OF BLOCK #294 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+
