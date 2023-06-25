@@ -1,0 +1,2412 @@
+--- BLOCK #0 1-64, warpins: 1 ---
+local mapDef = import("..map.def")
+local autoFindPath = class("autoFindPath")
+autoFindPath.pathFinder = pathFinder:create()
+
+table.merge(autoFindPath, {
+	sprMark,
+	openlist,
+	closelist,
+	points,
+	destx,
+	desty,
+	destmap,
+	scriptAuto
+})
+
+autoFindPath.singleMapPathStop = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.sprMark then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.sprMark:removeSelf()
+
+	self.sprMark = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-18, warpins: 2 ---
+	self.points = nil
+	self.destx = nil
+	self.desty = nil
+
+	--- END OF BLOCK #2 ---
+
+	slot1 = if main_scene then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 19-24, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot1 = if main_scene.ui.panels.bigmap then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 25-31, warpins: 1 ---
+	main_scene.ui.panels.bigmap:removeAllFindPath()
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 32-34, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	slot1 = if main_scene then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 35-40, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot1 = if main_scene.ui.panels.bigmapOther then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 41-47, warpins: 1 ---
+	main_scene.ui.panels.bigmapOther:removeAllFindPath()
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 48-48, warpins: 3 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+autoFindPath.multiMapPathStop = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.destmap = nil
+	self.scriptAuto = false
+
+	self.singleMapPathStop(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+autoFindPath.removePoint = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.points then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if 0 < #self.points then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 9-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if main_scene.ui.panels.bigmap then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-30, warpins: 1 ---
+	main_scene.ui.panels.bigmap:removePoint(self.key(self, self.points[1].x, self.points[1].y))
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 31-36, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if main_scene.ui.panels.bigmapOther then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 37-52, warpins: 1 ---
+	main_scene.ui.panels.bigmapOther:removePoint(self.key(self, self.points[1].x, self.points[1].y))
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 53-57, warpins: 2 ---
+	table.remove(self.points, 1)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 58-58, warpins: 3 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+autoFindPath.key = function (self, x, y)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return x*10000 + y
+	--- END OF BLOCK #0 ---
+
+
+
+end
+autoFindPath.search__ = function (self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+	--- BLOCK #0 1-33, warpins: 1 ---
+	local start = cc.p(startX, startY)
+	start.priority = 0
+	local startKey = self.key(self, startX, startY)
+	local openlist = {}
+	openlist[startKey] = start
+	local costlist = {}
+	costlist[startKey] = 0
+	local map = main_scene.ground.map
+	local toBanPoint = def.map.isBanPoint(destX, destY, main_scene.ground.map.mapid)
+	local checkBlock = nil
+
+	--- END OF BLOCK #0 ---
+
+	slot6 = if ignoreRole then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 34-35, warpins: 1 ---
+	function checkBlock(block, banBlock)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not block then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if banBlock then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #2 5-6, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if block ~= "hero" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 7-8, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if block ~= "mon" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 9-10, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if block ~= "npc" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 11-12, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 13-13, warpins: 4 ---
+		slot2 = true
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 14-14, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 36-36, warpins: 1 ---
+	function checkBlock(block, banBlock)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not block then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		slot2 = not banBlock
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #2 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 7-7, warpins: 0 ---
+		slot2 = true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 8-8, warpins: 3 ---
+		return slot2
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 37-45, warpins: 2 ---
+	local function getNeighbors(x, y)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		local n = {}
+		--- END OF BLOCK #0 ---
+
+		for ox=-1, 1, 1
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+		--- BLOCK #1 6-9, warpins: 2 ---
+		--- END OF BLOCK #1 ---
+
+		for oy=-1, 1, 1
+		LOOP BLOCK #2
+		GO OUT TO BLOCK #3
+
+		--- BLOCK #2 10-22, warpins: 2 ---
+		n[self:key(x + ox, y + oy)] = cc.p(x + ox, y + oy)
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+		--- BLOCK #3 23-23, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 24-32, warpins: 1 ---
+		n[self:key(x, y)] = nil
+
+		return n
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	local diagCost = math.sqrt(2)
+
+	local function getCost(pre, next)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if pre.x ~= next.x then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if pre.y == next.y then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-11, warpins: 2 ---
+		return 1
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 12-13, warpins: 1 ---
+		return diagCost
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 14-14, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	local function heuristic(from)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		local dx = from.x - destX
+		local dy = from.y - destY
+
+		return math.sqrt(dx*dx + dy*dy)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local last = nil
+	local cnt = 0
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 46-46, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 47-48, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot5 = if searchLimit then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 49-51, warpins: 1 ---
+	cnt = cnt + 1
+
+	--- END OF BLOCK #6 ---
+
+	if searchLimit < cnt then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 52-54, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 55-60, warpins: 3 ---
+	local bestf = inf
+	local current, curkey = nil
+
+	--- END OF BLOCK #8 ---
+
+	for k, v in pairs(openlist)
+
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #9 61-63, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if v.priority < bestf then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 64-66, warpins: 1 ---
+	bestf = v.priority
+	current = v
+	curkey = k
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 67-68, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #12 69-70, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot22 = if not current then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 71-73, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 74-77, warpins: 2 ---
+	local x = current.x
+	local y = current.y
+	--- END OF BLOCK #14 ---
+
+	if x == destX then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 78-79, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if y == destY then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 80-81, warpins: 1 ---
+	last = current
+
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #17 82-83, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	slot7 = if closeTo then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #18 84-96, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if math.max(math.abs(x - destX), math.abs(y - destY))
+
+	 < closeTo then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 97-98, warpins: 1 ---
+	last = current
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #20 99-107, warpins: 2 ---
+	openlist[curkey] = nil
+
+	--- END OF BLOCK #20 ---
+
+	for _, neiPos in pairs(getNeighbors(x, y))
+
+	LOOP BLOCK #21
+	GO OUT TO BLOCK #29
+
+
+	--- BLOCK #21 108-109, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot13 = if not toBanPoint then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 110-121, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot31 = if not def.map.isBanPoint(neiPos.x, neiPos.y, main_scene.ground.map.mapid)
+
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 122-122, warpins: 2 ---
+	local banBlock = nil
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 123-136, warpins: 2 ---
+	local neikey = self.key(self, neiPos.x, neiPos.y)
+	local curCost = getCost(current, neiPos) + costlist[curkey]
+
+	--- END OF BLOCK #24 ---
+
+	slot34 = if costlist[neikey] then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 137-139, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if curCost < costlist[neikey] then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #26 140-151, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	slot34 = if checkBlock(map.canWalk(map, neiPos.x, neiPos.y, {
+		useBlockInfo = true
+	}).block, banBlock)
+
+	 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 152-158, warpins: 1 ---
+	costlist[neikey] = curCost
+	neiPos.priority = heuristic(neiPos)
+	openlist[neikey] = neiPos
+	neiPos.parent = current
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 159-160, warpins: 4 ---
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #29 161-161, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #30 162-163, warpins: 2 ---
+	--- END OF BLOCK #30 ---
+
+	slot19 = if not last then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 164-166, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 167-167, warpins: 2 ---
+	local points = {}
+
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 168-169, warpins: 2 ---
+	--- END OF BLOCK #33 ---
+
+	slot19 = if last then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #34 170-170, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 171-188, warpins: 1 ---
+	table.insert(points, 1, {
+		x = last.x,
+		y = last.y,
+		key = self.key(self, last.x, last.y)
+	})
+
+	last = last.parent
+
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #33
+
+
+	--- BLOCK #36 189-190, warpins: 1 ---
+	return points
+	--- END OF BLOCK #36 ---
+
+
+
+end
+autoFindPath.getPath = function (self, startX, startY, destX, destY, map, searchLimit)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot7 = if not map then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-5, warpins: 1 ---
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot8 = if not map.file:isValid()
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-13, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-33, warpins: 2 ---
+	local start = cc.p(startX, startY)
+	local goal = cc.p(destX, destY)
+	slot11 = self.pathFinder
+	slot10 = self.pathFinder.find
+	slot12 = {}
+	slot13 = map.file
+	slot14 = start
+	slot15 = goal
+	slot16 = 1
+	--- END OF BLOCK #4 ---
+
+	slot17 = if not searchLimit then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 34-34, warpins: 1 ---
+	slot17 = -1
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 35-37, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot10 = if slot10(slot11, slot12, slot13, slot14, slot15, slot16, slot17)
+
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 38-41, warpins: 1 ---
+	return self.pathFinder:getCurrentPath()
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 42-42, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+autoFindPath.search = function (self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo, ignoreDoorPoint)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "windows" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot9 = if IS_PLAYER_DEBUG then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-18, warpins: 1 ---
+	return self.search__(self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #3 19-27, warpins: 2 ---
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #3 ---
+
+	slot10 = if not map.file:isValid()
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 28-29, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 30-31, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot7 = if not closeTo then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 32-32, warpins: 1 ---
+	closeTo = 1
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 33-35, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	if closeTo <= 1 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 36-43, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot10 = if map.canWalk(map, destX, destY)
+
+	.block then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 44-45, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 46-48, warpins: 3 ---
+	local objBlocks = nil
+	--- END OF BLOCK #10 ---
+
+	slot6 = if ignoreRole then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 49-50, warpins: 1 ---
+	objBlocks = {}
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 51-54, warpins: 1 ---
+	objBlocks = map.getObjeBlocks(map)
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 55-56, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot8 = if not ignoreDoorPoint then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #14 57-65, warpins: 1 ---
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #14 ---
+
+	slot12 = if mapDef.doorPoint[map.mapid] then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #15 66-72, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	for k, v in pairs(mapDef.doorPoint[map.mapid])
+
+	LOOP BLOCK #16
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #16 73-75, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if v.x ~= destX then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #17 76-78, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if v.y ~= destY then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 79-87, warpins: 1 ---
+	table.insert(objBlocks, cc.p(v.x, v.y))
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 88-89, warpins: 4 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #20 90-109, warpins: 3 ---
+	local start = cc.p(startX, startY)
+	local dest = cc.p(destX, destY)
+	slot14 = self.pathFinder
+	slot13 = self.pathFinder.find
+	slot15 = objBlocks
+	slot16 = map.file
+	slot17 = start
+	slot18 = dest
+	slot19 = closeTo
+	--- END OF BLOCK #20 ---
+
+	slot20 = if not searchLimit then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 110-110, warpins: 1 ---
+	slot20 = -1
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 111-113, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	slot13 = if slot13(slot14, slot15, slot16, slot17, slot18, slot19, slot20)
+
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 114-117, warpins: 1 ---
+	return self.pathFinder:getCurrentPath()
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 118-118, warpins: 3 ---
+	return 
+	--- END OF BLOCK #24 ---
+
+
+
+end
+autoFindPath.checkClose = function (self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if device.platform == "windows" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot8 = if IS_PLAYER_DEBUG then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-18, warpins: 1 ---
+	return self.search__(self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #3 19-28, warpins: 2 ---
+	local roles = nil
+	local map = main_scene.ground.map
+
+	--- END OF BLOCK #3 ---
+
+	slot10 = if not map.file:isValid()
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 29-30, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 31-32, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot6 = if ignoreRole then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 33-34, warpins: 1 ---
+	roles = {}
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 35-38, warpins: 1 ---
+	roles = map.getObjeBlocks(map)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 39-57, warpins: 2 ---
+	local start = cc.p(startX, startY)
+	local goal = cc.p(destX, destY)
+	slot13 = self.pathFinder
+	slot12 = self.pathFinder.find
+	slot14 = roles
+	slot15 = map.file
+	slot16 = start
+	slot17 = goal
+	--- END OF BLOCK #8 ---
+
+	slot18 = if not closeTo then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 58-58, warpins: 1 ---
+	slot18 = 1
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 59-60, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot19 = if not searchLimit then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 61-61, warpins: 1 ---
+	slot19 = -1
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 62-62, warpins: 2 ---
+	return slot12(slot13, slot14, slot15, slot16, slot17, slot18, slot19)
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 63-63, warpins: 2 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+autoFindPath.getNeighbors = function (self, prex, prey, map, blockChecker, toBanPoint)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local neighbors = {}
+	--- END OF BLOCK #0 ---
+
+	for i=0, 7, 1
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #11
+
+	--- BLOCK #1 6-24, warpins: 2 ---
+	local cfg = def.role.dir["_" .. i]
+	local x = prex + cfg[1]
+	local y = prey + cfg[2]
+	local info = map.canWalk(map, x, y, {
+		useBlockInfo = true
+	})
+
+	--- END OF BLOCK #1 ---
+
+	slot5 = if not toBanPoint then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 25-36, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot15 = if not def.map.isBanPoint(x, y, main_scene.ground.map.mapid)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 37-37, warpins: 2 ---
+	local banBlock = nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 38-43, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot16 = if blockChecker(info.block, banBlock)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 44-66, warpins: 1 ---
+	table.insert(neighbors, cc.p(x, y))
+
+	local x = prex + cfg[1]*2
+	local y = prey + cfg[2]*2
+	local info = map.canWalk(map, x, y, {
+		useBlockInfo = true
+	})
+
+	--- END OF BLOCK #5 ---
+
+	slot5 = if not toBanPoint then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 67-78, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot19 = if not def.map.isBanPoint(x, y, main_scene.ground.map.mapid)
+
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 79-79, warpins: 2 ---
+	local banBlock = nil
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 80-85, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot20 = if blockChecker(info.block, banBlock)
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 86-101, warpins: 1 ---
+	local pos = cc.p(x, y)
+	pos.isRun = true
+
+	table.insert(neighbors, cc.p(x, y))
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 102-102, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #11 103-103, warpins: 1 ---
+	return neighbors
+	--- END OF BLOCK #11 ---
+
+
+
+end
+autoFindPath.search__ = function (self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+	--- BLOCK #0 1-27, warpins: 1 ---
+	self.closelist = {}
+	self.openlist = {}
+	self.openlist[self.key(self, startX, startY)] = {
+		g = 0,
+		h = 0,
+		f = 0,
+		x = startX,
+		y = startY
+	}
+	local map = main_scene.ground.map
+	local player = main_scene.ground.player
+	local x = destX
+	local y = destY
+
+	local function getg(dir)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		return 10
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local function geth(x, y)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		return math.sqrt(x*x + y*y)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local checkBlock = nil
+
+	--- END OF BLOCK #0 ---
+
+	slot6 = if ignoreRole then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 28-29, warpins: 1 ---
+	function checkBlock(block, banBlock)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not block then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if banBlock then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #2 5-6, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if block ~= "hero" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 7-8, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if block ~= "mon" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 9-10, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if block ~= "npc" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 11-12, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 13-13, warpins: 4 ---
+		slot2 = true
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 14-14, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 30-30, warpins: 1 ---
+	function checkBlock(block, banBlock)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not block then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		slot2 = not banBlock
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #2 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 7-7, warpins: 0 ---
+		slot2 = true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 8-8, warpins: 3 ---
+		return slot2
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 31-45, warpins: 2 ---
+	local toBanPoint = def.map.isBanPoint(x, y, main_scene.ground.map.mapid)
+	local stepCnt = 0
+
+	local function go()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		FLOW; TARGET BLOCK #1
+
+
+		--- BLOCK #1 2-9, warpins: 1 ---
+		local best = nil
+		local fbest = inf
+		stepCnt = stepCnt + 1
+
+		--- END OF BLOCK #1 ---
+
+		slot2 = if searchLimit then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 10-13, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if searchLimit < stepCnt then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 14-15, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 16-20, warpins: 3 ---
+		--- END OF BLOCK #4 ---
+
+		for _, v in pairs(self.openlist)
+
+
+		LOOP BLOCK #5
+		GO OUT TO BLOCK #8
+
+
+		--- BLOCK #5 21-23, warpins: 1 ---
+		local f = v.f
+		--- END OF BLOCK #5 ---
+
+		if f < fbest then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 24-25, warpins: 1 ---
+		fbest = f
+		best = v
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 26-27, warpins: 3 ---
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #8 28-29, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		slot0 = if not best then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 30-31, warpins: 1 ---
+		return false
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 32-34, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		slot2 = if closeTo then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #11 35-43, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		if math.abs(best.x - x)
+		 < closeTo then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #12 44-52, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if math.abs(best.y - y)
+
+		 < closeTo then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #13 53-54, warpins: 1 ---
+		return best
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #14 55-58, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		if best.x == x then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #15 59-62, warpins: 1 ---
+		--- END OF BLOCK #15 ---
+
+		if best.y == y then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 63-63, warpins: 1 ---
+		return best
+
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 64-80, warpins: 6 ---
+		local key = self:key(best.x, best.y)
+		self.closelist[key] = best
+		self.openlist[key] = nil
+		--- END OF BLOCK #17 ---
+
+		for i=0, 7, 1
+		LOOP BLOCK #18
+		GO OUT TO BLOCK #27
+
+		--- BLOCK #18 81-103, warpins: 2 ---
+		local config = def.role.dir["_" .. i]
+		local nextx = best.x + config[1]
+		local nexty = best.y + config[2]
+		local info = map:canWalk(nextx, nexty, {
+			useBlockInfo = true
+		})
+
+		--- END OF BLOCK #18 ---
+
+		slot11 = if not toBanPoint then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 104-115, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		slot11 = if not def.map.isBanPoint(nextx, nexty, main_scene.ground.map.mapid)
+
+		 then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 116-116, warpins: 2 ---
+		local banBlock = nil
+
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 117-124, warpins: 2 ---
+		--- END OF BLOCK #21 ---
+
+		slot12 = if checkBlock(info.block, banBlock, nextx, nexty)
+
+		 then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #22 125-135, warpins: 1 ---
+		local key = self:key(nextx, nexty)
+		--- END OF BLOCK #22 ---
+
+		slot13 = if not self.closelist[key] then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #23 136-140, warpins: 1 ---
+		--- END OF BLOCK #23 ---
+
+		slot13 = if self.openlist[key] then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #25
+		end
+
+
+		--- BLOCK #24 141-141, warpins: 1 ---
+		--- END OF BLOCK #24 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+		--- BLOCK #25 142-170, warpins: 1 ---
+		self.openlist[key] = {
+			x = nextx,
+			y = nexty,
+			g = getg(i),
+			h = geth(nextx - x, nexty - y),
+			f = getg(i) + geth(nextx - x, nexty - y),
+			parent = best
+		}
+
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 171-171, warpins: 4 ---
+		--- END OF BLOCK #26 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #27 172-172, warpins: 1 ---
+		--- END OF BLOCK #27 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #28 173-173, warpins: 0 ---
+		return 
+		--- END OF BLOCK #28 ---
+
+
+
+	end
+
+	local last = nil
+	--- END OF BLOCK #3 ---
+
+	slot7 = if not closeTo then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 46-54, warpins: 1 ---
+	local block = map.canWalk(map, x, y, {
+		useBlockInfo = true
+	}).block
+
+	--- END OF BLOCK #4 ---
+
+	slot15 = if not toBanPoint then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 55-66, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot20 = if not def.map.isBanPoint(x, y, main_scene.ground.map.mapid)
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 67-67, warpins: 2 ---
+	local isBanPoint = nil
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 68-73, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot21 = if checkBlock(block, isBanPoint)
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 74-77, warpins: 1 ---
+	last = go()
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 78-80, warpins: 1 ---
+	last = go()
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 81-86, warpins: 3 ---
+	self.openlist = nil
+	self.closelist = nil
+
+	--- END OF BLOCK #10 ---
+
+	slot18 = if not last then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 87-89, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 90-90, warpins: 2 ---
+	local points = {}
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 91-92, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot18 = if last then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #14 93-93, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 94-111, warpins: 1 ---
+	table.insert(points, 1, {
+		x = last.x,
+		y = last.y,
+		key = self.key(self, last.x, last.y)
+	})
+
+	last = last.parent
+
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #16 112-113, warpins: 1 ---
+	return points
+	--- END OF BLOCK #16 ---
+
+
+
+end
+autoFindPath.mergeRoute = function (self, startX, startY, points)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local tmp = {}
+	tmp.x = startX
+	tmp.y = startY
+	tmp.key = self.key(self, startX, startY)
+	local tpoints = {}
+	local i = 1
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 12-14, warpins: 4 ---
+	--- END OF BLOCK #1 ---
+
+	if i <= #points then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #2 15-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-20, warpins: 1 ---
+	local v = points[i]
+	local v2 = points[i + 1]
+
+	--- END OF BLOCK #3 ---
+
+	slot7 = if v then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #4 21-22, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot8 = if v2 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 23-30, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if v.x - tmp.x == v2.x - v.x then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 31-38, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if v.y - tmp.y == v2.y - v.y then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 39-56, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if math.max(math.abs(v2.x - tmp.x), math.abs(v2.y - tmp.y))
+
+	 <= 2 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 57-62, warpins: 1 ---
+	tpoints[#tpoints + 1] = v2
+	tmp = v2
+	i = i + 2
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #9 63-68, warpins: 3 ---
+	tpoints[#tpoints + 1] = v
+	tmp = v
+	i = i + 1
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #10 69-73, warpins: 2 ---
+	tpoints[#tpoints + 1] = v
+	i = i + 1
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #11 74-74, warpins: 1 ---
+	return tpoints
+	--- END OF BLOCK #11 ---
+
+
+
+end
+autoFindPath.searchForRun = function (self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	self.closeTo = closeTo
+	local points = self.search(self, startX, startY, destX, destY, searchLimit, ignoreRole, closeTo)
+
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not points then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 14-15, warpins: 1 ---
+	return false
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 16-26, warpins: 2 ---
+	self.destx = destX
+	self.desty = destY
+	self.points = self.mergeRoute(self, startX, startY, points)
+
+	return true
+	--- END OF BLOCK #2 ---
+
+
+
+end
+autoFindPath.searching = function (self, x, y, destMapid, searchLimit, closeTo)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	self.singleMapPathStop(self)
+
+	local map = main_scene.ground.map
+	local player = main_scene.ground.player
+	local destx = x
+	local desty = y
+	--- END OF BLOCK #0 ---
+
+	slot3 = if destMapid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 14-19, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if destMapid == main_scene.ground.map.mapid then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 20-22, warpins: 2 ---
+	self.destmap = nil
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #3 23-33, warpins: 1 ---
+	local transferPoints = def.map.getTransferPoint(main_scene.ground.map.mapid, destMapid)
+
+	--- END OF BLOCK #3 ---
+
+	slot10 = if not transferPoints then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 34-43, warpins: 1 ---
+	self.multiMapPathStop(self)
+
+	return main_scene.ui:tip("目标地图不支持自动寻路.")
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #5 44-48, warpins: 1 ---
+	local destblock = true
+
+	--- END OF BLOCK #5 ---
+
+	for _, v in ipairs(transferPoints)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #6 49-56, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot17 = if not map.isObjblock(map, v.x, v.y)
+
+	.block then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 57-61, warpins: 1 ---
+	y = v.y
+	x = v.x
+	destblock = false
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 62-63, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #9 64-65, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot11 = if destblock then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 66-74, warpins: 1 ---
+	self.multiMapPathStop(self)
+
+	return main_scene.ui:tip("寻找不到前往目标点的路径.")
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 75-79, warpins: 3 ---
+	self.destmap = {
+		id = destMapid,
+		x = destx,
+		y = desty
+	}
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 80-91, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot10 = if self.searchForRun(self, player.x, player.y, x, y, searchLimit, false, closeTo)
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #13 92-97, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot10 = if main_scene.ui.panels.bigmap then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 98-112, warpins: 1 ---
+	main_scene.ui.panels.bigmap:change2CurMap()
+	main_scene.ui.panels.bigmap:loadFindPathPoint(self.points)
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 113-118, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot10 = if main_scene.ui.panels.bigmapOther then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #16 119-127, warpins: 1 ---
+	main_scene.ui.panels.bigmapOther:loadFindPathPoint(self.points)
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 128-133, warpins: 1 ---
+	main_scene.ui:tip("寻找不到前往目标点的路径.")
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 134-134, warpins: 3 ---
+	return 
+	--- END OF BLOCK #18 ---
+
+
+
+end
+autoFindPath.research = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.scriptAuto then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.scriptAutoPath(self)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #2 8-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.destmap then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-20, warpins: 1 ---
+	self.searching(self, self.destmap.x, self.destmap.y, self.destmap.id)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #4 21-23, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if self.destx then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 24-26, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot1 = if self.desty then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 27-34, warpins: 1 ---
+	self.searching(self, self.destx, self.desty, nil, nil, self.closeTo)
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 35-37, warpins: 2 ---
+	self.multiMapPathStop(self)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 38-38, warpins: 4 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+autoFindPath.scriptAutoPath = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local path = g_data.bigmap:getScriptPath(main_scene.ground.map.mapid)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if path then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-19, warpins: 1 ---
+	self.scriptAuto = true
+
+	self.searching(self, path.x, path.y)
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 20-21, warpins: 1 ---
+	self.scriptAuto = false
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 22-22, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+return autoFindPath
+--- END OF BLOCK #0 ---
+
+
+

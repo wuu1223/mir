@@ -1,0 +1,118 @@
+--- BLOCK #0 1-19, warpins: 1 ---
+local baseScene = class("baseScene", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(baseScene, {})
+
+baseScene.onEnter = function (self)
+	--- BLOCK #0 1-24, warpins: 1 ---
+	print("baseScene:onEnter")
+
+	local lastNetState = network.getInternetConnectionStatus()
+	local listener = cc.EventListenerCustom:create("CONNECTIVITY_ACTION", function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		local currentState = network.getInternetConnectionStatus()
+
+		print("CONNECTIVITY_ACTION", lastNetState, currentState)
+
+		--- END OF BLOCK #0 ---
+
+		if lastNetState ~= currentState then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 12-15, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if currentState == cc.kCCNetworkStatusNotReachable then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 16-21, warpins: 1 ---
+		lastNetState = 0
+
+		self:onLoseConnect()
+
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 22-27, warpins: 1 ---
+		lastNetState = currentState
+
+		self:onNetworkStateChange(currentState)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 28-28, warpins: 3 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+
+	self.getEventDispatcher(self):addEventListenerWithSceneGraphPriority(listener, self)
+
+	self.networkStatuListener = listener
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+baseScene.onExit = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.getEventDispatcher(self):removeEventListener(self.networkStatuListener)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+baseScene.onLoseConnect = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	print("baseScene:onLoseConnect")
+	assert(false, "should override me")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+baseScene.onNetworkStateChange = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	print("baseScene:onNetworkStateChange")
+	assert(false, "should override me")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return baseScene
+--- END OF BLOCK #0 ---
+
+
+

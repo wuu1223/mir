@@ -1,0 +1,3041 @@
+--- BLOCK #0 1-113, warpins: 1 ---
+local dummy = import(".dummy")
+local guide = import(".guide")
+local stage = import(".stage")
+local videoPlayer = import(".videoPlayer")
+local common = import("..common")
+local mapDef = require("mir2.scenes.main.map.def")
+local util = import(".util")
+runner = {
+	running = 0,
+	scriptCache = {},
+	settingCache = {},
+	routeEffectTex = {},
+	routeEffects = {},
+	dummy = dummy,
+	video = videoPlayer.new()
+}
+
+dummy.setRunner(runner)
+runner.video.setRunner(runner)
+
+runner.current = ...
+
+local function tryCall(proc, finishCallback, ...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local args = {}
+	args[MULTRES] = ...
+
+	return function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		xpcall(proc, function (...)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			print("========== 小助手脚本运行期间发生错误，以下是发生错误时的详细信息 ==========\n", ...)
+			print(debug.traceback("", 2))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, unpack(args))
+		--- END OF BLOCK #0 ---
+
+		slot0 = if finishCallback then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 11-12, warpins: 1 ---
+		finishCallback()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 13-13, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+runner.getScriptCache = function (key)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local playerName = common.getPlayerName()
+	--- END OF BLOCK #0 ---
+
+	if runner.playerName ~= playerName then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-12, warpins: 1 ---
+	runner.settingCache = {}
+	runner.playerName = playerName
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-17, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not runner.settingCache[key] then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 18-26, warpins: 1 ---
+	local data = cache.getHelperSerialize("script" .. key)
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not data[playerName] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-28, warpins: 1 ---
+	data[playerName] = {}
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 29-32, warpins: 2 ---
+	runner.settingCache[key] = data[playerName]
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 33-36, warpins: 2 ---
+	return runner.settingCache[key]
+	--- END OF BLOCK #6 ---
+
+
+
+end
+runner.checkEvt = function (evt, key)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local cache = runner.getScriptCache(evt .. "Guided")
+
+	return cache[key]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.getMap = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not runner.simStage then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	return main_scene.ground.map
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 10-14, warpins: 1 ---
+	return runner.simStage:getMap()
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-15, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+local function getHelperScript(type, env)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local script = runner.scriptCache[type]
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not script then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	local scriptModule, err = nil
+	--- END OF BLOCK #1 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #2 11-23, warpins: 1 ---
+	local filename = nil
+	filename, err = package.searchpath("mir2.helperScript." .. type, package.path)
+	--- END OF BLOCK #2 ---
+
+	slot5 = if filename then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 24-30, warpins: 1 ---
+	scriptModule, err = loadfile(filename)
+
+	--- END OF BLOCK #3 ---
+
+	if scriptModule == nil then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 31-34, warpins: 1 ---
+	return nil, err
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #5 35-41, warpins: 1 ---
+	scriptModule = package.preload["mir2.helperScript." .. type]
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #6 42-49, warpins: 1 ---
+	local key = "mir2.helperScript." .. type
+	scriptModule = package.preload[key]
+
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not scriptModule then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 50-54, warpins: 1 ---
+	return nil, "script not exist. " .. key
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 55-56, warpins: 5 ---
+	--- END OF BLOCK #8 ---
+
+	slot3 = if not scriptModule then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 57-59, warpins: 1 ---
+	return nil, err
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 60-76, warpins: 2 ---
+	script = {}
+
+	setmetatable(script, {
+		__index = env
+	})
+	setfenv(scriptModule, script)
+	scriptModule(filename)
+
+	--- END OF BLOCK #10 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 77-77, warpins: 1 ---
+	return script
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 78-80, warpins: 2 ---
+	runner.scriptCache[type] = script
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 81-81, warpins: 2 ---
+	return script
+	--- END OF BLOCK #13 ---
+
+
+
+end
+
+local function globalDataGetter(_, k)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not k then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-9, warpins: 1 ---
+	local k = string.upper(k)
+
+	--- END OF BLOCK #2 ---
+
+	if k == "PLAYERLEVEL" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 10-14, warpins: 1 ---
+	return main_scene.ground.player.level
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-15, warpins: 0 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #5 16-17, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if k == "PLAYERJOB" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 18-21, warpins: 1 ---
+	return g_data.player.job
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 22-22, warpins: 0 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #8 23-24, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if k == "PLAYERSEX" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 25-28, warpins: 1 ---
+	return g_data.player.sex
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 29-29, warpins: 0 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #11 30-31, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if k == "PLAYERGUILD" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 32-36, warpins: 1 ---
+	return g_data.player.guild.guildName
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 37-37, warpins: 0 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #14 38-39, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if k == "PLAYERISLEADER" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 40-44, warpins: 1 ---
+	return g_data.player:getIsLeader()
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 45-45, warpins: 0 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #17 46-47, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if k == "HASITEM" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 48-51, warpins: 1 ---
+	return function (itemName)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if g_data.bag:getItemWithName(itemName)
+
+		 == nil then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 11-11, warpins: 1 ---
+		slot1 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-12, warpins: 2 ---
+		return slot1
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #19 52-53, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if k == "GETITEMCOUNT" then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 54-57, warpins: 1 ---
+	return function (itemName)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		return g_data.bag:getItemCount(itemName)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #21 58-59, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if k == "GETPLAYERLOCATION" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 60-63, warpins: 1 ---
+	return function ()
+		--- BLOCK #0 1-16, warpins: 1 ---
+		local mapid = main_scene.ground.map.mapid
+		local x = main_scene.ground.player.x
+		local y = main_scene.ground.player.y
+
+		return x, y, mapid
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #23 64-65, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	if k == "HASEQUIP" then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 66-69, warpins: 1 ---
+	return function (equipName)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		return g_data.equip:isEquipped(equipName)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #25 70-71, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if k == "HASMAGIC" then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 72-75, warpins: 1 ---
+	return function (magicId)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if g_data.player:getMagic(magicId)
+
+		 == nil then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-10, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 11-11, warpins: 1 ---
+		slot1 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-12, warpins: 2 ---
+		return slot1
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #27 76-77, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	if k == "GETMAGICLEVEL" then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 78-81, warpins: 1 ---
+	return function (magicId)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		local magic = g_data.player:getMagic(magicId)
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if magic then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-12, warpins: 1 ---
+		return magic.get(magic, "level")
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 13-13, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #29 82-83, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if k == "ISHELPERSHIDNG" then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 84-91, warpins: 1 ---
+	return main_scene.ground.helper:isHiding()
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #31 92-93, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if k == "HELPER" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 94-94, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #33 95-96, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if k == "STAGE" then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 97-101, warpins: 1 ---
+	return runner.simStage
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #35 102-103, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	if k == "FINDNPCWITHNAME" then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 104-106, warpins: 1 ---
+	return function (name)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		return main_scene.ground.map:findNPCWithName(name)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 107-107, warpins: 16 ---
+	return 
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 108-108, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 109-109, warpins: 2 ---
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 110-110, warpins: 2 ---
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 111-111, warpins: 2 ---
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 112-112, warpins: 2 ---
+	--- END OF BLOCK #42 ---
+
+	FLOW; TARGET BLOCK #43
+
+
+	--- BLOCK #43 113-113, warpins: 2 ---
+	--- END OF BLOCK #43 ---
+
+
+
+end
+
+local function updateEnv(script)
+	--- BLOCK #0 1-25, warpins: 1 ---
+	local EVT = {}
+	local env = {}
+	env.EVT = EVT
+	env.waitEvt = function (evt)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		local co = coroutine.running()
+
+		--- END OF BLOCK #0 ---
+
+		if type(evt)
+
+		 ~= "table" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-11, warpins: 1 ---
+		evt = {
+			evt
+		}
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-16, warpins: 2 ---
+		local function evtProc(evtName, ...)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			local args = {}
+			args[MULTRES] = ...
+
+			--- END OF BLOCK #0 ---
+
+			for k, v in pairs(evt)
+
+
+			LOOP BLOCK #1
+			GO OUT TO BLOCK #3
+
+
+			--- BLOCK #1 8-10, warpins: 1 ---
+			EVT[v] = nil
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-12, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+			--- BLOCK #3 13-21, warpins: 1 ---
+			local delayHandler = scheduler.performWithDelayGlobal(function ()
+				--- BLOCK #0 1-9, warpins: 1 ---
+				coroutine.resume(co, evtName, unpack(args))
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, 0)
+
+			--- END OF BLOCK #3 ---
+
+			slot3 = if runner.delayHandlers then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 22-27, warpins: 1 ---
+			table.insert(runner.delayHandlers, delayHandler)
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 28-29, warpins: 2 ---
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end
+
+		--- END OF BLOCK #2 ---
+
+		for k, v in pairs(evt)
+
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #3 17-18, warpins: 1 ---
+		EVT[v] = evtProc
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 19-20, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #5 21-24, warpins: 1 ---
+		return coroutine.yield()
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+	env.onEvent = function (evt, ...)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		local proc = EVT[evt]
+		--- END OF BLOCK #0 ---
+
+		slot1 = if proc then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-22, warpins: 1 ---
+		runner.running = runner.running + 1
+		local evtCo = coroutine.create(tryCall(proc, function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			runner.running = runner.running - 1
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, evt, ...))
+
+		coroutine.resume(evtCo)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 23-23, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	env.playerMoveTo = function (x, y, mapid, closeTo)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		scheduler.performWithDelayGlobal(function ()
+			--- BLOCK #0 1-28, warpins: 1 ---
+			main_scene.ui.console.autoRat:clearAllAct()
+			main_scene.ui.console.autoRat:stop()
+			main_scene.ui.console.controller.autoFindPath:searching(x, y, mapid, nil, closeTo)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, 0)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	env.stopPlayerMove = function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		scheduler.performWithDelayGlobal(function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			main_scene.ui.console.controller.autoFindPath:multiMapPathStop()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, 0)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	env.isPlayerMoving = function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		local points = main_scene.ui.console.controller.autoFindPath.points
+		--- END OF BLOCK #0 ---
+
+		slot1 = if points then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 9-12, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if 0 >= #points then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 13-14, warpins: 1 ---
+		slot1 = false
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 15-15, warpins: 1 ---
+		slot1 = true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 16-16, warpins: 3 ---
+		return slot1
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	setmetatable(env, {
+		__index = runner.baseEnv
+	})
+
+	env._G = env
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(script)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 26-30, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if type(v)
+	 == "function" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 31-34, warpins: 1 ---
+	setfenv(v, env)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 35-36, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 37-45, warpins: 1 ---
+	runner.baseEnv.GUIDE.untilNodeExist = function (self, name, timeout)
+		--- BLOCK #0 1-20, warpins: 1 ---
+		local evt = "target_is_visible:" .. name
+		local co = coroutine.running()
+		EVT[evt] = function (...)
+			--- BLOCK #0 1-16, warpins: 1 ---
+			local args = {}
+			args[MULTRES] = ...
+			EVT[evt] = nil
+			local delayHandler = scheduler.performWithDelayGlobal(function ()
+				--- BLOCK #0 1-8, warpins: 1 ---
+				coroutine.resume(co, unpack(args))
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, 0)
+
+			--- END OF BLOCK #0 ---
+
+			slot2 = if runner.delayHandlers then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-22, warpins: 1 ---
+			table.insert(runner.delayHandlers, delayHandler)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 23-24, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+
+		gd:checkUntilNodeExist(name, function (state)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if state == "ok" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-7, warpins: 1 ---
+			env.onEvent(evt)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 8-12, warpins: 1 ---
+			env.onEvent(evt, "timeout")
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 13-13, warpins: 2 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end, timeout)
+
+		return coroutine.yield()
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	return script, env
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+runner.skip = function ()
+	--- BLOCK #0 1-7, warpins: 1 ---
+	runner.SKIP_PLAY = true
+
+	--- END OF BLOCK #0 ---
+
+	slot0 = if runner.delayHandlers then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 8-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(runner.delayHandlers)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 13-16, warpins: 1 ---
+	scheduler.unscheduleGlobal(v)
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-18, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 19-22, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot0 = if runner.curCo then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-27, warpins: 1 ---
+	coroutine.resume(runner.curCo)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-28, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+runner.init = function ()
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local gd = guide.new()
+	runner.guide = gd
+	--- END OF BLOCK #0 ---
+
+	slot1 = if DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-10, warpins: 1 ---
+	_G.gd = gd
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-162, warpins: 2 ---
+	local env = nil
+	env = {
+		def = def,
+		print = print,
+		type = type,
+		tonumber = tonumber,
+		dump = dump,
+		ipairs = ipairs,
+		pairs = pairs,
+		createRole = dummy.new,
+		ACTS = dummy.acts,
+		color = cc.c4b,
+		pos = cc.p,
+		mapPos = function (gameX, gameY)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			return gameX*mapDef.tile.w, (self.h - gameY)*mapDef.tile.h
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		off2p = util.off2p,
+		off2h = util.off2h,
+		off2t = util.off2t,
+		DIR = def.role.dir,
+		math = math,
+		getfenv = getfenv,
+		getDir = util.getDir,
+		inSet = util.inSet,
+		featu = util.featu,
+		state = dummy.state,
+		string = string,
+		table = table,
+		GUIDE = gd,
+		ITEMS = def.items,
+		action = cca,
+		display = {
+			width = display.width,
+			height = display.height,
+			cx = display.cx,
+			cy = display.cy
+		},
+		sound = sound,
+		delay = function (time)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			local co = coroutine.running()
+			local delayHandler = scheduler.performWithDelayGlobal(function ()
+				--- BLOCK #0 1-5, warpins: 1 ---
+				coroutine.resume(co)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, time)
+
+			--- END OF BLOCK #0 ---
+
+			slot3 = if runner.delayHandlers then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 13-18, warpins: 1 ---
+			table.insert(runner.delayHandlers, delayHandler)
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 19-23, warpins: 2 ---
+			coroutine.yield()
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		bind = function (func, obj, ...)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			local args = {}
+			args[MULTRES] = ...
+
+			return function ()
+				--- BLOCK #0 1-6, warpins: 1 ---
+				return func(obj, unpack(args))
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		assign = function (obj, key, value)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			return function ()
+				--- BLOCK #0 1-5, warpins: 1 ---
+				obj[key] = value
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		createColorLayer = function (color, w, h, parent)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			slot5 = cc.LayerColor
+			slot4 = cc.LayerColor.create
+			--- END OF BLOCK #0 ---
+
+			slot6 = if not color then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 7-13, warpins: 1 ---
+			slot6 = cc.c4b(0, 0, 0, 255)
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 14-15, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			slot7 = if not w then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 16-17, warpins: 1 ---
+			slot7 = display.width
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 18-19, warpins: 2 ---
+			--- END OF BLOCK #4 ---
+
+			slot8 = if not h then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 20-21, warpins: 1 ---
+			slot8 = display.height
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 22-26, warpins: 2 ---
+			slot5 = slot4(slot5, slot6, slot7, slot8)
+			slot4 = slot4(slot5, slot6, slot7, slot8).add2
+			--- END OF BLOCK #6 ---
+
+			slot6 = if not parent then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #7 27-30, warpins: 1 ---
+			--- END OF BLOCK #7 ---
+
+			slot6 = if not runner.simStage then
+			JUMP TO BLOCK #8
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #8 31-31, warpins: 1 ---
+			slot6 = main_scene
+
+			--- END OF BLOCK #8 ---
+
+			FLOW; TARGET BLOCK #9
+
+
+			--- BLOCK #9 32-32, warpins: 3 ---
+			return slot4(slot5, slot6)
+			--- END OF BLOCK #9 ---
+
+
+
+		end,
+		createLabel = function (text, fontSize, outlineSize, params, parent)
+			--- BLOCK #0 1-11, warpins: 1 ---
+			slot6 = an.newLabel(text, fontSize, outlineSize, params)
+			slot5 = an.newLabel(text, fontSize, outlineSize, params).add2
+			--- END OF BLOCK #0 ---
+
+			slot7 = if not parent then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 12-15, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot7 = if not runner.simStage then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 16-16, warpins: 1 ---
+			slot7 = main_scene
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 17-17, warpins: 3 ---
+			return slot5(slot6, slot7)
+			--- END OF BLOCK #3 ---
+
+
+
+		end,
+		createImage = function (name, parent)
+			--- BLOCK #0 1-10, warpins: 1 ---
+			slot3 = res.get2_helper("pic/" .. name)
+			slot2 = res.get2_helper("pic/" .. name).add2
+			--- END OF BLOCK #0 ---
+
+			slot4 = if not parent then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 11-14, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot4 = if not runner.simStage then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 15-15, warpins: 1 ---
+			slot4 = main_scene
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 16-16, warpins: 3 ---
+			return slot2(slot3, slot4)
+			--- END OF BLOCK #3 ---
+
+
+
+		end,
+		createNode = function (parent)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			slot2 = display.newNode()
+			slot1 = display.newNode().add2
+			--- END OF BLOCK #0 ---
+
+			slot3 = if not parent then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 8-11, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot3 = if not runner.simStage then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 12-12, warpins: 1 ---
+			slot3 = main_scene
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 13-13, warpins: 3 ---
+			return slot1(slot2, slot3)
+			--- END OF BLOCK #3 ---
+
+
+
+		end,
+		createFrameAni = function (preFix, start, num, speed, parant)
+			--- BLOCK #0 1-18, warpins: 1 ---
+			local ani = res.getani2("pic/helperScript/" .. preFix .. "%d.png", start, num, speed/1)
+			slot7 = display.newSprite()
+			slot6 = display.newSprite().add2
+			--- END OF BLOCK #0 ---
+
+			slot8 = if not parent then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 19-22, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot8 = if not runner.simStage then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 23-23, warpins: 1 ---
+			slot8 = main_scene
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 24-42, warpins: 3 ---
+			local spr = slot6(slot7, slot8)
+
+			spr.runs(spr, {
+				cc.Animate:create(ani),
+				cca.callFunc(function ()
+					--- BLOCK #0 1-4, warpins: 1 ---
+					--- END OF BLOCK #0 ---
+
+					slot0 = if spr.cb then
+					JUMP TO BLOCK #1
+					else
+					JUMP TO BLOCK #2
+					end
+
+
+					--- BLOCK #1 5-11, warpins: 1 ---
+					local t = spr.cb
+					spr.cb = nil
+
+					t()
+
+					--- END OF BLOCK #1 ---
+
+					FLOW; TARGET BLOCK #2
+
+
+					--- BLOCK #2 12-16, warpins: 2 ---
+					local evtCb = dummy.getEvtCallback()
+
+					--- END OF BLOCK #2 ---
+
+					slot0 = if evtCb then
+					JUMP TO BLOCK #3
+					else
+					JUMP TO BLOCK #4
+					end
+
+
+					--- BLOCK #3 17-19, warpins: 1 ---
+					evtCb("frameAniFinish")
+
+					--- END OF BLOCK #3 ---
+
+					FLOW; TARGET BLOCK #4
+
+
+					--- BLOCK #4 20-20, warpins: 2 ---
+					return 
+					--- END OF BLOCK #4 ---
+
+
+
+				end)
+			})
+
+			return spr
+			--- END OF BLOCK #3 ---
+
+
+
+		end,
+		createSay = function (texts, strWidth, fontSize, dir, dur, parent)
+			--- BLOCK #0 1-3, warpins: 1 ---
+			local node = nil
+			--- END OF BLOCK #0 ---
+
+			if dir == "left" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-11, warpins: 1 ---
+			node = dummy.createSayDL(texts, strWidth, fontSize)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 12-18, warpins: 1 ---
+			node = dummy.createSayDR(texts, strWidth, fontSize)
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 19-20, warpins: 2 ---
+			--- END OF BLOCK #3 ---
+
+			slot4 = if dur then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 21-33, warpins: 1 ---
+			node.runs(node, {
+				cca.delay(dur),
+				cca.removeSelf()
+			})
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 34-37, warpins: 2 ---
+			slot8 = node
+			slot7 = node.add2
+			--- END OF BLOCK #5 ---
+
+			slot9 = if not parent then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #6 38-41, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			slot9 = if not runner.simStage then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 42-42, warpins: 1 ---
+			slot9 = main_scene
+
+			--- END OF BLOCK #7 ---
+
+			FLOW; TARGET BLOCK #8
+
+
+			--- BLOCK #8 43-43, warpins: 3 ---
+			return slot7(slot8, slot9)
+			--- END OF BLOCK #8 ---
+
+
+
+		end,
+		createSayDL = function (texts, strWidth, fontSize, dur, parent)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			return env.createSay(texts, strWidth, fontSize, "left", dur, parent)
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		createSayDR = function (texts, strWidth, fontSize, dur, parent)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			return env.createSay(texts, strWidth, fontSize, "right", dur, parent)
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		runActs = function (acts)
+			--- BLOCK #0 1-16, warpins: 1 ---
+			table.insert(acts, cca.removeSelf())
+
+			slot2 = display.newNode()
+			slot1 = display.newNode().add2
+			--- END OF BLOCK #0 ---
+
+			slot3 = if not runner.simStage then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-17, warpins: 1 ---
+			slot3 = main_scene
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 18-22, warpins: 2 ---
+			return slot1(slot2, slot3):runs(acts)
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		runActsRepeat = function (acts, times)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			slot3 = display.newNode()
+			slot2 = display.newNode().add2
+			--- END OF BLOCK #0 ---
+
+			slot4 = if not runner.simStage then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-10, warpins: 1 ---
+			slot4 = main_scene
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-25, warpins: 2 ---
+			return slot2(slot3, slot4):runs({
+				cca.req(acts, times),
+				cca.removeSelf()
+			})
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		runActsForever = function (acts)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			slot2 = display.newNode()
+			slot1 = display.newNode().add2
+			--- END OF BLOCK #0 ---
+
+			slot3 = if not runner.simStage then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-10, warpins: 1 ---
+			slot3 = main_scene
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-18, warpins: 2 ---
+			return slot1(slot2, slot3):runForever(cca.seq(acts))
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		playVideo = function (videoName, keepAspectRatio)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			scheduler.performWithDelayGlobal(function ()
+				--- BLOCK #0 1-19, warpins: 1 ---
+				runner.video:setEvtCallback(dummy.evtCallback)
+				runner.video:play("res/video/" .. videoName, {
+					keepAspectRatio = keepAspectRatio
+				})
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, 0)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		getDeltaTime = function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			return cc.Director:getInstance():getDeltaTime()
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		enterStage = function (mapid, x, y, params)
+			--- BLOCK #0 1-13, warpins: 1 ---
+			env.delay(0.01)
+			res.purgeCachedData()
+
+			local simStage = nil
+
+			--- END OF BLOCK #0 ---
+
+			if type(params)
+
+			 == "string" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 14-17, warpins: 1 ---
+			params = {
+				image = params
+			}
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #2 18-19, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			slot3 = if not params then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 20-20, warpins: 1 ---
+			params = {}
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 21-37, warpins: 3 ---
+			simStage = stage.new(mapid, x, y, params.image, params.disableSkip)
+
+			simStage.setEvtCallback(simStage, dummy.evtCallback)
+
+			--- END OF BLOCK #4 ---
+
+			slot5 = if not params.trans then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 38-38, warpins: 1 ---
+			slot5 = {}
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 39-43, warpins: 2 ---
+			trans = slot5
+
+			--- END OF BLOCK #6 ---
+
+			slot5 = if runner.simStage then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 44-51, warpins: 1 ---
+			display.replaceScene(simStage, unpack(trans))
+			--- END OF BLOCK #7 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+			--- BLOCK #8 52-63, warpins: 1 ---
+			cc.Director:getInstance():pushScene(simStage, unpack(trans))
+
+			--- END OF BLOCK #8 ---
+
+			FLOW; TARGET BLOCK #9
+
+
+			--- BLOCK #9 64-68, warpins: 2 ---
+			runner.simStage = simStage
+			simStage.runner = runner
+
+			return 
+			--- END OF BLOCK #9 ---
+
+
+
+		end,
+		exitStage = function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if runner.simStage then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 5-18, warpins: 1 ---
+			res.purgeCachedData()
+			cc.Director:getInstance():popScene()
+
+			runner.simStage = nil
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 19-19, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		EFFIDS = mapDef,
+		showEffect = function (etType, pos, dur)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			local map = runner.getMap()
+
+			--- END OF BLOCK #0 ---
+
+			slot4 = if not tolua.isnull(map)
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-17, warpins: 1 ---
+			dummy._showEvents(map, {
+				pos
+			}, etType, dur)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 18-18, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end,
+		SKIP_PLAY = function ()
+			--- BLOCK #0 1-3, warpins: 1 ---
+			return runner.SKIP_PLAY
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		isPanelOpenning = function (name)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			return not not main_scene.ui.panels[name]
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		openPanel = function (name)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			main_scene.ui:showPanel(name)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		checkPlayerSkill = function (id)
+			--- BLOCK #0 1-9, warpins: 1 ---
+			return not not g_data.player:getMagic(id)
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		playerSay = function (str)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			scheduler.performWithDelayGlobal(function ()
+				--- BLOCK #0 1-10, warpins: 1 ---
+				net.send({
+					CM_SAY
+				}, {
+					str
+				})
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end, 0)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		STOP = function ()
+			--- BLOCK #0 1-7, warpins: 1 ---
+			runner.finish()
+			coroutine.yield()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		gl = gl
+	}
+	runner.baseEnv = env
+
+	setmetatable(env, {
+		__index = globalDataGetter
+	})
+
+	--- END OF BLOCK #2 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 163-178, warpins: 1 ---
+	local reged = {}
+
+	local function reg(m)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		reged[m] = true
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	getHelperScript("mod.init", {
+		reg = reg
+	})
+
+	env.mod = {}
+
+	setmetatable(env.mod, {
+		__index = function (_, k)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot2 = if not reged[k] then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 5-21, warpins: 1 ---
+			helper.obj:say("模块" .. k .. "未找到！", cc.c4b(150, 0, 0, 255))
+
+			return 
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-29, warpins: 1 ---
+			local script, err = getHelperScript("mod." .. k, env)
+
+			--- END OF BLOCK #2 ---
+
+			slot3 = if err then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 30-34, warpins: 1 ---
+			print("runner:init mod faild:", k, err)
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 35-40, warpins: 2 ---
+			local _, env = updateEnv(script)
+
+			return function (...)
+				--- BLOCK #0 1-28, warpins: 1 ---
+				local preEvtCallback = dummy.evtCallback
+
+				local function cb(evt, ...)
+					--- BLOCK #0 1-6, warpins: 1 ---
+					env.onEvent(evt, ...)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end
+
+				dummy.setEvtCallback(cb)
+				runner.baseEnv.GUIDE:setEvtCallback(cb)
+
+				local rets = {}
+				rets[MULTRES] = script.main(...)
+
+				dummy.setEvtCallback(preEvtCallback)
+
+				return unpack(rets)
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 41-41, warpins: 2 ---
+			--- END OF BLOCK #5 ---
+
+
+
+		end
+	})
+
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 179-194, warpins: 1 ---
+	local mod = {}
+
+	local function reg(m)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		local script = getHelperScript("mod." .. m, env)
+		mod[m] = script.main
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	env.mod = {}
+
+	setmetatable(env.mod, {
+		__index = function (_, k)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			local script = mod[k]
+			local _, env = updateEnv(script)
+
+			--- END OF BLOCK #0 ---
+
+			slot2 = if script then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 8-10, warpins: 1 ---
+			return function (...)
+				--- BLOCK #0 1-20, warpins: 1 ---
+				local preEvtCallback = dummy.evtCallback
+
+				dummy.setEvtCallback(function (evt, ...)
+					--- BLOCK #0 1-6, warpins: 1 ---
+					env.onEvent(evt, ...)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end)
+
+				local rets = {}
+				rets[MULTRES] = script.main(...)
+
+				dummy.setEvtCallback(preEvtCallback)
+
+				return unpack(rets)
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-12, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	})
+	getHelperScript("mod.init", {
+		reg = reg
+	})
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 195-196, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+
+
+end
+runner.execute_ = function (evtType, key)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < runner.running then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-14, warpins: 1 ---
+	local env = runner.baseEnv
+	local script, err = getHelperScript(evtType, env)
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not script then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #3 15-16, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if err == "script not exist" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 17-22, warpins: 1 ---
+	print("事件对应脚本不存在，事件类型：" .. evtType)
+
+	return 
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 23-23, warpins: 0 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 24-26, warpins: 1 ---
+	print(evtType)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 27-30, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 31-34, warpins: 1 ---
+	error(err)
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 35-35, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 36-38, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot5 = if script.Region then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #11 39-46, warpins: 1 ---
+	local mapid = main_scene.ground.map.mapid
+	--- END OF BLOCK #11 ---
+
+	slot6 = if not script.Region[mapid] then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 47-51, warpins: 1 ---
+	local mapRegion = script.Region["" .. mapid]
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 52-53, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot6 = if mapRegion then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #14 54-66, warpins: 1 ---
+	local x = main_scene.ground.player.x
+	local y = main_scene.ground.player.y
+	local ok = false
+
+	--- END OF BLOCK #14 ---
+
+	for k, v in ipairs(mapRegion)
+
+
+	LOOP BLOCK #15
+	GO OUT TO BLOCK #24
+
+
+	--- BLOCK #15 67-74, warpins: 1 ---
+	slot15 = math.abs(v.x - x)
+	--- END OF BLOCK #15 ---
+
+	slot16 = if not v.radio then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 75-75, warpins: 1 ---
+	slot16 = 2
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 76-77, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	if slot15 < slot16 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #18 78-85, warpins: 1 ---
+	slot15 = math.abs(v.y - y)
+	--- END OF BLOCK #18 ---
+
+	slot16 = if not v.radio then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 86-86, warpins: 1 ---
+	slot16 = 2
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 87-88, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	if slot15 < slot16 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #21 89-90, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if evtType == "enterRegion" then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #22 91-99, warpins: 1 ---
+	key = string.format("%s,%d,%d", mapid, v.x, v.y)
+
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #23 100-101, warpins: 3 ---
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #24 102-103, warpins: 4 ---
+	--- END OF BLOCK #24 ---
+
+	slot1 = if not key then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 104-104, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 105-106, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	slot1 = if key then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #27 107-109, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	slot5 = if script.MaxLevel then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #28 110-113, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	slot5 = if script.MaxLevel[key] then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #29 114-121, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if script.MaxLevel[key] <= main_scene.ground.player.level then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 122-125, warpins: 1 ---
+	print("max level")
+
+	return 
+
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 126-128, warpins: 3 ---
+	--- END OF BLOCK #31 ---
+
+	slot5 = if script.MinLevel then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #32 129-132, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot5 = if script.MinLevel[key] then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #33 133-140, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if main_scene.ground.player.level < script.MinLevel[key] then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 141-144, warpins: 1 ---
+	print("min level")
+
+	return 
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 145-147, warpins: 3 ---
+	--- END OF BLOCK #35 ---
+
+	slot5 = if script.Map then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #36 148-161, warpins: 1 ---
+	print("map")
+	--- END OF BLOCK #36 ---
+
+	slot5 = if not util.inSet(main_scene.ground.map.mapid, script.Map[key])
+
+	 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 162-162, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 163-165, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	slot5 = if script.GuideAlways then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 166-172, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	slot5 = if not util.inSet(key, script.GuideAlways)
+
+	 then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #40 173-182, warpins: 2 ---
+	local cachename = evtType .. "Guided"
+	local data = runner.getScriptCache(cachename)
+	--- END OF BLOCK #40 ---
+
+	if data[key] == nil then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 183-185, warpins: 1 ---
+	data[key] = true
+
+	--- END OF BLOCK #41 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #43
+
+
+	--- BLOCK #42 186-191, warpins: 1 ---
+	print("not always", evtType, key)
+
+	return 
+
+	--- END OF BLOCK #42 ---
+
+	FLOW; TARGET BLOCK #43
+
+
+	--- BLOCK #43 192-207, warpins: 3 ---
+	local c = coroutine.create(tryCall(function (...)
+		--- BLOCK #0 1-18, warpins: 1 ---
+		runner.running = runner.running + 1
+		local _, env = updateEnv(script)
+
+		dummy.setEvtCallback(function (evt, ...)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			env.onEvent(evt, ...)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+		script.main(...)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, runner.finish, key))
+
+	coroutine.resume(c)
+
+	return true
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 208-208, warpins: 2 ---
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 209-209, warpins: 2 ---
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 210-210, warpins: 2 ---
+	--- END OF BLOCK #46 ---
+
+	FLOW; TARGET BLOCK #47
+
+
+	--- BLOCK #47 211-211, warpins: 2 ---
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 212-212, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 213-213, warpins: 2 ---
+	--- END OF BLOCK #49 ---
+
+	FLOW; TARGET BLOCK #50
+
+
+	--- BLOCK #50 214-214, warpins: 2 ---
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 215-215, warpins: 2 ---
+	--- END OF BLOCK #51 ---
+
+
+
+end
+runner.execute = function (...)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if not runner.execute_(...)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	runner.finishCallback = nil
+
+	return false
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-13, warpins: 2 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+
+
+end
+runner.onGlobalEvent = function (evt)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	print("scriptRunner onGlobalEvent ", evt)
+	runner.execute("globalEvent", evt)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onClickHelper = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	runner.execute("clickedHelper")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onNewSkill = function (magicId)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	runner.execute("newSkill", magicId)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onLevelUp = function (level)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	runner.execute("levelUp", level)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onNewItem = function (itemid)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	runner.execute("newItem", itemid)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onKilledMonster = function (MonsterId)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	runner.execute("killedMonster", bossId)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onEnterMap = function (mapid)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	runner.execute("enterMap", mapid)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onOpenPanel = function (name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	runner.execute("openPanel", name)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onBloodChg = function (percent)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	runner.execute("bloodChg", math.floor(percent*100))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.onUpdatePosition = function ()
+	--- BLOCK #0 1-5, warpins: 1 ---
+	runner.execute("enterRegion")
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+runner.finish = function ()
+	--- BLOCK #0 1-18, warpins: 1 ---
+	runner.running = runner.running - 1
+	runner.curCo = nil
+	runner.SKIP_PLAY = nil
+	runner.delayHandlers = nil
+	--- END OF BLOCK #0 ---
+
+	slot0 = if runner.finishCallback then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 19-26, warpins: 1 ---
+	t = runner.finishCallback
+	runner.finishCallback = nil
+
+	t()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 27-27, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+runner.call = function (mod, ...)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < runner.running then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-34, warpins: 2 ---
+	local proc = runner.baseEnv.mod[mod]
+	runner.running = runner.running + 1
+	runner.delayHandlers = {}
+	local evtCo = coroutine.create(tryCall(proc, runner.finish, ...))
+
+	coroutine.resume(evtCo)
+
+	runner.curCo = evtCo
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+runner.init()
+
+return runner
+--- END OF BLOCK #0 ---
+
+
+

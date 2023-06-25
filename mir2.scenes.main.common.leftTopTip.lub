@@ -1,0 +1,145 @@
+--- BLOCK #0 1-21, warpins: 1 ---
+local tip = class("leftTopTip", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(tip, {
+	msgs = {}
+})
+
+tip.ctor = function (self)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	self.msgs = {}
+	self.maxLine = 10
+
+	self.pos(self, 40, display.height - 50 - self.maxLine*22)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+tip.getSpace = function (self)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	return 24
+	--- END OF BLOCK #0 ---
+
+
+
+end
+tip.upt = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(self.msgs)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-11, warpins: 1 ---
+	v.pos(v, 0, (self.maxLine - i)*22)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+tip.show = function (self, text, color)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local msg = nil
+	slot4 = an.newLabel
+	slot5 = text
+	slot6 = 20
+	slot7 = 1
+	slot8 = {}
+	--- END OF BLOCK #0 ---
+
+	slot9 = if not color then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-11, warpins: 1 ---
+	slot9 = display.COLOR_GREEN
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-57, warpins: 2 ---
+	slot8.color = slot9
+	msg = slot4(slot5, slot6, slot7, slot8):add2(self):runs({
+		cc.DelayTime:create(3),
+		cc.FadeOut:create(0.3),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-15, warpins: 1 ---
+			table.removebyvalue(self.msgs, msg)
+			msg:removeSelf()
+			self:upt()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	msg.setCascadeOpacityEnabled(msg, true)
+
+	self.msgs[#self.msgs + 1] = msg
+
+	--- END OF BLOCK #2 ---
+
+	if self.maxLine < #self.msgs then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 58-67, warpins: 1 ---
+	self.msgs[1]:removeSelf()
+	table.remove(self.msgs, 1)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 68-72, warpins: 2 ---
+	self.upt(self)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+return tip
+--- END OF BLOCK #0 ---
+
+
+

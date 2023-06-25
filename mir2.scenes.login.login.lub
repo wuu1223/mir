@@ -1,0 +1,990 @@
+--- BLOCK #0 1-27, warpins: 1 ---
+local scale = 1.8
+local login = class("login", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local loginer = import(".loginer")
+
+table.merge(login, {
+	submitting
+})
+
+login.ctor = function (self, scene, ip, port, loginEndCallback)
+	--- BLOCK #0 1-20, warpins: 1 ---
+	print(scene, ip, port, loginEndCallback)
+
+	self.scene = scene
+
+	self.setNodeEventEnabled(self, true)
+
+	local info = game.loadDeviceInfo()
+	slot6 = game.initLoginer
+	slot7 = loginer
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not info.uuid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 21-28, warpins: 1 ---
+	slot8 = cache.check_uuid("" .. math.random())
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 29-43, warpins: 2 ---
+	self.m = slot6(slot7, slot8)
+
+	self.m:selectServer(ip, port)
+	self.m:setEvtListener(self)
+
+	self.loginEndCallback = loginEndCallback
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+login.onEnter = function (self)
+	--- BLOCK #0 1-85, warpins: 1 ---
+	local scene = self.scene
+
+	res.getui(1, 60):addto(self):center():scale(scale)
+
+	local acInput, pwInput = nil
+
+	local function submit()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("104")
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self.submitting then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-9, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-19, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if string.len(acInput:getText())
+		 < 4 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-26, warpins: 1 ---
+		an.newMsgbox("帐号格式不对", nil, {
+			center = true
+		})
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #4 27-36, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if string.len(pwInput:getText())
+		 < 4 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 37-43, warpins: 1 ---
+		an.newMsgbox("密码格式不对", nil, {
+			center = true
+		})
+
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 44-71, warpins: 1 ---
+		g_data.login.ac = acInput:getText()
+		g_data.login.pw = pwInput:getText()
+
+		self.m:login(g_data.login.ac, g_data.login.pw)
+
+		self._isLoginProc = true
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 72-72, warpins: 3 ---
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	acInput = an.newInput(display.cx + scale*20, display.cy + scale*32, scale*135, scale*36, 32, {
+		label = {
+			"",
+			scale*16
+		},
+		return_call = function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			pwInput:startInput()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):addTo(self)
+	pwInput = an.newInput(display.cx + scale*20, display.cy - scale*1, scale*135, scale*36, 16, {
+		password = true,
+		label = {
+			"",
+			scale*16
+		},
+		return_call = submit
+	}):addTo(self)
+	local account = cache.getAccount()
+
+	--- END OF BLOCK #0 ---
+
+	slot5 = if account then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 86-93, warpins: 1 ---
+	acInput.setText(acInput, account.ac)
+	pwInput.setText(pwInput, account.pw)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 94-269, warpins: 2 ---
+	local function exitCallback()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self.accPanel:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	an.newBtn(res.getuitex(1, 61), function ()
+		--- BLOCK #0 1-29, warpins: 1 ---
+		local lbs = {
+			"用户名",
+			"密　码",
+			"安全码"
+		}
+
+		sound.playSound("104")
+		self:showPanel("注册", {
+			{
+				text = "用户名"
+			},
+			{
+				text = "密　码",
+				password = true
+			},
+			{
+				text = "安全码"
+			}
+		}, {
+			{
+				text = "确　定",
+				cb = function (inputs)
+					--- BLOCK #0 1-4, warpins: 1 ---
+					--- END OF BLOCK #0 ---
+
+					for k, v in pairs(inputs)
+
+					LOOP BLOCK #1
+					GO OUT TO BLOCK #7
+
+
+					--- BLOCK #1 5-11, warpins: 1 ---
+					--- END OF BLOCK #1 ---
+
+					if string.len(v)
+					 < 6 then
+					JUMP TO BLOCK #2
+					else
+					JUMP TO BLOCK #4
+					end
+
+
+					--- BLOCK #2 12-21, warpins: 1 ---
+					an.newMsgbox(lbs[k] .. "的长度不应小于6", nil, {
+						center = true
+					})
+
+					return 
+
+					--- END OF BLOCK #2 ---
+
+					FLOW; TARGET BLOCK #3
+
+
+					--- BLOCK #3 22-22, warpins: 0 ---
+					--- END OF BLOCK #3 ---
+
+					UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+					--- BLOCK #4 23-29, warpins: 1 ---
+					--- END OF BLOCK #4 ---
+
+					slot6 = if string.find(v, "[^%w!@#$]")
+					 then
+					JUMP TO BLOCK #5
+					else
+					JUMP TO BLOCK #6
+					end
+
+
+					--- BLOCK #5 30-37, warpins: 1 ---
+					an.newMsgbox("不允许使用除字母数字及\"!\"\"@\"\"#\"\"$\"以外的特殊字符", function (idx)
+						--- BLOCK #0 1-1, warpins: 1 ---
+						return 
+						--- END OF BLOCK #0 ---
+
+
+
+					end, {
+						center = true
+					})
+
+					return 
+
+					--- END OF BLOCK #5 ---
+
+					FLOW; TARGET BLOCK #6
+
+
+					--- BLOCK #6 38-39, warpins: 4 ---
+					--- END OF BLOCK #6 ---
+
+					UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+					--- BLOCK #7 40-48, warpins: 1 ---
+					self.m:register(unpack(inputs))
+
+					return 
+					--- END OF BLOCK #7 ---
+
+					FLOW; TARGET BLOCK #8
+
+
+					--- BLOCK #8 49-49, warpins: 2 ---
+					--- END OF BLOCK #8 ---
+
+
+
+				end
+			},
+			{
+				text = "绑定游客账号",
+				cb = function ()
+					--- BLOCK #0 1-24, warpins: 1 ---
+					self.accPanel:removeSelf()
+					self:showPanel("绑定游客账号", {
+						{
+							text = "用户名"
+						},
+						{
+							text = "密　码",
+							password = true
+						},
+						{
+							text = "安全码"
+						}
+					}, {
+						{
+							text = "确　定",
+							cb = function (inputs)
+								--- BLOCK #0 1-4, warpins: 1 ---
+								--- END OF BLOCK #0 ---
+
+								for k, v in pairs(inputs)
+
+								LOOP BLOCK #1
+								GO OUT TO BLOCK #7
+
+
+								--- BLOCK #1 5-11, warpins: 1 ---
+								--- END OF BLOCK #1 ---
+
+								if string.len(v)
+								 < 6 then
+								JUMP TO BLOCK #2
+								else
+								JUMP TO BLOCK #4
+								end
+
+
+								--- BLOCK #2 12-21, warpins: 1 ---
+								an.newMsgbox(lbs[k] .. "的长度不应小于6", nil, {
+									center = true
+								})
+
+								return 
+
+								--- END OF BLOCK #2 ---
+
+								FLOW; TARGET BLOCK #3
+
+
+								--- BLOCK #3 22-22, warpins: 0 ---
+								--- END OF BLOCK #3 ---
+
+								UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+								--- BLOCK #4 23-29, warpins: 1 ---
+								--- END OF BLOCK #4 ---
+
+								slot6 = if string.find(v, "[^%w!@#$]")
+								 then
+								JUMP TO BLOCK #5
+								else
+								JUMP TO BLOCK #6
+								end
+
+
+								--- BLOCK #5 30-37, warpins: 1 ---
+								an.newMsgbox("不允许使用除字母数字及\"!\"\"@\"\"#\"\"$\"以外的特殊字符", function (idx)
+									--- BLOCK #0 1-1, warpins: 1 ---
+									return 
+									--- END OF BLOCK #0 ---
+
+
+
+								end, {
+									center = true
+								})
+
+								return 
+
+								--- END OF BLOCK #5 ---
+
+								FLOW; TARGET BLOCK #6
+
+
+								--- BLOCK #6 38-39, warpins: 4 ---
+								--- END OF BLOCK #6 ---
+
+								UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+								--- BLOCK #7 40-48, warpins: 1 ---
+								self.m:bind(unpack(inputs))
+
+								return 
+								--- END OF BLOCK #7 ---
+
+								FLOW; TARGET BLOCK #8
+
+
+								--- BLOCK #8 49-49, warpins: 2 ---
+								--- END OF BLOCK #8 ---
+
+
+
+							end
+						}
+					}, exitCallback)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end
+			}
+		}, exitCallback)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressShow = true
+	}):pos(display.cx - scale*73, display.cy - scale*96):addto(self):scale(scale)
+	an.newBtn(res.getuitex(1, 62), submit, {
+		pressShow = true
+	}):pos(display.cx + scale*59, display.cy - scale*53):addto(self):scale(scale)
+	an.newBtn(res.getuitex(1, 53), function (event)
+		--- BLOCK #0 1-23, warpins: 1 ---
+		sound.playSound("104")
+		self:showPanel("修改密码", {
+			{
+				text = "用户名"
+			},
+			{
+				text = "新密码",
+				password = true
+			},
+			{
+				text = "安全码"
+			}
+		}, {
+			{
+				text = "确　定",
+				cb = function (inputs)
+					--- BLOCK #0 1-4, warpins: 1 ---
+					--- END OF BLOCK #0 ---
+
+					for k, v in pairs(inputs)
+
+					LOOP BLOCK #1
+					GO OUT TO BLOCK #7
+
+
+					--- BLOCK #1 5-11, warpins: 1 ---
+					--- END OF BLOCK #1 ---
+
+					if string.len(v)
+					 < 6 then
+					JUMP TO BLOCK #2
+					else
+					JUMP TO BLOCK #4
+					end
+
+
+					--- BLOCK #2 12-21, warpins: 1 ---
+					an.newMsgbox(lbs[k] .. "的长度不应小于6", nil, {
+						center = true
+					})
+
+					return 
+
+					--- END OF BLOCK #2 ---
+
+					FLOW; TARGET BLOCK #3
+
+
+					--- BLOCK #3 22-22, warpins: 0 ---
+					--- END OF BLOCK #3 ---
+
+					UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+					--- BLOCK #4 23-29, warpins: 1 ---
+					--- END OF BLOCK #4 ---
+
+					slot6 = if string.find(v, "[^%w!@#$]")
+					 then
+					JUMP TO BLOCK #5
+					else
+					JUMP TO BLOCK #6
+					end
+
+
+					--- BLOCK #5 30-37, warpins: 1 ---
+					an.newMsgbox("不允许使用除字母数字及\"!\"\"@\"\"#\"\"$\"以外的特殊字符", function (idx)
+						--- BLOCK #0 1-1, warpins: 1 ---
+						return 
+						--- END OF BLOCK #0 ---
+
+
+
+					end, {
+						center = true
+					})
+
+					return 
+
+					--- END OF BLOCK #5 ---
+
+					FLOW; TARGET BLOCK #6
+
+
+					--- BLOCK #6 38-39, warpins: 4 ---
+					--- END OF BLOCK #6 ---
+
+					UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+					--- BLOCK #7 40-48, warpins: 1 ---
+					self.m:chgPsw(unpack(inputs))
+
+					return 
+					--- END OF BLOCK #7 ---
+
+					FLOW; TARGET BLOCK #8
+
+
+					--- BLOCK #8 49-49, warpins: 2 ---
+					--- END OF BLOCK #8 ---
+
+
+
+				end
+			}
+		}, exitCallback)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressShow = true
+	}):pos(display.cx + scale*46, display.cy - scale*96):addto(self):scale(scale)
+	an.newBtn(res.gettex2("pic/login/bVLogin1.png"), function (event)
+		--- BLOCK #0 1-15, warpins: 1 ---
+		sound.playSound("104")
+		self.m:login(nil, nil, 1)
+
+		self._isLoginProc = true
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/login/bVLogin2.png")
+	}):pos(display.cx - scale*59, display.cy - scale*53):addto(self):scale(1.4):addChild(res.get2("pic/login/youkedenglu.png"):pos(84, 20))
+	an.newBtn(res.getuitex(1, 64), function (event)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		os.exit(1)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressShow = true,
+		size = {
+			36,
+			36
+		}
+	}):pos(display.cx + scale*112, display.cy + scale*86):addto(self):scale(scale)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+login.onExit = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.m:destroy()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+login.onCetSvrEvt = function (self, code, desc, res)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if tolua.isnull(self)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if code == -110 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	desc = "当前设备似乎未曾以游客身份进入过游戏"
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-13, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if self._isLoginProc then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #5 14-17, warpins: 1 ---
+	self._isLoginProc = false
+
+	--- END OF BLOCK #5 ---
+
+	if code == 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 18-26, warpins: 1 ---
+	self.loginEndCallback(res)
+	--- END OF BLOCK #6 ---
+
+	slot4 = if not tolua.isnull(self.accPanel)
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #7 27-31, warpins: 1 ---
+	self.accPanel:removeSelf()
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 32-38, warpins: 1 ---
+	print(code)
+
+	slot4 = an.newMsgbox
+	--- END OF BLOCK #8 ---
+
+	slot5 = if not desc then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 39-39, warpins: 1 ---
+	slot5 = ""
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 40-43, warpins: 2 ---
+	slot4(slot5, function (idx)
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		center = true
+	})
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 44-51, warpins: 1 ---
+	an.newMsgbox(desc, function (idx)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if code == 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-8, warpins: 1 ---
+		self.accPanel:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-9, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		center = true
+	})
+
+	return 
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 52-53, warpins: 4 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 54-54, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+
+
+end
+login.showPanel = function (self, title, inputs, btnsCfg, exitCallback)
+	--- BLOCK #0 1-143, warpins: 1 ---
+	local internal = 55
+	local w = 550
+	local h = internal*#inputs + 160
+	local colorTitle = cc.c3b(0, 176, 240)
+	local colorInputBg = cc.c4b(55, 62, 64, 255)
+	local colorInputTitle = cc.c3b(0, 179, 140)
+	local colorBtnBg = cc.c4b(241, 76, 75, 255)
+	local colorBtnTitle = cc.c3b(255, 255, 255)
+	self.accPanel = display.newNode():size(display.size):addto(display.getRunningScene(), 1)
+
+	self.accPanel:setTouchEnabled(true)
+
+	local layer = display.newScale9Sprite(res.getframe2("pic/login/netease_bg.png"), 0, 0, cc.size(w, h)):add2(self.accPanel):anchor(0.5, 0.5):pos(display.cx, display.cy)
+
+	layer.setTouchEnabled(layer, true)
+	an.newLabel(title, 24, nil, {
+		color = colorTitle
+	}):addTo(layer):anchor(0.5, 0.5):pos(w/2, h - 30)
+	an.newBtn(res.gettex2("pic/login/netease_close.png"), function ()
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if exitCallback then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-5, warpins: 1 ---
+		exitCallback()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 6-6, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		pressBig = true
+	}):addTo(layer):anchor(1, 0.5):pos(w - 15, h - 30)
+
+	local off = 90
+	local inputWids = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(inputs)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 144-219, warpins: 1 ---
+	local iw = 180
+	local ih = 32
+	local ip = an.newInput(0, 0, iw, ih, 12, {
+		label = {
+			"",
+			24
+		},
+		password = v.password
+	}):addTo(layer, 1):pos(w/2 + 20, h - off)
+	local base = display.newColorLayer(colorInputBg):addto(layer)
+
+	base.setContentSize(base, ip.getContentSize(ip))
+	base.setPosition(base, w/2 - iw/2 + 20, h - off - ih/2)
+	an.newLabel(tostring(v.text), 22, nil, {
+		color = colorInputTitle
+	}):addto(base):pos(-10, ih/2):anchor(1, 0.5)
+
+	inputWids[k] = ip
+	off = off + internal
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 220-221, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 222-227, warpins: 1 ---
+	local btns = {}
+	local totalWidth = 0
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(btnsCfg)
+
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 228-291, warpins: 1 ---
+	local text = an.newLabel(v.text, 24, nil, {
+		color = colorBtnTitle
+	})
+	local sz = text.getContentSize(text)
+	local btn = display.newScale9Sprite(res.getframe2("pic/login/netease_btn.png"), 0, 0, cc.size(sz.width + 24, sz.height + 5)):add2(layer):anchor(0, 0)
+
+	btn.addChild(btn, text)
+	text.pos(text, sz.width/2 + 10, sz.height/2 + 2.5):anchor(0.5, 0.5)
+
+	btns[k] = btn
+	totalWidth = totalWidth + btn.getw(btn)
+
+	text.enableClick(text, function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		local inputStrings = {}
+
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(inputWids)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 6-9, warpins: 1 ---
+		inputStrings[k] = v.getString(v)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-11, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 12-16, warpins: 1 ---
+		v.cb(inputStrings)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 292-293, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 294-303, warpins: 1 ---
+	local gap = (w - totalWidth)/(#btnsCfg + 1)
+	local btnY = 30
+	local off = 0
+
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(btns)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 304-313, warpins: 1 ---
+	v.pos(v, off + gap, btnY)
+
+	off = off + gap + v.getw(v)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 314-315, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 316-317, warpins: 1 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+
+return login
+--- END OF BLOCK #0 ---
+
+
+

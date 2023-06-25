@@ -1,0 +1,1506 @@
+--- BLOCK #0 1-54, warpins: 1 ---
+local current = ...
+local common = import("..common", current)
+local runner = import(".scriptRunner")
+local util = import(".util")
+local guide = import(".guide", ...)
+local helper = {}
+helper.runner = runner
+helper.init = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	slot1 = helper
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not cache.getHelper("setting")
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	slot2 = {
+		isHiding = false
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-10, warpins: 2 ---
+	slot1.setting = slot2
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+helper.clickedHelper = function ()
+	--- BLOCK #0 1-7, warpins: 1 ---
+	net.send({
+		CM_CLICK_HELPER
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+helper.show = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+helper.setData = function (self, key, data)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local playerName = common.getPlayerName()
+	slot4 = helper.setting
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not helper.setting[playerName] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-11, warpins: 1 ---
+	slot5 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-23, warpins: 2 ---
+	slot4[playerName] = slot5
+	helper.setting[playerName][key] = data
+
+	cache.saveHelper("setting", helper.setting)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+helper.getData = function (self, key)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local playerName = common.getPlayerName()
+	slot3 = helper.setting
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not helper.setting[playerName] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-11, warpins: 1 ---
+	slot4 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-17, warpins: 2 ---
+	slot3[playerName] = slot4
+
+	return helper.setting[playerName][key]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+helper.clickHide = function (self)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	self.obj:say("以后可以通过助手按钮找我，随叫随到哦")
+	self.obj.role:performWithDelay(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:hide()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 4)
+	self.setData(self, "isHiding", true)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+helper.hide = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not tolua.isnull(helper.obj.role.node)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-17, warpins: 1 ---
+	helper.obj:removeSelf()
+
+	helper.obj = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-18, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+helper.getHelper = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.isHiding(self)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	self.show(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-10, warpins: 2 ---
+	return self.obj
+	--- END OF BLOCK #2 ---
+
+
+
+end
+helper.isHiding = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if helper.obj then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	slot1 = tolua.isnull(helper.obj.role.node)
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 13-14, warpins: 0 ---
+	slot1 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	local ret = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-16, warpins: 3 ---
+	return ret
+	--- END OF BLOCK #4 ---
+
+
+
+end
+helper.enterMap = function (self, mapid)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	runner.onEnterMap(mapid)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+helper.checkFirstLogin = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if helper.checkedFirstLogin then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-6, warpins: 0 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 7-9, warpins: 1 ---
+	helper.checkedFirstLogin = true
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-18, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if g_data.player.ability:get("level")
+	 == 1 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-24, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot1 = if not self.getData(self, "firstLoginGuided")
+
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 25-31, warpins: 1 ---
+	runner.finishCallback = function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self:setData("firstLoginGuided", true)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	runner.onGlobalEvent("firstLogin")
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 32-33, warpins: 3 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 34-34, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+
+
+end
+helper.call = function (mod, ...)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	def.magic.getConfig("skillMagic")
+	def.magic.getConfig("mapMagic")
+	runner.call(mod, ...)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+helper.openPanel = function (self, name)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	runner.onOpenPanel(name)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+helper.bloodChg = function (self, per)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if main_scene.ground.player.level <= 20 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 8-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if per <= 20 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 11-17, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not helper:getData("guided_low_hp")
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-36, warpins: 1 ---
+	helper:setData("guided_low_hp", true)
+	print("bloodChg", helper:getData("guided_low_hp"))
+	runner.call("newbee", "low_hp")
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 37-37, warpins: 4 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+
+scheduler.performWithDelayGlobal(function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot0 = if helper.setting then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-70, warpins: 1 ---
+	_G.helper = helper
+
+	setmetatable(helper, {
+		__newindex = function (_, k, v)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if k == "mod1" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-9, warpins: 1 ---
+			helper:setData("testMod1", v)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #2 10-11, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if k == "mod2" then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 12-18, warpins: 1 ---
+			helper:setData("testMod2", v)
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #4 19-20, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			if k == "mod3" then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 21-27, warpins: 1 ---
+			helper:setData("testMod3", v)
+			--- END OF BLOCK #5 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #6 28-29, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			if k == "mod4" then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #8
+			end
+
+
+			--- BLOCK #7 30-36, warpins: 1 ---
+			helper:setData("testMod4", v)
+			--- END OF BLOCK #7 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #8 37-38, warpins: 1 ---
+			--- END OF BLOCK #8 ---
+
+			if k == "mod5" then
+			JUMP TO BLOCK #9
+			else
+			JUMP TO BLOCK #10
+			end
+
+
+			--- BLOCK #9 39-45, warpins: 1 ---
+			helper:setData("testMod5", v)
+			--- END OF BLOCK #9 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #10 46-47, warpins: 1 ---
+			--- END OF BLOCK #10 ---
+
+			if k == "mod7" then
+			JUMP TO BLOCK #11
+			else
+			JUMP TO BLOCK #12
+			end
+
+
+			--- BLOCK #11 48-54, warpins: 1 ---
+			helper:setData("testMod7", v)
+			--- END OF BLOCK #11 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #12 55-56, warpins: 1 ---
+			--- END OF BLOCK #12 ---
+
+			if k == "mod8" then
+			JUMP TO BLOCK #13
+			else
+			JUMP TO BLOCK #14
+			end
+
+
+			--- BLOCK #13 57-63, warpins: 1 ---
+			helper:setData("testMod8", v)
+			--- END OF BLOCK #13 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #14 64-70, warpins: 1 ---
+			--- END OF BLOCK #14 ---
+
+			if string.sub(k, 3)
+			 == "mod" then
+			JUMP TO BLOCK #15
+			else
+			JUMP TO BLOCK #16
+			end
+
+
+			--- BLOCK #15 71-74, warpins: 1 ---
+			print("只能指定 mod1,mod2,mod3,mod4,mod5,mod7,mod8,当前F6有特殊用途因而不能指定")
+			--- END OF BLOCK #15 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #16 75-76, warpins: 1 ---
+			--- END OF BLOCK #16 ---
+
+			if k == "panel" then
+			JUMP TO BLOCK #17
+			else
+			JUMP TO BLOCK #18
+			end
+
+
+			--- BLOCK #17 77-83, warpins: 1 ---
+			helper:setData("quickKey", v)
+			--- END OF BLOCK #17 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+			--- BLOCK #18 84-88, warpins: 1 ---
+			rawset(helper, k, v)
+
+			--- END OF BLOCK #18 ---
+
+			FLOW; TARGET BLOCK #19
+
+
+			--- BLOCK #19 89-89, warpins: 10 ---
+			return 
+			--- END OF BLOCK #19 ---
+
+
+
+		end
+	})
+
+	local listener = cc.EventListenerKeyboard:create()
+
+	listener.registerScriptHandler(listener, function (keyCode, evt)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if WIN32_OPERATE then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-4, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-9, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if not helper.setting.testMod1 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-10, warpins: 1 ---
+		local mod1 = "skill"
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 11-15, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot3 = if not helper.setting.testMod2 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 16-16, warpins: 1 ---
+		local mod2 = "skill"
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 17-21, warpins: 2 ---
+		--- END OF BLOCK #6 ---
+
+		slot4 = if not helper.setting.testMod3 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 22-22, warpins: 1 ---
+		local mod3 = "skill"
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 23-27, warpins: 2 ---
+		--- END OF BLOCK #8 ---
+
+		slot5 = if not helper.setting.testMod4 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 28-28, warpins: 1 ---
+		local mod4 = "skill"
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 29-33, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		slot6 = if not helper.setting.testMod5 then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 34-34, warpins: 1 ---
+		local mod5 = "skill"
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 35-39, warpins: 2 ---
+		--- END OF BLOCK #12 ---
+
+		slot7 = if not helper.setting.testMod7 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 40-40, warpins: 1 ---
+		local mod7 = "skill"
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 41-45, warpins: 2 ---
+		--- END OF BLOCK #14 ---
+
+		slot8 = if not helper.setting.testMod8 then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 46-46, warpins: 1 ---
+		local mod8 = "skill"
+
+		--- END OF BLOCK #15 ---
+
+		FLOW; TARGET BLOCK #16
+
+
+		--- BLOCK #16 47-48, warpins: 2 ---
+		--- END OF BLOCK #16 ---
+
+		if keyCode == 47 then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 49-54, warpins: 1 ---
+		helper.call("newbee", "firstLogin")
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #18 55-56, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		if keyCode == 48 then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 57-62, warpins: 1 ---
+		helper.call("newbee", "low_hp")
+		--- END OF BLOCK #19 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #20 63-64, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		if keyCode == 49 then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 65-70, warpins: 1 ---
+		helper.call("newbee", "level_7")
+		--- END OF BLOCK #21 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #22 71-72, warpins: 1 ---
+		--- END OF BLOCK #22 ---
+
+		if keyCode == 50 then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 73-78, warpins: 1 ---
+		helper.call("newbee", "level_9")
+		--- END OF BLOCK #23 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #24 79-80, warpins: 1 ---
+		--- END OF BLOCK #24 ---
+
+		if keyCode == 51 then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #25 81-86, warpins: 1 ---
+		helper.call("newbee", "level_10")
+		--- END OF BLOCK #25 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #26 87-88, warpins: 1 ---
+		--- END OF BLOCK #26 ---
+
+		if keyCode == 52 then
+		JUMP TO BLOCK #27
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #27 89-94, warpins: 1 ---
+		helper.call("test", "level_10")
+
+		--- END OF BLOCK #27 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #28 95-96, warpins: 1 ---
+		--- END OF BLOCK #28 ---
+
+		if keyCode == 56 then
+		JUMP TO BLOCK #29
+		else
+		JUMP TO BLOCK #35
+		end
+
+
+		--- BLOCK #29 97-99, warpins: 1 ---
+		--- END OF BLOCK #29 ---
+
+		slot9 = if IS_PLAYER_DEBUG then
+		JUMP TO BLOCK #30
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #30 100-134, warpins: 1 ---
+		package.loaded[guide.current] = nil
+		guide = import(".guide", current)
+
+		gd:disDebug()
+		gd:stop()
+
+		runner.baseEnv.GUIDE = guide.new()
+		_G.gd = runner.baseEnv.GUIDE
+
+		gd:debug()
+
+		--- END OF BLOCK #30 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #31 135-138, warpins: 1 ---
+		--- END OF BLOCK #31 ---
+
+		if _G.GUIDE_DEBUG_OPENED ~= nil then
+		JUMP TO BLOCK #32
+		else
+		JUMP TO BLOCK #33
+		end
+
+
+		--- BLOCK #32 139-142, warpins: 1 ---
+		--- END OF BLOCK #32 ---
+
+		slot9 = if _G.GUIDE_DEBUG_OPENED then
+		JUMP TO BLOCK #33
+		else
+		JUMP TO BLOCK #34
+		end
+
+
+		--- BLOCK #33 143-150, warpins: 2 ---
+		_G.GUIDE_DEBUG_OPENED = false
+
+		gd:debug()
+
+		--- END OF BLOCK #33 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #34 151-158, warpins: 1 ---
+		_G.GUIDE_DEBUG_OPENED = true
+
+		gd:disDebug()
+		--- END OF BLOCK #34 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #35 159-161, warpins: 1 ---
+		--- END OF BLOCK #35 ---
+
+		slot9 = if not IS_PLAYER_DEBUG then
+		JUMP TO BLOCK #36
+		else
+		JUMP TO BLOCK #45
+		end
+
+
+		--- BLOCK #36 162-163, warpins: 1 ---
+		--- END OF BLOCK #36 ---
+
+		if keyCode == 53 then
+		JUMP TO BLOCK #37
+		else
+		JUMP TO BLOCK #38
+		end
+
+
+		--- BLOCK #37 164-168, warpins: 1 ---
+		helper.call(mod7)
+		--- END OF BLOCK #37 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #38 169-170, warpins: 1 ---
+		--- END OF BLOCK #38 ---
+
+		if keyCode == 54 then
+		JUMP TO BLOCK #39
+		else
+		JUMP TO BLOCK #40
+		end
+
+
+		--- BLOCK #39 171-175, warpins: 1 ---
+		helper.call(mod7)
+
+		--- END OF BLOCK #39 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #40 176-177, warpins: 1 ---
+		--- END OF BLOCK #40 ---
+
+		if keyCode == 55 then
+		JUMP TO BLOCK #41
+		else
+		JUMP TO BLOCK #64
+		end
+
+
+		--- BLOCK #41 178-193, warpins: 1 ---
+		local magic = import("..magic", current)
+		local keys = def.magic.getMagicIds(g_data.player.job, false)
+
+		--- END OF BLOCK #41 ---
+
+		for k, v in pairs(keys)
+
+		LOOP BLOCK #42
+		GO OUT TO BLOCK #44
+
+
+		--- BLOCK #42 194-209, warpins: 1 ---
+		net.send({
+			CM_SAY
+		}, {
+			"@doresou " .. def.magic.getMagicConfigByUid(v).name
+		})
+
+		--- END OF BLOCK #42 ---
+
+		FLOW; TARGET BLOCK #43
+
+
+		--- BLOCK #43 210-211, warpins: 2 ---
+		--- END OF BLOCK #43 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #41
+
+
+		--- BLOCK #44 212-212, warpins: 1 ---
+		--- END OF BLOCK #44 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #45 213-214, warpins: 1 ---
+		--- END OF BLOCK #45 ---
+
+		if keyCode == 53 then
+		JUMP TO BLOCK #46
+		else
+		JUMP TO BLOCK #47
+		end
+
+
+		--- BLOCK #46 215-252, warpins: 1 ---
+		package.loaded[current] = nil
+		package.loaded[runner.current] = nil
+
+		cc.Director:getInstance():getEventDispatcher():removeEventListener(listener)
+
+		helper = require(current)
+
+		helper.init()
+
+		main_scene.ground.helper = helper
+
+		print("helper 已重置")
+
+		--- END OF BLOCK #46 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #47 253-254, warpins: 1 ---
+		--- END OF BLOCK #47 ---
+
+		if keyCode == 54 then
+		JUMP TO BLOCK #48
+		else
+		JUMP TO BLOCK #52
+		end
+
+
+		--- BLOCK #48 255-258, warpins: 1 ---
+		--- END OF BLOCK #48 ---
+
+		slot9 = if not _G.resetAutoRat then
+		JUMP TO BLOCK #49
+		else
+		JUMP TO BLOCK #50
+		end
+
+
+		--- BLOCK #49 259-281, warpins: 1 ---
+		package.loaded[main_scene.ui.console.autoRat.current] = nil
+
+		main_scene.ui.console:resetAutoRat()
+		main_scene.ui.console.autoRat:enable()
+		--- END OF BLOCK #49 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #51
+
+
+		--- BLOCK #50 282-288, warpins: 1 ---
+		main_scene.ui.console.autoRat:stop()
+
+		--- END OF BLOCK #50 ---
+
+		FLOW; TARGET BLOCK #51
+
+
+		--- BLOCK #51 289-297, warpins: 2 ---
+		_G.resetAutoRat = not _G.resetAutoRat
+
+		print("helper 已重置1")
+
+		--- END OF BLOCK #51 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #52 298-299, warpins: 1 ---
+		--- END OF BLOCK #52 ---
+
+		if keyCode == 55 then
+		JUMP TO BLOCK #53
+		else
+		JUMP TO BLOCK #59
+		end
+
+
+		--- BLOCK #53 300-315, warpins: 1 ---
+		local magic = import("..magic", current)
+		local keys = def.magic.getMagicIds(g_data.player.job, false)
+
+		--- END OF BLOCK #53 ---
+
+		for k, v in pairs(keys)
+
+
+		LOOP BLOCK #54
+		GO OUT TO BLOCK #58
+
+
+		--- BLOCK #54 316-326, warpins: 1 ---
+		local mg = def.magic.getMagicConfigByUid(v)
+
+		dump(mg)
+		--- END OF BLOCK #54 ---
+
+		slot17 = if mg.name then
+		JUMP TO BLOCK #55
+		else
+		JUMP TO BLOCK #56
+		end
+
+
+		--- BLOCK #55 327-338, warpins: 1 ---
+		net.send({
+			CM_SAY
+		}, {
+			"@doresou " .. mg.name
+		})
+		--- END OF BLOCK #55 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #57
+
+
+		--- BLOCK #56 339-349, warpins: 1 ---
+		net.send({
+			CM_SAY
+		}, {
+			"@doresou " .. mg.heroName
+		})
+		--- END OF BLOCK #56 ---
+
+		FLOW; TARGET BLOCK #57
+
+
+		--- BLOCK #57 350-351, warpins: 3 ---
+		--- END OF BLOCK #57 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #53
+
+
+		--- BLOCK #58 352-355, warpins: 1 ---
+		print("helper 已重置2")
+		--- END OF BLOCK #58 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #59 356-357, warpins: 1 ---
+		--- END OF BLOCK #59 ---
+
+		if keyCode == 57 then
+		JUMP TO BLOCK #60
+		else
+		JUMP TO BLOCK #61
+		end
+
+
+		--- BLOCK #60 358-362, warpins: 1 ---
+		gd:testTwinkle()
+		--- END OF BLOCK #60 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #61 363-364, warpins: 1 ---
+		--- END OF BLOCK #61 ---
+
+		if keyCode == 58 then
+		JUMP TO BLOCK #62
+		else
+		JUMP TO BLOCK #64
+		end
+
+
+		--- BLOCK #62 365-369, warpins: 1 ---
+		--- END OF BLOCK #62 ---
+
+		slot9 = if helper.setting.quickKey then
+		JUMP TO BLOCK #63
+		else
+		JUMP TO BLOCK #64
+		end
+
+
+		--- BLOCK #63 370-378, warpins: 1 ---
+		main_scene.ui:showPanel(helper.setting.quickKey)
+
+		--- END OF BLOCK #63 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #64
+
+
+		--- BLOCK #64 379-379, warpins: 20 ---
+		return 
+		--- END OF BLOCK #64 ---
+
+
+
+	end, cc.Handler.EVENT_KEYBOARD_RELEASED)
+	cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+
+	local _mouseListener = cc.EventListenerMouse:create()
+	local touched = false
+
+	_mouseListener.registerScriptHandler(_mouseListener, function (evt)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not main_scene then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-4, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-19, warpins: 2 ---
+		local controller = main_scene.ui.console.controller
+		local btn_mouse = evt.getMouseButton(evt)
+		local x = evt.getCursorX(evt)
+		local y = evt.getCursorY(evt)
+		--- END OF BLOCK #2 ---
+
+		if btn_mouse == 0 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-20, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #4 21-22, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if btn_mouse == 1 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 23-31, warpins: 1 ---
+		controller.move.step = 2
+
+		controller.handleTouch(controller, {
+			name = "began",
+			x = x,
+			y = y
+		})
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 32-32, warpins: 3 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end, cc.Handler.EVENT_MOUSE_DOWN)
+	_mouseListener.registerScriptHandler(_mouseListener, function (evt)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		local x = evt.getCursorX(evt)
+		local y = evt.getCursorY(evt)
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not main_scene then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 10-10, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 11-18, warpins: 2 ---
+		local controller = main_scene.ui.console.controller
+
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not controller.move.step then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 19-19, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 20-24, warpins: 2 ---
+		local btn_mouse = evt.getMouseButton(evt)
+		--- END OF BLOCK #4 ---
+
+		if btn_mouse == 1 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 25-37, warpins: 1 ---
+		controller.move.step = 2
+
+		main_scene.ui.console.controller:handleTouch({
+			name = "moved",
+			x = x,
+			y = y
+		})
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 38-38, warpins: 2 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end, cc.Handler.EVENT_MOUSE_MOVE)
+	_mouseListener.registerScriptHandler(_mouseListener, function (evt)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		local x = evt.getCursorX(evt)
+		local y = evt.getCursorY(evt)
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not main_scene then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 10-10, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 11-19, warpins: 2 ---
+		local controller = main_scene.ui.console.controller
+		local btn_mouse = evt.getMouseButton(evt)
+
+		--- END OF BLOCK #2 ---
+
+		if btn_mouse == 1 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-32, warpins: 1 ---
+		main_scene.ui.console.controller:handleTouch({
+			name = "ended",
+			x = x,
+			y = y
+		})
+
+		controller.move.step = nil
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 33-33, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, cc.Handler.EVENT_MOUSE_UP)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 71-71, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end, 1)
+
+helper.onUpdateAct = function (self, x, y)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local player = main_scene.ground.player
+
+	--- END OF BLOCK #0 ---
+
+	if x == self.prePlayerX then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if y ~= self.prePlayerY then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 10-19, warpins: 2 ---
+	runner.onUpdatePosition(x, y)
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not self.isHiding(self)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 20-26, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if 15 < player.getDis(player, self.obj)
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 27-30, warpins: 1 ---
+	self.obj:jumpToPlayer()
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 31-33, warpins: 4 ---
+	self.prePlayerX = x
+	self.prePlayerY = y
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return helper
+--- END OF BLOCK #0 ---
+
+
+

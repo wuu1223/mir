@@ -1,0 +1,13 @@
+--- BLOCK #0 1-22, warpins: 1 ---
+scheduler = require("framework.scheduler")
+
+import(".def.init")
+import(".single.init")
+import(".data.init")
+import(".app").new():run()
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

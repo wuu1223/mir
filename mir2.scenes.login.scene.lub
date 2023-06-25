@@ -1,0 +1,1818 @@
+--- BLOCK #0 1-54, warpins: 1 ---
+local current = ...
+local common = import("..main.common.common")
+local scene = class("loginScene", function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return display.newScene("login")
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(scene, {})
+
+scene.ctor = function (self, params)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.setNodeEventEnabled(self, true)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	slot2 = {
+		logout = true
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-31, warpins: 2 ---
+	self.params = slot2
+
+	sound.playMusic("game_over2", true)
+	res.get("chrsel", 22):addto(self):center():fit()
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if MIR2_VERSION then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 32-36, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not ("版本号:" .. MIR2_VERSION) then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 37-37, warpins: 2 ---
+	local strVer = ""
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 38-71, warpins: 2 ---
+	an.newLabel(strVer, 20, 1, {
+		color = cc.c3b(222, 222, 150)
+	}):add2(self):pos(display.width - 5, 5):anchor(1, 0)
+	--- END OF BLOCK #5 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 72-81, warpins: 1 ---
+	self.setKeypadEnabled(self, true)
+	self.addNodeEventListener(self, cc.KEYPAD_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.key == "back" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		an.newMsgbox("是否退出游戏?", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-6, warpins: 1 ---
+			os.exit(1)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 7-7, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, {
+			center = true,
+			hasCancel = true
+		})
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-10, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 82-82, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+scene.onCleanup = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.connectServer = function (self)
+	--- BLOCK #0 1-54, warpins: 1 ---
+	self.logined = false
+	self.loadText = an.newLabel("正在连接服务器, 请稍候...", 20, 1, {
+		color = cc.c3b(255, 255, 0),
+		sc = display.COLOR_BLACK
+	}):anchor(0.5, 0):pos(display.cx, 115):add2(self)
+	local IpPortparam1, IpPortparam2 = string.find(def.ip, ":")
+
+	print("IpPortparam1", IpPortparam1, IpPortparam2, def.ip)
+
+	local IpResult = def.ip
+	local PortResult = "7000"
+	--- END OF BLOCK #0 ---
+
+	if 1 <= IpPortparam2 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 55-74, warpins: 1 ---
+	PortResult = string.sub(def.ip, IpPortparam2 + 1, string.len(def.ip))
+	IpResult = string.sub(def.ip, 1, IpPortparam2 - 1)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 75-84, warpins: 2 ---
+	net.connect(IpResult, PortResult, self, nil, def.areaID)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.chooseList = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.loadText:removeSelf()
+
+	self.loadText = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onEnterTransitionFinish = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.isLogined then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-10, warpins: 1 ---
+	self.isLogined = true
+
+	local function login(isGplusLogin)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not self.params.logout then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-17, warpins: 1 ---
+		self:showLayer("areas", true, handler(self, self.onRepServerList))
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 18-31, warpins: 1 ---
+		self:showLayer("login", def.loginCenterIP, def.loginCenterPort, handler(self, self.loginEnd))
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 32-32, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if self.params then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #3 11-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if g_data.login.isSDKLogin then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #4 16-20, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if type(self.params)
+	 == "table" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #5 21-24, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if self.params.logout then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #6 25-25, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #7 26-26, warpins: 0 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #8 27-29, warpins: 1 ---
+	login()
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #9 30-33, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if device.platform ~= "ios" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 34-37, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if device.platform == "android" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #11 38-41, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 42-46, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot2 = if m2debug.setting.acLogin then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 47-49, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	if DEBUG == 0 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 50-55, warpins: 2 ---
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		login(true)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0)
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 56-57, warpins: 2 ---
+	login()
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 58-59, warpins: 7 ---
+	return 
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 60-60, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+
+
+end
+scene.onEnter = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	cc.Director:getInstance():purgeCachedData()
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onExit = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.showLayer = function (self, name, ...)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.layer.__cname == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-9, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 10-13, warpins: 1 ---
+	self.layer:removeSelf()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-29, warpins: 3 ---
+	self.layer = import("." .. name, current).new(self, ...):addto(self)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+scene.hideLayer = function (self, name)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.layer.__cname == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	self.layer:removeSelf()
+
+	self.layer = nil
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-14, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+scene.reconectFuc = function (self, info)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.reconnectBox then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.reconnectBox:removeSelf()
+
+	self.reconnectBox = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-12, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not self.reconnectBox then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-21, warpins: 1 ---
+	self.reconnectBox = an.newMsgbox(info, function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		center = true,
+		btnTexts = {
+			"重连"
+		}
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-22, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+scene.socketEvent = function (self, data, status)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if status == 2 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	self.reconectFuc(self, "连接服务器失败")
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 8-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if status == 3 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-13, warpins: 1 ---
+	self.reconectFuc(self, "与服务器断开连接")
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-14, warpins: 3 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+scene.onLoseConnect = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	print("scene:onLoseConnect")
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.reconnectBox then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	self.reconnectBox:removeSelf()
+
+	self.reconnectBox = nil
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-18, warpins: 2 ---
+	self.reconnectBox = self.reconectFuc(self, "网络连接已断开!")
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+scene.onNetworkStateChange = function (self, currentState)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local connectable = network.isHostNameReachable("www.baidu.com")
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not tolua.isnull(self.reconnectBox)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 11-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if connectable then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-19, warpins: 1 ---
+	self.reconnectBox:removeSelf()
+
+	self.reconnectBox = nil
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-22, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if connectable then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 23-29, warpins: 1 ---
+	slot4 = self
+	slot3 = self.reconectFuc
+	slot5 = "切换到 "
+	--- END OF BLOCK #5 ---
+
+	if currentState == cc.kCCNetworkStatusReachableViaWiFi then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 30-31, warpins: 1 ---
+	slot6 = "WIFI网络"
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 32-32, warpins: 1 ---
+	slot6 = "蜂窝网络"
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 33-34, warpins: 2 ---
+	slot3(slot4, slot5 .. slot6)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 35-35, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+scene.processMsg = function (self, msg, buf, bufLen)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not msg then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-8, warpins: 1 ---
+	local function tip(str)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		an.newMsgbox(str, nil, {
+			center = true
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local ident = msg.ident
+
+	--- END OF BLOCK #2 ---
+
+	if SM_SERVER_LIST == ident then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-44, warpins: 1 ---
+	g_data.login:setGroupList(msg, buf, bufLen)
+	self.hideLayer(self, "servers")
+	self.chooseList(self)
+
+	local name = g_data.login:getSelectGroup():get("groupName")
+
+	net.send({
+		CM_SELECT_SERVER,
+		param = 1,
+		series = 0,
+		recog = -1,
+		tag = def.useIGW
+	}, {
+		name
+	})
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #4 45-47, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if SM_SELECT_SERVER == ident then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #5 48-50, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if msg.recog == 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #6 51-53, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if msg.series == 2 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 54-57, warpins: 1 ---
+	tip("你选择的服务器满员")
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 58-60, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if msg.series == 3 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 61-64, warpins: 1 ---
+	tip("你选择的服务器正在维护中")
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 65-67, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if msg.series == 4 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 68-70, warpins: 1 ---
+	tip("配置的区组ID或服务器名字不一致")
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 71-74, warpins: 4 ---
+	--- END OF BLOCK #12 ---
+
+	if self.layer.__cname == "areas" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #13 75-78, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot6 = if self.layer.mask then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #14 79-83, warpins: 1 ---
+	self.layer:removeMask()
+
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #15 84-117, warpins: 1 ---
+	local ip = int2ip(MakeLong(msg.tag, msg.series))
+	local port = msg.param
+	local sessionID = msg.recog
+	local serverMsg, buf, bufLen = net.record("TSelectServerMsg", buf, bufLen)
+	local serverMsg2 = getRecord("TSelectServerMsg2")
+	g_data.login.recIP = ip
+	g_data.login.recPort = port
+	g_data.login.recSession = sessionID
+	g_data.login.serverMsg = serverMsg
+
+	--- END OF BLOCK #15 ---
+
+	if serverMsg2.size(serverMsg2)
+	 <= bufLen then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 118-126, warpins: 1 ---
+	net.record(serverMsg2, buf, buflen)
+
+	g_data.login.serverMsg2 = serverMsg2
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 127-133, warpins: 2 ---
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		net.connect(ip, port, self, sessionID)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #18 134-136, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if SM_LOGIN == ident then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #19 137-139, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	slot6 = if IOS_REVIEW then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #20 140-150, warpins: 1 ---
+	print("IOS_REVIEW")
+
+	local info = game.loadDeviceInfo()
+	slot7 = crypto.md5
+	--- END OF BLOCK #20 ---
+
+	slot8 = if not info.uuid then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 151-151, warpins: 1 ---
+	slot8 = "unknow"
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 152-171, warpins: 2 ---
+	local ac = slot7(slot8)
+
+	net.send({
+		CM_LOGIN_AUTH,
+		recog = def.MIR_VERSION_NUMBER,
+		param = net.platformCode()
+	}, {
+		ac,
+		"123456",
+		def.gameType,
+		"mobile-mac-address"
+	})
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #23 172-195, warpins: 1 ---
+	net.send({
+		CM_LOGIN_AUTH,
+		recog = def.MIR_VERSION_NUMBER,
+		param = net.platformCode()
+	}, {
+		g_data.login.ticket,
+		"",
+		def.gameType,
+		"mobile-mac-address"
+	})
+
+	--- END OF BLOCK #23 ---
+
+	if msg.param == 1 then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #24 196-196, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #25 197-199, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if SM_LOGIN_AUTH == ident then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #26 200-202, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if msg.param == 2 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 203-203, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #28 204-206, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	if msg.param == 1 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #29 207-217, warpins: 1 ---
+	local ret1 = getRecord("TLoginIdResult")
+	local ret2 = getRecord("TLoginIdResult2")
+
+	--- END OF BLOCK #29 ---
+
+	if ret1.size(ret1)
+	 < bufLen then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 218-233, warpins: 1 ---
+	net.record(ret2, buf, bufLen)
+
+	g_data.reconnctID = ret2.get(ret2, "reconnectID")
+	g_data.login.loginRet2 = ret2
+
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #31 234-242, warpins: 1 ---
+	net.record(ret1, buf, bufLen)
+
+	g_data.login.loginRet1 = ret1
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 243-247, warpins: 2 ---
+	--- END OF BLOCK #32 ---
+
+	slot8 = if g_data.login.ac then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #33 248-252, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if g_data.login.ac ~= "" then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 253-261, warpins: 1 ---
+	cache.saveAccount(g_data.login.ac, g_data.login.pw)
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 262-266, warpins: 3 ---
+	self.hideLayer(self, "login")
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #36 267-272, warpins: 1 ---
+	dump(msg)
+
+	local str = nil
+
+	--- END OF BLOCK #36 ---
+
+	slot2 = if buf then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 273-279, warpins: 1 ---
+	tip(net.str(buf))
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #38 280-282, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	if msg.recog == -1 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 283-286, warpins: 1 ---
+	tip("[失败]：认证失败")
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #40 287-289, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	if msg.recog == -2 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 290-293, warpins: 1 ---
+	tip("[失败]：认证超时，请重新登录")
+	--- END OF BLOCK #41 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #42 294-296, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	if msg.recog == -3 then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 297-300, warpins: 1 ---
+	tip("[失败]：系统错误")
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #44 301-303, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if msg.recog == -4 then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 304-307, warpins: 1 ---
+	tip("[失败]：系统繁忙，请稍后登录")
+	--- END OF BLOCK #45 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #46 308-310, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if msg.recog == -5 then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 311-314, warpins: 1 ---
+	tip("[失败]：对不起，发生连接错误，请稍后登陆")
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #48 315-317, warpins: 1 ---
+	tip("[失败]：登陆错误")
+
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 318-320, warpins: 7 ---
+	--- END OF BLOCK #49 ---
+
+	slot7 = if self.layer then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #52
+	end
+
+
+	--- BLOCK #50 321-324, warpins: 1 ---
+	--- END OF BLOCK #50 ---
+
+	if self.layer.__cname == "login" then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #52
+	end
+
+
+	--- BLOCK #51 325-327, warpins: 1 ---
+	self.layer.submitting = false
+
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 328-331, warpins: 3 ---
+	--- END OF BLOCK #52 ---
+
+	if self.layer.__cname == "areas" then
+	JUMP TO BLOCK #53
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #53 332-335, warpins: 1 ---
+	--- END OF BLOCK #53 ---
+
+	slot7 = if self.layer.mask then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #54 336-340, warpins: 1 ---
+	self.layer:removeMask()
+
+	--- END OF BLOCK #54 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #55 341-343, warpins: 1 ---
+	--- END OF BLOCK #55 ---
+
+	if SM_CHR_LIST == ident then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #57
+	end
+
+
+	--- BLOCK #56 344-351, warpins: 1 ---
+	g_data.login.roleInfo = {
+		msg = msg,
+		buf = buf,
+		bufLen = bufLen
+	}
+
+	--- END OF BLOCK #56 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #57 352-354, warpins: 1 ---
+	--- END OF BLOCK #57 ---
+
+	if SM_SDOA_AUTH_NOTIFY_RESULT == ident then
+	JUMP TO BLOCK #58
+	else
+	JUMP TO BLOCK #59
+	end
+
+
+	--- BLOCK #58 355-355, warpins: 1 ---
+	--- END OF BLOCK #58 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #59 356-358, warpins: 1 ---
+	--- END OF BLOCK #59 ---
+
+	if SM_SDOA_AUTH_NOTIFY_ERROR == ident then
+	JUMP TO BLOCK #60
+	else
+	JUMP TO BLOCK #61
+	end
+
+
+	--- BLOCK #60 359-359, warpins: 1 ---
+	--- END OF BLOCK #60 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #61 360-362, warpins: 1 ---
+	--- END OF BLOCK #61 ---
+
+	if SM_REQUIRE_MIBAO == ident then
+	JUMP TO BLOCK #62
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #62 363-371, warpins: 1 ---
+	g_data.security:setLoginBit(msg, buf, bufLen)
+
+	--- END OF BLOCK #62 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #63 372-374, warpins: 1 ---
+	--- END OF BLOCK #63 ---
+
+	if SM_NEED_VALIDATE_IMAGE == ident then
+	JUMP TO BLOCK #64
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #64 375-385, warpins: 1 ---
+	local input = nil
+	slot7 = an.newMsgbox
+	slot8 = "图形验证码: "
+
+	function slot9(idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-7, warpins: 1 ---
+		os.exit(1)
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #2 8-9, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-22, warpins: 1 ---
+		net.send({
+			CM_SUBMIT_VALIDATE_IMAGE
+		}, {
+			input:getString()
+		})
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #4 23-24, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if idx == 3 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 25-30, warpins: 1 ---
+		net.send({
+			CM_SUBMIT_VALIDATE_IMAGE,
+			param = 1
+		})
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 31-31, warpins: 4 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	slot10 = {
+		disableScroll = true,
+		hasCancel = true
+	}
+	slot11 = {
+		"取消",
+		"确定"
+	}
+	--- END OF BLOCK #64 ---
+
+	if 0 < msg.param then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #66
+	end
+
+
+	--- BLOCK #65 386-387, warpins: 1 ---
+	slot12 = "换一张"
+	--- END OF BLOCK #65 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #67
+
+
+	--- BLOCK #66 388-388, warpins: 1 ---
+	slot12 = nil
+	--- END OF BLOCK #66 ---
+
+	FLOW; TARGET BLOCK #67
+
+
+	--- BLOCK #67 389-454, warpins: 2 ---
+	slot11[3] = slot12
+	slot10.btnTexts = slot11
+	local msgbox = slot7(slot8, slot9, slot10)
+	input = an.newInput(130, msgbox.bg:geth() - 47, 200, 30, 8, {
+		label = {
+			"",
+			18,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit2.png"),
+			offset = {
+				-10,
+				0
+			}
+		},
+		getWorldY_call = function ()
+			--- BLOCK #0 1-2, warpins: 1 ---
+			return 250
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):add2(msgbox.bg):anchor(0, 0)
+	local tex = ycFunction:makeTexWithRawData(buf, msg.tag, msg.series, bufLen)
+
+	display.newSprite(tex):add2(msgbox.bg):anchor(0, 0):pos(30, 94)
+
+	--- END OF BLOCK #67 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #68 455-457, warpins: 1 ---
+	--- END OF BLOCK #68 ---
+
+	if SM_LOGIN_ALREADY_ONLINE == ident then
+	JUMP TO BLOCK #69
+	else
+	JUMP TO BLOCK #72
+	end
+
+
+	--- BLOCK #69 458-460, warpins: 1 ---
+	--- END OF BLOCK #69 ---
+
+	if msg.recog == 1 then
+	JUMP TO BLOCK #70
+	else
+	JUMP TO BLOCK #71
+	end
+
+
+	--- BLOCK #70 461-468, warpins: 1 ---
+	self.kickoutBox = an.newMsgbox("此账号目前在线，是否强行登录?", function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 3-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if g_data.login.roleInfo.msg.recog == 1 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #2 10-32, warpins: 1 ---
+		self:showLayer("door")
+		g_data.select:receiveChrs(g_data.login.roleInfo.msg, g_data.login.roleInfo.buf, g_data.login.roleInfo.bufLen)
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #3 33-36, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot1 = if self.layer then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #4 37-41, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if self.layer.__cname == "areas" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #5 42-46, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot1 = if self.layer.mask then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 47-51, warpins: 1 ---
+		self.layer:removeMask()
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 52-58, warpins: 6 ---
+		slot1 = net.send
+		slot2 = {
+			CM_LOGIN_ALREADY_ONLINE
+		}
+		--- END OF BLOCK #7 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 59-60, warpins: 1 ---
+		slot3 = 1
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 61-61, warpins: 1 ---
+		slot3 = 0
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 62-64, warpins: 2 ---
+		slot2.param = slot3
+
+		slot1(slot2)
+
+		return 
+		--- END OF BLOCK #10 ---
+
+
+
+	end, {
+		center = true,
+		hasCancel = true
+	})
+
+	--- END OF BLOCK #70 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #71 469-490, warpins: 1 ---
+	self.showLayer(self, "door")
+	g_data.select:receiveChrs(g_data.login.roleInfo.msg, g_data.login.roleInfo.buf, g_data.login.roleInfo.bufLen)
+	--- END OF BLOCK #71 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #72 491-493, warpins: 1 ---
+	--- END OF BLOCK #72 ---
+
+	if SM_LOGIN_QUEUE == ident then
+	JUMP TO BLOCK #73
+	else
+	JUMP TO BLOCK #74
+	end
+
+
+	--- BLOCK #73 494-500, warpins: 1 ---
+	g_data.login:setQueueData(msg)
+	--- END OF BLOCK #73 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #74 501-503, warpins: 1 ---
+	--- END OF BLOCK #74 ---
+
+	if SM_SELCHR_ERR == ident then
+	JUMP TO BLOCK #75
+	else
+	JUMP TO BLOCK #76
+	end
+
+
+	--- BLOCK #75 504-510, warpins: 1 ---
+	an.newMsgbox("服务器维护中，请稍后再试", nil, {
+		center = true
+	})
+
+	--- END OF BLOCK #75 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #77
+
+
+	--- BLOCK #76 511-513, warpins: 1 ---
+	return false
+	--- END OF BLOCK #76 ---
+
+	FLOW; TARGET BLOCK #77
+
+
+	--- BLOCK #77 514-516, warpins: 23 ---
+	return true
+	--- END OF BLOCK #77 ---
+
+	FLOW; TARGET BLOCK #78
+
+
+	--- BLOCK #78 517-517, warpins: 2 ---
+	--- END OF BLOCK #78 ---
+
+
+
+end
+scene.loginEnd = function (self, data)
+	--- BLOCK #0 1-29, warpins: 1 ---
+	print("loginEnd ok", data)
+
+	g_data.login.phone = data.phone
+
+	g_data.login:setForceList(data.list.forces)
+	g_data.login:setNetLastName(data.last)
+
+	g_data.login.ticket = data.ticket
+
+	self.connectServer(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.onRepServerList = function (self)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	def.lazyLoadConfig()
+	self.showLayer(self, "login", def.loginCenterIP, def.loginCenterPort, handler(self, self.loginEnd))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+local function getServerList(callback)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+scene.ERRCODE_INIT = {
+	[0] = "成功",
+	[-10862710.0] = "未初始化错误",
+	[-10862709.0] = "用户未登录",
+	[-10862703.0] = "参数错误",
+	[-10862705.0] = "正在支付，请稍后",
+	[-10862901.0] = "初始化失败",
+	[-10862706.0] = "支付失败",
+	[-10862707.0] = "系统错误，请稍后重试(与服务端建立安全通信通道失败)",
+	[-10862712.0] = "支付取消",
+	[-10862708.0] = "登录失败",
+	[-10862801.0] = "请绑定游客至G家账号",
+	[-10862714.0] = "用户已经登录，不能重复登录",
+	[-10862701.0] = "系统错误",
+	[-10862704.0] = "无ticket错误",
+	[-10862802.0] = "游客升级成功",
+	[-10862713.0] = "服务器异常",
+	[-10862702.0] = "网络错误",
+	[-10862711.0] = "登录取消(接入方通常要对这个参数做些处理)",
+	[-10862750.0] = "当前渠道不支持此扩展方法"
+}
+scene.gplusInitEnd = function (self, code, msg)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+scene.gplusLoginEnd = function (self, code, msg, ticket, userid, phone)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return scene
+--- END OF BLOCK #0 ---
+
+
+

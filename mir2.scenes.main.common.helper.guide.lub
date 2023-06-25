@@ -1,0 +1,3997 @@
+--- BLOCK #0 1-19, warpins: 1 ---
+local current = ...
+local guide = class("guide")
+guide.SWALLOW_PRIORITY = -10000000
+guide.TIP_ZORDER = 1000000
+guide.current = current
+guide.ctor = function (self)
+	--- BLOCK #0 1-25, warpins: 1 ---
+	self.dragGuideImage_ = {}
+	self.twinkleNodeStops_ = {}
+	self.widgetCheckers_ = {}
+	self.hightLights_ = {}
+	self.preTouchPosition = {}
+	self.tipTexts_ = {}
+	self.currentFocus = nil
+	self.evtCallback_ = nil
+	local handler = nil
+
+	local function createGuideLayer()
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if main_scene then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 4-15, warpins: 1 ---
+		self.guideLayer = display.newNode()
+
+		--- END OF BLOCK #1 ---
+
+		slot0 = if not tolua.isnull(self.guideLayer)
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 16-20, warpins: 1 ---
+		self.guideLayer:removeFromParent()
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 21-40, warpins: 2 ---
+		self.guideLayer:add2(main_scene)
+		self.guideLayer:setNodeEventEnabled(true)
+
+		self.guideLayer.onCleanup = function (self)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			handler = scheduler.scheduleUpdateGlobal(createGuideLayer, 0)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		scheduler.unscheduleGlobal(handler)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 41-41, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	handler = scheduler.scheduleUpdateGlobal(createGuideLayer)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.getEventNodesByPos = function (self, pos)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local nodes = {}
+
+	traversalNodeTree(main_scene, function (n)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if cc.Node.hitTest(n, pos, false)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 10-14, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if n.getName(n)
+		 ~= "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 15-19, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if n.getName(n)
+		 ~= "nameLabel_byGuide" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-24, warpins: 1 ---
+		table.insert(nodes, n)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 25-26, warpins: 4 ---
+		return true
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+
+	return nodes
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.setEvtCallback = function (self, func)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.evtCallback_ = func
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+--- END OF BLOCK #0 ---
+
+if 0 < DEBUG then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #2
+end
+
+
+--- BLOCK #1 20-35, warpins: 1 ---
+guide.debug = function (self)
+	--- BLOCK #0 1-44, warpins: 1 ---
+	self.debug = true
+	self._mouseEventListener = cc.EventListenerMouse:create()
+
+	self._mouseEventListener:registerScriptHandler(handler(self, self.onMouseMove), cc.Handler.EVENT_MOUSE_MOVE)
+	self._mouseEventListener:registerScriptHandler(handler(self, self.onMouseDown), cc.Handler.EVENT_MOUSE_DOWN)
+
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+	eventDispatcher.addEventListenerWithFixedPriority(eventDispatcher, self._mouseEventListener, 1000)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.disDebug = function (self)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+	eventDispatcher.removeEventListener(eventDispatcher, self._mouseEventListener)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local oleListenerAdder = cc.Node.addNodeEventListener
+cc.Node.addNodeEventListener = function (self, evt, hdl, tag, priority)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local stack = debug.traceback()
+	local node = self
+
+	--- END OF BLOCK #0 ---
+
+	if evt == cc.NODE_TOUCH_EVENT then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-13, warpins: 1 ---
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not tolua.isnull(node)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #1 7-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if main_scene then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #2 10-13, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot0 = if main_scene.ui then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #3 14-19, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if node:getName()
+		 == "" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #4 20-25, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		for k, v in pairs(main_scene.ui.panels)
+
+		LOOP BLOCK #5
+		GO OUT TO BLOCK #8
+
+
+		--- BLOCK #5 26-31, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot5 = if isChildOf(node, v)
+
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 32-64, warpins: 1 ---
+		local pos = node:convertToWorldSpace(cc.p(0, 0))
+		pos = v.convertToNodeSpace(v, pos)
+
+		node:setName(k .. string.format("(%s,%s)", math.floor(pos.x), math.floor(pos.y)))
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #7 65-66, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #8 67-67, warpins: 6 ---
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end, 0)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-21, warpins: 2 ---
+	return oleListenerAdder(self, evt, hdl, tag, priority)
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guide.onMouseMove = function (self, event)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.__handler then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.__handler)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-24, warpins: 2 ---
+	local mousePos = cc.p(event.getCursorX(event), event.getCursorY(event))
+	self.__handler = scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		local nodes = self:getEventNodesByPos(mousePos)
+		slot1 = pairs
+		--- END OF BLOCK #0 ---
+
+		slot2 = if not self.preNodes then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 11-11, warpins: 1 ---
+		slot2 = {}
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-13, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		for k, v in slot1(slot2)
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #7
+
+
+		--- BLOCK #3 14-19, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot6 = if not tolua.isnull(v)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 20-25, warpins: 1 ---
+		local nlb = v.getChildByName(v, "nameLabel_byGuide")
+
+		--- END OF BLOCK #4 ---
+
+		slot6 = if nlb then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 26-28, warpins: 1 ---
+		nlb.removeFromParent(nlb)
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 29-30, warpins: 4 ---
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #7 31-36, warpins: 1 ---
+		self.preNodes = nodes
+
+		--- END OF BLOCK #7 ---
+
+		for k, v in pairs(nodes)
+
+		LOOP BLOCK #8
+		GO OUT TO BLOCK #11
+
+
+		--- BLOCK #8 37-42, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		slot6 = if not tolua.isnull(v)
+
+		 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 43-73, warpins: 1 ---
+		local lb = an.newLabel(v.getName(v), 22, 1):add2(v):pos(v.centerPos(v)):anchor(0.5, 0.5)
+
+		lb.setName(lb, "nameLabel_byGuide")
+		lb.setGlobalZOrder(lb, 9999)
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 74-75, warpins: 3 ---
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #11 76-76, warpins: 1 ---
+		return 
+		--- END OF BLOCK #11 ---
+
+
+
+	end, 0.1)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guide.onMouseDown = function (self, event)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local common = import("..common", current)
+
+	--- END OF BLOCK #0 ---
+
+	if event.getMouseButton(event)
+
+	 == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #1 10-24, warpins: 1 ---
+	local mousePos = cc.p(event.getCursorX(event), event.getCursorY(event))
+
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not tolua.isnull(self.pre)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 25-30, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not tolua.isnull(self.preMenu)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 31-60, warpins: 1 ---
+	local pos = self.pre:convertToNodeSpace(cc.p(mousePos.x - self.pre:getw()/2, mousePos.y - self.pre:geth()/2))
+
+	print(string.format("curPos :x:%d,y:%d", pos.x, pos.y))
+
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 61-67, warpins: 2 ---
+	slot4 = print
+
+	--- END OF BLOCK #4 ---
+
+	slot5 = if not tolua.isnull(self.pre)
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 68-73, warpins: 1 ---
+	slot5 = not tolua.isnull(self.preMenu)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #6 74-75, warpins: 1 ---
+	slot5 = false
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 76-76, warpins: 0 ---
+	slot5 = true
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 77-86, warpins: 3 ---
+	slot4(slot5)
+
+	local nodes = self.getEventNodesByPos(self, mousePos)
+	local cells = {}
+
+	--- END OF BLOCK #8 ---
+
+	for k, v in pairs(nodes)
+
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #9 87-101, warpins: 1 ---
+	local cell = {}
+	cell.w = 250
+	cell.h = 25
+	cell.cellCls = function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		local lb = v:getName()
+		--- END OF BLOCK #0 ---
+
+		slot0 = if lb then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if lb == "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-10, warpins: 2 ---
+		lb = v.listener_id__
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-31, warpins: 2 ---
+		cell.stack = cell.node.stack__
+		cell.lb = lb
+
+		print(lb)
+
+		return an.newLabel(lb, 22, 1):anchor(0.5, 0.5)
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	cell.node = v
+
+	table.insert(cells, cell)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 102-103, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #11 104-107, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if #cells <= 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 108-109, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 110-136, warpins: 2 ---
+	local menu = common.createOperationMenu(cells, 5, function (pnl, cell)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if not tolua.isnull(cell.node)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-9, warpins: 1 ---
+		self.pre = cell.node
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-43, warpins: 2 ---
+		local data = self:createTouchData("began", mousePos.x, mousePos.y)
+
+		cell.node:EventDispatcher(cc.NODE_TOUCH_EVENT, data)
+
+		local data = self:createTouchData("ended", mousePos.x, mousePos.y)
+
+		cell.node:EventDispatcher(cc.NODE_TOUCH_EVENT, data)
+
+		return true
+		--- END OF BLOCK #2 ---
+
+
+
+	end):add2(self.guideLayer):center():anchor(0.5, 0.5)
+
+	traversalNodeTree(menu, function (n)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		n.setGlobalZOrder(n, 999999999999.0)
+
+		return true
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #13 ---
+
+	slot7 = if not tolua.isnull(self.preMenu)
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 137-140, warpins: 1 ---
+	self.preMenu:removeSelf()
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 141-142, warpins: 2 ---
+	self.preMenu = menu
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 143-144, warpins: 2 ---
+	return 
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 145-145, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+
+
+end
+--- END OF BLOCK #1 ---
+
+FLOW; TARGET BLOCK #2
+
+
+--- BLOCK #2 36-113, warpins: 2 ---
+guide.getNodeByName = function (self, name)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local c = nil
+
+	traversalNodeTree(main_scene, function (child)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if child.getName(child)
+
+		 == name then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-9, warpins: 1 ---
+		c = child
+
+		return false
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-11, warpins: 2 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+
+	return c
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.getNodeByNames = function (self, names, checkScroll)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local nodes = {}
+
+	traversalNodeTree(main_scene, function (child)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		local name = child.getName(child)
+
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(names)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 8-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v == name then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-11, warpins: 1 ---
+		nodes[v] = child
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-13, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 14-15, warpins: 1 ---
+		return true
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if checkScroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 8-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(nodes)
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #2 12-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.__cname == "an.scroll" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	nodes[k] = v.scrollView.touchNode_
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 18-19, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #5 20-21, warpins: 2 ---
+	return nodes
+	--- END OF BLOCK #5 ---
+
+
+
+end
+guide.createTouchData = function (self, evt, x, y)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local data = {}
+	--- END OF BLOCK #0 ---
+
+	if evt == "began" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	data.x = x
+	data.y = y
+	data.prevX = x
+	data.prevY = y
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 9-16, warpins: 1 ---
+	data.x = x
+	data.y = y
+	data.prevX = self.preTouchPosition[1]
+	data.prevY = self.preTouchPosition[2]
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-24, warpins: 2 ---
+	self.preTouchPosition = {
+		x,
+		y
+	}
+	data.name = evt
+	data.phase = "capturing"
+
+	return data
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.touchSwallower = function (self, touchCb, priority)
+	--- BLOCK #0 1-43, warpins: 1 ---
+	local listener = cc.EventListenerTouchOneByOne:create()
+
+	listener.setSwallowTouches(listener, true)
+	listener.registerScriptHandler(listener, function (touch, event)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		local pos = touch.getLocation(touch)
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if touchCb("began", event, pos)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 11-15, warpins: 1 ---
+		print("swallow touch by helper-guide")
+
+		return true
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-16, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, cc.Handler.EVENT_TOUCH_BEGAN)
+	listener.registerScriptHandler(listener, function (touch, event)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		local pos = touch.getLocation(touch)
+
+		touchCb("moved", event, pos)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, cc.Handler.EVENT_TOUCH_MOVED)
+	listener.registerScriptHandler(listener, function (touch, event)
+		--- BLOCK #0 1-9, warpins: 1 ---
+		local pos = touch.getLocation(touch)
+
+		touchCb("ended", event, pos)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, cc.Handler.EVENT_TOUCH_ENDED)
+
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+	slot6 = eventDispatcher
+	slot5 = eventDispatcher.addEventListenerWithFixedPriority
+	slot7 = listener
+	--- END OF BLOCK #0 ---
+
+	slot8 = if not priority then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 44-45, warpins: 1 ---
+	slot8 = guide.SWALLOW_PRIORITY
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 46-48, warpins: 2 ---
+	slot5(slot6, slot7, slot8)
+
+	return listener
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guide.talkWithNPC = function (self, name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local npc = main_scene.ground.map:findNPCWithName(name)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if npc then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-21, warpins: 1 ---
+	print("talk with ", npc.roleid)
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		net.send({
+			CM_CLICKNPC,
+			recog = npc.roleid
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0)
+
+	return true
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 22-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guide.showTipText = function (self, name, tipParams, offset)
+	--- BLOCK #0 1-79, warpins: 1 ---
+	local tip = an.newLabel(unpack(tipParams))
+	local lbsz = tip.getContentSize(tip)
+	lbsz.width = lbsz.width + 30
+	lbsz.height = lbsz.height + 30
+	local node = display.newScale9Sprite(res.getframe2("pic/helperScript/guide/frame.png"), 0, 0, lbsz)
+	local arrow = res.get2("pic/helperScript/guide/frame_arrows.png"):add2(node, 10):anchor(0, 0.5)
+
+	tip.add2(tip, node):pos(15, 15)
+	node.setVisible(node, false)
+	node.schedule(node, function ()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		node:setVisible(true)
+
+		local pos = self:calcWorldPos(name, offset)
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not pos then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 14-14, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 15-33, warpins: 2 ---
+		local lbsz = tip:getContentSize()
+		lbsz.width = lbsz.width + 30
+		lbsz.height = lbsz.height + 30
+
+		node:setContentSize(lbsz)
+		--- END OF BLOCK #2 ---
+
+		slot2 = if tipParams.align then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #3 34-37, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if tipParams.align == "left" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 38-59, warpins: 1 ---
+		node:anchor(0, 0.5)
+		arrow:pos(6, lbsz.height/2)
+		arrow:setRotation(180)
+
+		pos.x = pos.x + 60
+
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #5 60-63, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if tipParams.align == "top" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 64-86, warpins: 1 ---
+		node:anchor(0.5, 1)
+		arrow:pos(lbsz.width/2, lbsz.height - 6)
+		arrow:setRotation(-90)
+
+		pos.y = pos.y - 60
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #7 87-90, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if tipParams.align == "right" then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 91-113, warpins: 1 ---
+		node:anchor(1, 0.5)
+		arrow:pos(lbsz.width - 6, lbsz.height/2)
+		arrow:setRotation(0)
+
+		pos.x = pos.x - 60
+
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #9 114-117, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		if tipParams.align == "bottom" then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 118-138, warpins: 1 ---
+		node:anchor(0.5, 0)
+		arrow:pos(lbsz.width/2, 6)
+		arrow:setRotation(90)
+
+		pos.y = pos.y + 60
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 139-145, warpins: 6 ---
+		node:pos(pos.x, pos.y)
+
+		return 
+		--- END OF BLOCK #11 ---
+
+
+
+	end, 0)
+	node.add2(node, self.guideLayer)
+	setGlobalZOrderCascade(node, guide.TIP_ZORDER + 1)
+	node.setLocalZOrder(node, guide.TIP_ZORDER)
+	table.insert(self.tipTexts_, node)
+
+	return node
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.removeTipText = function (self, tip)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.tipTexts_)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == tip then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-12, warpins: 1 ---
+	table.remove(self.tipTexts_, k)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 13-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 15-20, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not tolua.isnull(tip)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 21-23, warpins: 1 ---
+	tip.removeFromParent(tip)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 24-24, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+guide.hightLightNode = function (self, names)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local nodes = nil
+
+	--- END OF BLOCK #0 ---
+
+	if type(names)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	names = {
+		names
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-23, warpins: 2 ---
+	nodes = self.getNodeByNames(self, names, true)
+	local zorders = {}
+	local sp = nil
+
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not tolua.isnull(self.grayPanel)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 24-27, warpins: 1 ---
+	self.grayPanel:removeSelf()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-73, warpins: 2 ---
+	local base = display.newNode():add2(self.guideLayer)
+	sp = cc.NVGDrawNode:create():add2(base)
+
+	sp.drawSolidRect(sp, cc.p(0, 0), cc.p(display.cx*2, display.cy*2), cc.c4b(0, 0, 0, 0.5))
+
+	self.grayPanel = base
+
+	--- END OF BLOCK #4 ---
+
+	for k, v in ipairs(names)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #5 74-80, warpins: 1 ---
+	local node = nodes[v]
+
+	--- END OF BLOCK #5 ---
+
+	slot12 = if tolua.isnull(node)
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 81-87, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if string.find(v, "panel_")
+
+	 == 1 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 88-101, warpins: 1 ---
+	node = main_scene.ui.panels[string.sub(v, string.find(v, "_") + 1)]
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 102-102, warpins: 2 ---
+	nodes[v] = node
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 103-104, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot11 = if node then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 105-109, warpins: 1 ---
+	local function zsetter(n)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not zorders[n] then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-15, warpins: 1 ---
+		zorders[n] = n.getGlobalZOrder(n)
+
+		n.setGlobalZOrder(n, guide.TIP_ZORDER - 3)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-17, warpins: 2 ---
+		return true
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	traversalNodeTree(node, zsetter)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 110-111, warpins: 3 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #12 112-119, warpins: 1 ---
+	local function resume()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(zorders)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 5-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot5 = if not tolua.isnull(k)
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-14, warpins: 1 ---
+		k.setGlobalZOrder(k, v)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 15-16, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 17-22, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if #self.hightLights_ <= 0 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #5 23-29, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot0 = if not tolua.isnull(self.grayPanel)
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 30-37, warpins: 1 ---
+		self.grayPanel:removeSelf()
+
+		self.grayPanel = nil
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 38-38, warpins: 3 ---
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	table.insert(self.hightLights_, resume)
+
+	return resume
+	--- END OF BLOCK #12 ---
+
+
+
+end
+guide.disableHightLight = function (self, resumer)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.hightLights_)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == resumer then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-12, warpins: 1 ---
+	table.remove(self.hightLights_, k)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 13-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 15-17, warpins: 2 ---
+	resumer()
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+guide.setScrollOffsetX = function (self, name, x)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local scroll = self.getNodeByName(self, name)
+	--- END OF BLOCK #0 ---
+
+	slot3 = if scroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if scroll.__cname == "an.scroll" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-17, warpins: 1 ---
+	local ox, oy = scroll.getScrollOffset(scroll)
+
+	scroll.setScrollOffset(scroll, x, oy)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-18, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.setScrollOffsetY = function (self, name, y)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local scroll = self.getNodeByName(self, name)
+	--- END OF BLOCK #0 ---
+
+	slot3 = if scroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if scroll.__cname == "an.scroll" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-17, warpins: 1 ---
+	local ox, oy = scroll.getScrollOffset(scroll)
+
+	scroll.setScrollOffset(scroll, ox, y)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-18, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.getScrollOffsetX = function (self, name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local scroll = self.getNodeByName(self, name)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if scroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if scroll.__cname == "an.scroll" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	local ox, oy = scroll.getScrollOffset(scroll)
+
+	return ox
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-14, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.getScrollOffsetY = function (self, name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local scroll = self.getNodeByName(self, name)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if scroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if scroll.__cname == "an.scroll" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	local ox, oy = scroll.getScrollOffset(scroll)
+
+	return oy
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-14, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.stopBounce = function (self, name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local scroll = self.getNodeByName(self, name)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if scroll then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 7-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if scroll.__cname == "an.scroll" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-49, warpins: 1 ---
+	local tn = scroll.scrollView.touchNode_
+	local pos = tn.convertToWorldSpace(tn, cc.p(tn.getw(tn)/2, tn.geth(tn)/2))
+	local data = self.createTouchData(self, "began", pos.x, pos.y)
+
+	tn.EventDispatcher(tn, cc.NODE_TOUCH_EVENT, data)
+
+	local data = self.createTouchData(self, "ended", pos.x, pos.y)
+
+	tn.EventDispatcher(tn, cc.NODE_TOUCH_EVENT, data)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 50-50, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.focusNodeByName = function (self, names, evtCb, lockAll, swallowAnyway)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot5 = if self.currentFocus then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	self.stopCurrentFocus(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-12, warpins: 2 ---
+	local nodes = nil
+
+	--- END OF BLOCK #2 ---
+
+	if type(names)
+
+	 == "string" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-15, warpins: 1 ---
+	names = {
+		names
+	}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-26, warpins: 2 ---
+	nodes = self.getNodeByNames(self, names, true)
+	local evtCallback = self.evtCallback_
+
+	--- END OF BLOCK #4 ---
+
+	for k, v in pairs(nodes)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #5 27-40, warpins: 1 ---
+	local n = display.newNode()
+
+	v.addChild(v, n)
+	n.setNodeEventEnabled(n, true)
+
+	n.onCleanup = function (self)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		evtCallback("clean," .. k)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 41-42, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #7 43-60, warpins: 1 ---
+	local listener = nil
+	listener = self.touchSwallower(self, function (evtName, event, pos)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		local hited = nil
+
+		--- END OF BLOCK #0 ---
+
+		if evtName == "moved" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-4, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-6, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		if evtName == "began" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #3 7-10, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		for k, name in ipairs(names)
+
+
+		LOOP BLOCK #4
+		GO OUT TO BLOCK #8
+
+
+		--- BLOCK #4 11-14, warpins: 1 ---
+		local node = nodes[name]
+
+		--- END OF BLOCK #4 ---
+
+		slot9 = if node then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #5 15-21, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot10 = if node.hitTest(node, pos, true)
+
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 22-23, warpins: 1 ---
+		hited = node
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #7 24-25, warpins: 3 ---
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #8 26-28, warpins: 2 ---
+		self.curNode = hited
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 29-30, warpins: 1 ---
+		hited = self.curNode
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 31-32, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		slot3 = if hited then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #11 33-34, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		if evtName == "ended" then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #12 35-41, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		slot4 = if not hited.hitTest(hited, pos, true)
+
+		 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 42-42, warpins: 1 ---
+		evtName = "canceled"
+
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 43-51, warpins: 3 ---
+		--- END OF BLOCK #14 ---
+
+		slot4 = if evtCb(evtName, pos, hited.getName(hited))
+
+		 then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 52-73, warpins: 1 ---
+		local data = self:createTouchData(evtName, pos.x, pos.y)
+
+		print("swallowAnyway", not not swallowAnyway)
+		listener:setSwallowTouches(not not swallowAnyway)
+
+		return true
+
+		--- END OF BLOCK #15 ---
+
+		FLOW; TARGET BLOCK #16
+
+
+		--- BLOCK #16 74-80, warpins: 3 ---
+		listener:setSwallowTouches(true)
+
+		--- END OF BLOCK #16 ---
+
+		if evtName ~= "ended" then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 81-82, warpins: 1 ---
+		--- END OF BLOCK #17 ---
+
+		if evtName == "canceled" then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #18 83-85, warpins: 2 ---
+		self.curNode = nil
+
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 86-88, warpins: 2 ---
+		--- END OF BLOCK #19 ---
+
+		slot4 = if lockAll then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 89-90, warpins: 1 ---
+		return true
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 91-91, warpins: 2 ---
+		return 
+		--- END OF BLOCK #21 ---
+
+
+
+	end)
+	self.currentFocus = {
+		listener_ = listener,
+		focus = node,
+		guider_ = self
+	}
+	self.currentFocus.stop = function (self)
+		--- BLOCK #0 1-18, warpins: 1 ---
+		local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+		eventDispatcher.removeEventListener(eventDispatcher, listener)
+
+		self.guider_.currentFocus = nil
+
+		--- END OF BLOCK #0 ---
+
+		slot2 = if grayOther then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 19-26, warpins: 1 ---
+		traversalNodeTree(node, function (n)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			slot2 = n
+			slot1 = n.setGlobalZOrder
+			--- END OF BLOCK #0 ---
+
+			slot3 = if not zorders[n] then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 7-7, warpins: 1 ---
+			slot3 = 0
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 8-10, warpins: 2 ---
+			slot1(slot2, slot3)
+
+			return true
+			--- END OF BLOCK #2 ---
+
+
+
+		end)
+		sp:removeFromParent()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 27-27, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	return self.currentFocus
+	--- END OF BLOCK #7 ---
+
+
+
+end
+guide.stopCurrentFocus = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.currentFocus then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.currentFocus:stop()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-8, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guide.calcWorldPos = function (self, name, offset)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	assert(name, "get world position faild. not name spacify")
+
+	local function nodePos(node, name, off)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not node then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-9, warpins: 1 ---
+		local n = self:getNodeByNames({
+			name
+		})[name]
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-12, warpins: 2 ---
+		local pos = nil
+		--- END OF BLOCK #2 ---
+
+		slot3 = if n then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 13-29, warpins: 1 ---
+		pos = n.convertToWorldSpace(n, cc.p(n.getw(n)/2, n.geth(n)/2))
+		--- END OF BLOCK #3 ---
+
+		slot2 = if off then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 30-36, warpins: 1 ---
+		pos = cc.pAdd(pos, off)
+
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 37-41, warpins: 1 ---
+		print("calcWolrdPos, target not exist", name, pos)
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 42-42, warpins: 3 ---
+		return pos
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local pos = name
+
+	--- END OF BLOCK #0 ---
+
+	if type(name)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-18, warpins: 1 ---
+	pos = nodePos(nil, name, offset)
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 19-24, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not tolua.isnull(name)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 25-30, warpins: 1 ---
+	pos = nodePos(name, nil, offset)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 31-32, warpins: 3 ---
+	return pos
+	--- END OF BLOCK #4 ---
+
+
+
+end
+guide.useOnceAct = function (self, idx)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		net.send({
+			CM_EXEC_FRESHMAN_TASK_CMD,
+			recog = idx
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.dragGuide = function (self, start, goal, params)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-6, warpins: 1 ---
+	params = {
+		finger = {}
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not params.finger then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	slot4 = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-16, warpins: 2 ---
+	params.finger = slot4
+	slot4 = res.get2
+	--- END OF BLOCK #4 ---
+
+	slot5 = if not params.image then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-17, warpins: 1 ---
+	slot5 = "pic/helperScript/guide/finger.png"
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 18-33, warpins: 2 ---
+	local img = slot4(slot5):add2(self.guideLayer):anchor(1, 1)
+	slot6 = img
+	slot5 = img.setRotation
+	--- END OF BLOCK #6 ---
+
+	slot7 = if not params.finger.r then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 34-34, warpins: 1 ---
+	slot7 = 0
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 35-41, warpins: 2 ---
+	slot5(slot6, slot7)
+
+	slot6 = img
+	slot5 = img.setScaleY
+	--- END OF BLOCK #8 ---
+
+	slot7 = if params.finger.flipX then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 42-43, warpins: 1 ---
+	slot7 = 1
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 44-44, warpins: 1 ---
+	slot7 = -1
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 45-51, warpins: 2 ---
+	slot5(slot6, slot7)
+
+	slot6 = img
+	slot5 = img.setScaleX
+	--- END OF BLOCK #11 ---
+
+	slot7 = if params.finger.flipY then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 52-53, warpins: 1 ---
+	slot7 = 1
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 54-54, warpins: 1 ---
+	slot7 = -1
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 55-61, warpins: 2 ---
+	slot5(slot6, slot7)
+
+	slot6 = self
+	slot5 = self.calcWorldPos
+	slot7 = start
+	--- END OF BLOCK #14 ---
+
+	slot8 = if not params.startOffset then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 62-66, warpins: 1 ---
+	slot8 = cc.p(0, 0)
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 67-73, warpins: 2 ---
+	local startPos = slot5(slot6, slot7, slot8)
+	slot7 = self
+	slot6 = self.calcWorldPos
+	slot8 = goal
+	--- END OF BLOCK #16 ---
+
+	slot9 = if not params.goalOffset then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 74-78, warpins: 1 ---
+	slot9 = cc.p(0, 0)
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 79-141, warpins: 2 ---
+	local goalPos = slot6(slot7, slot8, slot9)
+	local dis = cc.pGetDistance(startPos, goalPos)
+	local arrow = display.newScale9Sprite(res.getframe2("pic/helperScript/guide/arrows_translucence02.png"), (startPos.x + goalPos.x)/2, (startPos.y + goalPos.y)/2, cc.size(28, dis))
+
+	arrow.add2(arrow, self.guideLayer):rotation(math.deg(cc.pGetAngle(startPos, goalPos)) - 90):anchor(0.5, 0.5)
+
+	local function runActs()
+		--- BLOCK #0 1-29, warpins: 1 ---
+		img:setGlobalZOrder(guide.TIP_ZORDER)
+		img:setPosition(startPos)
+
+		slot1 = img
+		slot0 = img.runs
+		slot2 = {
+			cca.place(startPos.x, startPos.y)
+		}
+		slot3 = cca.delay
+		--- END OF BLOCK #0 ---
+
+		slot4 = if not params.interval then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 30-30, warpins: 1 ---
+		slot4 = 0
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 31-43, warpins: 2 ---
+		slot2[2] = slot3(slot4)
+		slot2[3] = cca.fadeIn(0.2)
+		slot3 = cca.moveTo
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not params.duration then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 44-44, warpins: 1 ---
+		slot4 = 1.3
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 45-62, warpins: 2 ---
+		slot2[4] = slot3(slot4, goalPos.x, goalPos.y)
+		slot2[5] = cca.fadeOut(1)
+		slot2[MULTRES] = cca.callFunc(runActs)
+
+		slot0(slot1, slot2)
+
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	runActs()
+	table.insert(self.dragGuideImage_, img)
+	img.setNodeEventEnabled(img, true)
+
+	img.onCleanup = function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		arrow:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	return img
+	--- END OF BLOCK #18 ---
+
+
+
+end
+guide.stopDragGuide = function (self, img)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.dragGuideImage_)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == img then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-12, warpins: 1 ---
+	table.remove(self.dragGuideImage_, k)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 13-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 15-20, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not tolua.isnull(img)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 21-23, warpins: 1 ---
+	img.removeFromParent(img)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 24-24, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+guide.isNodeExist = function (self, name)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if string.find(name, "panel_")
+
+	 == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 8-23, warpins: 1 ---
+	local panel = main_scene.ui.panels[string.sub(name, string.find(name, "_") + 1)]
+
+	--- END OF BLOCK #1 ---
+
+	slot2 = if panel then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 24-25, warpins: 1 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 26-32, warpins: 3 ---
+	return not not self.getNodeByName(self, name)
+	--- END OF BLOCK #3 ---
+
+
+
+end
+guide.isNodeVisible = function (self, node)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	local p = node
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 2-3, warpins: 3 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if p then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #2 4-4, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 5-14, warpins: 1 ---
+	p = p.getParent(p)
+
+	--- END OF BLOCK #3 ---
+
+	if tolua.type(p)
+
+	 == "cc.ClippingRectangleNode" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #1
+	end
+
+
+	--- BLOCK #4 15-19, warpins: 1 ---
+	p = p.getParent(p)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 20-20, warpins: 0 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #6 21-22, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if not p then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 23-24, warpins: 1 ---
+	return true
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 25-33, warpins: 2 ---
+	return cc.rectIntersectsRect(node.getCascadeBoundingBox(node), p.getBoundingBox(p))
+	--- END OF BLOCK #8 ---
+
+
+
+end
+guide.checkUntilNodeExist = function (self, name, cb, timeout)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local timeoutHandler, updateHandler = nil
+	updateHandler = scheduler.scheduleUpdateGlobal(function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self:isNodeExist(name)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 8-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if timeoutHandler then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-14, warpins: 1 ---
+		scheduler.unscheduleGlobal(timeoutHandler)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 15-21, warpins: 2 ---
+		cb("ok")
+		scheduler.unscheduleGlobal(updateHandler)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 22-22, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+
+	local function stopCheck()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		scheduler.unscheduleGlobal(updateHandler)
+		cb("timeout")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if timeout then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-14, warpins: 1 ---
+	scheduler.performWithDelayGlobal(stopCheck, timeout)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-21, warpins: 2 ---
+	table.insert(self.widgetCheckers_, stopCheck)
+
+	return stopCheck
+	--- END OF BLOCK #2 ---
+
+
+
+end
+guide.scrollNodeToCenter = function (self, name, scrollName, offset)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not offset then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-8, warpins: 1 ---
+	offset = cc.p(0, 0)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-18, warpins: 2 ---
+	local scroll = self.getNodeByName(self, scrollName)
+
+	--- END OF BLOCK #2 ---
+
+	slot5 = if iskindof(scroll, "an.scroll")
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-19, warpins: 1 ---
+	scroll = scroll.scrollView
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-25, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot5 = if not iskindof(scroll, "UIScrollView")
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 26-30, warpins: 1 ---
+	error(scrollName .. " is not a scroll node")
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 31-36, warpins: 2 ---
+	local node = self.getNodeByName(self, name)
+
+	--- END OF BLOCK #6 ---
+
+	slot5 = if not node then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 37-41, warpins: 1 ---
+	error(name .. " is not exist!")
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 42-85, warpins: 2 ---
+	local wp = node.convertToWorldSpace(node, cc.p(0, 0))
+	local n = scroll.getScrollNode(scroll)
+	local np = n.convertToNodeSpace(n, wp)
+	np.x = scroll.getViewRect(scroll).width/2 + np.x + offset.x
+	np.y = np.y - scroll.getViewRect(scroll).height/2 + offset.y
+	local dir = scroll.getDirection(scroll)
+
+	--- END OF BLOCK #8 ---
+
+	if dir == cc.ui.UIScrollView.DIRECTION_VERTICAL then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 86-95, warpins: 1 ---
+	n.run(n, cca.moveTo(0.5, 0, np.y))
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #10 96-101, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if dir == cc.ui.UIScrollView.DIRECTION_VERTICAL then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 102-107, warpins: 1 ---
+	scroll.scrollTo(scroll, np.x, 0)
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 108-111, warpins: 1 ---
+	scroll.scrollTo(scroll, np)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 112-112, warpins: 3 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+guide.twinkleNodeWidthName = function (self, name, params)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not speed then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	slot3 = 1
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	speed = slot3
+
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not name then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 8-11, warpins: 1 ---
+	error("未指定控件名")
+
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-19, warpins: 1 ---
+	local node = self.getNodeByNames(self, {
+		name
+	})
+	node = node[name]
+
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not node then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 20-25, warpins: 1 ---
+	error("指定的控件不存在" .. name)
+
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 26-30, warpins: 1 ---
+	local drawNodes = {}
+	local vst = nil
+	--- END OF BLOCK #6 ---
+
+	slot6 = if not params.boderColor then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 31-31, warpins: 1 ---
+	local borderColor = {
+		g = 0.27058823529411763,
+		a = 0,
+		r = 0.9333333333333333,
+		b = 0
+	}
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 32-45, warpins: 2 ---
+	local innner = cc.c4f(borderColor.r*4, borderColor.g*4, borderColor.b*4, borderColor.a)
+	--- END OF BLOCK #8 ---
+
+	for k=1, 5, 1
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #10
+
+	--- BLOCK #9 46-96, warpins: 2 ---
+	local dn = cc.NVGDrawNode:create():add2(self.guideLayer)
+	dn.dn2 = cc.NVGDrawNode:create():add2(self.guideLayer)
+
+	dn.setLineWidth(dn, 5)
+	dn.dn2:setLineWidth(3)
+	table.insert(drawNodes, dn)
+
+	dn.per = (k - 1)*20 - 100
+
+	dn.setLocalZOrder(dn, guide.TIP_ZORDER - 1)
+	dn.dn2:setLocalZOrder(guide.TIP_ZORDER - 1)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #10 97-111, warpins: 1 ---
+	local function stopTwinkle()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not tolua.isnull(drawNodes[1])
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 8-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		for k, v in pairs(drawNodes)
+
+		LOOP BLOCK #2
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #2 12-18, warpins: 1 ---
+		v.dn2:removeFromParent()
+		v.removeFromParent(v)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 19-20, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+		--- BLOCK #4 21-21, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	local function update()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if tolua.isnull(node)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-9, warpins: 1 ---
+		stopTwinkle()
+
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-20, warpins: 2 ---
+		local pos = self:calcWorldPos(node, params.offset)
+
+		--- END OF BLOCK #2 ---
+
+		for k, drawNode in pairs(drawNodes)
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #16
+
+
+		--- BLOCK #3 21-26, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot6 = if tolua.isnull(drawNode)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 27-27, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 28-32, warpins: 2 ---
+		local per = drawNode.per - 1.6
+		--- END OF BLOCK #5 ---
+
+		if per < 0 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 33-33, warpins: 1 ---
+		per = 100
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 34-37, warpins: 2 ---
+		drawNode.per = per
+		--- END OF BLOCK #7 ---
+
+		if per < 10 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 38-42, warpins: 1 ---
+		borderColor.a = (per*0.7)/10
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 43-47, warpins: 1 ---
+		borderColor.a = (per/100 - 1)*0.7
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 48-50, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		if per < 10 then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 51-51, warpins: 1 ---
+		per = 10
+
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 52-55, warpins: 2 ---
+		--- END OF BLOCK #12 ---
+
+		slot7 = if params.circle then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 56-86, warpins: 1 ---
+		drawNode.clear(drawNode)
+		drawNode.drawCircle(drawNode, pos, (params.radio + per) - 10, borderColor)
+
+		innner.a = borderColor.a
+
+		drawNode.dn2:clear()
+		drawNode.dn2:drawCircle(pos, (params.radio + per) - 10, innner)
+
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #14 87-207, warpins: 1 ---
+		per = per - 10
+		local w = params.w*(per/25 + 1)
+		local h = params.h*(per/25 + 1)
+		local cx = pos.x + ((display.cx - pos.x)*(w - params.w))/(display.size.width - params.w)
+		local cy = pos.y + ((display.cy - pos.y)*(h - params.h))/(display.size.height - params.h)
+
+		drawNode.clear(drawNode)
+		drawNode.drawRect(drawNode, cc.p(cx - w/2, cy - h/2), cc.p(cx + w/2, cy - h/2), cc.p(cx + w/2, cy + h/2), cc.p(cx - w/2, cy + h/2), borderColor)
+
+		innner.a = borderColor.a
+
+		drawNode.dn2:clear()
+		drawNode.dn2:drawRect(cc.p(cx - w/2, cy - h/2), cc.p(cx + w/2, cy - h/2), cc.p(cx + w/2, cy + h/2), cc.p(cx - w/2, cy + h/2), innner)
+
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 208-209, warpins: 3 ---
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #16 210-210, warpins: 1 ---
+		return 
+		--- END OF BLOCK #16 ---
+
+
+
+	end
+
+	drawNodes[1]:schedule(update, 0)
+	table.insert(self.twinkleNodeStops_, stopTwinkle)
+
+	return stopTwinkle
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 112-112, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 113-113, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+
+
+end
+guide.stopTwinkleNode = function (self, stoper)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.twinkleNodeStops_)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v == stoper then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-12, warpins: 1 ---
+	table.remove(self.twinkleNodeStops_, k)
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 13-14, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 15-17, warpins: 2 ---
+	stoper()
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+guide.getNodePositionRelative = function (self, name, relative)
+	--- BLOCK #0 1-20, warpins: 1 ---
+	local node = self.getNodeByName(self, name)
+	local relative = self.getNodeByName(self, relative)
+	local pos = node.convertToWorldSpace(node, cc.p(0, 0))
+
+	return relative.convertToNodeSpace(relative, pos)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.focusToNode = function (self, names, lockOther, stopEvt, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local handler = nil
+	local swallowAnyway = false
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if type(params)
+
+	 == "table" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-13, warpins: 1 ---
+	timeout = params.timeout
+	swallowAnyway = params.swallowAnyway
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 14-14, warpins: 1 ---
+	timeout = params
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-17, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot7 = if timeout then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-23, warpins: 1 ---
+	handler = scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self.evtCallback_("timeout")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, timeout)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 24-31, warpins: 3 ---
+	return self.focusNodeByName(self, names, function (evt, pos, widName)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		self.evtCallback_(string.format("%s,%s", evt, widName))
+		--- END OF BLOCK #0 ---
+
+		if evt == stopEvt then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 13-16, warpins: 1 ---
+		self:stopCurrentFocus()
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 17-19, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot3 = if handler then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 20-23, warpins: 1 ---
+		scheduler.unscheduleGlobal(handler)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 24-25, warpins: 2 ---
+		return true
+		--- END OF BLOCK #4 ---
+
+
+
+	end, lockOther, swallowAnyway)
+	--- END OF BLOCK #6 ---
+
+
+
+end
+guide.tip = function (self, text)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	main_scene.ui:tip(text)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.showGuideBoard = function (self, text, hightLight, btns)
+	--- BLOCK #0 1-22, warpins: 1 ---
+	local n = display.newNode():add2(self.guideLayer)
+
+	n.setContentSize(n, display.size.width, display.size.height)
+	n.setLocalZOrder(n, 999)
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if hightLight then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 23-64, warpins: 1 ---
+	local layer = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(display.size.width*2, display.size.width*2):pos(-display.size.width/2, -display.size.width/2):add2(n)
+
+	layer.setLocalZOrder(layer, -1)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 65-124, warpins: 2 ---
+	local spr = res.get2("pic/helperScript/guide/guideBoard.png"):add2(n):anchor(0.5, 0.5):pos(display.cx - 70, display.cy)
+
+	spr.setLocalZOrder(spr, 1)
+
+	local label = an.newLabelM(310, 20, 1):add2(spr):pos(330, 210):anchor(0, 1)
+
+	label.nextLine(label):addLabel(text, cc.c3b(255, 255, 255))
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if btns then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #3 125-131, warpins: 1 ---
+	local confirm = true
+	local cancel = true
+
+	--- END OF BLOCK #3 ---
+
+	if type(btns)
+
+	 == "table" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 132-133, warpins: 1 ---
+	confirm = btns.confirm
+	cancel = btns.cancel
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 134-135, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot7 = if confirm then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 136-163, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self.evtCallback_("GuideBoardEvt_confirm")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/confirm.png")
+	}):pos(370, 15):addto(spr)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 164-165, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot8 = if cancel then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 166-193, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self.evtCallback_("GuideBoardEvt_cancel")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/common/cancel.png")
+	}):pos(480, 15):addto(spr)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 194-195, warpins: 3 ---
+	return n
+	--- END OF BLOCK #9 ---
+
+
+
+end
+guide.stop = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local t = self.widgetCheckers_
+	self.widgetCheckers_ = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(t)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 8-9, warpins: 1 ---
+	v()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 12-18, warpins: 1 ---
+	local t = self.twinkleNodeStops_
+	self.twinkleNodeStops_ = {}
+
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(t)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 19-20, warpins: 1 ---
+	v()
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 21-22, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 23-29, warpins: 1 ---
+	local t = self.dragGuideImage_
+	self.dragGuideImage_ = {}
+
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(t)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #7 30-35, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot9 = if not tolua.isnull(v)
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 36-38, warpins: 1 ---
+	v.removeSelf(v)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 39-40, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #10 41-47, warpins: 1 ---
+	local t = self.tipTexts_
+	self.tipTexts_ = {}
+
+	--- END OF BLOCK #10 ---
+
+	for k, v in pairs(t)
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #11 48-53, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot10 = if not tolua.isnull(v)
+	 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 54-56, warpins: 1 ---
+	v.removeSelf(v)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 57-58, warpins: 3 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #14 59-65, warpins: 1 ---
+	local t = self.hightLights_
+	self.hightLights_ = {}
+
+	--- END OF BLOCK #14 ---
+
+	for k, v in pairs(t)
+
+	LOOP BLOCK #15
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #15 66-67, warpins: 1 ---
+	v()
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 68-69, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #17 70-73, warpins: 1 ---
+	self.stopCurrentFocus(self)
+
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+guide.testTouchSwallower = function (self)
+	--- BLOCK #0 1-24, warpins: 1 ---
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+	local l10000 = nil
+	l10000 = self.touchSwallower(self, function (evt)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		print(evt, "func10000")
+		--- END OF BLOCK #0 ---
+
+		if evt == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-11, warpins: 1 ---
+		eventDispatcher:removeEventListener(l10000)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-12, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, -10000)
+	local l100000 = nil
+	l100000 = self.touchSwallower(self, function (evt)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		print(evt, "func100000")
+		--- END OF BLOCK #0 ---
+
+		if evt == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-11, warpins: 1 ---
+		eventDispatcher:removeEventListener(l100000)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 12-12, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, -100000)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.testFocus = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.focusNodeByName(self, "relation(-43,22)", function (evtName, pos, hited)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if evtName == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot2 = if hited then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 5-8, warpins: 1 ---
+		self:stopCurrentFocus()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 9-10, warpins: 3 ---
+		return true
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.testDrag = function (self)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.dragGuide(self, "rocker_walk", "rocker_run")
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:stopDragGuide()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 10)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.testFocusDynamic = function (self)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	self.focusNodeByName(self, {
+		"diy_tmpIcon",
+		"diyPanel_btnPanelBag",
+		"diy(20,82)"
+	}, function (evtName, pos, hited)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		return true
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true)
+	self.checkUntilNodeExist(self, "diy_背包", function (evt)
+		--- BLOCK #0 1-8, warpins: 1 ---
+		print(evt)
+		self:stopCurrentFocus()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.testCheckWidget = function (self)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	print(self.isNodeExist(self, "diy_挖取"))
+	self.checkUntilNodeExist(self, "diy_小助手", function (state)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		print(state)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 10)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.testHightLight = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local resume = self.hightLightNode(self, {
+		"diy_下属"
+	})
+
+	scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:disableHightLight(resume)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 10)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+guide.testTwinkle = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.twinkleNodeWidthName(self, "diy_下属", {
+		w = 35,
+		circle = false,
+		h = 65,
+		radio = 40
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return guide
+--- END OF BLOCK #2 ---
+
+
+

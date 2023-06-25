@@ -1,0 +1,4084 @@
+--- BLOCK #0 1-67, warpins: 1 ---
+local itemInfo = import(".itemInfo")
+local item = class("item", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local common = import(".common")
+
+table.merge(item, {
+	w = 45,
+	mute = false,
+	h = 45
+})
+
+item.ctor = function (self, data, formPanel, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.data = data
+	self.formPanel = formPanel
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	slot4 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-8, warpins: 2 ---
+	self.params = slot4
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not params then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-9, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 10-14, warpins: 2 ---
+	local form = formPanel.__cname
+	local isSetOffset = params.isSetOffset
+	--- END OF BLOCK #4 ---
+
+	slot6 = if params.tex then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 15-24, warpins: 1 ---
+	self.sprite = display.newSprite(params.tex):addto(self)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #6 25-29, warpins: 1 ---
+	slot6 = res.get
+	--- END OF BLOCK #6 ---
+
+	slot7 = if not params.img then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 30-30, warpins: 1 ---
+	slot7 = "items"
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 31-36, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot8 = if not self.data.getVar("looks")
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 37-37, warpins: 1 ---
+	slot8 = 0
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 38-43, warpins: 2 ---
+	self.sprite = slot6(slot7, slot8):addto(self)
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 44-45, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot5 = if isSetOffset then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #12 46-50, warpins: 1 ---
+	slot6 = res.getinfo
+	--- END OF BLOCK #12 ---
+
+	slot7 = if not params.img then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 51-51, warpins: 1 ---
+	slot7 = "items"
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 52-58, warpins: 2 ---
+	local info = slot6(slot7, self.data.getVar("looks"))
+
+	--- END OF BLOCK #14 ---
+
+	slot6 = if info then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #15 59-61, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot7 = if info.x then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #16 62-64, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot7 = if info.y then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 65-84, warpins: 1 ---
+	self.sprite:anchor(0, 1):pos(info.x*formPanel._scale, -info.y*formPanel._scale):scale(formPanel._scale)
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 85-101, warpins: 4 ---
+	self.sprite2 = res.get("items", self.data.getVar("looks")):addto(self):hide()
+
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 102-120, warpins: 1 ---
+	display.newNode():size(item.w, item.h):anchor(0.5, 0.5):addto(self)
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 121-123, warpins: 2 ---
+	--- END OF BLOCK #20 ---
+
+	slot6 = if data.isPileUp then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #21 124-127, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot6 = if data.isPileUp()
+
+	 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 128-162, warpins: 1 ---
+	self.dura = an.newLabel("" .. data.get(data, "dura"), 12, 1, {
+		color = cc.c3b(0, 255, 0)
+	}):anchor(1, 0):pos(16, -20):add2(self, 1)
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 163-165, warpins: 3 ---
+	--- END OF BLOCK #23 ---
+
+	slot6 = if WIN32_OPERATE then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 166-169, warpins: 1 ---
+	self.registerMouseEvent(self)
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #25 170-172, warpins: 1 ---
+	self.registerTouchEvent(self)
+
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 173-173, warpins: 2 ---
+	return 
+	--- END OF BLOCK #26 ---
+
+
+
+end
+item.registerTouchEvent = function (self)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.setTouchEnabled(self, true)
+	self.addNodeEventListener(self, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		return self:onTouchBegan(event)
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #2 10-12, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 13-18, warpins: 1 ---
+		self:onTouchMoved(event)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #4 19-21, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 22-27, warpins: 1 ---
+		self:onTouchEnded(event)
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+		--- BLOCK #6 28-30, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if event.name == "exit" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 31-34, warpins: 1 ---
+		self:onExit()
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 35-35, warpins: 5 ---
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+item.onTouchBegan = function (self, event)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.handler then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.clicked = true
+
+	return false
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-31, warpins: 2 ---
+	self.beganPos = cc.p(self.getPosition(self))
+	self.beganTouchPos = cc.p(event.x, event.y)
+	self.hasMove = false
+
+	self.setLocalZOrder(self, self.getLocalZOrder(self) + 1)
+
+	return true
+	--- END OF BLOCK #2 ---
+
+
+
+end
+item.onTouchMoved = function (self, event)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.params.donotMove then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #1 5-14, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if 10 >= math.abs(self.beganTouchPos.x - event.x)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 15-24, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 10 < math.abs(self.beganTouchPos.y - event.y)
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #3 25-27, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not self.hasMove then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 28-31, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.params.isGold then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 32-37, warpins: 1 ---
+	sound.playSound(sound.s_money)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 38-42, warpins: 1 ---
+	sound.play("item", self.data)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 43-48, warpins: 3 ---
+	self.hasMove = true
+	--- END OF BLOCK #7 ---
+
+	slot2 = if not self.params.isSetOffset then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 49-52, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if not self.formPanel._scale then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 53-53, warpins: 2 ---
+	local scale = 1
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 54-57, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot3 = if self.params.isSetOffset then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 58-88, warpins: 1 ---
+	self.sprite:hide()
+	self.sprite2:show()
+
+	local p = self.getParent(self):convertToWorldSpace(cc.p(0, 0))
+
+	self.pos(self, (event.x - p.x)/scale, (event.y - p.y)/scale)
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 89-107, warpins: 1 ---
+	self.pos(self, (event.x - self.beganTouchPos.x)/scale + self.beganPos.x, (event.y - self.beganTouchPos.y)/scale + self.beganPos.y)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 108-108, warpins: 4 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+item.onTouchEnded = function (self, event)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.hasMove then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #1 4-24, warpins: 1 ---
+	local ret = false
+	local isInPanel = false
+	local form = self.formPanel.__cname
+	local pos = cc.p(event.x, event.y)
+	local panels = sortNodes(table.values(main_scene.ui.panels))
+
+	--- END OF BLOCK #1 ---
+
+	for i, v in ipairs(panels)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #2 25-30, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot12 = if v.checkInPanel(v, pos)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #3 31-33, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot12 = if v.putItem then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 34-37, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot12 = if not self.params.isGold then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 38-57, warpins: 1 ---
+	local p = v.convertToWorldSpace(v, cc.p(0, 0))
+	ret = v.putItem(v, self, pos.x - p.x, pos.y - p.y)
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #6 58-60, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot12 = if v.putGold then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 61-64, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot12 = if self.params.isGold then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 65-68, warpins: 1 ---
+	v.putGold(v, self)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 69-70, warpins: 4 ---
+	isInPanel = true
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 71-72, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #11 73-75, warpins: 2 ---
+	local isInCustom = false
+	--- END OF BLOCK #11 ---
+
+	slot3 = if not isInPanel then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #12 76-87, warpins: 1 ---
+	local customs = sortNodes(table.values(main_scene.ui.customs))
+
+	--- END OF BLOCK #12 ---
+
+	for i, v in ipairs(customs)
+
+	LOOP BLOCK #13
+	GO OUT TO BLOCK #22
+
+
+	--- BLOCK #13 88-93, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot14 = if v.checkInButton(v, pos)
+
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 94-94, warpins: 1 ---
+	isInCustom = true
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 95-96, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	slot7 = if isInCustom then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #16 97-102, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot14 = if v.checkItemType(v, self.data)
+
+	 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #17 103-107, warpins: 1 ---
+	local data = self.data
+	local owner = self.owner
+
+	--- END OF BLOCK #17 ---
+
+	slot16 = if self.customNode then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #18 108-110, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if v ~= self.customNode then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 111-114, warpins: 1 ---
+	self.customNode:custom_delItem()
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 115-120, warpins: 3 ---
+	v.setCustomProps(v, data, owner)
+
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #21 121-122, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #22 123-125, warpins: 4 ---
+	--- END OF BLOCK #22 ---
+
+	slot8 = if self.customNode then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #23 126-127, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	slot7 = if not isInCustom then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #24 128-139, warpins: 1 ---
+	local customs = sortNodes(table.values(main_scene.ui.customs))
+
+	--- END OF BLOCK #24 ---
+
+	for i, v in ipairs(customs)
+
+	LOOP BLOCK #25
+	GO OUT TO BLOCK #28
+
+
+	--- BLOCK #25 140-143, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if v.btn.item == self then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 144-147, warpins: 1 ---
+	v.custom_delItem(v)
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #27 148-149, warpins: 2 ---
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #28 150-151, warpins: 4 ---
+	--- END OF BLOCK #28 ---
+
+	slot3 = if not isInPanel then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #29 152-153, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot7 = if not isInCustom then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #30 154-155, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	if form ~= "bag" then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 156-157, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if form == "heroBag" then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 158-160, warpins: 2 ---
+	self.throw(self)
+	--- END OF BLOCK #32 ---
+
+	FLOW; TARGET BLOCK #33
+
+
+	--- BLOCK #33 161-163, warpins: 4 ---
+	--- END OF BLOCK #33 ---
+
+	slot8 = if self.params then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #34 164-167, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	slot8 = if self.params.isSetOffset then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #35 168-170, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot8 = if self.sprite then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 171-178, warpins: 1 ---
+	self.sprite:show()
+	self.sprite2:hide()
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 179-180, warpins: 4 ---
+	--- END OF BLOCK #37 ---
+
+	slot2 = if not ret then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #38 181-183, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	slot8 = if self.beganPos then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 184-191, warpins: 1 ---
+	self.pos(self, self.beganPos.x, self.beganPos.y)
+
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #42
+
+
+	--- BLOCK #40 192-193, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #42
+
+
+	--- BLOCK #41 194-202, warpins: 1 ---
+	self.handler = scheduler.performWithDelayGlobal(handler(self, self.click), 0.25)
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 203-212, warpins: 3 ---
+	self.hasMove = false
+
+	self.setLocalZOrder(self, self.getLocalZOrder(self) - 1)
+
+	return 
+	--- END OF BLOCK #42 ---
+
+
+
+end
+item.click = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local form = self.formPanel.__cname
+	local quick = nil
+	--- END OF BLOCK #0 ---
+
+	slot3 = if main_scene.ui.panels.storage then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if main_scene.ui.panels.storage.quick then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-17, warpins: 1 ---
+	quick = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-19, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if quick then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 20-21, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if form ~= "storage" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 22-23, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if form == "bag" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 24-25, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if form == "bag" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 26-34, warpins: 1 ---
+	main_scene.ui.panels.storage:putItem(self)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #8 35-43, warpins: 1 ---
+	main_scene.ui.panels.bag:putItem(self)
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #9 44-46, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot3 = if self.clicked then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #10 47-50, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot3 = if not self.params.mute then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 51-55, warpins: 1 ---
+	sound.play("item", self.data)
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 56-57, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	if form ~= "bag" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 58-59, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if form == "heroBag" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 60-63, warpins: 2 ---
+	self.use(self)
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #15 64-65, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if form ~= "equip" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 66-67, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if form == "heroEquip" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 68-71, warpins: 2 ---
+	self.takeOff(self)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #18 72-74, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	slot3 = if self.customNode then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #19 75-84, warpins: 1 ---
+	main_scene.ui.console.btnCallbacks:handle("custom", self.customNode)
+
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #20 85-88, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot3 = if not self.params.isGold then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #21 89-91, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot3 = if self.sprite then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #22 92-122, warpins: 1 ---
+	local p = self.sprite:convertToWorldSpace(cc.p(self.sprite:getw()/2, self.sprite:geth()/2))
+
+	itemInfo.show(self.data, p, {
+		from = form,
+		extend = self.params.extend
+	})
+	--- END OF BLOCK #22 ---
+
+	slot4 = if self.params.clickcb then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 123-126, warpins: 1 ---
+	self.params.clickcb(self)
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 127-131, warpins: 10 ---
+	self.handler = nil
+	self.clicked = nil
+
+	return 
+	--- END OF BLOCK #24 ---
+
+
+
+end
+item.canUseEquip = function (self, item, dataFrom, weight, isPlayer)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not item then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-6, warpins: 1 ---
+	local function chargeNeed(info, value)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if value then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-5, warpins: 1 ---
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 6-14, warpins: 1 ---
+		common.addMsg(info, display.COLOR_RED, display.COLOR_WHITE, true)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 15-15, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	slot4 = if isPlayer then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 7-10, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot6 = if not g_data.player then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 11-12, warpins: 2 ---
+	local playerData = g_data.hero
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 13-25, warpins: 2 ---
+	local need = item.getVar("need")
+	local needLevel = item.getVar("needLevel")
+	local where = getTakeOnPosition(item.getVar("stdMode"))
+	--- END OF BLOCK #5 ---
+
+	slot9 = if where then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #6 26-28, warpins: 1 ---
+	local ret = true
+	--- END OF BLOCK #6 ---
+
+	if need == 0 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #7 29-37, warpins: 1 ---
+	slot11 = chargeNeed
+	slot12 = "等级不够"
+
+	--- END OF BLOCK #7 ---
+
+	if needLevel > playerData.ability:get("level")
+
+	 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 38-39, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 40-40, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 41-43, warpins: 2 ---
+	ret = slot11(slot12, slot13)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #11 44-45, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if need == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #12 46-54, warpins: 1 ---
+	slot11 = chargeNeed
+	slot12 = "攻击力不足"
+
+	--- END OF BLOCK #12 ---
+
+	if needLevel > playerData.ability:get("maxDC")
+
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 55-56, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 57-57, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 58-60, warpins: 2 ---
+	ret = slot11(slot12, slot13)
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #16 61-62, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if need == 2 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #17 63-71, warpins: 1 ---
+	slot11 = chargeNeed
+	slot12 = "魔法力不足"
+
+	--- END OF BLOCK #17 ---
+
+	if needLevel > playerData.ability:get("maxMC")
+
+	 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 72-73, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 74-74, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 75-77, warpins: 2 ---
+	ret = slot11(slot12, slot13)
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #21 78-79, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if need == 3 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #22 80-88, warpins: 1 ---
+	slot11 = chargeNeed
+	slot12 = "精神力不足"
+
+	--- END OF BLOCK #22 ---
+
+	if needLevel > playerData.ability:get("maxSC")
+
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 89-90, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #24 91-91, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 92-94, warpins: 2 ---
+	ret = slot11(slot12, slot13)
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+	--- BLOCK #26 95-96, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if need == 5 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #27 97-98, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	slot4 = if isPlayer then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #28 99-109, warpins: 1 ---
+	slot11 = chargeNeed
+	slot12 = "你的声望不足，不能佩戴"
+
+	--- END OF BLOCK #28 ---
+
+	if g_data.player.ability3:get("prestige")
+
+	 > needLevel then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 110-111, warpins: 1 ---
+	slot13 = false
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+	--- BLOCK #30 112-112, warpins: 1 ---
+	slot13 = true
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 113-114, warpins: 2 ---
+	ret = slot11(slot12, slot13)
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 115-116, warpins: 7 ---
+	--- END OF BLOCK #32 ---
+
+	slot10 = if not ret then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 117-118, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 119-128, warpins: 3 ---
+	--- END OF BLOCK #34 ---
+
+	if playerData.ability:get("maxHandWeight")
+	 < item.getVar("weight")
+	 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #35 129-133, warpins: 2 ---
+	--- END OF BLOCK #35 ---
+
+	if item.getVar("stdMode")
+	 == 4 then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #36 134-138, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	slot10 = if not item.getVar("shape")
+
+	 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 139-139, warpins: 1 ---
+	local shape = 0
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 140-141, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	if shape ~= 3 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #39 142-143, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if shape == 4 then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 144-144, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #43
+
+
+	--- BLOCK #41 145-147, warpins: 1 ---
+	--- END OF BLOCK #41 ---
+
+	if shape ~= playerData.job then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #42 148-159, warpins: 1 ---
+	common.addMsg("不能学习其他职业技能书", display.COLOR_RED, display.COLOR_WHITE, true)
+
+	return false
+
+	--- END OF BLOCK #42 ---
+
+	FLOW; TARGET BLOCK #43
+
+
+	--- BLOCK #43 160-174, warpins: 4 ---
+	local needLevel = math.modf(Word(item.getVar("duraMax")))
+
+	--- END OF BLOCK #43 ---
+
+	if playerData.ability:get("level")
+	 < needLevel then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 175-187, warpins: 1 ---
+	common.addMsg("等级不够", display.COLOR_RED, display.COLOR_WHITE, true)
+
+	return false
+	--- END OF BLOCK #44 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #45 188-190, warpins: 3 ---
+	return true
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 191-191, warpins: 2 ---
+	--- END OF BLOCK #46 ---
+
+
+
+end
+item.getItemSourceInfo = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.formPanel.__cname == "bag" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-15, warpins: 1 ---
+	equipData = g_data.equip
+	bagData = g_data.bag
+	takeonMsg = CM_TAKEONITEM
+	eatMsg = CM_EAT
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 16-27, warpins: 1 ---
+	isPlayer = false
+	equipData = g_data.heroEquip
+	bagData = g_data.heroBag
+	takeonMsg = CM_HERO_TAKEON
+	eatMsg = CM_HERO_EAT
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 28-32, warpins: 2 ---
+	return bagData, equipData, eatMsg, takeonMsg
+	--- END OF BLOCK #3 ---
+
+
+
+end
+local cBox2Names = {
+	"紫铜天赐",
+	"白银天赐",
+	"赤金天赐",
+	"神秘天赐",
+	"新年天赐",
+	"节日天赐",
+	"春节天赐",
+	"火龙天赐",
+	"王者天赐",
+	"玛法天赐"
+}
+local cBox2KeyNames = {
+	"紫铜钥匙",
+	"白银钥匙",
+	"赤金钥匙",
+	"神秘钥匙",
+	"新年钥匙",
+	"节日钥匙",
+	"春节钥匙",
+	"火龙钥匙",
+	"王者钥匙",
+	"玛法钥匙"
+}
+item.useTreasureBox = function (self, item, bagData)
+	--- BLOCK #0 1-17, warpins: 1 ---
+	local name = item.getVar("name")
+	local boxIndex = item.get(item, "makeIndex")
+	local keyIndex = item.get(item, "makeIndex")
+	local findName = nil
+	local isKey = true
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(cBox2Names)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 18-25, warpins: 1 ---
+	print(v, name, cBox2KeyNames[k])
+
+	--- END OF BLOCK #1 ---
+
+	if v == name then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 26-31, warpins: 1 ---
+	findName = cBox2KeyNames[k]
+	isKey = false
+	g_data.usingTreasureKeyName = findName
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #3 32-35, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if cBox2KeyNames[k] == name then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 36-38, warpins: 1 ---
+	findName = v
+	g_data.usingTreasureKeyName = name
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 39-40, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 41-50, warpins: 1 ---
+	print(findName, name, boxIndex, keyIndex, g_data.usingTreasureKeyName)
+
+	--- END OF BLOCK #6 ---
+
+	slot6 = if not findName then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 51-51, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 52-55, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	for k, v in pairs(bagData.items)
+
+	LOOP BLOCK #9
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #9 56-60, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if v.getVar("name")
+	 == findName then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 61-66, warpins: 1 ---
+	print(name, findName)
+
+	--- END OF BLOCK #10 ---
+
+	slot7 = if isKey then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 67-72, warpins: 1 ---
+	boxIndex = v.get(v, "makeIndex")
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 73-77, warpins: 1 ---
+	keyIndex = v.get(v, "makeIndex")
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 78-79, warpins: 4 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #14 80-87, warpins: 1 ---
+	print(findName, name, boxIndex, keyIndex)
+
+	--- END OF BLOCK #14 ---
+
+	if keyIndex == boxIndex then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 88-88, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 89-104, warpins: 2 ---
+	net.send({
+		CM_BOX2_TRYOPEN,
+		flag = 0,
+		recog = boxIndex,
+		param = Loword(keyIndex),
+		tag = Hiword(keyIndex)
+	})
+
+	return 
+	--- END OF BLOCK #16 ---
+
+
+
+end
+item.use = function (self, equipIdx)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local bagData, equipData, eatMsg, takeonMsg = nil
+	local isPlayer = true
+	--- END OF BLOCK #0 ---
+
+	if self.formPanel.__cname == "bag" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-15, warpins: 1 ---
+	equipData = g_data.equip
+	bagData = g_data.bag
+	takeonMsg = CM_TAKEONITEM
+	eatMsg = CM_EAT
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 16-24, warpins: 1 ---
+	isPlayer = false
+	equipData = g_data.heroEquip
+	bagData = g_data.heroBag
+	takeonMsg = CM_HERO_TAKEON
+	eatMsg = CM_HERO_EAT
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 25-32, warpins: 2 ---
+	local where = getTakeOnPosition(self.data.getVar("stdMode"))
+	--- END OF BLOCK #3 ---
+
+	slot7 = if where then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #4 33-35, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if U_RINGL ~= where then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 36-38, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if U_RINGR == where then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #6 39-40, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot1 = if equipIdx then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 41-42, warpins: 1 ---
+	where = equipIdx
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #8 43-47, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot8 = if not equipData.items[U_RINGL] then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 48-49, warpins: 1 ---
+	where = U_RINGL
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #10 50-54, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot8 = if not equipData.items[U_RINGR] then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 55-56, warpins: 1 ---
+	where = U_RINGR
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #12 57-59, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot8 = if equipData.lastTakeOnRingIsLeft then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 60-63, warpins: 1 ---
+	equipData.lastTakeOnRingIsLeft = false
+	where = U_RINGR
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #14 64-67, warpins: 1 ---
+	equipData.lastTakeOnRingIsLeft = true
+	where = U_RINGL
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #15 68-70, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if U_ARMRINGL ~= where then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 71-73, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if U_ARMRINGR == where then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #17 74-75, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	slot1 = if equipIdx then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 76-77, warpins: 1 ---
+	where = equipIdx
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #19 78-82, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	slot8 = if not equipData.items[U_ARMRINGL] then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 83-84, warpins: 1 ---
+	where = U_ARMRINGL
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #21 85-89, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot8 = if not equipData.items[U_ARMRINGR] then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 90-91, warpins: 1 ---
+	where = U_ARMRINGR
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #23 92-94, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	slot8 = if equipData.lastTakeOnBraceletIsLeft then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 95-98, warpins: 1 ---
+	equipData.lastTakeOnBraceletIsLeft = false
+	where = U_ARMRINGR
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #25 99-102, warpins: 1 ---
+	equipData.lastTakeOnBraceletIsLeft = true
+	where = U_ARMRINGL
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #26 103-104, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	slot1 = if equipIdx then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 105-105, warpins: 1 ---
+	where = equipIdx
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 106-109, warpins: 12 ---
+	--- END OF BLOCK #28 ---
+
+	slot8 = if equipData.items[where] then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 110-116, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot8 = if not equipData.items[where].getVar("weight")
+
+	 then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 117-117, warpins: 2 ---
+	local weight = 0
+
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 118-126, warpins: 2 ---
+	--- END OF BLOCK #31 ---
+
+	slot9 = if self.canUseEquip(self, self.data, bagData, weight, isPlayer)
+	 then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #32 127-139, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot9 = if bagData.use(bagData, "take", self.data:get("makeIndex"), {
+		where = where
+	})
+	 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #33 140-167, warpins: 1 ---
+	net.send({
+		takeonMsg,
+		recog = self.data:get("makeIndex"),
+		param = where
+	}, {
+		self.data.getVar("name")
+	})
+	self.formPanel:delItem(self.data:get("makeIndex"))
+
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #51
+
+
+	--- BLOCK #34 168-169, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	slot1 = if equipIdx then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 170-170, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 171-179, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	slot8 = if not self.canUseEquip(self, self.data, bagData, 0, isPlayer)
+
+	 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 180-180, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 181-187, warpins: 1 ---
+	local function use()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if bagData:use("eat", self.data:get("makeIndex"))
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 14-37, warpins: 1 ---
+		net.send({
+			eatMsg,
+			recog = self.data:get("makeIndex")
+		})
+		self.formPanel:delItem(self.data:get("makeIndex"))
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 38-38, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	--- END OF BLOCK #38 ---
+
+	if self.data.getVar("stdMode")
+	 == 4 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 188-205, warpins: 1 ---
+	an.newMsgbox(string.format("[%s] 你想要开始训练吗? ", self.data.getVar("name")), function (isOk)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if isOk == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-4, warpins: 1 ---
+		use()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-5, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		center = true,
+		hasCancel = true
+	}):setName("msgBoxLearnSkill")
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #40 206-211, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	if self.data.getVar("stdMode")
+	 == 47 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #41 212-217, warpins: 1 ---
+	--- END OF BLOCK #41 ---
+
+	if self.data.getVar("name")
+
+	 == "传情烟花" then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #42 218-228, warpins: 1 ---
+	local msgbox = nil
+	msgbox = an.newMsgbox("请输入传情烟花文字", function (idx)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 3-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if msgbox.input:getString()
+
+		 == "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-10, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-30, warpins: 2 ---
+		net.send({
+			CM_YANHUA_TEXT,
+			recog = self.data:get("makeIndex")
+		}, {
+			msgbox.input:getString()
+		})
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 31-31, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		disableScroll = true,
+		input = 20,
+		btnTexts = {
+			"关闭",
+			"确定"
+		}
+	})
+
+	--- END OF BLOCK #42 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #43 229-234, warpins: 1 ---
+	--- END OF BLOCK #43 ---
+
+	if self.data.getVar("name")
+	 == "金条" then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #44 235-241, warpins: 1 ---
+	an.newMsgbox("确定使用一根金条兑换998000金币吗？", function ()
+		--- BLOCK #0 1-15, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if g_data.bag:use("eat", self.data:get("makeIndex"), {
+			quick = false
+		})
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 16-39, warpins: 1 ---
+		net.send({
+			eatMsg,
+			recog = self.data:get("makeIndex")
+		})
+		self.formPanel:delItem(self.data:get("makeIndex"))
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 40-40, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		center = true
+	})
+	--- END OF BLOCK #44 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #45 242-247, warpins: 1 ---
+	--- END OF BLOCK #45 ---
+
+	if self.data.getVar("stdMode")
+	 == 159 then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #47
+	end
+
+
+	--- BLOCK #46 248-260, warpins: 1 ---
+	net.send({
+		CM_V_POWERSTONE,
+		recog = self.data:get("makeIndex")
+	})
+	--- END OF BLOCK #46 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #47 261-266, warpins: 1 ---
+	--- END OF BLOCK #47 ---
+
+	if self.data.getVar("stdMode")
+	 == 46 then
+	JUMP TO BLOCK #48
+	else
+	JUMP TO BLOCK #49
+	end
+
+
+	--- BLOCK #48 267-279, warpins: 1 ---
+	print(self.data:get("makeIndex"))
+	self.useTreasureBox(self, self.data, bagData)
+	--- END OF BLOCK #48 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #49 280-281, warpins: 1 ---
+	use()
+
+	--- END OF BLOCK #49 ---
+
+	FLOW; TARGET BLOCK #50
+
+
+	--- BLOCK #50 282-282, warpins: 7 ---
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 283-284, warpins: 4 ---
+	return 
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 285-285, warpins: 2 ---
+	--- END OF BLOCK #52 ---
+
+	FLOW; TARGET BLOCK #53
+
+
+	--- BLOCK #53 286-286, warpins: 2 ---
+	--- END OF BLOCK #53 ---
+
+
+
+end
+item.takeOff = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.formPanel.__cname == "equip" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-20, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if g_data.equip:takeOff(self.data:get("makeIndex"), {
+		where = self.params.idx
+	})
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 21-51, warpins: 1 ---
+	net.send({
+		CM_TAKEOFFITEM,
+		recog = self.data:get("makeIndex"),
+		param = self.params.idx
+	}, {
+		self.data.getVar("name")
+	})
+	self.formPanel:delItem(self.data:get("makeIndex"))
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #3 52-67, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot1 = if g_data.heroEquip:takeOff(self.data:get("makeIndex"), {
+		where = self.params.idx
+	})
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 68-97, warpins: 1 ---
+	net.send({
+		CM_HERO_TAKEOFF,
+		recog = self.data:get("makeIndex"),
+		param = self.params.idx
+	}, {
+		self.data.getVar("name")
+	})
+	self.formPanel:delItem(self.data:get("makeIndex"))
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 98-98, warpins: 4 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+item.throw = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local function dropItem(cmd, from)
+		--- BLOCK #0 1-40, warpins: 1 ---
+		net.send({
+			cmd,
+			recog = self.data:get("makeIndex")
+		}, {
+			self.data.getVar("name")
+		})
+		from.throw(from, self.data:get("makeIndex"))
+		self.formPanel:delItem(self.data:get("makeIndex"))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	if self.formPanel.__cname == "bag" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self.params.isGold then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-73, warpins: 1 ---
+	local msgbox = nil
+	msgbox = an.newMsgbox("请输入你要丢的金币数量", function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if msgbox.nameInput:getString()
+
+		 == "" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-8, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-17, warpins: 2 ---
+		local num = tonumber(msgbox.nameInput:getString())
+
+		--- END OF BLOCK #2 ---
+
+		slot0 = if num then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 18-24, warpins: 1 ---
+		net.send({
+			CM_DROPGOLD,
+			recog = num
+		})
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 25-25, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		disableScroll = true
+	})
+	msgbox.nameInput = an.newInput(0, 0, msgbox.bg:getw() - 60, 40, 14, {
+		checkCLen = true,
+		label = {
+			"",
+			20,
+			1
+		},
+		bg = {
+			tex = res.gettex2("pic/scale/scale16.png"),
+			offset = {
+				-10,
+				2
+			}
+		},
+		tip = {
+			"",
+			20,
+			1,
+			{
+				color = cc.c3b(128, 128, 128)
+			}
+		}
+	}):add2(msgbox.bg):pos(msgbox.bg:getw()*0.5 + 10, msgbox.bg:geth()*0.5 + 20)
+
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 74-83, warpins: 1 ---
+	local cfg = def.items.filt[self.data.getVar("name")]
+	--- END OF BLOCK #3 ---
+
+	slot2 = if cfg then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 84-86, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot3 = if cfg.isGood then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 87-91, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot3 = if g_data.credit.isAuthen then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 92-93, warpins: 1 ---
+	slot3 = ""
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 94-94, warpins: 1 ---
+	local extStr = "\n未验证角色丢弃物品后其他玩家无法拾取"
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 95-110, warpins: 2 ---
+	local str = string.format("确认丢弃%s?%s", self.data.getVar("name"), extStr)
+
+	an.newMsgbox(str, function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		dropItem(CM_DROPITEM, g_data.bag)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		center = true
+	})
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #9 111-116, warpins: 2 ---
+	dropItem(CM_DROPITEM, g_data.bag)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #10 117-126, warpins: 1 ---
+	local cfg = def.items.filt[self.data.getVar("name")]
+	--- END OF BLOCK #10 ---
+
+	slot2 = if cfg then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #11 127-129, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot3 = if cfg.isGood then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #12 130-134, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot3 = if g_data.credit.isAuthen then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 135-136, warpins: 1 ---
+	slot3 = ""
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 137-137, warpins: 1 ---
+	local extStr = "\n未验证角色丢弃物品后其他玩家无法拾取"
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 138-153, warpins: 2 ---
+	local str = string.format("确认丢弃%s?%s", self.data.getVar("name"), extStr)
+
+	an.newMsgbox(str, function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		dropItem(CM_HERO_DROPITEM, g_data.heroBag)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		center = true
+	})
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #16 154-158, warpins: 2 ---
+	dropItem(CM_HERO_DROPITEM, g_data.heroBag)
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 159-160, warpins: 5 ---
+	--- END OF BLOCK #17 ---
+
+
+
+end
+item.duraChange = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.data.isPileUp()
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if self.dura then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-19, warpins: 1 ---
+	self.dura:setString("" .. self.data:get("dura"))
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 20-20, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+item.isChose = nil
+item.isShowInfo = nil
+item.registerMouseEvent = function (self)
+	--- BLOCK #0 1-49, warpins: 1 ---
+	self.registerScriptHandler(self, function (event)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event == "exit" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-6, warpins: 1 ---
+		self:onExit()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-7, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end)
+
+	self.mouseListener = cc.EventListenerMouse:create()
+
+	self.mouseListener:registerScriptHandler(function (evt)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if g_data.hotKey.isSettingKey then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-6, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-12, warpins: 2 ---
+		self:onMouseDown(evt)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, cc.Handler.EVENT_MOUSE_DOWN)
+	self.mouseListener:registerScriptHandler(function (evt)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if g_data.hotKey.isSettingKey then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-6, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-12, warpins: 2 ---
+		self:onMouseMoved(evt)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, cc.Handler.EVENT_MOUSE_MOVE)
+	self.mouseListener:registerScriptHandler(function (evt)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if g_data.hotKey.isSettingKey then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-6, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-12, warpins: 2 ---
+		self:onMouseUp(evt)
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, cc.Handler.EVENT_MOUSE_UP)
+	cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self.mouseListener, 1)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+item.onExit = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.isChose then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	main_scene.ui.isChoseItem = false
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-13, warpins: 2 ---
+	self.removeItemInfo(self)
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.mouseListener then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-27, warpins: 1 ---
+	cc.Director:getInstance():getEventDispatcher():removeEventListener(self.mouseListener)
+
+	self.mouseListener = nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 28-28, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+item.onMouseDown = function (self, evt)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if evt.getMouseButton(evt)
+
+	 == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	return 
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if main_scene.ui.isChoseItem then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not self.isChose then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-15, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 16-33, warpins: 3 ---
+	self.mouseDown = true
+	local x = evt.getCursorX(evt)
+	local y = evt.getCursorY(evt)
+
+	--- END OF BLOCK #5 ---
+
+	slot4 = if self.isInRect(self, cc.p(x, y))
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 34-36, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot4 = if self.handler then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 37-50, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.handler)
+
+	self.handler = nil
+	self.clicked = true
+	self.isChose = false
+	main_scene.ui.isChoseItem = false
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 51-53, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot4 = if not self.isChose then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 54-75, warpins: 1 ---
+	self.beganPos = cc.p(self.getPosition(self))
+	self.beganTouchPos = cc.p(x, y)
+	self.hasMove = false
+
+	self.setLocalZOrder(self, self.getLocalZOrder(self) + 1)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 76-76, warpins: 3 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+item.onMouseMoved = function (self, evt)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local x = evt.getCursorX(evt)
+	local y = evt.getCursorY(evt)
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.isChose then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #1 10-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not self.beganTouchPos then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-13, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-22, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if 5 >= math.abs(self.beganTouchPos.x - x)
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-31, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if 5 < math.abs(self.beganTouchPos.y - y)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #5 32-34, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot4 = if self.handler then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 35-40, warpins: 1 ---
+	scheduler.unscheduleGlobal(self.handler)
+
+	self.handler = nil
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 41-54, warpins: 2 ---
+	self.followMouse(self, x, y)
+	self.setLocalZOrder(self, main_scene.ui.z.focus + 1)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #8 55-64, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot4 = if self.isInRect(self, cc.p(x, y))
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #9 65-67, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot4 = if not self.infoLayer then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #10 68-71, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot4 = if not self.params.isGold then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #11 72-74, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot4 = if self.sprite then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #12 75-106, warpins: 1 ---
+	local p = self.sprite:convertToWorldSpace(cc.p(self.sprite:getw()/2, self.sprite:geth()/2))
+	self.infoLayer = itemInfo.show(self.data, p, {
+		from = form,
+		extend = self.params.extend
+	})
+
+	--- END OF BLOCK #12 ---
+
+	slot5 = if self.infoLayer then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 107-111, warpins: 1 ---
+	self.infoLayer:setTouchEnabled(false)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 112-115, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	slot5 = if self.params.clickcb then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 116-120, warpins: 1 ---
+	self.params.clickcb(self)
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #16 121-123, warpins: 1 ---
+	self.removeItemInfo(self)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 124-124, warpins: 8 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+item.onMouseUp = function (self, evt)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	self.removeItemInfo(self)
+
+	local x = evt.getCursorX(evt)
+	local y = evt.getCursorY(evt)
+
+	--- END OF BLOCK #0 ---
+
+	if evt.getMouseButton(evt)
+
+	 == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #1 15-17, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if not self.mouseDown then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 18-18, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 19-21, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if self.clicked then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 22-34, warpins: 1 ---
+	print("----双击------")
+	--- END OF BLOCK #4 ---
+
+	slot4 = if self.isInRect(self, cc.p(x, y))
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #5 35-40, warpins: 1 ---
+	self.mouseDoubleClick(self)
+
+	self.clicked = nil
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #6 41-43, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot4 = if not self.isChose then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #7 44-48, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot4 = if not main_scene.ui.isChoseItem then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #8 49-58, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot4 = if self.isInRect(self, cc.p(x, y))
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #9 59-62, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot4 = if not self.params.donotMove then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #10 63-79, warpins: 1 ---
+	print("----选中------")
+
+	self.isChose = true
+	main_scene.ui.isChoseItem = true
+	self.initZorder = self.getLocalZOrder(self)
+
+	--- END OF BLOCK #10 ---
+
+	slot4 = if self.params.isGold then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 80-85, warpins: 1 ---
+	sound.playSound(sound.s_money)
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #12 86-90, warpins: 1 ---
+	sound.play("item", self.data)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 91-97, warpins: 3 ---
+	self.handler = scheduler.performWithDelayGlobal(function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		self.handler = nil
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0.25)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #14 98-100, warpins: 1 ---
+	self.mouseDown = nil
+
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #15 101-121, warpins: 1 ---
+	print("----放下------")
+
+	self.isChose = false
+	main_scene.ui.isChoseItem = false
+	self.hasMove = true
+
+	self.setLocalZOrder(self, self.initZorder)
+	self.onTouchEnded(self, {
+		x = x,
+		y = y
+	})
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 122-124, warpins: 6 ---
+	self.mouseDown = nil
+
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #17 125-127, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot4 = if self.isChose then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #18 128-146, warpins: 1 ---
+	print("----撤销------")
+
+	self.isChose = false
+	main_scene.ui.isChoseItem = false
+
+	self.pos(self, self.beganPos.x, self.beganPos.y)
+	--- END OF BLOCK #18 ---
+
+	slot4 = if self.params then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #19 147-150, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	slot4 = if self.params.isSetOffset then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #20 151-153, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot4 = if self.sprite then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 154-161, warpins: 1 ---
+	self.sprite:show()
+	self.sprite2:hide()
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 162-165, warpins: 4 ---
+	self.setLocalZOrder(self, self.initZorder)
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 166-167, warpins: 3 ---
+	return 
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 168-168, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+
+
+end
+item.mouseDoubleClick = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local form = self.formPanel.__cname
+	local quick = nil
+	--- END OF BLOCK #0 ---
+
+	slot3 = if main_scene.ui.panels.storage then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if main_scene.ui.panels.storage.quick then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-17, warpins: 1 ---
+	quick = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-19, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if quick then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #4 20-21, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if form ~= "storage" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 22-23, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if form == "bag" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 24-25, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if form == "bag" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 26-34, warpins: 1 ---
+	main_scene.ui.panels.storage:putItem(self)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #8 35-43, warpins: 1 ---
+	main_scene.ui.panels.bag:putItem(self)
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #9 44-47, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	slot3 = if not self.params.mute then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 48-52, warpins: 1 ---
+	sound.play("item", self.data)
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 53-54, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	if form ~= "bag" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 55-56, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if form == "heroBag" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 57-60, warpins: 2 ---
+	self.use(self)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #14 61-62, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if form ~= "equip" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 63-64, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if form == "heroEquip" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 65-68, warpins: 2 ---
+	self.takeOff(self)
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #17 69-71, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot3 = if self.customNode then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 72-80, warpins: 1 ---
+	main_scene.ui.console.btnCallbacks:handle("custom", self.customNode)
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 81-81, warpins: 6 ---
+	return 
+	--- END OF BLOCK #19 ---
+
+
+
+end
+item.followMouse = function (self, x, y)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.params.isSetOffset then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot3 = if not self.formPanel._scale then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 9-9, warpins: 2 ---
+	local scale = 1
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 10-13, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if self.params.isSetOffset then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 14-42, warpins: 1 ---
+	self.sprite:hide()
+	self.sprite2:show()
+
+	local p = self.getParent(self):convertToWorldSpace(cc.p(0, 0))
+
+	self.pos(self, (x - p.x)/scale, (y - p.y)/scale)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 43-59, warpins: 1 ---
+	self.pos(self, (x - self.beganTouchPos.x)/scale + self.beganPos.x, (y - self.beganTouchPos.y)/scale + self.beganPos.y)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 60-60, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+item.removeItemInfo = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.infoLayer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-13, warpins: 1 ---
+	g_data.player.showTips = false
+
+	self.infoLayer:removeSelf()
+
+	self.infoLayer = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-14, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+item.isInRect = function (self, pos)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	local lastZ = -1
+	local topForm = nil
+	local panels = sortNodes(table.values(main_scene.ui.panels))
+
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(panels)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 15-20, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot10 = if v.checkInPanel(v, pos)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 21-25, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if lastZ < v.getLocalZOrder(v)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 26-30, warpins: 1 ---
+	lastZ = v.getLocalZOrder(v)
+	topForm = v
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 31-32, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 33-44, warpins: 1 ---
+	local customs = sortNodes(table.values(main_scene.ui.customs))
+
+	--- END OF BLOCK #5 ---
+
+	for i, v in ipairs(customs)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #6 45-50, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot11 = if v.checkInButton(v, pos)
+
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 51-53, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if lastZ < 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 54-58, warpins: 1 ---
+	lastZ = v.getLocalZOrder(v)
+	topForm = v
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 59-60, warpins: 4 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #10 61-89, warpins: 1 ---
+	local p = self.sprite:convertToWorldSpace(cc.p(0, 0))
+	local rect = cc.rect(p.x, p.y, self.sprite:getw(), self.sprite:geth())
+
+	--- END OF BLOCK #10 ---
+
+	slot8 = if cc.rectContainsPoint(rect, pos)
+
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #11 90-91, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot3 = if topForm then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 92-96, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if topForm.__cname == self.formPanel.__cname then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 97-98, warpins: 1 ---
+	return true
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 99-100, warpins: 4 ---
+	return false
+	--- END OF BLOCK #14 ---
+
+
+
+end
+
+return item
+--- END OF BLOCK #0 ---
+
+
+

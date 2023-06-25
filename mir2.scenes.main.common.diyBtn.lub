@@ -1,0 +1,551 @@
+--- BLOCK #0 1-25, warpins: 1 ---
+local diyBtn = class("diyBtn", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(diyBtn, {
+	btn,
+	btns,
+	beganPos,
+	beganTouchPos,
+	hasMove,
+	lock
+})
+
+diyBtn.ctor = function (self)
+	--- BLOCK #0 1-94, warpins: 1 ---
+	self.btn = res.get2("pic/panels/diy/icon.png"):anchor(0, 0):add2(self)
+
+	self.setCascadeOpacityEnabled(self, true)
+	self.size(self, self.btn:getw(), self.btn:geth()):anchor(0.5, 0.5):pos(main_scene.ui.panels.diy:getPosition()):opacity(0):runs({
+		cc.FadeIn:create(1),
+		cc.DelayTime:create(3),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:opacity(128)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	}):add2(main_scene.ui, main_scene.ui.z.diyBtn)
+	self.setTouchEnabled(self, true)
+	self.addNodeEventListener(self, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if self.lock then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-5, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 6-8, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 9-42, warpins: 1 ---
+		self.beganPos = cc.p(self:getPosition())
+		self.beganTouchPos = cc.p(event.x, event.y)
+		self.hasMove = false
+
+		self:opacity(255)
+		self:scale(1)
+		self:stopAllActions()
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+		--- BLOCK #4 43-45, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #5 46-49, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot1 = if not self.hasMove then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #6 50-60, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if 10 >= math.abs(self.beganTouchPos.x - event.x)
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 61-71, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if 10 < math.abs(self.beganTouchPos.y - event.y)
+
+		 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #8 72-95, warpins: 3 ---
+		self.hasMove = true
+		local x = event.x - self.beganTouchPos.x + self.beganPos.x
+		local y = event.y - self.beganTouchPos.y + self.beganPos.y
+		--- END OF BLOCK #8 ---
+
+		if x < 0 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 96-97, warpins: 1 ---
+		x = 0
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #10 98-101, warpins: 2 ---
+		--- END OF BLOCK #10 ---
+
+		if display.width < x then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #11 102-105, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		slot1 = if not display.width then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 105-105, warpins: 1 ---
+		x = x
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 106-108, warpins: 3 ---
+		--- END OF BLOCK #13 ---
+
+		if y < 0 then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 109-110, warpins: 1 ---
+		y = 0
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #15 111-114, warpins: 2 ---
+		--- END OF BLOCK #15 ---
+
+		if display.height < y then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #16 115-118, warpins: 1 ---
+		--- END OF BLOCK #16 ---
+
+		slot2 = if not display.height then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 118-118, warpins: 1 ---
+		y = y
+
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 119-125, warpins: 3 ---
+		self:pos(x, y)
+
+		--- END OF BLOCK #18 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+		--- BLOCK #19 126-128, warpins: 1 ---
+		--- END OF BLOCK #19 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #20 129-132, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		slot1 = if not self.hasMove then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #22
+		end
+
+
+		--- BLOCK #21 133-156, warpins: 1 ---
+		self.lock = true
+
+		self:runs({
+			cc.ScaleTo:create(0.2, 0.01),
+			cc.CallFunc:create(function ()
+				--- BLOCK #0 1-10, warpins: 1 ---
+				self:removeSelf()
+				--- END OF BLOCK #0 ---
+
+				slot0 = if main_scene.ui.panels.diy then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 11-21, warpins: 1 ---
+				main_scene.ui.panels.diy:setShow(self:getPosition())
+
+				--- END OF BLOCK #1 ---
+
+				FLOW; TARGET BLOCK #2
+
+
+				--- BLOCK #2 22-22, warpins: 2 ---
+				return 
+				--- END OF BLOCK #2 ---
+
+
+
+			end)
+		})
+
+		--- END OF BLOCK #21 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+		--- BLOCK #22 157-185, warpins: 1 ---
+		local function newx(x)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if x < self:getw()
+			/2 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 8-14, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot0 = if not (self:getw()
+
+			/2) then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 14-14, warpins: 1 ---
+			x = x
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 15-24, warpins: 3 ---
+			--- END OF BLOCK #3 ---
+
+			if display.width - self:getw()
+			/2 < x then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #4 25-34, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			slot0 = if not (display.width - self:getw()
+
+			/2) then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 34-34, warpins: 1 ---
+			x = x
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 35-35, warpins: 3 ---
+			return x
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+
+		local function newy(y)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if y < self:geth()
+			/2 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 8-14, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot0 = if not (self:geth()
+
+			/2) then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 14-14, warpins: 1 ---
+			y = y
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 15-24, warpins: 3 ---
+			--- END OF BLOCK #3 ---
+
+			if display.height - self:geth()
+			/2 < y then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #4 25-34, warpins: 1 ---
+			--- END OF BLOCK #4 ---
+
+			slot0 = if not (display.height - self:geth()
+
+			/2) then
+			JUMP TO BLOCK #5
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #5 34-34, warpins: 1 ---
+			y = y
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 35-35, warpins: 3 ---
+			return y
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+
+		local x = event.x - self.beganTouchPos.x + self.beganPos.x
+		local y = event.y - self.beganTouchPos.y + self.beganPos.y
+		y = newy(y)
+		x = newx(x)
+
+		--- END OF BLOCK #22 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #23 186-191, warpins: 0 ---
+		--- END OF BLOCK #23 ---
+
+		if y < self:geth()
+
+		 then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #25
+		end
+
+
+		--- BLOCK #24 192-201, warpins: 1 ---
+		x = newx(x)
+		y = self:geth()/2
+
+		--- END OF BLOCK #24 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #25 202-210, warpins: 1 ---
+		--- END OF BLOCK #25 ---
+
+		if display.height - self:geth()
+
+		 < y then
+		JUMP TO BLOCK #26
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #26 211-223, warpins: 1 ---
+		x = newx(x)
+		y = display.height - self:geth()/2
+		--- END OF BLOCK #26 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #27 224-227, warpins: 1 ---
+		--- END OF BLOCK #27 ---
+
+		if display.cx < x then
+		JUMP TO BLOCK #28
+		else
+		JUMP TO BLOCK #29
+		end
+
+
+		--- BLOCK #28 228-240, warpins: 1 ---
+		x = display.width - self:getw()/2
+		y = newy(y)
+		--- END OF BLOCK #28 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #29 241-249, warpins: 1 ---
+		x = self:getw()/2
+		y = newy(y)
+
+		--- END OF BLOCK #29 ---
+
+		FLOW; TARGET BLOCK #30
+
+
+		--- BLOCK #30 250-280, warpins: 5 ---
+		self:runs({
+			cc.MoveTo:create(0.25, cc.p(x, y)),
+			cc.DelayTime:create(3),
+			cc.CallFunc:create(function ()
+				--- BLOCK #0 1-6, warpins: 1 ---
+				self:opacity(128)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+		})
+
+		--- END OF BLOCK #30 ---
+
+		FLOW; TARGET BLOCK #31
+
+
+		--- BLOCK #31 281-283, warpins: 6 ---
+		return true
+		--- END OF BLOCK #31 ---
+
+		FLOW; TARGET BLOCK #32
+
+
+		--- BLOCK #32 284-284, warpins: 2 ---
+		--- END OF BLOCK #32 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return diyBtn
+--- END OF BLOCK #0 ---
+
+
+

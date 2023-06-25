@@ -1,0 +1,2133 @@
+--- BLOCK #0 1-31, warpins: 1 ---
+local areas = class("areas", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(areas, {})
+
+areas.ctor = function (self, scene, forceSelect, serverlistCallback)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.scene = scene
+	self.serverlistCallback = serverlistCallback
+
+	self.requestServerList(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+areas.requestServerList = function (self)
+	--- BLOCK #0 1-23, warpins: 1 ---
+	local url = string.format("http://%s:%s/account", def.loginCenterIP, def.loginCenterPort)
+
+	print("requestServerList", url)
+
+	local httpReq = network.createHTTPRequest(function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name ~= "completed" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if event.name == "failed" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 7-14, warpins: 1 ---
+		an.newMsgbox("获取服务器列表失败. ", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 3-7, warpins: 1 ---
+			os.exit(0)
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+			--- BLOCK #2 8-9, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if idx == 2 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 10-13, warpins: 1 ---
+			self:requestServerList()
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 14-14, warpins: 3 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end, {
+			center = true,
+			btnTexts = {
+				"退出",
+				"重试"
+			}
+		})
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 15-16, warpins: 2 ---
+		return 
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 17-22, warpins: 2 ---
+		local request = event.request
+		local code = request.getResponseStatusCode(request)
+
+		--- END OF BLOCK #4 ---
+
+		if code ~= 200 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 23-30, warpins: 1 ---
+		an.newMsgbox("获取服务器列表失败. ", function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			os.exit(0)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			center = true
+		})
+
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 31-44, warpins: 2 ---
+		p2("login", request.getResponseData(request))
+		--- END OF BLOCK #6 ---
+
+		slot3 = if not json.decode(request.getResponseData(request))
+
+		 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 45-45, warpins: 1 ---
+		local ret = {}
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 46-84, warpins: 2 ---
+		g_data.login:setVerInfo(ret.serverlist.verinfo)
+		g_data.login:setShopUrl(ret.serverlist.shopurl)
+		g_data.login:setServerList(ret.serverlist.servers)
+		g_data.login:setNotice(ret.serverlist.notice)
+		g_data.login:setNetLastName(ret.last)
+		self:loadServer()
+
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end, url, "POST")
+
+	httpReq.start(httpReq)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+areas.loadLayer = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.layer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.layer:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-44, warpins: 2 ---
+	self.layer = display.newNode():addTo(self):size(display.width, display.height):anchor(0, 0)
+
+	self.size(self, self.layer:getContentSize()):anchor(0.5, 0.5):center()
+
+	return self.layer
+	--- END OF BLOCK #2 ---
+
+
+
+end
+areas.loadServer = function (self)
+	--- BLOCK #0 1-72, warpins: 1 ---
+	local bg = self.loadLayer(self)
+	local areabg = res.get2("pic/login/areabg.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg)/2)
+
+	res.get2("pic/login/line1.png"):addTo(areabg):pos(155, 182)
+	res.get2("pic/login/line2.png"):addTo(areabg):pos(372, 282)
+	an.newBtn(res.gettex2("pic/login/return.png"), function ()
+		--- BLOCK #0 1-25, warpins: 1 ---
+		sound.playSound("104")
+		g_data.login:resetLogin()
+		def.setIsLazyLoadConfig(false)
+		def.resetGameServer()
+		def.resetLoginCenter()
+		game.gotoscene("sfselect", {
+			logout = false
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true
+	}):add2(bg):pos(90, display.height - 80)
+	--- END OF BLOCK #0 ---
+
+	slot3 = if def.isSelectServer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 73-94, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/login/manage.png"), function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		sound.playSound("104")
+		game.gotoscene("login", {
+			logout = true
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true
+	}):addTo(bg):pos(display.width - 90, display.height - 80)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 95-121, warpins: 2 ---
+	an.newBtn(res.gettex2("pic/login/notice.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("104")
+		self:showNotice()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true
+	}):addTo(bg):pos(display.width - 90, display.height - 180)
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not g_data.login.localLastSer then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 122-124, warpins: 1 ---
+	self.showNotice(self)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 125-157, warpins: 2 ---
+	local info = "抵制不良游戏，拒绝盗版游戏。注意自我保护，谨防受骗上当。适度游戏益脑，\n沉迷游戏伤身。合理安排时间，享受健康生活。严厉打击赌博，营造和谐环境。"
+
+	an.newLabel(info, 18, 1, {
+		color = cc.c3b(245, 243, 202)
+	}):anchor(0.5, 0.5):pos(display.cx, 55):add2(bg)
+	--- END OF BLOCK #4 ---
+
+	slot4 = if WIN32_OPERATE then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 158-160, warpins: 1 ---
+	self.extend(self)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 161-169, warpins: 2 ---
+	local servers = {}
+	local suggest = {}
+	local last = nil
+
+	--- END OF BLOCK #6 ---
+
+	for i, v in ipairs(g_data.login.verinfo)
+
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #7 170-172, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	slot12 = if v.verid then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 173-175, warpins: 1 ---
+	servers[v.verid] = {}
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 176-177, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #10 178-183, warpins: 1 ---
+	slot7 = ipairs
+	--- END OF BLOCK #10 ---
+
+	slot8 = if not g_data.login.servers then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 184-184, warpins: 1 ---
+	slot8 = {}
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 185-186, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	for i, v in slot7(slot8)
+
+	LOOP BLOCK #13
+	GO OUT TO BLOCK #20
+
+
+	--- BLOCK #13 187-189, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot12 = if v.verid then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 190-195, warpins: 1 ---
+	table.insert(servers[v.verid], v)
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 196-199, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	if 0 < v.suggest then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 200-204, warpins: 1 ---
+	table.insert(suggest, v)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 205-210, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	if v.name == g_data.login.netLastName then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 211-211, warpins: 1 ---
+	last = v
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 212-213, warpins: 3 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #20 214-217, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	for k, v in pairs(servers)
+
+	LOOP BLOCK #21
+	GO OUT TO BLOCK #23
+
+
+	--- BLOCK #21 218-222, warpins: 1 ---
+	table.sort(v, function (a, b)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if a.zoneid >= b.zoneid then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 7-7, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 8-8, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 223-224, warpins: 2 ---
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #23 225-273, warpins: 1 ---
+	table.sort(suggest, function (a, b)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if a.zoneid >= b.zoneid then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		slot2 = false
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 7-7, warpins: 1 ---
+		slot2 = true
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 8-8, warpins: 2 ---
+		return slot2
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	local scroll = an.newScroll(27, 31, 125, 305):addTo(areabg)
+	local list = nil
+	local suggestMark = res.get2("pic/login/new.png"):addTo(areabg):pos(370, 265)
+
+	suggestMark.setVisible(suggestMark, false)
+
+	local btns = {}
+
+	local function newServerBtn(data, parent, pos)
+		--- BLOCK #0 1-16, warpins: 1 ---
+		slot3 = an.newBtn
+		slot4 = res.gettex2("pic/login/b9.png")
+
+		function slot5()
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not data then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-4, warpins: 1 ---
+			return 
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 5-8, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			slot0 = if data.force then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 9-27, warpins: 1 ---
+			an.newMsgbox(data.zoneid .. "区" .. data.zonename .. "\n" .. g_data.login.forces[data.force], nil, {
+				center = true
+			})
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+			--- BLOCK #4 28-32, warpins: 1 ---
+			self:selectServer(data)
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 33-33, warpins: 2 ---
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end
+
+		slot6 = {
+			support = "scroll",
+			pressImage = res.gettex2("pic/login/b10.png")
+		}
+		slot7 = {
+			nil,
+			20,
+			2
+		}
+		--- END OF BLOCK #0 ---
+
+		slot0 = if data then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 17-22, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot8 = if not (data.zoneid .. "区 " .. data.zonename) then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 23-23, warpins: 2 ---
+		slot8 = "暂无记录"
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 24-42, warpins: 2 ---
+		slot7[1] = slot8
+		slot6.label = slot7
+		local btn = slot3(slot4, slot5, slot6):addTo(parent):pos(pos.x, pos.y):anchor(0, 1)
+
+		--- END OF BLOCK #3 ---
+
+		slot0 = if data then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 43-54, warpins: 1 ---
+		btn.label:setPositionX(btn.label:getPositionX() + 9)
+		--- END OF BLOCK #4 ---
+
+		slot4 = if data.heat then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 55-78, warpins: 1 ---
+		res.get2("pic/login/heat_" .. data.heat .. ".png"):addTo(btn):pos(18, btn.geth(btn)/2):anchor(0.5, 0.5)
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 79-80, warpins: 3 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local function click(btn)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if list then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		list:removeSelf()
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-10, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot1 = if btn.suggest then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 11-16, warpins: 1 ---
+		suggestMark:setVisible(true)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 17-21, warpins: 1 ---
+		suggestMark:setVisible(false)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 22-46, warpins: 2 ---
+		list = an.newScroll(165, 25, 420, 220):add2(areabg):pos(165, 30):anchor(0, 0)
+
+		--- END OF BLOCK #5 ---
+
+		slot1 = if btn.data then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #6 47-50, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		for i, v in ipairs(btn.data)
+
+		LOOP BLOCK #7
+		GO OUT TO BLOCK #11
+
+
+		--- BLOCK #7 51-53, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if i%2 == 1 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 54-73, warpins: 1 ---
+		newServerBtn(v, list, cc.p(0, list:geth() - math.floor((i - 1)/2)*45))
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 74-92, warpins: 1 ---
+		newServerBtn(v, list, cc.p(225, list:geth() - math.floor((i - 1)/2)*45))
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 93-94, warpins: 3 ---
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #11 95-98, warpins: 2 ---
+		--- END OF BLOCK #11 ---
+
+		for i, v in ipairs(btns)
+
+		LOOP BLOCK #12
+		GO OUT TO BLOCK #16
+
+
+		--- BLOCK #12 99-100, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		if btn == v then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 101-104, warpins: 1 ---
+		v.select(v)
+		--- END OF BLOCK #13 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #14 105-107, warpins: 1 ---
+		v.unselect(v)
+
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 108-109, warpins: 3 ---
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+		--- BLOCK #16 110-110, warpins: 1 ---
+		return 
+		--- END OF BLOCK #16 ---
+
+
+
+	end
+
+	local function addVerCategoryBtn(data, title, isSuggest)
+		--- BLOCK #0 1-44, warpins: 1 ---
+		local btn = an.newBtn(res.gettex2("pic/login/b5.png"), click, {
+			support = "scroll",
+			select = {
+				res.gettex2("pic/login/b6.png")
+			},
+			label = {
+				title,
+				20,
+				2
+			}
+		}):addTo(scroll):pos(62, #btns*40 - 300):anchor(0.5, 1)
+		btn.data = data
+		btn.suggest = isSuggest
+		btns[#btns + 1] = btn
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	addVerCategoryBtn(suggest, "推荐区组", true)
+	--- END OF BLOCK #23 ---
+
+	for i, v in ipairs(g_data.login.verinfo)
+
+	LOOP BLOCK #24
+	GO OUT TO BLOCK #26
+
+
+	--- BLOCK #24 274-278, warpins: 1 ---
+	addVerCategoryBtn(servers[v.verid], v.vername)
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 279-280, warpins: 2 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+	--- BLOCK #26 281-312, warpins: 1 ---
+	click(btns[1])
+	res.get2("pic/login/last.png"):addTo(areabg):pos(230, 312):anchor(0.5, 0.5)
+	newServerBtn(last, areabg, cc.p(306.5, 332.5))
+
+	return 
+	--- END OF BLOCK #26 ---
+
+
+
+end
+areas.selectServer = function (self, data)
+	--- BLOCK #0 1-167, warpins: 1 ---
+	local bg = self.loadLayer(self)
+
+	an.newBtn(res.gettex2("pic/login/return.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("104")
+		self:loadServer()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true
+	}):add2(bg):pos(90, display.height - 80)
+
+	local panel = res.get2("pic/login/curren_ser.png"):addTo(bg):pos(bg.getw(bg)/2, 250)
+
+	an.newLabel(g_data.login:getVerName(data.verid), 20, 2, {
+		color = def.colors.labelYellow
+	}):addTo(panel):pos(panel.getw(panel)/2, 130):anchor(0.5, 0.5)
+
+	local scene = self.scene
+
+	local function enterGame()
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if IS_PLAYER_DEBUG then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if 0 < DEBUG then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 8-17, warpins: 1 ---
+		m2debug.setting.last = data
+
+		cache.saveDebug("setting", m2debug.setting)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 18-40, warpins: 3 ---
+		g_data.login:setLocalLastServer(data)
+		sound.playSound("104")
+
+		local clientVer = g_data.login:getClientVer(data.verid)
+		slot1 = def.setGameServer
+		--- END OF BLOCK #3 ---
+
+		slot2 = if not data.zoneid then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 41-41, warpins: 1 ---
+		slot2 = ""
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 42-45, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		slot3 = if not data.zoneip then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 46-46, warpins: 1 ---
+		slot3 = ""
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 47-50, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		slot4 = if not data.area then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 51-51, warpins: 1 ---
+		slot4 = ""
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 52-53, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		slot5 = if not clientVer then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 54-54, warpins: 1 ---
+		slot5 = 180
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 55-66, warpins: 2 ---
+		slot1(slot2, slot3, slot4, slot5, data.serverinfo, data.ConfigName, data.ConfigVer)
+
+		local bNeedRequest = false
+		--- END OF BLOCK #11 ---
+
+		slot2 = if data.ConfigName then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #12 67-70, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		slot2 = if data.ConfigVer then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #31
+		end
+
+
+		--- BLOCK #13 71-80, warpins: 1 ---
+		local configDir = device.writablePath .. "config/"
+
+		--- END OF BLOCK #13 ---
+
+		slot3 = if not io.exists(configDir)
+		 then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 81-85, warpins: 1 ---
+		ycFunction:mkdir(configDir)
+
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 86-98, warpins: 2 ---
+		local serveridDir = device.writablePath .. "config/" .. def.serverId .. "/"
+
+		--- END OF BLOCK #15 ---
+
+		slot4 = if not io.exists(serveridDir)
+		 then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 99-103, warpins: 1 ---
+		ycFunction:mkdir(serveridDir)
+
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 104-113, warpins: 2 ---
+		local dir = self:getConfigFileDir()
+
+		--- END OF BLOCK #17 ---
+
+		slot5 = if not io.exists(dir)
+		 then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #18 114-118, warpins: 1 ---
+		ycFunction:mkdir(dir)
+
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 119-131, warpins: 2 ---
+		local zipFilePath = dir .. data.ConfigName
+		local verFilePath = dir .. "configver.json"
+
+		--- END OF BLOCK #19 ---
+
+		slot7 = if io.exists(zipFilePath)
+		 then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #29
+		end
+
+
+		--- BLOCK #20 132-137, warpins: 1 ---
+		--- END OF BLOCK #20 ---
+
+		slot7 = if io.exists(verFilePath)
+
+		 then
+		JUMP TO BLOCK #21
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #21 138-144, warpins: 1 ---
+		local ver = nil
+		local rawData = io.readfile(verFilePath)
+		--- END OF BLOCK #21 ---
+
+		slot8 = if rawData then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #22 145-150, warpins: 1 ---
+		local data2 = json.decode(rawData)
+		--- END OF BLOCK #22 ---
+
+		slot9 = if data2 then
+		JUMP TO BLOCK #23
+		else
+		JUMP TO BLOCK #24
+		end
+
+
+		--- BLOCK #23 151-151, warpins: 1 ---
+		ver = data2.ver
+		--- END OF BLOCK #23 ---
+
+		FLOW; TARGET BLOCK #24
+
+
+		--- BLOCK #24 152-153, warpins: 3 ---
+		--- END OF BLOCK #24 ---
+
+		slot7 = if ver then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #25 154-157, warpins: 1 ---
+		--- END OF BLOCK #25 ---
+
+		if data.ConfigVer ~= ver then
+		JUMP TO BLOCK #26
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #26 158-159, warpins: 1 ---
+		bNeedRequest = true
+		--- END OF BLOCK #26 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #27 160-161, warpins: 2 ---
+		bNeedRequest = false
+		--- END OF BLOCK #27 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #28 162-163, warpins: 1 ---
+		bNeedRequest = true
+		--- END OF BLOCK #28 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+		--- BLOCK #29 164-164, warpins: 1 ---
+		bNeedRequest = true
+
+		--- END OF BLOCK #29 ---
+
+		FLOW; TARGET BLOCK #30
+
+
+		--- BLOCK #30 165-169, warpins: 4 ---
+		def.setIsLazyLoadConfig(true)
+
+		--- END OF BLOCK #30 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #32
+
+
+		--- BLOCK #31 170-174, warpins: 2 ---
+		bNeedRequest = false
+
+		def.setIsLazyLoadConfig(false)
+		--- END OF BLOCK #31 ---
+
+		FLOW; TARGET BLOCK #32
+
+
+		--- BLOCK #32 175-176, warpins: 2 ---
+		--- END OF BLOCK #32 ---
+
+		slot1 = if bNeedRequest then
+		JUMP TO BLOCK #33
+		else
+		JUMP TO BLOCK #34
+		end
+
+
+		--- BLOCK #33 177-181, warpins: 1 ---
+		self:requestConfigZip()
+		--- END OF BLOCK #33 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+		--- BLOCK #34 182-185, warpins: 1 ---
+		--- END OF BLOCK #34 ---
+
+		slot2 = if self.serverlistCallback then
+		JUMP TO BLOCK #35
+		else
+		JUMP TO BLOCK #36
+		end
+
+
+		--- BLOCK #35 186-188, warpins: 1 ---
+		self.serverlistCallback()
+
+		--- END OF BLOCK #35 ---
+
+		FLOW; TARGET BLOCK #36
+
+
+		--- BLOCK #36 189-189, warpins: 3 ---
+		return 
+		--- END OF BLOCK #36 ---
+
+
+
+	end
+
+	local btn = an.newBtn(res.gettex2("pic/login/b7.png"), enterGame, {
+		pressImage = res.gettex2("pic/login/b8.png"),
+		label = {
+			data.zoneid .. "区 " .. data.zonename,
+			20,
+			2,
+			cc.c3b(206, 191, 165)
+		}
+	}):addTo(panel):pos(panel.getw(panel)/2, 80)
+
+	btn.label:setPositionX(btn.label:getPositionX() + 9)
+	res.get2("pic/login/heat_" .. data.heat .. ".png"):addTo(btn):pos(18, btn.geth(btn)/2)
+	an.newLabel("点击进入游戏", 16, 2):addTo(panel):pos(panel.getw(panel)/2, 40):anchor(0.5, 0.5)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+areas.requestConfigZip = function (self)
+	--- BLOCK #0 1-73, warpins: 1 ---
+	local url = def.loginCenter .. "/downloadconfig/" .. def.configName
+	local maskLayer = display.newNode():addTo(self):enableClick(function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end):size(display.width, display.height)
+	local progressLabel = an.newLabel("正在更新该区补丁...", 25, 1, {
+		color = cc.c3b(255, 0, 0)
+	}):anchor(0.5, 0.5):pos(display.cx, display.cy):add2(maskLayer)
+
+	print("requestConfigZip", url)
+
+	local httpReq = network.createHTTPRequest(function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name ~= "completed" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if event.name == "failed" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #2 7-9, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot1 = if maskLayer then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-13, warpins: 1 ---
+		maskLayer:removeSelf()
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 14-19, warpins: 2 ---
+		an.newMsgbox("获取该区补丁失败.", function ()
+			--- BLOCK #0 1-1, warpins: 1 ---
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			center = true
+		})
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 20-21, warpins: 2 ---
+		return 
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 22-27, warpins: 2 ---
+		local request = event.request
+		local code = request.getResponseStatusCode(request)
+
+		--- END OF BLOCK #6 ---
+
+		if code ~= 200 then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #7 28-30, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot3 = if maskLayer then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 31-34, warpins: 1 ---
+		maskLayer:removeSelf()
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 35-42, warpins: 2 ---
+		an.newMsgbox("获取该区补丁失败.", function ()
+			--- BLOCK #0 1-1, warpins: 1 ---
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			center = true
+		})
+
+		return 
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 43-51, warpins: 2 ---
+		local function saveConfigFileAndVer()
+			--- BLOCK #0 1-36, warpins: 1 ---
+			local dir = self:getConfigFileDir()
+			local zipFilePath = dir .. def.configName
+			local verFilePath = dir .. "configver.json"
+
+			request:saveResponseData(zipFilePath)
+			io.writefile(verFilePath, json.encode({
+				ver = def.configVer
+			}))
+
+			local unzipDir = dir .. "config/"
+
+			--- END OF BLOCK #0 ---
+
+			slot4 = if not io.exists(unzipDir)
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 37-41, warpins: 1 ---
+			ycFunction:mkdir(unzipDir)
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 42-53, warpins: 2 ---
+			print("unzip", unzipDir)
+			ycFunction:unzip(zipFilePath, unzipDir, false)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+
+		saveConfigFileAndVer()
+		print("requestConfigZip success")
+		--- END OF BLOCK #10 ---
+
+		slot4 = if maskLayer then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 52-55, warpins: 1 ---
+		maskLayer:removeSelf()
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 56-59, warpins: 2 ---
+		--- END OF BLOCK #12 ---
+
+		slot4 = if self.serverlistCallback then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 60-62, warpins: 1 ---
+		self.serverlistCallback()
+
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 63-64, warpins: 2 ---
+		return 
+		--- END OF BLOCK #14 ---
+
+
+
+	end, url, "GET")
+
+	httpReq.setTimeout(httpReq, 200)
+	httpReq.start(httpReq)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+areas.getConfigFileDir = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if def.serverId then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if def.zoneid then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 9-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if def.serverId ~= "" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-16, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if def.zoneid == "" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 17-18, warpins: 4 ---
+	return ""
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-29, warpins: 2 ---
+	local dir = device.writablePath .. "config/" .. def.serverId .. "/" .. def.zoneid .. "/"
+
+	return dir
+	--- END OF BLOCK #5 ---
+
+
+
+end
+areas.showNotice = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not g_data.login.notice then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	local content = ""
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-199, warpins: 2 ---
+	local node = display.newNode():size(display.width, display.height):addTo(self)
+	local noticebg = res.get2("pic/common/black_2.png"):addTo(node):pos(node.centerPos(node)):anchor(0.5, 0.5):scale(0.1)
+
+	noticebg.runAction(noticebg, cc.ScaleTo:create(0.2, 1))
+	res.get2("pic/login/notice_title.png"):addTo(noticebg):pos(noticebg.getw(noticebg)/2, noticebg.geth(noticebg) - 25)
+	node.setTouchEnabled(node, true)
+	node.addNodeEventListener(node, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 4-17, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not cc.rectContainsPoint(noticebg:getBoundingBox(), cc.p(event.x, event.y))
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 18-21, warpins: 1 ---
+		node:removeSelf()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 22-23, warpins: 3 ---
+		return true
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		node:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png")
+	}):addTo(noticebg):pos(noticebg.getw(noticebg) - 8, noticebg.geth(noticebg) - 8):anchor(1, 1)
+	display.newScale9Sprite(res.getframe2("pic/scale/scale26.png"), 14, 14, cc.size(noticebg.getw(noticebg) - 28, noticebg.geth(noticebg) - 68)):addTo(noticebg):anchor(0, 0)
+
+	local scroll = an.newScroll(25, 20, noticebg.getw(noticebg) - 50, noticebg.geth(noticebg) - 80):addTo(noticebg):anchor(0, 0)
+	local labelM = an.newLabelM(noticebg.getw(noticebg) - 50, 20, 1, {
+		manual = false
+	}):addTo(scroll):pos(0, noticebg.geth(noticebg) - 80):anchor(0, 1):nextLine()
+	local parseing = true
+
+	local function parseContent(block)
+		--- BLOCK #0 1-24, warpins: 1 ---
+		local p = string.find(block, "/>")
+		local szText = string.trim(string.sub(block, 1, p + 1))
+		local data = string.split(szText, " ")
+		local params = {}
+
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(data)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 25-32, warpins: 1 ---
+		local temp = string.split(v, "=")
+		--- END OF BLOCK #1 ---
+
+		slot11 = if temp[1] then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 33-35, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot11 = if temp[2] then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 36-38, warpins: 1 ---
+		params[temp[1]] = temp[2]
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 39-40, warpins: 4 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 41-48, warpins: 1 ---
+		slot6 = labelM
+		slot5 = labelM.setFontSize
+
+		--- END OF BLOCK #5 ---
+
+		slot7 = if not tonumber(params.size)
+
+		 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 49-49, warpins: 1 ---
+		slot7 = 20
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 50-61, warpins: 2 ---
+		slot5(slot6, slot7)
+
+		local urlcolor = string.split(params.urlcolor, "|")
+		slot6 = cc.c3b
+		slot7 = tonumber
+		--- END OF BLOCK #7 ---
+
+		slot8 = if not urlcolor[1] then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 62-62, warpins: 1 ---
+		slot8 = 255
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 63-65, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		slot7 = if not slot7(slot8)
+
+		 then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 66-66, warpins: 1 ---
+		slot7 = 255
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 67-70, warpins: 2 ---
+		slot8 = tonumber
+		--- END OF BLOCK #11 ---
+
+		slot9 = if not urlcolor[2] then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 71-71, warpins: 1 ---
+		slot9 = 255
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 72-76, warpins: 2 ---
+		slot8 = slot8(slot9)
+		slot9 = tonumber
+		--- END OF BLOCK #13 ---
+
+		slot10 = if not urlcolor[3] then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #15
+		end
+
+
+		--- BLOCK #14 77-77, warpins: 1 ---
+		slot10 = 255
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 78-91, warpins: 2 ---
+		urlcolor = slot6(slot7, slot8, slot9(slot10))
+		local textcolor = string.split(params.textcolor, "|")
+		slot7 = cc.c3b
+		slot8 = tonumber
+		--- END OF BLOCK #15 ---
+
+		slot9 = if not textcolor[1] then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #16 92-92, warpins: 1 ---
+		slot9 = 255
+
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 93-95, warpins: 2 ---
+		--- END OF BLOCK #17 ---
+
+		slot8 = if not slot8(slot9)
+
+		 then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #19
+		end
+
+
+		--- BLOCK #18 96-96, warpins: 1 ---
+		slot8 = 255
+		--- END OF BLOCK #18 ---
+
+		FLOW; TARGET BLOCK #19
+
+
+		--- BLOCK #19 97-100, warpins: 2 ---
+		slot9 = tonumber
+		--- END OF BLOCK #19 ---
+
+		slot10 = if not textcolor[2] then
+		JUMP TO BLOCK #20
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #20 101-101, warpins: 1 ---
+		slot10 = 255
+		--- END OF BLOCK #20 ---
+
+		FLOW; TARGET BLOCK #21
+
+
+		--- BLOCK #21 102-106, warpins: 2 ---
+		slot9 = slot9(slot10)
+		slot10 = tonumber
+		--- END OF BLOCK #21 ---
+
+		slot11 = if not textcolor[3] then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #22 107-107, warpins: 1 ---
+		slot11 = 255
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 108-113, warpins: 2 ---
+		textcolor = slot7(slot8, slot9, slot10(slot11))
+		--- END OF BLOCK #23 ---
+
+		slot7 = if params.urladdr then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #24 114-119, warpins: 1 ---
+		slot8 = labelM
+		slot7 = labelM.addLabel
+		--- END OF BLOCK #24 ---
+
+		slot9 = if not params.urltext then
+		JUMP TO BLOCK #25
+		else
+		JUMP TO BLOCK #26
+		end
+
+
+		--- BLOCK #25 120-120, warpins: 1 ---
+		slot9 = params.urladdr
+
+		--- END OF BLOCK #25 ---
+
+		FLOW; TARGET BLOCK #26
+
+
+		--- BLOCK #26 121-124, warpins: 2 ---
+		slot7(slot8, slot9, urlcolor, nil, nil, function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			device.openURL(params.urladdr)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+
+		--- END OF BLOCK #26 ---
+
+		FLOW; TARGET BLOCK #27
+
+
+		--- BLOCK #27 125-142, warpins: 2 ---
+		block = string.sub(block, p + 2)
+		local p1 = string.find(block, "<t")
+		local p2 = string.find(block, "/>")
+		--- END OF BLOCK #27 ---
+
+		slot7 = if p1 then
+		JUMP TO BLOCK #28
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #28 143-144, warpins: 1 ---
+		--- END OF BLOCK #28 ---
+
+		slot8 = if p2 then
+		JUMP TO BLOCK #29
+		else
+		JUMP TO BLOCK #30
+		end
+
+
+		--- BLOCK #29 145-164, warpins: 1 ---
+		szText = string.sub(block, p1 + 3, p2 - 1)
+		szText = string.gsub(szText, "\\n", "\n")
+
+		labelM:addLabel(szText, textcolor)
+
+		--- END OF BLOCK #29 ---
+
+		FLOW; TARGET BLOCK #30
+
+
+		--- BLOCK #30 165-166, warpins: 3 ---
+		return 
+		--- END OF BLOCK #30 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 200-200, warpins: 5 ---
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 201-212, warpins: 1 ---
+	local p1 = string.find(content, "<b")
+	local p2 = string.find(content, "</b>")
+	--- END OF BLOCK #4 ---
+
+	slot8 = if p1 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #5 213-214, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot9 = if p2 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #6 215-230, warpins: 1 ---
+	local block = string.sub(content, p1 + 3, p2 - 1)
+
+	parseContent(block)
+	--- END OF BLOCK #6 ---
+
+	if string.len(content)
+
+	 <= p2 + 4 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #7 231-231, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 232-232, warpins: 0 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #9 233-239, warpins: 1 ---
+	content = string.sub(content, p2 + 4)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #10 240-241, warpins: 1 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+areas.removeMask = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.mask then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.mask:removeSelf()
+
+	self.mask = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+areas.extend = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if IS_PLAYER_DEBUG then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-14, warpins: 1 ---
+	g_data.login:setServerList({
+		{
+			heat = 2,
+			name = "内网98",
+			id = 3,
+			suggest = true,
+			ip = "172.30.10.98",
+			area = 0,
+			ver = 180,
+			group = {
+				min = 1,
+				max = 10
+			}
+		}
+	})
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 15-23, warpins: 1 ---
+	local data = parseJson("config/serverlist.json")
+
+	g_data.login:setServerList(data.servers)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 24-24, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+return areas
+--- END OF BLOCK #0 ---
+
+
+

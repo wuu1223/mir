@@ -1,0 +1,97 @@
+--- BLOCK #0 1-11, warpins: 1 ---
+local itemInfo = import(".itemInfo")
+local chatItem = class("chatItem", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+chatItem.ctor = function (self, h, labelM, data, noTouch, x, y)
+	--- BLOCK #0 1-48, warpins: 1 ---
+	local h = labelM.wordSize.height*2 - 2
+	local w = h
+	local bg = res.get2("pic/common/itembg.png"):anchor(0, 0):add2(self)
+
+	bg.scalex(bg, w/bg.getw(bg))
+	bg.scaley(bg, h/bg.geth(bg))
+	res.get("items", data.lookID):pos(w/2, h/2):add2(self)
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not noTouch then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 49-52, warpins: 1 ---
+	bg.enableClick(bg, function ()
+		--- BLOCK #0 1-15, warpins: 1 ---
+		local p = self:convertToWorldSpace(cc.p(self:centerPos()))
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if data.itemData then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 16-22, warpins: 1 ---
+		itemInfo.show(data.itemData, p)
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 23-42, warpins: 1 ---
+		g_data.client:setLastQueryChatItem(data.makeIndex, data.name, p.x, p.y)
+		net.send({
+			CM_QUERY_FOCUS_ITEM,
+			recog = data.makeIndex
+		})
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 43-43, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 53-123, warpins: 2 ---
+	local fontSize = math.min(labelM.fontSize, 18)
+	local title = an.newLabel(data.name, fontSize, 1, {
+		color = cc.c3b(0, 255, 255)
+	}):pos(w + 2, h/2):add2(self)
+	local weight = an.newLabel(string.format("÷ÿ¡ø: %s", data.weight), fontSize, 1, {
+		color = cc.c3b(0, 255, 255)
+	}):pos(w + 2, 0):add2(self)
+
+	self.size(self, w + math.max(title.getw(title), weight.getw(weight)), h)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return chatItem
+--- END OF BLOCK #0 ---
+
+
+

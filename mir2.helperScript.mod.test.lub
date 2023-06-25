@@ -1,0 +1,1212 @@
+--- BLOCK #0 1-3, warpins: 1 ---
+function main(skillIndex)
+	--- BLOCK #0 1-21, warpins: 1 ---
+	print("test")
+
+	local testAll = false
+	local testSkills = false
+	local testWalkTo = false
+	local testShowEquip = false
+	local testNameColor = false
+	local testSkillDir = false
+	local testStateSkill = false
+	local testAct = false
+	local testGuide = false
+	local testStage = false
+	local testDialogNode = false
+	local testEffect = false
+	local testNewSkill = false
+	local testSpaceMove = false
+	local testRole = false
+	local stress = true
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not testSkills then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 22-23, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #2 24-29, warpins: 2 ---
+	skillName = {
+		"火球术",
+		"治愈术",
+		"基本剑术",
+		"精神力战法",
+		"大火球",
+		"施毒术",
+		"攻杀剑术",
+		"抗拒火环",
+		"地狱火",
+		"疾光电影",
+		"雷电术",
+		"刺杀剑术",
+		"灵魂火符",
+		"幽灵盾",
+		"神圣战甲术",
+		"困魔咒",
+		"召唤骷髅",
+		"隐身术",
+		"集体隐身术",
+		"诱惑之光",
+		"瞬息移动",
+		"火墙",
+		"爆裂火焰",
+		"地狱雷光",
+		"半月弯刀",
+		"烈火剑法",
+		"野蛮冲撞",
+		"心灵启示",
+		"群体治疗术",
+		"召唤神兽",
+		"魔法盾",
+		"圣言术",
+		"冰咆哮",
+		nil,
+		"灭天火",
+		"无极真气",
+		"气功波",
+		nil,
+		"寒冰掌",
+		nil,
+		nil,
+		nil,
+		"狮子吼",
+		nil,
+		nil,
+		nil,
+		nil,
+		"噬血术",
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		"逐日剑法",
+		"流星火雨",
+		[300.0] = "wer"
+	}
+
+	--- END OF BLOCK #2 ---
+
+	for skillIndex, v in pairs({
+		[300.0] = "测试"
+	})
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #3 30-40, warpins: 1 ---
+	HELPER:say("现在发动的是:" .. skillName[skillIndex])
+
+	--- END OF BLOCK #3 ---
+
+	if PlayerJob == "法师" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 41-56, warpins: 1 ---
+	actor = createRole("至尊法师", "hero", 24, 19, 1, 0, pos(1, 0), nil, 500)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #5 57-59, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if PlayerJob == "战士" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 60-75, warpins: 1 ---
+	actor = createRole("至尊战士", "hero", 24, 19, 1, 0, pos(1, 0), nil, 500)
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 76-90, warpins: 1 ---
+	actor = createRole("至尊道士", "hero", 24, 19, 1, 0, pos(1, 0), nil, 500)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 91-106, warpins: 3 ---
+	actor:dirTo("player")
+	actor:setNameColor(color(255, 255, 0))
+
+	--- END OF BLOCK #8 ---
+
+	if skillIndex == 27 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 107-175, warpins: 1 ---
+	actor.dir = DIR.right
+
+	delay(0.5)
+
+	稻草人 = createRole("稻草人", 17, 27, 19, 1, 0, nil, pos(actor.x + 1, actor.y), 5)
+	稻草人.dir = DIR.left
+
+	delay(1)
+	actor:magic(skillIndex, nil, pos(2, 0), DIR.right)
+	稻草人:playAct(ACTS.ACT_BACKSTEP, pos(2, 0), DIR.left)
+	稻草人:playAct(ACTS.ACT_STRUCK, pos(2, 0), DIR.left)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 176-186, warpins: 1 ---
+	target = HELPER
+
+	delay(0.5)
+	actor:magic(skillIndex, "player")
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 187-189, warpins: 2 ---
+	delay(2)
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 190-191, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #13 192-193, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot3 = if not testWalkTo then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 194-195, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 196-227, warpins: 2 ---
+	HELPER:walkTo(330, 260, "0", "走到比奇330,260，引导距离3，与玩家最大距离10", 3, 10, "waitEvt", "arriveEvt", "failtEvt", false)
+
+	EVT.waitEvt = function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		HELPER:say("正在等待玩家")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	EVT.failtEvt = function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		HELPER:say("目标不可达")
+		HELPER:followPlayer()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	waitEvt("arriveEvt")
+	HELPER:say("引导结束")
+	HELPER:followPlayer()
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 228-229, warpins: 2 ---
+	--- END OF BLOCK #16 ---
+
+	slot4 = if not testShowEquip then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 230-231, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 232-287, warpins: 2 ---
+	actor = createRole("装备测试", "hero", nil, 19, 1, 0, pos(1, 0), nil, 5)
+
+	actor:showEquip(3)
+	HELPER:say("显示的应当是女性装备")
+	delay(3)
+
+	actor = createRole("装备测试2", "hero", nil, 19, 0, 1, pos(1, 0), nil, 5)
+
+	actor:showEquip(3)
+	HELPER:say("显示的应当是男性装备")
+	delay(3)
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 288-289, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	slot5 = if not testNameColor then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 290-291, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #21 292-365, warpins: 2 ---
+	actor = createRole("名称颜色", "hero", nil, 19, 1, 0, pos(1, 1), nil)
+	actor2 = createRole("名称颜色", "hero", nil, 19, 1, 0, pos(2, 2), nil)
+	actor3 = createRole("名称颜色", "hero", nil, 19, 1, 0, pos(3, 3), nil)
+	actor4 = createRole("名称颜色", "hero", nil, 19, 1, 0, pos(4, 4), nil)
+	actor5 = createRole("名称颜色", "hero", nil, 19, 1, 0, pos(5, 5), nil)
+
+	--- END OF BLOCK #21 ---
+
+	for k=200, 255, 5
+	LOOP BLOCK #22
+	GO OUT TO BLOCK #23
+
+	--- BLOCK #22 366-408, warpins: 2 ---
+	actor:setNameColor(k)
+
+	actor.name = k
+
+	actor2:setNameColor(k + 1)
+
+	actor2.name = k + 1
+
+	actor3:setNameColor(k + 2)
+
+	actor3.name = k + 2
+
+	actor4:setNameColor(k + 3)
+
+	actor4.name = k + 3
+
+	actor5:setNameColor(k + 4)
+
+	actor5.name = k + 4
+
+	delay(3)
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #23 409-412, warpins: 1 ---
+	actor:removeSelf()
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 413-414, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	slot6 = if not testSkillDir then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 415-416, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #26 417-435, warpins: 2 ---
+	actor = createRole("技能方向", "hero", nil, 19, 1, 0, pos(1, 0), nil, 5)
+
+	--- END OF BLOCK #26 ---
+
+	for k=1, 5, 1
+	LOOP BLOCK #27
+	GO OUT TO BLOCK #28
+
+	--- BLOCK #27 436-524, warpins: 2 ---
+	actor:magic(30, nil, nil, DIR.up)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.rightUp)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.right)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.rightBottom)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.bottom)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.leftBottom)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.left)
+	delay(1)
+	actor:magic(30, nil, nil, DIR.leftUp)
+	delay(1)
+
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #28 525-526, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	slot7 = if not testStateSkill then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 527-528, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 529-632, warpins: 2 ---
+	actor = createRole("带状态技能测试", "hero", nil, 19, 1, 0, pos(1, 0), nil)
+	actor2 = createRole("魔法受击者", "hero", nil, 19, 1, 0, pos(1, 5), nil)
+
+	HELPER:say("火墙,必须带目标/坐标")
+	actor:magic(22, actor2)
+	delay(5)
+	HELPER:say("困魔咒,必须带目标/坐标")
+	actor:magic(16, actor2)
+	delay(5)
+	HELPER:say("魔法盾")
+	actor:magic(31)
+	delay(5)
+	HELPER:say("隐身术")
+	actor:magic(18)
+	delay(5)
+	HELPER:say("隐身术")
+	actor:magic(18, actor2)
+	delay(5)
+	actor:removeSelf()
+	actor2:removeSelf()
+
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 633-634, warpins: 2 ---
+	--- END OF BLOCK #31 ---
+
+	slot8 = if not testAct then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 635-636, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 637-683, warpins: 2 ---
+	actor = createRole("action类动作测试", "hero", nil, 19, 1, 0, pos(1, 0), nil)
+
+	runActs({
+		action.delay(0.5),
+		action.callFunc(function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			print("ok~")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end),
+		actor:actWalkTo(off2p(5, 5).x, off2p(5, 5).y),
+		action.callFunc(function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			print("ok~2")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 684-685, warpins: 2 ---
+	--- END OF BLOCK #34 ---
+
+	slot9 = if not testGuide then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 686-687, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #36 688-693, warpins: 2 ---
+	local testTwinkle = false
+	local testTipText = false
+	local testDragGuide = false
+	local test = nil
+	--- END OF BLOCK #36 ---
+
+	slot17 = if testTwinkle then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 694-706, warpins: 1 ---
+	local flashHandler = GUIDE:twinkleNodeWidthName("diy_布局", {
+		w = 36,
+		circle = false,
+		h = 72
+	})
+
+	delay(5)
+	GUIDE:stop()
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 707-708, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	slot18 = if testTipText then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 709-755, warpins: 1 ---
+	local tip1 = GUIDE:showTipText("diy_布局", {
+		"点击这里打开布局面板",
+		22,
+		1,
+		align = "left"
+	}, pos(400, 0))
+	local tip2 = GUIDE:showTipText("diy_布局", {
+		"点击这里打开布局面板",
+		22,
+		1,
+		align = "top"
+	}, pos(400, 0))
+	local tip3 = GUIDE:showTipText("diy_布局", {
+		"点击这里打开布局面板",
+		22,
+		1,
+		align = "right"
+	}, pos(400, 0))
+	local tip4 = GUIDE:showTipText("diy_布局", {
+		"点击这里打开布局面板",
+		22,
+		1,
+		align = "bottom"
+	}, pos(400, 0))
+
+	delay(5)
+	GUIDE:stop()
+
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 756-757, warpins: 2 ---
+	--- END OF BLOCK #40 ---
+
+	slot19 = if testDragGuide then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 758-810, warpins: 1 ---
+	local handler1 = GUIDE:dragGuide("diy_布局", "diy_好友")
+	local handler1 = GUIDE:dragGuide("diy_布局", "diy_好友", {
+		finger = {
+			flipY = true
+		}
+	})
+	local handler2 = GUIDE:dragGuide("diy_布局", "diy_好友", {
+		finger = {
+			flipX = true
+		}
+	})
+	local handler3 = GUIDE:dragGuide("diy_布局", "diy_好友", {
+		finger = {
+			flipX = true,
+			flipY = true
+		}
+	})
+
+	delay(7)
+	GUIDE:stop()
+
+	local handler1 = GUIDE:dragGuide("diy_布局", "diy_好友")
+
+	delay(3)
+	GUIDE:stop()
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 811-812, warpins: 3 ---
+	--- END OF BLOCK #42 ---
+
+	slot10 = if testStage then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 813-838, warpins: 1 ---
+	enterStage(0, 333, 260)
+	enterStage(3, 333, 333)
+	delay(0.5)
+	stage:moveTo(340, 340, true, 10)
+	delay(10)
+	exitStage()
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 839-840, warpins: 2 ---
+	--- END OF BLOCK #44 ---
+
+	slot11 = if testDialogNode then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 841-862, warpins: 1 ---
+	createSayDL("left::::", nil, 32, 5):pos(100, 100)
+	createSayDR("right::::", nil, 32, 5):pos(400, 100)
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 863-864, warpins: 2 ---
+	--- END OF BLOCK #46 ---
+
+	slot12 = if testEffect then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 865-877, warpins: 1 ---
+	print(EFFIDS.ET_FIRE)
+	showEffect(EFFIDS.ET_FIRE, off2p(1, 1), 10)
+
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 878-879, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+	slot13 = if testNewSkill then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #50
+	end
+
+
+	--- BLOCK #49 880-903, warpins: 1 ---
+	actor = createRole("至尊战士", "hero", 24, 19, 1, 0, pos(1, 0), nil, 50)
+
+	delay(1)
+	actor:playBigSkill()
+
+	return 
+
+	--- END OF BLOCK #49 ---
+
+	FLOW; TARGET BLOCK #50
+
+
+	--- BLOCK #50 904-905, warpins: 2 ---
+	--- END OF BLOCK #50 ---
+
+	slot13 = if testNewSkill then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #52
+	end
+
+
+	--- BLOCK #51 906-927, warpins: 1 ---
+	actor = createRole("至尊战士", "hero", 24, 19, 1, 0, pos(1, 0), nil, 50)
+
+	delay(1)
+	actor:playBigSkill1()
+
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 928-929, warpins: 2 ---
+	--- END OF BLOCK #52 ---
+
+	slot14 = if not testSpaceMove then
+	JUMP TO BLOCK #53
+	else
+	JUMP TO BLOCK #54
+	end
+
+
+	--- BLOCK #53 930-931, warpins: 1 ---
+	--- END OF BLOCK #53 ---
+
+	slot1 = if testAll then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #54 932-952, warpins: 2 ---
+	actor = createRole("至尊战士", "hero", 24, 19, 1, 0, pos(1, 0), nil, 50)
+
+	actor:playAct(ACTS.SPACEMOVE_SHOW)
+
+	--- END OF BLOCK #54 ---
+
+	FLOW; TARGET BLOCK #55
+
+
+	--- BLOCK #55 953-954, warpins: 2 ---
+	--- END OF BLOCK #55 ---
+
+	slot15 = if testRole then
+	JUMP TO BLOCK #56
+	else
+	JUMP TO BLOCK #62
+	end
+
+
+	--- BLOCK #56 955-958, warpins: 1 ---
+	--- END OF BLOCK #56 ---
+
+	for k=0, 7, 1
+	LOOP BLOCK #57
+	GO OUT TO BLOCK #58
+
+	--- BLOCK #57 959-990, warpins: 2 ---
+	actor = createRole("怪物", 14, 150, 0, 0, 0, pos(k*2, 0), nil)
+	actor.dir = k
+
+	runActsForever({
+		actor:actAttack(3),
+		actor:actDelay(1)
+	})
+
+	--- END OF BLOCK #57 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #58 991-994, warpins: 1 ---
+	--- END OF BLOCK #58 ---
+
+	for k=0, 7, 1
+	LOOP BLOCK #59
+	GO OUT TO BLOCK #60
+
+	--- BLOCK #59 995-1028, warpins: 2 ---
+	actor = createRole("攻击 人物_" .. k, "hero", 24, 19, 1, 0, pos(k*2, 3), nil)
+	actor.dir = k
+
+	runActsForever({
+		actor:actAttack(3),
+		actor:actDelay(1)
+	})
+
+	--- END OF BLOCK #59 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #58
+
+
+	--- BLOCK #60 1029-1045, warpins: 1 ---
+	local host = createRole("施法 受体", "hero", 24, 19, 1, 0, pos(5, 8), nil)
+	--- END OF BLOCK #60 ---
+
+	for k=0, 7, 1
+	LOOP BLOCK #61
+	GO OUT TO BLOCK #62
+
+	--- BLOCK #61 1046-1093, warpins: 2 ---
+	local cfg = DIR["_" .. k]
+	actor = createRole("施法 人物_" .. k, "hero", 24, 19, 1, 0, pos(cfg[1]*2 + 5, cfg[2]*2 + 8), nil)
+	actor.dir = k
+
+	runActsForever({
+		actor:actMagic("30", host, pos(1, 0)),
+		actor:actDelay(1)
+	})
+	--- END OF BLOCK #61 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #60
+
+
+	--- BLOCK #62 1094-1095, warpins: 2 ---
+	--- END OF BLOCK #62 ---
+
+	slot16 = if stress then
+	JUMP TO BLOCK #63
+	else
+	JUMP TO BLOCK #88
+	end
+
+
+	--- BLOCK #63 1096-1105, warpins: 1 ---
+	math.randomseed(0)
+
+	local ret = {}
+	local dress = {}
+
+	--- END OF BLOCK #63 ---
+
+	for k, v in pairs(ITEMS)
+
+	LOOP BLOCK #64
+	GO OUT TO BLOCK #69
+
+
+	--- BLOCK #64 1106-1110, warpins: 1 ---
+	--- END OF BLOCK #64 ---
+
+	if type(v)
+	 == "table" then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #65 1111-1113, warpins: 1 ---
+	--- END OF BLOCK #65 ---
+
+	if v.stdMode ~= 10 then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #67
+	end
+
+
+	--- BLOCK #66 1114-1116, warpins: 1 ---
+	--- END OF BLOCK #66 ---
+
+	if v.stdMode == 11 then
+	JUMP TO BLOCK #67
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #67 1117-1121, warpins: 2 ---
+	table.insert(dress, k)
+
+	--- END OF BLOCK #67 ---
+
+	FLOW; TARGET BLOCK #68
+
+
+	--- BLOCK #68 1122-1123, warpins: 4 ---
+	--- END OF BLOCK #68 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #63
+
+
+	--- BLOCK #69 1124-1129, warpins: 1 ---
+	local magics = {
+		"火球术",
+		"治愈术",
+		"基本剑术",
+		"精神力战法",
+		"大火球",
+		"施毒术",
+		"攻杀剑术",
+		"抗拒火环",
+		"地狱火",
+		"疾光电影",
+		"雷电术",
+		"刺杀剑术",
+		"灵魂火符",
+		"幽灵盾",
+		"神圣战甲术",
+		"困魔咒",
+		"召唤骷髅",
+		"隐身术",
+		"集体隐身术",
+		"诱惑之光",
+		"瞬息移动",
+		"火墙",
+		"爆裂火焰",
+		"地狱雷光",
+		"半月弯刀",
+		"烈火剑法",
+		"野蛮冲撞",
+		"心灵启示",
+		"群体治疗术",
+		"召唤神兽",
+		"魔法盾",
+		"圣言术",
+		"冰咆哮",
+		nil,
+		"灭天火",
+		"无极真气",
+		"气功波",
+		nil,
+		"寒冰掌",
+		nil,
+		nil,
+		nil,
+		"狮子吼",
+		nil,
+		nil,
+		nil,
+		nil,
+		"噬血术",
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		"逐日剑法",
+		"流星火雨"
+	}
+	local mid = {}
+
+	--- END OF BLOCK #69 ---
+
+	for k, v in pairs(magics)
+
+	LOOP BLOCK #70
+	GO OUT TO BLOCK #72
+
+
+	--- BLOCK #70 1130-1134, warpins: 1 ---
+	table.insert(mid, k)
+	--- END OF BLOCK #70 ---
+
+	FLOW; TARGET BLOCK #71
+
+
+	--- BLOCK #71 1135-1136, warpins: 2 ---
+	--- END OF BLOCK #71 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #69
+
+
+	--- BLOCK #72 1137-1158, warpins: 1 ---
+	enterStage("3", 504, 146, {
+		disableSkip = true
+	})
+
+	local _pos = pos
+
+	local function pos(x, y)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		return _pos(x + 504, y + 146)
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local pre = nil
+	useDress = true
+	skill = true
+
+	STAGE:setMapScale(0.7)
+
+	--- END OF BLOCK #72 ---
+
+	for _=1, 3, 1
+	LOOP BLOCK #73
+	GO OUT TO BLOCK #87
+
+	--- BLOCK #73 1159-1162, warpins: 2 ---
+	--- END OF BLOCK #73 ---
+
+	for y=-15, 15, 1
+	LOOP BLOCK #74
+	GO OUT TO BLOCK #86
+
+	--- BLOCK #74 1163-1166, warpins: 2 ---
+	--- END OF BLOCK #74 ---
+
+	for x=0, 40, 1
+	LOOP BLOCK #75
+	GO OUT TO BLOCK #85
+
+	--- BLOCK #75 1167-1170, warpins: 2 ---
+	local dre = nil
+	--- END OF BLOCK #75 ---
+
+	slot37 = if useDress then
+	JUMP TO BLOCK #76
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #76 1171-1175, warpins: 1 ---
+	dre = dress[math.random(#dress)]
+	--- END OF BLOCK #76 ---
+
+	FLOW; TARGET BLOCK #77
+
+
+	--- BLOCK #77 1176-1180, warpins: 2 ---
+	slot37 = createRole
+	slot38 = ""
+	--- END OF BLOCK #77 ---
+
+	slot39 = if not dress[x] then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #78 1181-1181, warpins: 1 ---
+	slot39 = y
+	--- END OF BLOCK #78 ---
+
+	FLOW; TARGET BLOCK #79
+
+
+	--- BLOCK #79 1182-1197, warpins: 2 ---
+	local d = slot37(slot38 .. slot39, "hero", dre, nil, 0, y%7, nil, pos(x - 20, y), nil)
+	--- END OF BLOCK #79 ---
+
+	slot38 = if skill then
+	JUMP TO BLOCK #80
+	else
+	JUMP TO BLOCK #82
+	end
+
+
+	--- BLOCK #80 1198-1199, warpins: 1 ---
+	--- END OF BLOCK #80 ---
+
+	slot23 = if pre then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #82
+	end
+
+
+	--- BLOCK #81 1200-1211, warpins: 1 ---
+	local tpre = pre
+
+	d.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-25, warpins: 1 ---
+		d.role.node:runForever(action.seq({
+			action.callFunc(function ()
+				--- BLOCK #0 1-14, warpins: 1 ---
+				local id = mid[math.random(#mid)]
+
+				d:magic(id, tpre)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end),
+			d:actDelay(math.random()*10)
+		}))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, math.random()*10)
+	--- END OF BLOCK #81 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #84
+
+
+	--- BLOCK #82 1212-1214, warpins: 2 ---
+	--- END OF BLOCK #82 ---
+
+	slot38 = if move then
+	JUMP TO BLOCK #83
+	else
+	JUMP TO BLOCK #84
+	end
+
+
+	--- BLOCK #83 1215-1241, warpins: 1 ---
+	d.role.node:runs({
+		action.rep(action.seq(d.actPlayAct(d, ACTS.WALK, pos(-1, -1)), d.actDelay(d, 2)), 50)
+	})
+
+	--- END OF BLOCK #83 ---
+
+	FLOW; TARGET BLOCK #84
+
+
+	--- BLOCK #84 1242-1249, warpins: 3 ---
+	pre = d
+
+	table.insert(ret, d)
+
+	--- END OF BLOCK #84 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #74
+
+
+	--- BLOCK #85 1250-1250, warpins: 1 ---
+	--- END OF BLOCK #85 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #73
+
+
+	--- BLOCK #86 1251-1251, warpins: 1 ---
+	--- END OF BLOCK #86 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #72
+
+
+	--- BLOCK #87 1252-1252, warpins: 1 ---
+	--- END OF BLOCK #87 ---
+
+	FLOW; TARGET BLOCK #88
+
+
+	--- BLOCK #88 1253-1253, warpins: 2 ---
+	return 
+	--- END OF BLOCK #88 ---
+
+
+
+end
+
+return 
+--- END OF BLOCK #0 ---
+
+
+

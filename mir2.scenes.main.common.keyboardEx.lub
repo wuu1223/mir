@@ -1,0 +1,1007 @@
+--- BLOCK #0 1-46, warpins: 1 ---
+local common = import(".common")
+local itemInfo = import(".itemInfo")
+local rightBtnW = 45
+local edge = 15
+local minh = 200
+local keyboardEx = class("keyboardEx", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(keyboardEx, {
+	input,
+	bar,
+	content
+})
+
+keyboardEx.create = function (input)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if main_scene.keyboardEx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	return main_scene.keyboardEx
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-28, warpins: 2 ---
+	main_scene.keyboardEx = keyboardEx.new(input):anchor(0, 1):add2(main_scene, an.z.inputtool)
+
+	return main_scene.keyboardEx
+	--- END OF BLOCK #2 ---
+
+
+
+end
+keyboardEx.destory = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot0 = if main_scene.keyboardEx then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	main_scene.keyboardEx:removeSelf()
+
+	main_scene.keyboardEx = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+keyboardEx.ctor = function (self, input)
+	--- BLOCK #0 1-36, warpins: 1 ---
+	local bg = res.get2("pic/keyboard/bar.png"):anchor(0, 0):scalex(display.width/960):add2(self):enableClick(function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	self.size(self, display.width, bg.geth(bg))
+
+	self.input = input
+
+	self.loadMain(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+keyboardEx.addRightBtns = function (self)
+	--- BLOCK #0 1-110, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/keyboard/btn11.png"), function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self.input:callback({
+			text = "\n",
+			type = "insertText"
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/keyboard/btn22.png"),
+		scale9 = cc.size(rightBtnW, self.content:geth()/2 - edge),
+		sprite = res.gettex2("pic/keyboard/send.png")
+	}):add2(self.content):anchor(1, 1):pos(self.content:getw() - edge, self.content:geth()/2)
+	an.newBtn(res.gettex2("pic/keyboard/btn11.png"), function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		self.input:callback({
+			type = "deleteBackward"
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/keyboard/btn22.png"),
+		scale9 = cc.size(rightBtnW, self.content:geth()/2 - edge),
+		sprite = res.gettex2("pic/keyboard/delete.png")
+	}):add2(self.content):anchor(1, 0):pos(self.content:getw() - edge, self.content:geth()/2)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+keyboardEx.loadMain = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.bar then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.bar:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-133, warpins: 2 ---
+	self.bar = display.newNode():size(self.getContentSize(self)):add2(self)
+	local btnw = 83
+	local configs = {}
+	configs[1] = {
+		"key",
+		btnw/2 + btnw*0,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-10, warpins: 1 ---
+			self.input:setKeyboardVisable(true)
+			--- END OF BLOCK #0 ---
+
+			slot0 = if self.content then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 11-18, warpins: 1 ---
+			self.content:removeSelf()
+
+			self.content = nil
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 19-19, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}
+	configs[2] = {
+		"face",
+		btnw/2 + btnw*1,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-18, warpins: 1 ---
+			self.input:setKeyboardVisable(false)
+			self.input:callback({
+				type = "keyboardWillShow",
+				duration = 0.3,
+				eh = self:loadFace()
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	configs[3] = {
+		"cmd",
+		btnw/2 + btnw*2,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-18, warpins: 1 ---
+			self.input:setKeyboardVisable(false)
+			self.input:callback({
+				type = "keyboardWillShow",
+				duration = 0.3,
+				eh = self:loadCMD()
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	configs[4] = {
+		"bag",
+		btnw/2 + btnw*3,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-18, warpins: 1 ---
+			self.input:setKeyboardVisable(false)
+			self.input:callback({
+				type = "keyboardWillShow",
+				duration = 0.3,
+				eh = self:loadBag()
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	configs[5] = {
+		"equip",
+		btnw/2 + btnw*4,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-18, warpins: 1 ---
+			self.input:setKeyboardVisable(false)
+			self.input:callback({
+				type = "keyboardWillShow",
+				duration = 0.3,
+				eh = self:loadEquip()
+			})
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	configs[6] = {
+		"pos",
+		btnw/2 + btnw*5,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-53, warpins: 1 ---
+			local text = string.format("[%s:%s,%s]", g_data.map.mapTitle, main_scene.ground.player.x, main_scene.ground.player.y)
+
+			self.input:addLabel(text, cc.c3b(0, 0, 255), display.COLOR_WHITE, common.encodeRich({
+				type = "pos",
+				mapID = main_scene.ground.map.mapid,
+				mapTitle = g_data.map.mapTitle,
+				x = main_scene.ground.player.x,
+				y = main_scene.ground.player.y
+			}))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		true
+	}
+	configs[7] = {
+		"screen",
+		btnw/2 + btnw*6,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-14, warpins: 1 ---
+			self.input:stopInput()
+
+			local ok, msg = pic.canScreenshot()
+
+			--- END OF BLOCK #0 ---
+
+			if g_data.chat.style.channel == "私聊" then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #1 15-20, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if g_data.chat.style.target == "" then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #3
+			end
+
+
+			--- BLOCK #2 21-27, warpins: 1 ---
+			an.newMsgbox("未设置对方名字.", nil, {
+				center = true
+			})
+			--- END OF BLOCK #2 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+			--- BLOCK #3 28-29, warpins: 2 ---
+			--- END OF BLOCK #3 ---
+
+			slot0 = if not ok then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 30-36, warpins: 1 ---
+			main_scene.ui:tip(msg)
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+			--- BLOCK #5 37-48, warpins: 1 ---
+			main_scene.ui:hidePanel("screenshot")
+			main_scene.ui:showPanel("screenshot")
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 49-49, warpins: 3 ---
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end,
+		true
+	}
+	configs[8] = {
+		"voice2text",
+		btnw/2 + btnw*7,
+		self.geth(self)/2,
+		function ()
+			--- BLOCK #0 1-1, warpins: 1 ---
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	local btns = {}
+
+	local function setSelected(key)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(btns)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #6
+
+
+		--- BLOCK #1 5-8, warpins: 1 ---
+		slot7 = v
+		slot6 = v.setIsSelect
+		--- END OF BLOCK #1 ---
+
+		if k ~= key then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-10, warpins: 1 ---
+		slot8 = false
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 11-11, warpins: 1 ---
+		slot8 = true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 12-12, warpins: 2 ---
+		slot6(slot7, slot8)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 13-14, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #6 15-15, warpins: 1 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(configs)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #3 134-146, warpins: 1 ---
+	local key, x, y, func, isOnce = unpack(v)
+	slot15 = an.newBtn
+	slot16 = res.gettex2("pic/keyboard/btn1.png")
+
+	function slot17()
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not isOnce then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		setSelected(key)
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-9, warpins: 2 ---
+		func()
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	slot18 = {}
+	--- END OF BLOCK #3 ---
+
+	slot19 = if isOnce then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 147-150, warpins: 1 ---
+	slot19 = res.gettex2("pic/keyboard/btn2.png")
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 151-153, warpins: 2 ---
+	slot18.pressImage = slot19
+	--- END OF BLOCK #5 ---
+
+	slot14 = if not isOnce then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 154-160, warpins: 1 ---
+	slot19 = {
+		res.gettex2("pic/keyboard/btn2.png"),
+		manual = true
+	}
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #7 161-162, warpins: 1 ---
+	slot19 = false
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #8 163-163, warpins: 0 ---
+	slot19 = true
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 164-184, warpins: 3 ---
+	slot18.select = slot19
+	slot18.sprite = res.gettex2("pic/keyboard/" .. key .. ".png")
+	btns[key] = slot15(slot16, slot17, slot18):pos(x, y):add2(self.bar)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 185-186, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #11 187-191, warpins: 1 ---
+	setSelected("key")
+
+	return 
+	--- END OF BLOCK #11 ---
+
+
+
+end
+keyboardEx.loadFace = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-85, warpins: 2 ---
+	local emojiCount = 79
+	local space = 55
+	local lineMax = math.modf((display.width - rightBtnW - edge)/space)
+	local lineCnt = math.ceil(emojiCount/lineMax)
+	local h = math.max(minh, lineCnt*space + edge*2)
+	self.content = display.newNode():size(self.getw(self), h):anchor(0, 1):add2(self):enableClick(function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	display.newScale9Sprite(res.getframe2("pic/keyboard/bg.png")):anchor(0, 0):size(self.content:getContentSize()):add2(self.content)
+	self.addRightBtns(self)
+
+	--- END OF BLOCK #2 ---
+
+	for i=1, emojiCount, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 86-134, warpins: 2 ---
+	local col = (i - 1)%lineMax
+	local line = math.modf((i - 1)/lineMax)
+	local tex = res.gettex2("pic/emoji/" .. i .. ".png")
+	slot13 = an.newBtn(tex, function ()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		self.input:addEmoji(tex, common.encodeRich({
+			type = "emoji",
+			id = i
+		}))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressBig = true,
+		size = {
+			space,
+			space
+		}
+	}):pos(edge + col*space + space/2, self.content:geth() - edge - line*space - space/2):add2(self.content)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 135-136, warpins: 1 ---
+	return h
+	--- END OF BLOCK #4 ---
+
+
+
+end
+keyboardEx.loadCMD = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-64, warpins: 2 ---
+	local h = minh
+	self.content = display.newNode():size(self.getw(self), h):anchor(0, 1):add2(self):enableClick(function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	display.newScale9Sprite(res.getframe2("pic/keyboard/bg.png")):anchor(0, 0):size(self.content:getContentSize()):add2(self.content)
+	self.addRightBtns(self)
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(def.cmds.all)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #3 65-133, warpins: 1 ---
+	local col = math.modf((i - 1)/2)
+	local line = (i - 1)%2
+	local addSpace = (display.width - 960)/math.modf(#def.cmds.all/2)
+	local pos = cc.p(col*(addSpace + 190) + 35, h - 60 - line*39)
+	local color = cc.c3b(255, 255, 0)
+	local label = an.newLabel(v[1], 18, 1, {
+		color = color
+	}):pos(pos.x, pos.y):addUnderline(color):add2(self.content)
+
+	label.enableClick(label, function ()
+		--- BLOCK #0 1-12, warpins: 1 ---
+		self.input:callback({
+			type = "insertText",
+			text = v[2] .. " "
+		})
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		ani = true,
+		size = cc.size(label.getw(label), 39)
+	})
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 134-135, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #5 136-137, warpins: 1 ---
+	return h
+	--- END OF BLOCK #5 ---
+
+
+
+end
+keyboardEx.loadItems = function (self, datas, emptyTip)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-30, warpins: 2 ---
+	local itemCount = table.nums(datas)
+	local space = 60
+	local lineMax = math.modf((display.width - rightBtnW - edge)/space)
+	local lineCnt = math.ceil(itemCount/lineMax)
+	local h = minh
+	--- END OF BLOCK #2 ---
+
+	if 0 < itemCount then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 31-40, warpins: 1 ---
+	h = math.max(h, lineCnt*space + edge*2 + 50)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 41-95, warpins: 2 ---
+	local items = {}
+
+	local function click(data, pos)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(items)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #1 5-7, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if data == v.data then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 8-16, warpins: 1 ---
+		v.bg:setTex(res.gettex2("pic/chatEx/item_bg2.png"))
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 17-24, warpins: 1 ---
+		v.bg:setTex(res.gettex2("pic/chatEx/item_bg.png"))
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 25-26, warpins: 3 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #5 27-28, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot0 = if data then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #6 29-30, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot1 = if pos then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 31-55, warpins: 1 ---
+		local p = cc.p(pos.x, pos.y)
+
+		local function callback()
+			--- BLOCK #0 1-48, warpins: 1 ---
+			local text = string.format("[%s]", data.getVar("name"))
+
+			self.input:addLabel(text, cc.c3b(0, 0, 255), display.COLOR_WHITE, common.encodeRich({
+				type = "item",
+				makeIndex = data:get("makeIndex"),
+				name = data.getVar("name"),
+				lookID = data.getVar("looks"),
+				weight = data.getVar("weight")
+			}))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		itemInfo.show(data, p, {
+			parent = display.getRunningScene(),
+			z = an.z.max + 1,
+			miny = -h,
+			itemLink = callback
+		})
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 56-57, warpins: 3 ---
+		return 
+		--- END OF BLOCK #8 ---
+
+
+
+	end
+
+	self.content = display.newNode():size(self.getw(self), h):anchor(0, 1):add2(self):enableClick(function ()
+		--- BLOCK #0 1-3, warpins: 1 ---
+		click()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	display.newScale9Sprite(res.getframe2("pic/keyboard/bg.png")):anchor(0, 0):size(self.content:getContentSize()):add2(self.content)
+	self.addRightBtns(self)
+
+	--- END OF BLOCK #4 ---
+
+	if 0 < itemCount then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #5 96-101, warpins: 1 ---
+	local cnt = 1
+
+	local function add(data)
+		--- BLOCK #0 1-89, warpins: 1 ---
+		local col = (cnt - 1)%lineMax
+		local line = math.modf((cnt - 1)/lineMax)
+		local pos = cc.p(edge + space/2 + col*space, self.content:geth() - edge - space/2 - line*space)
+		local item = {}
+		item.data = data
+		item.bg = res.get2("pic/chatEx/item_bg.png"):pos(pos.x, pos.y):add2(self.content):enableClick(function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			click(data, pos)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			size = cc.size(space, space)
+		})
+
+		res.get("items", data.getVar("looks")):pos(pos.x, pos.y):add2(self.content)
+
+		items[#items + 1] = item
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #5 ---
+
+	for k, v in pairs(datas)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #6 102-104, warpins: 1 ---
+	add(v)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 105-106, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #8 107-107, warpins: 1 ---
+	return h
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 108-134, warpins: 1 ---
+	an.newLabel(emptyTip, 24, 1, {
+		color = def.colors.labelGray
+	}):anchor(0.5, 0.5):pos(self.content:centerPos()):add2(self.content)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 135-136, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+
+
+end
+keyboardEx.loadBag = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	return self.loadItems(self, g_data.bag.items, "当前背包暂无物品可以分享.")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+keyboardEx.loadEquip = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	return self.loadItems(self, g_data.equip.items, "当前装备暂无物品可以分享.")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return keyboardEx
+--- END OF BLOCK #0 ---
+
+
+

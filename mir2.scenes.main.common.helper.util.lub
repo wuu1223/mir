@@ -1,0 +1,666 @@
+--- BLOCK #0 1-18, warpins: 1 ---
+local util = {}
+local current = ...
+util.getDir = function (from, to)
+	--- BLOCK #0 1-15, warpins: 1 ---
+	local offX = to.x - from.x
+	local offY = to.y - from.y
+	local angle = math.atan(offY/offX)
+
+	--- END OF BLOCK #0 ---
+
+	if angle <= math.pi/8 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 16-21, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if -math.pi/8 < angle then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 22-24, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 0 < offX then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 25-32, warpins: 1 ---
+	return def.role.dir.right, 1, 0
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #4 33-40, warpins: 1 ---
+	return def.role.dir.left, -1, 0
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #5 41-46, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if angle < (math.pi*3)/8 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #6 47-51, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if math.pi/8 < angle then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #7 52-54, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if 0 < offX then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 55-62, warpins: 1 ---
+	return def.role.dir.rightBottom, 1, 1
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #9 63-70, warpins: 1 ---
+	return def.role.dir.leftUp, -1, -1
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #10 71-76, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	if (math.pi*3)/8 > angle then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 77-83, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if angle < (-math.pi*3)/8 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #12 84-86, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	if 0 < offY then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 87-94, warpins: 1 ---
+	return def.role.dir.bottom, 0, 1
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #14 95-102, warpins: 1 ---
+	return def.role.dir.up, 0, -1
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #15 103-108, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if angle <= -math.pi/8 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #16 109-115, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if (-math.pi*3)/8 < angle then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 116-118, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if offY < 0 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 119-126, warpins: 1 ---
+	return def.role.dir.rightUp, 1, -1
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 127-133, warpins: 1 ---
+	return def.role.dir.leftBottom, -1, 1
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 134-140, warpins: 10 ---
+	return def.role.dir.bottom, 0, 1
+	--- END OF BLOCK #20 ---
+
+
+
+end
+util.inSet = function (l, set)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in ipairs(set)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if l == v then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-8, warpins: 1 ---
+	return true
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-10, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 11-12, warpins: 1 ---
+	return false
+	--- END OF BLOCK #4 ---
+
+
+
+end
+util.off2p = function (x, y)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local player = main_scene.ground.player
+	local ret = cc.p(x + player.x, y + player.y)
+	ret.off2 = true
+
+	return ret
+	--- END OF BLOCK #0 ---
+
+
+
+end
+util.off2t = function (x, y, t)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local ret = cc.p(x + t.x, y + t.y)
+	ret.off2 = true
+
+	return ret
+	--- END OF BLOCK #0 ---
+
+
+
+end
+util.featu = function (race, dress, feature, hair)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	return {
+		race = race,
+		dress = dress,
+		feature = feature,
+		hair = hair
+	}
+	--- END OF BLOCK #0 ---
+
+
+
+end
+util.region = function (x, y, r)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	slot3 = {
+		x = x,
+		y = y
+	}
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not r then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-6, warpins: 1 ---
+	slot4 = 2
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 7-8, warpins: 2 ---
+	slot3.radio = slot4
+
+	return slot3
+	--- END OF BLOCK #2 ---
+
+
+
+end
+util.stressTest = function (skill, useDress, move)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local ret = {}
+	local dress = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(def.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #1 8-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if type(v)
+	 == "table" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 13-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if v.stdMode ~= 10 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 16-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v.stdMode == 11 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-23, warpins: 2 ---
+	table.insert(dress, k)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 24-25, warpins: 4 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #6 26-31, warpins: 1 ---
+	local magics = {
+		"火球术",
+		"治愈术",
+		"基本剑术",
+		"精神力战法",
+		"大火球",
+		"施毒术",
+		"攻杀剑术",
+		"抗拒火环",
+		"地狱火",
+		"疾光电影",
+		"雷电术",
+		"刺杀剑术",
+		"灵魂火符",
+		"幽灵盾",
+		"神圣战甲术",
+		"困魔咒",
+		"召唤骷髅",
+		"隐身术",
+		"集体隐身术",
+		"诱惑之光",
+		"瞬息移动",
+		"火墙",
+		"爆裂火焰",
+		"地狱雷光",
+		"半月弯刀",
+		"烈火剑法",
+		"野蛮冲撞",
+		"心灵启示",
+		"群体治疗术",
+		"召唤神兽",
+		"魔法盾",
+		"圣言术",
+		"冰咆哮",
+		nil,
+		"灭天火",
+		"无极真气",
+		"气功波",
+		nil,
+		"寒冰掌",
+		nil,
+		nil,
+		nil,
+		"狮子吼",
+		nil,
+		nil,
+		nil,
+		nil,
+		"噬血术",
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		"逐日剑法",
+		"流星火雨"
+	}
+	local mid = {}
+
+	--- END OF BLOCK #6 ---
+
+	for k, v in pairs(magics)
+
+	LOOP BLOCK #7
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #7 32-36, warpins: 1 ---
+	table.insert(mid, k)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 37-38, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #9 39-43, warpins: 1 ---
+	local pre = nil
+	--- END OF BLOCK #9 ---
+
+	for y=-15, 15, 1
+	LOOP BLOCK #10
+	GO OUT TO BLOCK #24
+
+	--- BLOCK #10 44-47, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	for x=0, 40, 1
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #23
+
+	--- BLOCK #11 48-50, warpins: 2 ---
+	local dre = nil
+	--- END OF BLOCK #11 ---
+
+	slot1 = if useDress then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 51-55, warpins: 1 ---
+	dre = dress[math.random(#dress)]
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 56-62, warpins: 2 ---
+	slot17 = util.dummy.new
+	slot18 = ""
+	--- END OF BLOCK #13 ---
+
+	slot19 = if not dress[x] then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 63-63, warpins: 1 ---
+	slot19 = y
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 64-78, warpins: 2 ---
+	local d = slot17(slot18 .. slot19, "hero", dre, nil, 0, y%7, cc.p(x - 20, y), nil, nil)
+	--- END OF BLOCK #15 ---
+
+	slot0 = if skill then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #16 79-80, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot7 = if pre then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 81-92, warpins: 1 ---
+	local tpre = pre
+
+	d.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-22, warpins: 1 ---
+		d.role.node:runForever(cca.seq({
+			cca.callFunc(function ()
+				--- BLOCK #0 1-14, warpins: 1 ---
+				local id = mid[math.random(#mid)]
+
+				d:magic(id, tpre)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end),
+			d:actDelay(10)
+		}))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, math.random()*10)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #18 93-94, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	slot2 = if move then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 95-124, warpins: 1 ---
+	d.role.node:runs({
+		cca.rep(cca.seq(d.actPlayAct(d, dummy.acts.WALK, cc.p(-1, -1)), d.actDelay(d, 2)), 50)
+	})
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #20 125-126, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot1 = if useDress then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 127-133, warpins: 1 ---
+	d.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-22, warpins: 1 ---
+		d.role.node:runForever(cca.seq({
+			d:actDelay(1),
+			cca.callFunc(function ()
+				--- BLOCK #0 1-8, warpins: 1 ---
+				local dir = math.random(8) - 1
+				d.dir = dir
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+		}))
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 10)
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 134-141, warpins: 4 ---
+	pre = d
+
+	table.insert(ret, d)
+
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #23 142-142, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #24 143-145, warpins: 1 ---
+	return function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(ret)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 5-7, warpins: 1 ---
+		v.removeSelf(v)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-9, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 10-10, warpins: 1 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	--- END OF BLOCK #24 ---
+
+
+
+end
+
+return util
+--- END OF BLOCK #0 ---
+
+
+

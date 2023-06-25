@@ -1,0 +1,4073 @@
+--- BLOCK #0 1-262, warpins: 1 ---
+local magic = import("..magic")
+local mapDef = require("mir2.scenes.main.map.def")
+local autoFindPath = import("..autoFindPath")
+local util = import(".util")
+local common = import("..common")
+dummy = class("dummy", function ()
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local obj = {}
+
+	setmetatable(obj, {
+		__index = function (_, k)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			return obj.role[k]
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	return obj
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+util.dummy = dummy
+
+table.merge(dummy, {})
+
+dummy.roleid = 1
+dummy.say_default_bgColor = cc.c4b(150, 84, 13, 100)
+dummy.say_default_fontSize = 17
+dummy.say_default_strWidth = 300
+dummy.say_default_duration = 4
+dummy.setEvtCallback = function (func)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	rawset(dummy, "evtCallback", func)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if main_scene then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 9-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not main_scene.ground.helper:isHiding()
+
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-21, warpins: 1 ---
+	main_scene.ground.helper.obj.evtCallback_ = func
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 22-22, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+dummy.getEvtCallback = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return rawget(dummy, "evtCallback")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.setRunner = function (runner)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	rawset(dummy, "runner", runner)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.getMap = function ()
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return dummy.runner.getMap()
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.WALK_INTERVAL = 0.7
+dummy.FOLLOW_DISTANCE = 4
+dummy.FOLLOW_DISTANCE_LIMIT = 20
+dummy.GUIDE_DISTANCE_LIMIT = 7
+dummy.GUIDE_DEFAULT_TIP = "∏˙Œ“¿¥"
+dummy.acts = {
+	WALK = SM_WALK,
+	RUN = SM_RUN,
+	TURN = SM_TURN,
+	BACKSTEP = SM_BACKSTEP,
+	DEATH = SM_DEATH,
+	NOWDEATH = SM_NOWDEATH,
+	HIT = SM_HIT,
+	HEAVYHIT = SM_HEAVYHIT,
+	BIGHIT = SM_BIGHIT,
+	POWERHIT = SM_POWERHIT,
+	LONGHIT = SM_LONGHIT,
+	WIDEHIT = SM_WIDEHIT,
+	FIREHIT = SM_FIREHIT,
+	FOURFIREHIT = SM_4FIREHIT,
+	HERO_LONGHIT = SM_HERO_LONGHIT,
+	HERO_LASTHIT = SM_HERO_LASTHIT,
+	SWORD_HIT = SM_SWORD_HIT,
+	RUSH = SM_RUSH,
+	RUSHKUNG = SM_RUSHKUNG,
+	STRUCK = SM_STRUCK,
+	SKELETON = SM_SKELETON,
+	DIGUP = SM_DIGUP,
+	DIGDOWN = SM_DIGDOWN,
+	ALIVE = SM_ALIVE,
+	SPACEMOVE_SHOW = SM_SPACEMOVE_SHOW,
+	FLYAXE = SM_FLYAXE,
+	BUTCH = SM_BUTCH,
+	SPELL = SM_SPELL,
+	HERO_LOGON = SM_HERO_LOGON,
+	UNITEHIT0 = SM_UNITEHIT0,
+	UNITEHIT1 = SM_UNITEHIT1,
+	UNITEHIT2 = SM_UNITEHIT2,
+	FEATURECHANGED = SM_FEATURECHANGED
+}
+dummy.state = {
+	csNoDieState = "csNoDieState",
+	csAssCritHit = "csAssCritHit",
+	csAttPoisonMove = "csAttPoisonMove",
+	csDingShen = "csDingShen",
+	StBlueDiamond = "StBlueDiamond",
+	stStone = "stStone",
+	csRelive = "csRelive",
+	stPoisonYellow = "stPoisonYellow",
+	csTmpSSk = "csTmpSSk",
+	csTmpStrength = "csTmpStrength",
+	stBloodWarrior = "stBloodWarrior",
+	stNil_UsedByClient = "stNil_UsedByClient",
+	csVioletPoision = "csVioletPoision",
+	StSskTaoist = "StSskTaoist",
+	stWEBS = "stWEBS",
+	csAttYLB = "csAttYLB",
+	csTmpHQ = "csTmpHQ",
+	stPoisonRed = "stPoisonRed",
+	csDominateBuf = "csDominateBuf",
+	csSXSL = "csSXSL",
+	csNB = "csNB",
+	stReleaseStone = "stReleaseStone",
+	stMACShield = "stMACShield",
+	stHeroLongHit = "stHeroLongHit",
+	csTmpMAC = "csTmpMAC",
+	csNoDamage = "csNoDamage",
+	csWJD = "csWJD",
+	csWJZQ = "csWJZQ",
+	csRealHide = "csRealHide",
+	stACShield = "stACShield",
+	stZeroShield = "stZeroShield",
+	csNil_48 = "csNil_48",
+	csTmpSC = "csTmpSC",
+	csHMSF = "csHMSF",
+	csTmpNearHit = "csTmpNearHit",
+	csTmpMaxHP = "csTmpMaxHP",
+	csAssLK = "csAssLK",
+	csTmpMC = "csTmpMC",
+	csHorseRider = "csHorseRider",
+	csZaiMaShang = "csZaiMaShang",
+	csAssXJRS = "csAssXJRS",
+	csNil_47 = "csNil_47",
+	stPoisonStone = "stPoisonStone",
+	stHackQuest = "stHackQuest",
+	stDenyMagic = "stDenyMagic",
+	stOpenHealth = "stOpenHealth",
+	csTmpDC = "csTmpDC",
+	stFreeze = "stFreeze",
+	stPoisonGreen = "stPoisonGreen",
+	stJFBF = "stJFBF",
+	stDragonState = "stDragonState",
+	csDurativeVioletDmg = "csDurativeVioletDmg",
+	StDzxyFull = "StDzxyFull",
+	csTmpUnion = "csTmpUnion",
+	csRevenge = "csRevenge",
+	csTmpDCSpeed = "csTmpDCSpeed",
+	StSskWizard = "StSskWizard",
+	csDecTmpDefence = "csDecTmpDefence",
+	csBurn = "csBurn",
+	csZLHT = "csZLHT",
+	csTmpAM = "csTmpAM",
+	csJinghun = "csJinghun",
+	stPoisonFuchsia = "stPoisonFuchsia",
+	StYellowDiamond = "StYellowDiamond",
+	stManaProtected = "stManaProtected",
+	csPoisonMove = "csPoisonMove",
+	stHidden = "stHidden",
+	csTmpMaxMP = "csTmpMaxMP",
+	csTmpQR = "csTmpQR",
+	csDurativeSdsDmg = "csDurativeSdsDmg",
+	csBleeding = "csBleeding",
+	stMagicShieldEx = "stMagicShieldEx",
+	stAlwaysShowName = "stAlwaysShowName",
+	csTmpAC = "csTmpAC",
+	csAttHLKW = "csAttHLKW",
+	stMagicShield = "stMagicShield",
+	csAssRXPK = "csAssRXPK",
+	csTmpCC = "csTmpCC",
+	csLieHun = "csLieHun",
+	stAutoLFTrain = "stAutoLFTrain",
+	csDominaterPet = "csDominaterPet",
+	stPoisonBlue = "stPoisonBlue"
+}
+dummy.ctor = function (self, name, race, dress, weapon, sex, hair, offset, realPos, time)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(name)
+
+	 == "table" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 6-25, warpins: 1 ---
+	local name = params.name
+	local race = params.race
+	local dress = params.dress
+	local weapon = params.weapon
+	local sex = params.sex
+	local hair = params.hair
+	local offset = params.offset
+	local realPos = params.pos
+	--- END OF BLOCK #1 ---
+
+	slot18 = if not params.time then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 26-26, warpins: 1 ---
+	slot18 = 5
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 27-28, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	slot10 = if not name then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 29-29, warpins: 1 ---
+	local name = ""
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 30-43, warpins: 2 ---
+	local roleid = name .. dummy.roleid
+	dummy.roleid = dummy.roleid + 1
+	self.evtCallback_ = dummy.evtCallback
+	--- END OF BLOCK #5 ---
+
+	if race ~= nil then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 44-45, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if race == "hero" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #7 46-48, warpins: 2 ---
+	race = 0
+	--- END OF BLOCK #7 ---
+
+	slot12 = if not dress then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 49-49, warpins: 1 ---
+	slot12 = 0
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 50-52, warpins: 2 ---
+	self.dressid = slot12
+	--- END OF BLOCK #9 ---
+
+	slot12 = if not weapon then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 53-53, warpins: 1 ---
+	slot12 = 0
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 54-59, warpins: 2 ---
+	self.weaponid = slot12
+	local items = def.items
+	local dressData = items[dress]
+	--- END OF BLOCK #11 ---
+
+	slot13 = if dressData then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 60-60, warpins: 1 ---
+	dress = dressData.shape
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 61-63, warpins: 2 ---
+	local weaponData = items[weapon]
+	--- END OF BLOCK #13 ---
+
+	slot14 = if weaponData then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 64-64, warpins: 1 ---
+	weapon = weaponData.shape
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 65-72, warpins: 3 ---
+	local feature = getRecord("TFeature")
+	slot14 = feature
+	slot13 = feature.set
+	slot15 = "race"
+	--- END OF BLOCK #15 ---
+
+	slot16 = if not race then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 73-73, warpins: 1 ---
+	slot16 = 0
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 74-79, warpins: 2 ---
+	slot13(slot14, slot15, slot16)
+
+	slot14 = feature
+	slot13 = feature.set
+	slot15 = "sex"
+	--- END OF BLOCK #17 ---
+
+	slot16 = if not sex then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 80-80, warpins: 1 ---
+	slot16 = 0
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 81-86, warpins: 2 ---
+	slot13(slot14, slot15, slot16)
+
+	slot14 = feature
+	slot13 = feature.set
+	slot15 = "dress"
+	--- END OF BLOCK #19 ---
+
+	slot16 = if not dress then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 87-87, warpins: 1 ---
+	slot16 = 0
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 88-93, warpins: 2 ---
+	slot13(slot14, slot15, slot16)
+
+	slot14 = feature
+	slot13 = feature.set
+	slot15 = "weapon"
+	--- END OF BLOCK #21 ---
+
+	slot16 = if not weapon then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 94-94, warpins: 1 ---
+	slot16 = 0
+
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 95-100, warpins: 2 ---
+	slot13(slot14, slot15, slot16)
+
+	slot14 = feature
+	slot13 = feature.set
+	slot15 = "hair"
+	--- END OF BLOCK #23 ---
+
+	slot16 = if not hair then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 101-101, warpins: 1 ---
+	slot16 = 0
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 102-114, warpins: 2 ---
+	slot13(slot14, slot15, slot16)
+
+	self.feature = feature
+	local map = dummy.getMap()
+	local model = self.getRoleModel(self)
+	model.feature = feature
+	model.roleid = roleid
+	self.roleid = roleid
+	--- END OF BLOCK #25 ---
+
+	slot8 = if not realPos then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #26 115-117, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	slot15 = if offset.off2 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 118-122, warpins: 1 ---
+	model.y = offset.y
+	model.x = offset.x
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #28 123-126, warpins: 1 ---
+	local offsetTo = map.player
+	slot16 = offsetTo.x
+	--- END OF BLOCK #28 ---
+
+	slot17 = if offset then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #29 127-129, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot17 = if not offset.x then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 130-130, warpins: 1 ---
+	slot17 = 1
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 131-135, warpins: 3 ---
+	model.x = slot16 + slot17
+	slot16 = offsetTo.y
+	--- END OF BLOCK #31 ---
+
+	slot17 = if offset then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #32 136-138, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot17 = if not offset.y then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 139-139, warpins: 1 ---
+	slot17 = 0
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 140-142, warpins: 3 ---
+	model.y = slot16 + slot17
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #36
+
+
+	--- BLOCK #35 143-146, warpins: 1 ---
+	model.x = realPos.x
+	model.y = realPos.y
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 147-165, warpins: 3 ---
+	model.name = name
+	self.role = map.newRole(map, model)
+	self.role.isDummy = true
+
+	self.role.info:setName(name)
+
+	self.role.name = name
+
+	--- END OF BLOCK #36 ---
+
+	if time ~= nil then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #37 166-168, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	if 0 < time then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 169-178, warpins: 1 ---
+	self.role.node:performWithDelay(handler(self, self.removeSelf), time)
+
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 179-189, warpins: 3 ---
+	self.pathFinder = autoFindPath.new()
+	getmetatable(self).__newindex = function (t, k, v)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if k == "walkFunc" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-9, warpins: 1 ---
+		rawset(self, k, v)
+
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #2 10-11, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if k == "name" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 12-21, warpins: 1 ---
+		self.role.info:setName(tostring(v))
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #4 22-23, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if k == "clickCallback" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 24-24, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #6 25-26, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if k == "dir" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #7 27-37, warpins: 1 ---
+		assert(v)
+		--- END OF BLOCK #7 ---
+
+		slot3 = if not self.role.node:isRunning()
+
+		 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 38-41, warpins: 1 ---
+		self.role.last.dir = v
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 42-54, warpins: 2 ---
+		self.role:processMsg(SM_TURN, self.x, self.y, v, feature, state)
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 55-58, warpins: 5 ---
+		self.role[k] = v
+
+		return 
+		--- END OF BLOCK #10 ---
+
+
+
+	end
+
+	return 
+	--- END OF BLOCK #39 ---
+
+
+
+end
+dummy.setName = function (self, name)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.role.info:setName(name)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.actDelay = function (self, delay)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return cca.delay(delay)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.actAttack = function (self, skillIndex, offset, dir)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return cca.callFunc(function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		self:attack(skillIndex, offset, dir)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.actPlayAct = function (self, actid, offset, dir, feature, state)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return cca.callFunc(function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		self:playAct(actid, offset, dir, feature, state)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.actMagic = function (self, magicID, target, offset, dir)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return cca.callFunc(function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self:magic(magicID, target, offset, dir)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.actRemoveSelf = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return cca.callFunc(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:removeSelf()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.actAssign = function (self, key, value)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return cca.callFunc(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self[key] = value
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.getRoleModel = function (self)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	local dir = def.role.dir.bottom
+	local allBodyState = getRecord("TAllBodyState")
+
+	return {
+		dir = dir,
+		state = allBodyState
+	}
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.removeSelf = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local map = dummy.getMap()
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not tolua.isnull(map)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 10-16, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not tolua.isnull(self.role.node)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-21, warpins: 1 ---
+	map.removeRole(map, self.role.roleid)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 22-22, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+dummy.addState = function (self, stateName)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-24, warpins: 2 ---
+	local last = self.role.last
+
+	def.role.addState(last.state, stateName)
+	self.role:processMsg(SM_CHARSTATUSCHANGED, nil, nil, nil, last.state)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+dummy.removeState = function (self, stateName)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-24, warpins: 2 ---
+	local last = self.role.last
+
+	def.role.removeState(last.state, stateName)
+	self.role:processMsg(SM_CHARSTATUSCHANGED, nil, nil, nil, last.state)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+dummy.say = function (self, text, bgColor, fontSize, strWidth, dur)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot6 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if type(text)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 14-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not bgColor then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-20, warpins: 1 ---
+	local params = text
+	text = params.text
+	bgColor = params.bgColor
+	fontSize = params.fontSize
+	strWidth = params.strWidth
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 21-22, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if not bgColor then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 23-23, warpins: 1 ---
+	bgColor = self.say_default_bgColor
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 24-29, warpins: 2 ---
+	local adapt = nil
+
+	--- END OF BLOCK #7 ---
+
+	if type(bgColor)
+
+	 == "function" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 30-31, warpins: 1 ---
+	adapt = bgColor
+	bgColor = nil
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 32-47, warpins: 2 ---
+	local msg = {
+		color = 0,
+		channel = "dummy",
+		bgColor = 255
+	}
+	msg.data = {
+		{
+			str = text,
+			bgColor = bgColor
+		}
+	}
+	msg.ident = SM_HEAR
+	msg.target = self.name
+	msg.user = self.name
+	msg.adapt = adapt
+	--- END OF BLOCK #9 ---
+
+	slot8 = if not dur then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 48-48, warpins: 1 ---
+	slot8 = self.say_default_duration
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 49-51, warpins: 2 ---
+	msg.duration = slot8
+	--- END OF BLOCK #11 ---
+
+	slot8 = if not fontSize then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 52-52, warpins: 1 ---
+	slot8 = self.say_default_fontSize
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 53-55, warpins: 2 ---
+	msg.fontSize = slot8
+	--- END OF BLOCK #13 ---
+
+	slot8 = if not strWidth then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 56-56, warpins: 1 ---
+	slot8 = self.say_default_strWidth
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 57-77, warpins: 2 ---
+	msg.strWidth = slot8
+	local info = self.role.info
+
+	info.say(info, msg)
+	common.addMsg(string.format("%s:%s", self.name, text), 255, bgColor, true, self.name)
+
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+dummy.sayDialogAdapt = function (node, digImg, offset)
+	--- BLOCK #0 1-14, warpins: 1 ---
+	local sz = node.getContentSize(node)
+	sz.width = sz.width + 20
+	sz.height = sz.height + 35
+	local w = sz.width
+	--- END OF BLOCK #0 ---
+
+	if sz.height < 65 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 15-16, warpins: 1 ---
+	sz.height = 65
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-20, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if sz.width < 316 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-22, warpins: 1 ---
+	sz.width = 316
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-75, warpins: 2 ---
+	local dig = display.newScale9Sprite(res.getframe2(digImg), 0, 0, sz):pos(offset.x, offset.y):anchor(0, 0)
+
+	node.add2(node, dig):pos(sz.width/2, 25):anchor(0.5, 0)
+	dig.setCapInsets(dig, cc.rect(20, 20, 10, 50))
+
+	slot7 = dig
+	slot6 = dig.setScale
+	--- END OF BLOCK #4 ---
+
+	slot8 = if not g_data.setting.display.mapScale then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 76-76, warpins: 1 ---
+	slot8 = 1.5
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 77-91, warpins: 2 ---
+	slot6(slot7, slot8/1)
+
+	local p = display.newNode()
+
+	p.setContentSize(p, sz.width, sz.height)
+	dig.add2(dig, p)
+
+	return p
+	--- END OF BLOCK #6 ---
+
+
+
+end
+dummy.sayDL = function (self, text, fontSize, strWidth, dur)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.say(self, text, function (node)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		return dummy.sayDialogAdapt(node, "pic/helperScript/dialog_box.png", cc.p(20, -20))
+		--- END OF BLOCK #0 ---
+
+
+
+	end, fontSize, strWidth, dur)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.sayDR = function (self, text, fontSize, strWidth, dur)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.say(self, text, function (node)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		return dummy.sayDialogAdapt(node, "pic/helperScript/dialog_box02.png", cc.p(75, -20))
+		--- END OF BLOCK #0 ---
+
+
+
+	end, fontSize, strWidth, dur)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy.createSayDL = function (texts, strWidth, fontSize)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(texts)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	texts = {
+		texts
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-12, warpins: 2 ---
+	local msg = {}
+	msg.data = texts
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not strWidth then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-14, warpins: 1 ---
+	slot4 = dummy.say_default_strWidth
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-17, warpins: 2 ---
+	msg.strWidth = slot4
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not fontSize then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-19, warpins: 1 ---
+	slot4 = dummy.say_default_fontSize
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 20-34, warpins: 2 ---
+	msg.fontSize = slot4
+	local node = common.createChatLabel(msg)
+
+	return dummy.sayDialogAdapt(node, "pic/helperScript/dialog_box.png", cc.p(40, 0))
+	--- END OF BLOCK #6 ---
+
+
+
+end
+dummy.createSayDR = function (texts, strWidth, fontSize)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(texts)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	texts = {
+		texts
+	}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-12, warpins: 2 ---
+	local msg = {}
+	msg.data = texts
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not strWidth then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-14, warpins: 1 ---
+	slot4 = dummy.say_default_strWidth
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 15-17, warpins: 2 ---
+	msg.strWidth = slot4
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not fontSize then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-19, warpins: 1 ---
+	slot4 = dummy.say_default_fontSize
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 20-34, warpins: 2 ---
+	msg.fontSize = slot4
+	local node = common.createChatLabel(msg)
+
+	return dummy.sayDialogAdapt(node, "pic/helperScript/dialog_box02.png", cc.p(75, 0))
+	--- END OF BLOCK #6 ---
+
+
+
+end
+dummy.moveTo_ = function (self, pos)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local myObj = self.role
+	--- END OF BLOCK #0 ---
+
+	if myObj.x == pos.x then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 6-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if myObj.y == pos.y then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #3 11-27, warpins: 2 ---
+	local dir = util.getDir(myObj, pos)
+
+	--- END OF BLOCK #3 ---
+
+	if cc.pGetDistance(cc.p(myObj.x, myObj.y), pos)
+	 < 2 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 28-35, warpins: 1 ---
+	myObj.processMsg(myObj, SM_WALK, pos.x, pos.y, dir)
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 36-42, warpins: 1 ---
+	myObj.processMsg(myObj, SM_RUN, pos.x, pos.y, dir)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 43-43, warpins: 3 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+dummy.walkTo = function (self, x, y, mapid, tip, guideDis, maxDis, waitEvt, arriveEvt, faildEvt, unshowRoute)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot11 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type(x)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-21, warpins: 1 ---
+	local params = x
+	x = params.x
+	y = params.y
+	mapid = params.mapid
+	waitEvt = params.waitEvt
+	arriveEvt = params.arriveEvt
+	maxDis = params.maxDis
+	unshowRoute = params.unshowRoute
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-26, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if type(mapid)
+
+	 == "number" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 27-29, warpins: 1 ---
+	mapid = "" .. mapid
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 30-31, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot10 = if not unshowRoute then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 32-92, warpins: 1 ---
+	local size = def.role.size
+	self.guideTipSpr = res.get2("pic/common/guideTip.png"):add2(self.role):pos(size.w/2, size.h + 25)
+
+	self.guideTipSpr:setGlobalZOrder(self.role.node:getGlobalZOrder() + 1)
+	self.guideTipSpr:runForever(transition.sequence({
+		cc.MoveBy:create(1, cc.p(0, 15)),
+		cc.MoveBy:create(1, cc.p(0, -15))
+	}))
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 93-100, warpins: 2 ---
+	self.walkFunc = {
+		function (...)
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self:walkTo_(x, y, mapid, tip, guideDis, maxDis, waitEvt, arriveEvt, faildEvt)
+
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not unshowRoute then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #1 17-52, warpins: 1 ---
+			local myObj = self.role
+			local map = dummy.getMap()
+			local player = main_scene.ground.player
+
+			self.pathFinder:singleMapPathStop()
+
+			local routePoints = self.pathFinder:search(player.x, player.y, myObj.x, myObj.y, nil, true, true)
+			local effect = res.getani2("pic/effect/followHelper/%d.png", 1, 6, 0.1)
+
+			--- END OF BLOCK #1 ---
+
+			for k, off in ipairs(routePoints)
+
+
+			LOOP BLOCK #2
+			GO OUT TO BLOCK #6
+
+
+			--- BLOCK #2 53-54, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			slot9 = if off then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #3 55-109, warpins: 1 ---
+			local x, y = map.getMapPos(map, off.x, off.y)
+			slot12 = display.newSprite():addto(map.layers.mid, y + mapDef.tile.h):pos(x + mapDef.tile.w/2, y + mapDef.tile.h/2):runs({
+				cc.DelayTime:create(k*0.1),
+				cc.Animate:create(effect),
+				cc.RemoveSelf:create()
+			})
+
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+			--- BLOCK #4 110-110, warpins: 0 ---
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+			--- BLOCK #5 111-112, warpins: 2 ---
+			--- END OF BLOCK #5 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+			--- BLOCK #6 113-113, warpins: 4 ---
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end,
+		{}
+	}
+
+	return 
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 101-101, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+
+
+end
+dummy.walkTo_ = function (self, x, y, mapid, tip, guideDis, maxDis, waitEvt, arriveEvt, faildEvt)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot10 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-10, warpins: 1 ---
+	self.walkFunc = nil
+
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-19, warpins: 2 ---
+	local player = main_scene.ground.player
+	local myObj = self.role
+	local map = dummy.getMap()
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if mapid then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #3 20-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if map.mapid ~= mapid then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #4 23-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot13 = if not tolua.isnull(self.guideTipSpr)
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 29-32, warpins: 1 ---
+	self.guideTipSpr:removeFromParent()
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 33-37, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if type(faildEvt)
+	 == "function" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 38-41, warpins: 1 ---
+	faildEvt("faild")
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #8 42-44, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot13 = if self.evtCallback_ then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 45-46, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot9 = if faildEvt then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 47-50, warpins: 1 ---
+	self.evtCallback_(faildEvt, self)
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 51-58, warpins: 4 ---
+	self.walkFunc = {
+		self.followPlayer,
+		{
+			self
+		}
+	}
+
+	return 
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 59-64, warpins: 3 ---
+	local dis = player.getDis(player, myObj)
+	--- END OF BLOCK #12 ---
+
+	slot14 = if not guideDis then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 65-66, warpins: 1 ---
+	slot14 = dummy.GUIDE_DISTANCE_LIMIT
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 67-68, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	if slot14 < dis then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #15 69-70, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot14 = if not maxDis then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 71-72, warpins: 1 ---
+	slot14 = dummy.FOLLOW_DISTANCE_LIMIT
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 73-74, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	if slot14 < dis then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 75-85, warpins: 1 ---
+	myObj.processMsg(myObj, SM_SPACEMOVE_SHOW, player.x, player.y, 0)
+
+	self.points = nil
+
+	return 
+
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #25
+
+
+	--- BLOCK #19 86-90, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if type(waitEvt)
+	 == "function" then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 91-94, warpins: 1 ---
+	waitEvt("wait")
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #21 95-97, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	slot14 = if self.evtCallback_ then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #22 98-99, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot7 = if waitEvt then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 100-103, warpins: 1 ---
+	self.evtCallback_(waitEvt, self)
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 104-104, warpins: 4 ---
+	return 
+
+	--- END OF BLOCK #24 ---
+
+	FLOW; TARGET BLOCK #25
+
+
+	--- BLOCK #25 105-107, warpins: 3 ---
+	--- END OF BLOCK #25 ---
+
+	if self.x == x then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #26 108-110, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	if self.y == y then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #27 111-118, warpins: 1 ---
+	self.walkFunc = nil
+
+	--- END OF BLOCK #27 ---
+
+	slot14 = if not tolua.isnull(self.guideTipSpr)
+	 then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 119-122, warpins: 1 ---
+	self.guideTipSpr:removeFromParent()
+	--- END OF BLOCK #28 ---
+
+	FLOW; TARGET BLOCK #29
+
+
+	--- BLOCK #29 123-127, warpins: 2 ---
+	--- END OF BLOCK #29 ---
+
+	if type(arriveEvt)
+	 == "function" then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 128-131, warpins: 1 ---
+	arriveEvt("arrive")
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #34
+
+
+	--- BLOCK #31 132-134, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	slot14 = if self.evtCallback_ then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #32 135-136, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot8 = if arriveEvt then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 137-140, warpins: 1 ---
+	self.evtCallback_(arriveEvt, self)
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 141-141, warpins: 4 ---
+	return 
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 142-144, warpins: 3 ---
+	--- END OF BLOCK #35 ---
+
+	slot14 = if self.points then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 145-148, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	if #self.points == 0 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #37 149-164, warpins: 2 ---
+	self.pathFinder:singleMapPathStop()
+
+	local points = self.pathFinder:search(myObj.x, myObj.y, x, y, nil, true)
+	--- END OF BLOCK #37 ---
+
+	slot14 = if points then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 165-166, warpins: 1 ---
+	self.points = points
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #40
+
+
+	--- BLOCK #39 167-174, warpins: 1 ---
+	self.walkFunc = {
+		self.followPlayer,
+		{
+			self
+		}
+	}
+
+	return 
+
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 175-183, warpins: 3 ---
+	table.remove(self.points, 1)
+
+	local pos = self.points[1]
+
+	--- END OF BLOCK #40 ---
+
+	slot14 = if pos then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 184-187, warpins: 1 ---
+	self.moveTo_(self, pos)
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 188-189, warpins: 2 ---
+	--- END OF BLOCK #42 ---
+
+	slot4 = if tip then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 190-193, warpins: 1 ---
+	self.say(self, tip)
+
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 194-194, warpins: 2 ---
+	return 
+	--- END OF BLOCK #44 ---
+
+
+
+end
+dummy.followPlayer = function (self, followDistance, distanceLimit)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if type(followDistance)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-16, warpins: 1 ---
+	local params = followDistance
+	followDistance = params.followDistance
+	distanceLimit = params.distanceLimit
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-24, warpins: 2 ---
+	slot3 = {
+		dummy.followPlayer_
+	}
+	slot4 = {
+		self
+	}
+	--- END OF BLOCK #4 ---
+
+	slot5 = if not followDistance then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 25-26, warpins: 1 ---
+	slot5 = dummy.FOLLOW_DISTANCE
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 27-29, warpins: 2 ---
+	slot4[2] = slot5
+	--- END OF BLOCK #6 ---
+
+	slot5 = if not distanceLimit then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 30-31, warpins: 1 ---
+	slot5 = dummy.FOLLOW_DISTANCE_LIMIT
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 32-35, warpins: 2 ---
+	slot4[3] = slot5
+	slot3[2] = slot4
+	self.walkFunc = slot3
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+dummy.followPlayer_ = function (self, followDistance, distanceLimit)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local player = main_scene.ground.player
+	local myObj = self.role
+	local map = dummy.getMap()
+	local dis = player.getDis(player, myObj)
+
+	--- END OF BLOCK #0 ---
+
+	if dis < followDistance then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 14-14, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 15-16, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if dis <= distanceLimit then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 17-35, warpins: 1 ---
+	local x = player.x
+	local y = player.y
+	local points = self.pathFinder:search(myObj.x, myObj.y, x, y, math.pow(distanceLimit, 2), true, followDistance)
+	--- END OF BLOCK #3 ---
+
+	slot9 = if points then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #4 36-38, warpins: 1 ---
+	local pos = points[2]
+
+	--- END OF BLOCK #4 ---
+
+	slot10 = if pos then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 39-42, warpins: 1 ---
+	self.moveTo_(self, pos)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 43-43, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 44-57, warpins: 3 ---
+	self.playAct(self, SM_SPACEMOVE_SHOW, util.off2p(1, 0), def.role.dir.bottom)
+
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+dummy.jumpToPlayer = function (self)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	local player = main_scene.ground.player
+	self.points = nil
+
+	self.playAct(self, SM_SPACEMOVE_SHOW, util.off2p(0, 0), 0)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+dummy._showEvents = function (map, pos, type, delay)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local ids = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(pos)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 6-23, warpins: 1 ---
+	local id = string.format("%d,%d", v.x, v.y)
+
+	map.showEvent(map, id, v.x, v.y, type)
+	table.insert(ids, id)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 24-25, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 26-32, warpins: 1 ---
+	map.performWithDelay(map, function ()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in ipairs(ids)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		map:hideEvent(v)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 10-11, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 12-12, warpins: 1 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, delay)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+dummy.magic = function (self, magicID, target, offset, dir)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if magicID == 4 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-10, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot5 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-11, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if type(magicID)
+
+	 == "table" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-20, warpins: 1 ---
+	local params = magicID
+	magicID = params.magicID
+	target = params.target
+	offset = params.offset
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 21-23, warpins: 2 ---
+	local noTarget = false
+	--- END OF BLOCK #6 ---
+
+	if target == "player" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 24-27, warpins: 1 ---
+	target = main_scene.ground.player
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #8 28-29, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if target == nil then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #9 30-35, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if dir == def.role.dir.up then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 36-43, warpins: 1 ---
+	target = util.off2t(0, -1, self)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #11 44-49, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if dir == def.role.dir.rightUp then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 50-57, warpins: 1 ---
+	target = util.off2t(1, -1, self)
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #13 58-63, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if dir == def.role.dir.right then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 64-71, warpins: 1 ---
+	target = util.off2t(1, 0, self)
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #15 72-77, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if dir == def.role.dir.rightBottom then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 78-85, warpins: 1 ---
+	target = util.off2t(1, 1, self)
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #17 86-91, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if dir == def.role.dir.bottom then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 92-99, warpins: 1 ---
+	target = util.off2t(0, 1, self)
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #19 100-105, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if dir == def.role.dir.leftBottom then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 106-113, warpins: 1 ---
+	target = util.off2t(-1, 1, self)
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #21 114-119, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if dir == def.role.dir.left then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 120-127, warpins: 1 ---
+	target = util.off2t(-1, 0, self)
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #23 128-133, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	if dir == def.role.dir.leftUp then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 134-141, warpins: 1 ---
+	target = util.off2t(-1, -1, self)
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #25 142-143, warpins: 1 ---
+	noTarget = true
+	target = self
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 144-145, warpins: 11 ---
+	--- END OF BLOCK #26 ---
+
+	slot3 = if not offset then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 146-151, warpins: 1 ---
+	offset = cc.p(0, 0)
+
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 152-158, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	slot6 = if util.inSet(magicID, {
+		3,
+		7,
+		12,
+		25,
+		26,
+		27,
+		58,
+		300,
+		301
+	})
+
+	 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #29 159-160, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot4 = if not dir then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 161-166, warpins: 1 ---
+	dir = util.getDir(self, target)
+
+	--- END OF BLOCK #30 ---
+
+	FLOW; TARGET BLOCK #31
+
+
+	--- BLOCK #31 167-173, warpins: 2 ---
+	self.attack(self, magicID, offset, dir)
+
+	return 
+
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 174-175, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot6 = if not dir then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 176-176, warpins: 1 ---
+	slot6 = self.dir
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 177-187, warpins: 2 ---
+	self.dir = slot6
+	local map = dummy.getMap()
+	local skill = def.magic.getMagicConfigByUid(magicID)
+	--- END OF BLOCK #34 ---
+
+	slot8 = if skill then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 188-188, warpins: 1 ---
+	local effectID = skill.effectID
+	--- END OF BLOCK #35 ---
+
+	FLOW; TARGET BLOCK #36
+
+
+	--- BLOCK #36 189-190, warpins: 2 ---
+	--- END OF BLOCK #36 ---
+
+	slot8 = if effectID then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 191-209, warpins: 1 ---
+	local params = {}
+	params.effect = {
+		effectID = effectID - 1,
+		magicId = magicID
+	}
+	params.targetX = target.x
+	params.targetY = target.y
+
+	self.role:processMsg(SM_SPELL, nil, nil, self.dir, nil, nil, params)
+
+	--- END OF BLOCK #37 ---
+
+	FLOW; TARGET BLOCK #38
+
+
+	--- BLOCK #38 210-213, warpins: 2 ---
+	local x, y = nil
+	--- END OF BLOCK #38 ---
+
+	slot11 = if offset.off2 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 214-217, warpins: 1 ---
+	y = offset.y
+	x = offset.x
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #41
+
+
+	--- BLOCK #40 218-223, warpins: 1 ---
+	x = target.x + offset.x
+	y = target.y + offset.y
+
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 224-225, warpins: 2 ---
+	--- END OF BLOCK #41 ---
+
+	slot8 = if effectID then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #42 226-230, warpins: 1 ---
+	map.performWithDelay(map, function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not tolua.isnull(map)
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #1 7-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if "" .. magicID == "22" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 12-14, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot0 = if not noTarget then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 15-73, warpins: 1 ---
+		local pos = {}
+
+		table.insert(pos, cc.p(x, y))
+		table.insert(pos, cc.p(x + 1, y))
+		table.insert(pos, cc.p(x - 1, y))
+		table.insert(pos, cc.p(x, y + 1))
+		table.insert(pos, cc.p(x, y - 1))
+		dummy._showEvents(map, pos, mapDef.ET_FIRE, 15)
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #4 74-78, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		if "" .. magicID == "31" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 79-92, warpins: 1 ---
+		self:addState("stMagicShield")
+		self.role.node:performWithDelay(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:removeState("stMagicShield")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, 15)
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #6 93-97, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if "" .. magicID == "18" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #7 98-100, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot0 = if noTarget then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 101-114, warpins: 1 ---
+		self:addState("stHidden")
+		self.role.node:performWithDelay(function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:removeState("stHidden")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, 15)
+
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #9 115-119, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		if "" .. magicID == "16" then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 120-217, warpins: 1 ---
+		local pos = {}
+
+		table.insert(pos, cc.p(x + 2, y - 1))
+		table.insert(pos, cc.p(x + 2, y + 1))
+		table.insert(pos, cc.p(x - 2, y - 1))
+		table.insert(pos, cc.p(x - 2, y + 1))
+		table.insert(pos, cc.p(x + 1, y - 2))
+		table.insert(pos, cc.p(x - 1, y - 2))
+		table.insert(pos, cc.p(x + 1, y + 2))
+		table.insert(pos, cc.p(x - 1, y + 2))
+		dummy._showEvents(map, pos, mapDef.ET_HOLYCURTAIN, 15)
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #11 218-220, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		slot0 = if not noTarget then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #12 221-228, warpins: 1 ---
+		--- END OF BLOCK #12 ---
+
+		slot0 = if not tolua.isnull(self.role.node)
+		 then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 229-239, warpins: 1 ---
+		magic.showMagic(map, self.role, target.roleid, x, y, effectID)
+
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 240-240, warpins: 8 ---
+		return 
+		--- END OF BLOCK #14 ---
+
+
+
+	end, 0.5)
+
+	--- END OF BLOCK #42 ---
+
+	FLOW; TARGET BLOCK #43
+
+
+	--- BLOCK #43 231-232, warpins: 2 ---
+	return 
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 233-233, warpins: 2 ---
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 234-234, warpins: 2 ---
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 235-235, warpins: 2 ---
+	--- END OF BLOCK #46 ---
+
+
+
+end
+dummy.attack = function (self, skillIndex, offset, dir)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if type(skillIndex)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-19, warpins: 1 ---
+	local params = skillIndex
+	x = params.x
+	y = params.y
+	dir = params.dir
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-21, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if skillIndex == 3 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 22-30, warpins: 1 ---
+	self.playAct(self, dummy.acts.HIT, offset, dir)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #6 31-32, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if skillIndex == 7 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 33-41, warpins: 1 ---
+	self.playAct(self, dummy.acts.POWERHIT, offset, dir)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #8 42-43, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if skillIndex == 12 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 44-52, warpins: 1 ---
+	self.playAct(self, dummy.acts.LONGHIT, offset, dir)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #10 53-54, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if skillIndex == 25 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 55-63, warpins: 1 ---
+	self.playAct(self, dummy.acts.WIDEHIT, offset, dir)
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #12 64-65, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if skillIndex == 26 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 66-74, warpins: 1 ---
+	self.playAct(self, dummy.acts.FIREHIT, offset, dir)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #14 75-76, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if skillIndex == 12 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 77-85, warpins: 1 ---
+	self.playAct(self, dummy.acts.FOURFIREHIT, offset, dir)
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #16 86-87, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if skillIndex == 27 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 88-96, warpins: 1 ---
+	self.playAct(self, dummy.acts.RUSH, offset, dir)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #18 97-98, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if skillIndex == 58 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 99-106, warpins: 1 ---
+	self.playAct(self, dummy.acts.SWORD_HIT, offset, dir)
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 107-107, warpins: 9 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+dummy.playBigSkill = function (self)
+	--- BLOCK #0 1-101, warpins: 1 ---
+	local sprs = {}
+	sprs[1] = m2spr.playAnimation("cbohum", 24580, 10, 0.1, false, false, true):addto(self.role.node, 1):pos(0, mapDef.tile.h)
+	sprs[2] = m2spr.playAnimation("cboweapon", 104580, 10, 0.1, false, false, true):addto(self.role.node, 1):pos(0, mapDef.tile.h)
+	sprs[MULTRES] = m2spr.playAnimation("cbohair", 4580, 10, 0.1, false, false, true):addto(self.role.node, 1):pos(0, mapDef.tile.h)
+
+	m2spr.playAnimation("cboeffect", 580, 10, 0.1, true, true, true):addto(self.role.node, 1):pos(0, mapDef.tile.h)
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.role.sprites)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 102-105, warpins: 1 ---
+	v.setVisible(v, false)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 106-107, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 108-123, warpins: 1 ---
+	self.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		sound.playSound("cboZs4_start")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0.1)
+	self.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(self.role.sprites)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 7-10, warpins: 1 ---
+		v.setVisible(v, true)
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 11-12, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 13-16, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		for k, v in pairs(sprs)
+
+		LOOP BLOCK #4
+		GO OUT TO BLOCK #6
+
+
+		--- BLOCK #4 17-19, warpins: 1 ---
+		v.removeSelf(v)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 20-21, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #6 22-22, warpins: 1 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end, 1.4000000000000001)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+dummy.playBigSkill1 = function (self)
+	--- BLOCK #0 1-109, warpins: 1 ---
+	local time = 1
+	local sprs = {}
+	sprs[1] = m2spr.playAnimation("hum", 7408, 5, 0.1, false, false, true):addto(self.role.node, 0):pos(0, mapDef.tile.h)
+	sprs[2] = m2spr.playAnimation("weapon", 31408, 5, 0.1, false, false, true):addto(self.role.node, 1):pos(0, mapDef.tile.h)
+	sprs[MULTRES] = m2spr.playAnimation("hair", 2608, 5, 0.1, false, false, true):addto(self.role.node, 2):pos(0, mapDef.tile.h)
+
+	self.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		sound.playSound("m12-1")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, 0.3)
+	m2spr.playAnimation("magic2", 760, 14, 0.08, true, true, true):addto(self.role.node, 2):pos(0, mapDef.tile.h)
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.role.sprites)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 110-113, warpins: 1 ---
+	v.setVisible(v, false)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 114-115, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 116-124, warpins: 1 ---
+	self.role.node:performWithDelay(function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(self.role.sprites)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 7-10, warpins: 1 ---
+		v.setVisible(v, true)
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 11-12, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 13-16, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		for k, v in pairs(sprs)
+
+		LOOP BLOCK #4
+		GO OUT TO BLOCK #6
+
+
+		--- BLOCK #4 17-19, warpins: 1 ---
+		v.removeSelf(v)
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 20-21, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #6 22-22, warpins: 1 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end, time)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+dummy.magicEffect = function (self, magicID, offset)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if type(magicID)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-16, warpins: 1 ---
+	local params = magicID
+	magicID = params.magicID
+	offset = params.offset
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-18, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not offset then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-24, warpins: 1 ---
+	offset = cc.p(0, 0)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 25-34, warpins: 2 ---
+	local map = dummy.getMap()
+	local skill = def.magic.getMagicConfigByUid(magicID)
+	--- END OF BLOCK #6 ---
+
+	slot5 = if skill then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 35-35, warpins: 1 ---
+	local effectID = skill.effectID
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 36-39, warpins: 2 ---
+	local x, y = nil
+	--- END OF BLOCK #8 ---
+
+	slot8 = if offset.off2 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 40-43, warpins: 1 ---
+	y = offset.y
+	x = offset.x
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 44-51, warpins: 1 ---
+	x = self.role.x + offset.x
+	y = self.role.y + offset.y
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 52-57, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot8 = if not tolua.isnull(map)
+	 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 58-66, warpins: 1 ---
+	magic.showMagic(map, self.role, self.role, x, y, effectID)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 67-67, warpins: 2 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+dummy.playAct = function (self, actid, offset, dir, feature, state)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot6 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if type(actid)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-19, warpins: 1 ---
+	local params = actid
+	actid = params.actid
+	offset = params.offset
+	dir = params.dir
+	feature = params.feature
+	state = params.state
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 20-21, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not offset then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 22-27, warpins: 1 ---
+	offset = cc.p(0, 0)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-32, warpins: 2 ---
+	local feature = self.role.feature
+
+	--- END OF BLOCK #6 ---
+
+	slot7 = if feature.race then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 33-37, warpins: 1 ---
+	feature.set(feature, "race", feature.race)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 38-40, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot7 = if feature.dress then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 41-45, warpins: 1 ---
+	feature.set(feature, "dress", feature.dress)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 46-48, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot7 = if feature.weapon then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 49-53, warpins: 1 ---
+	feature.set(feature, "weapon", feature.weapon)
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 54-56, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot7 = if feature.hair then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 57-61, warpins: 1 ---
+	feature.set(feature, "hair", feature.hair)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 62-65, warpins: 2 ---
+	local x, y = nil
+	--- END OF BLOCK #14 ---
+
+	slot9 = if offset.off2 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 66-69, warpins: 1 ---
+	y = offset.y
+	x = offset.x
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #16 70-77, warpins: 1 ---
+	x = offset.x + self.role.x
+	y = offset.y + self.role.y
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 78-79, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	slot9 = if not dir then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 80-80, warpins: 1 ---
+	local dir = self.dir
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 81-95, warpins: 2 ---
+	self.role:processMsg(actid, x, y, dir, feature, state)
+	--- END OF BLOCK #19 ---
+
+	if actid == dummy.acts.SPACEMOVE_SHOW then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 96-105, warpins: 1 ---
+	magic.showWithName(dummy.getMap(), "spaceMoveShow", {
+		roleid = self.roleid
+	})
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 106-106, warpins: 2 ---
+	return 
+	--- END OF BLOCK #21 ---
+
+
+
+end
+dummy.showEquip = function (self, time, dressid, weaponid)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot4 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type(time)
+
+	 == "table" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-16, warpins: 1 ---
+	local params = time
+	dressid = params.dressid
+	weaponid = params.weaponid
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-18, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not dressid then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-19, warpins: 1 ---
+	dressid = self.dressid
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 20-21, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not weaponid then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 22-22, warpins: 1 ---
+	weaponid = self.weaponid
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 23-32, warpins: 2 ---
+	local model = getRecord("TUserStateInfo")
+	local items = model.get(model, "userItems")
+	local itemDress, itemWeapon = nil
+	--- END OF BLOCK #8 ---
+
+	slot2 = if dressid then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 33-46, warpins: 1 ---
+	itemDress = getRecord("TClientItem")
+
+	itemDress.set(itemDress, "Index", dressid)
+	itemDress.set(itemDress, "makeIndex", -1)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 47-48, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	slot3 = if weaponid then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 49-62, warpins: 1 ---
+	itemWeapon = getRecord("TClientItem")
+
+	itemWeapon.set(itemWeapon, "Index", weaponid)
+	itemWeapon.set(itemWeapon, "makeIndex", -1)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 63-68, warpins: 2 ---
+	slot9 = model
+	slot8 = model.set
+	slot10 = "nameColorIndex"
+	--- END OF BLOCK #12 ---
+
+	slot11 = if not self.nameColorIndex then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 69-69, warpins: 1 ---
+	slot11 = 255
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 70-95, warpins: 2 ---
+	slot8(slot9, slot10, slot11)
+	model.set(model, "userItems", {
+		itemDress,
+		itemWeapon
+	})
+
+	local role = self.role
+
+	model.set(model, "userName", role.info:getName())
+
+	local pnl = main_scene.ui:showPanel("equipOther", model)
+
+	--- END OF BLOCK #14 ---
+
+	slot1 = if time then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #15 96-98, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if 0 < time then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 99-103, warpins: 1 ---
+	pnl.performWithDelay(pnl, function ()
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:hideEquip()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, time)
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 104-105, warpins: 3 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 106-106, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+
+
+end
+dummy.hideEquip = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not tolua.isnull(main_scene)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	main_scene.ui:hidePanel("equipOther")
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+dummy.setNameColor = function (self, color, delay)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	slot4 = self.role.node
+	slot3 = self.role.node.performWithDelay
+
+	function slot5()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		self.role.info:setNameColor(color)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	slot6 = if not delay then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	slot6 = 0.1
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-11, warpins: 2 ---
+	slot3(slot4, slot5, slot6)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+dummy.dirTo = function (self, pos)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if tolua.isnull(self.role.node)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-10, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if pos == "player" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-13, warpins: 1 ---
+	pos = main_scene.ground.player
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-21, warpins: 2 ---
+	self.role.dir = util.getDir(self, pos)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+dummy.update = function (self, dt)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.walkFunc then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-10, warpins: 1 ---
+	self.walkFunc[1](unpack(self.walkFunc[2]))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+local function unableModify(tbl)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local metatable = getmetatable(tbl)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not metatable then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	metatable = {}
+
+	setmetatable(tbl, metatable)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-13, warpins: 2 ---
+	metatable.__newindex = function (_, n)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		error("unable to write current table " .. n, 2)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+unableModify(dummy)
+
+return dummy
+--- END OF BLOCK #0 ---
+
+
+

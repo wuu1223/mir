@@ -1,0 +1,139 @@
+--- BLOCK #0 1-10, warpins: 1 ---
+local cls = class("loongsRingBtn", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+cls.ctor = function (self, spriteFilename, clickCb, heightOffsetDiv, heightDiv)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	self.cb = clickCb
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not heightDiv then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	heightDiv = 2
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-6, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not heightOffsetDiv then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 7-7, warpins: 1 ---
+	heightOffsetDiv = 2
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 8-55, warpins: 2 ---
+	local tex = res.gettex2(spriteFilename)
+	local texsz = tex.getContentSize(tex)
+	local height = texsz.height
+	local sprFrm = cc.SpriteFrame:createWithTexture(tex, cc.rect(texsz.width/2, height/heightOffsetDiv, texsz.width/8, height/heightDiv))
+	local spr = display.newSprite(sprFrm):addto(self)
+	self.spr = spr
+	self.height = height
+	self.texsz = texsz
+	self.heightOffsetDiv = heightOffsetDiv
+	self.heightDiv = heightDiv
+
+	spr.setTouchEnabled(spr, true)
+	spr.addNodeEventListener(spr, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-11, warpins: 1 ---
+		self:setTex(1)
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #2 12-14, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 15-26, warpins: 1 ---
+		self:setTex(0)
+		--- END OF BLOCK #3 ---
+
+		slot1 = if spr:hitTest(event)
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 27-28, warpins: 1 ---
+		clickCb()
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 29-29, warpins: 4 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+cls.setTex = function (self, num)
+	--- BLOCK #0 1-25, warpins: 1 ---
+	self.spr:setTextureRect(cc.rect(self.texsz.width/2 + self.texsz.width/8*num, self.height/self.heightOffsetDiv, self.texsz.width/8, self.height/self.heightDiv))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return cls
+--- END OF BLOCK #0 ---
+
+
+
