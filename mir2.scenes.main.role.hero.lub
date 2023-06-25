@@ -1,0 +1,752 @@
+--- BLOCK #0 1-34, warpins: 1 ---
+local role = import(".role")
+local hero = class("hero", role)
+
+table.merge(hero, {
+	lastAttackTime = 0,
+	lastSpellTime = 0
+})
+
+hero.ctor = function (self, params)
+	--- BLOCK #0 1-22, warpins: 1 ---
+	hero.super.ctor(self, params)
+
+	self.sex = nil
+	self.job = nil
+	self.isHelper = params.isHelper
+	self.lastAttackTime = 0
+	self.endWarModeAction = nil
+
+	self.initEnd(self)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if params.isPlayer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 23-29, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if main_scene.ui.console.autoRat.enableRat then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 30-32, warpins: 1 ---
+	self.showAutoRatHint(self)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 33-33, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+hero.showAutoRatHint = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.autoRatHintSpr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-22, warpins: 1 ---
+	local x, y = self.node:centerPos()
+	self.autoRatHintSpr = res.get2("pic/console/autoRat.png"):add2(self.node, 1):pos(x, 108)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 23-23, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+hero.hideAutoRatHint = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.autoRatHintSpr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-9, warpins: 1 ---
+	self.autoRatHintSpr:removeSelf()
+
+	self.autoRatHintSpr = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-10, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+hero.getParts = function (self, feature)
+	--- BLOCK #0 1-45, warpins: 1 ---
+	local parts = {}
+	local sex = feature.get(feature, "sex")
+	local weapon = def.role.getHeroWeapon(feature.get(feature, "weapon")*2 + sex)
+	local dress = def.role.getHeroDress(feature.get(feature, "dress")*2 + sex)
+	local hairImg, hair = def.role.hair(feature)
+	self.sex = sex
+	self.hair = hair
+	local frame = def.role.getDressFrame(0)
+	slot9 = {
+		id = dress.Id
+	}
+	slot10 = string.lower
+	--- END OF BLOCK #0 ---
+
+	slot11 = if not dress.WhichLib then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 46-46, warpins: 1 ---
+	slot11 = ""
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 47-52, warpins: 2 ---
+	slot9.imgid = slot10(slot11)
+	slot9.offset = dress.OffSet
+	--- END OF BLOCK #2 ---
+
+	slot10 = if not frame then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 53-53, warpins: 1 ---
+	slot10 = {}
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 54-63, warpins: 2 ---
+	slot9.frame = slot10
+	parts.dress = slot9
+	slot9 = {
+		id = weapon.Id
+	}
+	slot10 = string.lower
+	--- END OF BLOCK #4 ---
+
+	slot11 = if not weapon.WhichLib then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 64-64, warpins: 1 ---
+	slot11 = ""
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 65-70, warpins: 2 ---
+	slot9.imgid = slot10(slot11)
+	slot9.offset = weapon.OffSet
+	--- END OF BLOCK #6 ---
+
+	slot10 = if not frame then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 71-71, warpins: 1 ---
+	slot10 = {}
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 72-76, warpins: 2 ---
+	slot9.frame = slot10
+	parts.weapon = slot9
+	--- END OF BLOCK #8 ---
+
+	if self.sex == 1 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #9 77-80, warpins: 1 ---
+	slot9 = parts.weapon
+	--- END OF BLOCK #9 ---
+
+	if weapon.Id ~= 1 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 81-82, warpins: 1 ---
+	slot10 = false
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 83-83, warpins: 1 ---
+	slot10 = true
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 84-85, warpins: 2 ---
+	slot9.delete = slot10
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 86-89, warpins: 1 ---
+	parts.weapon.delete = not weapon.Id
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 90-99, warpins: 2 ---
+	slot9 = {
+		id = hair,
+		imgid = hairImg,
+		offset = def.role.humFrame*hair
+	}
+	--- END OF BLOCK #14 ---
+
+	slot10 = if not frame then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 100-100, warpins: 1 ---
+	slot10 = {}
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 101-103, warpins: 2 ---
+	slot9.frame = slot10
+	--- END OF BLOCK #16 ---
+
+	if hair ~= 0 then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 104-105, warpins: 1 ---
+	slot10 = false
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #19
+
+
+	--- BLOCK #18 106-106, warpins: 1 ---
+	slot10 = true
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 107-111, warpins: 2 ---
+	slot9.delete = slot10
+	parts.hair = slot9
+	--- END OF BLOCK #19 ---
+
+	slot9 = if dress.WihichEffectLib then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #20 112-119, warpins: 1 ---
+	slot9 = {
+		blend = true,
+		id = dress.Id
+	}
+	slot10 = string.lower
+	--- END OF BLOCK #20 ---
+
+	slot11 = if not dress.WihichEffectLib then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 120-120, warpins: 1 ---
+	slot11 = ""
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 121-133, warpins: 2 ---
+	slot9.imgid = slot10(slot11)
+	slot9.offset = dress.EffectOffSet
+	slot9.offsetEnd = dress.offsetEnd
+	slot9.delay = dress.delay
+	slot9.alwaysPlay = dress.alwaysPlay
+	slot9.frame = frame
+	parts.humEffect = slot9
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #23 134-135, warpins: 1 ---
+	parts.humEffect = {
+		delete = true
+	}
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 136-138, warpins: 2 ---
+	return parts, sex
+	--- END OF BLOCK #24 ---
+
+
+
+end
+hero.addAct = function (self, params)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.endWarModeAction then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-8, warpins: 1 ---
+	self.node:stopAction(self.endWarModeAction)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-11, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if params.type ~= "hit" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 12-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if params.type ~= "spell" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 15-17, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if params.type ~= "heavyHit" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-20, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if params.type == "bigHit" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 21-23, warpins: 4 ---
+	--- END OF BLOCK #6 ---
+
+	if params.type == "spell" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 24-27, warpins: 1 ---
+	lastSpellTime = socket.gettime()
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 28-32, warpins: 2 ---
+	self.lastAttackTime = socket.gettime()
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #9 33-35, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if params.type == "die" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #10 36-38, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot2 = if self.isPlayer then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 39-49, warpins: 1 ---
+	self.map:setGrayState()
+	main_scene.ui.console.autoRat:stop()
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 50-52, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot2 = if not params.corpse then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 53-59, warpins: 1 ---
+	sound.playSound(sound.s_man_die + self.sex)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 60-66, warpins: 4 ---
+	hero.super.addAct(self, params)
+
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+hero.allExecuteEnd = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.die then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if self.last.act then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #2 8-15, warpins: 1 ---
+	local time = socket.gettime() - self.lastAttackTime
+	--- END OF BLOCK #2 ---
+
+	if time < 4 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #3 16-21, warpins: 1 ---
+	local act = {
+		type = "warMode"
+	}
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not self.last.act.dir then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 22-22, warpins: 1 ---
+	slot3 = self.dir
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 23-27, warpins: 2 ---
+	act.dir = slot3
+
+	--- END OF BLOCK #5 ---
+
+	for k, v in pairs(self.sprites)
+
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #6 28-31, warpins: 1 ---
+	v.play(v, act)
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 32-33, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #8 34-55, warpins: 1 ---
+	_, self.endWarModeAction = self.node:runs({
+		cc.DelayTime:create(time - 4),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			self:addStandAct()
+
+			self.endWarModeAction = nil
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 56-60, warpins: 1 ---
+	hero.super.allExecuteEnd(self)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 61-64, warpins: 4 ---
+	self.isExecuteEnd = true
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+hero.getHitTime = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not tonumber(avoidPlugValue(self.hitSpeed, true))
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-9, warpins: 1 ---
+	local hitSpeed = 0
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-25, warpins: 2 ---
+	local ret = math.max(0, def.role.speed.attack - math.min(300, hitSpeed*60)/1000)
+
+	return ret
+	--- END OF BLOCK #2 ---
+
+
+
+end
+hero.canNextHit = function (self)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.getHitTime(self)
+	 >= socket.gettime()
+
+	 - self.lastAttackTime then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-12, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 13-13, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 14-14, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+hero.getNextMagicDelay = function (self, magicId)
+	--- BLOCK #0 1-19, warpins: 1 ---
+	local time = def.role.speed.spell + g_data.player:getMagicDelay(magicId)/1000
+
+	return (self.lastSpellTime + time) - socket.gettime()
+	--- END OF BLOCK #0 ---
+
+
+
+end
+hero.canNextSpell = function (self, magicId)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.isLocked(self)
+
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	return false
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-14, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if self.getNextMagicDelay(self, magicId)
+
+	 > 0 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-16, warpins: 1 ---
+	slot2 = false
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 17-17, warpins: 1 ---
+	slot2 = true
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 18-18, warpins: 2 ---
+	return slot2
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return hero
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,1791 @@
+--- BLOCK #0 1-59, warpins: 1 ---
+local common = import("..common.common")
+local item = import("..common.item")
+local ybdeal = class("ybdeal", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(ybdeal, {
+	context,
+	tag,
+	items,
+	itembgs,
+	tabs
+})
+
+ybdeal.resetPanelPosition = function (self, type)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type == "center" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-11, warpins: 1 ---
+	self.anchor(self, 0.5, 0.5):center()
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 12-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if type == "left" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-24, warpins: 1 ---
+	self.anchor(self, 0, 0.5):pos(0, display.cy)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 25-25, warpins: 3 ---
+	return self
+	--- END OF BLOCK #4 ---
+
+
+
+end
+ybdeal.query = function (self, tag)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	local cmds = {}
+	cmds[1] = CM_YBDEAL_QUERY_BUY
+	cmds[2] = CM_YBDEAL_QUERY_SELL
+	cmds[3] = function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:upt(3)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	cmds[4] = CM_YBDEAL_HISTROY_BUY
+	cmds[5] = CM_YBDEAL_HISTROY_SELL
+	cmds[6] = CM_DISPLAY_YBDEAL_SET
+
+	--- END OF BLOCK #0 ---
+
+	if type(cmds[tag])
+
+	 == "function" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 19-22, warpins: 1 ---
+	return cmds[tag]()
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 23-29, warpins: 1 ---
+	return net.send({
+		cmds[tag]
+	})
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 30-31, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+ybdeal.ctor = function (self, params)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self._supportMove = true
+
+	self.setNodeEventEnabled(self, true)
+
+	self.items = {}
+	self.itembgs = {}
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-13, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-16, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not params.tag then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-17, warpins: 1 ---
+	local tag = 1
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 18-164, warpins: 2 ---
+	local bg = res.get2("pic/common/black_0.png"):addTo(self):pos(0, 0):anchor(0, 0)
+
+	res.get2("pic/panels/ybdeal/title.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 14):anchor(0.5, 1)
+	self.size(self, cc.size(bg.getw(bg), bg.geth(bg))):resetPanelPosition("center")
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):addTo(bg):anchor(1, 1):pos(bg.getw(bg) - 5, bg.geth(bg) - 9)
+
+	local sprs = {
+		"pic/panels/ybdeal/tab_buy.png",
+		"pic/panels/ybdeal/tab_selling.png",
+		"pic/panels/ybdeal/tab_sell.png",
+		"pic/panels/ybdeal/tab_hisbuy.png",
+		"pic/panels/ybdeal/tab_hissell.png",
+		"pic/panels/ybdeal/tab_set.png"
+	}
+	self.tabs = common.tabs(bg, {
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self:query(idx)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		tabTp = 2,
+		time = 2,
+		pos = {
+			offset = 55,
+			x = 19,
+			y = bg.geth(bg) - 60
+		},
+		default = {
+			manual = true,
+			var = tag
+		}
+	})
+
+	display.newScale9Sprite(res.getframe2("pic/scale/scale16.png"), 135, 60, cc.size(490, 344)):addTo(bg):anchor(0, 0)
+	self.upt(self, tag)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+ybdeal.onCleanup = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.clearItems(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.upt = function (self, tag)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.tag = tag
+
+	self.clearItems(self)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.context then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-11, warpins: 1 ---
+	self.context:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-31, warpins: 2 ---
+	self.context = display.newNode():addTo(self):pos(0, 0):anchor(0, 0)
+
+	--- END OF BLOCK #2 ---
+
+	if tag ~= 3 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 32-64, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		sound.playSound("103")
+		self.tabs.click(tag)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/ybdeal/refresh.png")
+	}):addTo(self.context):pos(575, 33):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 65-87, warpins: 2 ---
+	local scroll = an.newScroll(135, 65, 490, 335):addTo(self.context):anchor(0, 0)
+	local y = 335
+	local sy = 210
+	local msgs = {
+		"当前无玩家向你下单。",
+		"当前无正在出售的订单。",
+		nil,
+		"当前无历史购买过的订单。",
+		"当前无历史出售过的订单。"
+	}
+
+	local function defaultMsg(cnt)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if cnt == 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-37, warpins: 1 ---
+		an.newLabel(msgs[tag], 24, 1, {
+			color = def.colors.labelGray
+		}):addTo(scroll):pos(scroll:getw()/2, scroll:geth()/2):anchor(0.5, 0.5)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 38-38, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local index = nil
+	--- END OF BLOCK #4 ---
+
+	if tag == 1 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #5 88-95, warpins: 1 ---
+	index = 0
+	--- END OF BLOCK #5 ---
+
+	for i=1, #g_data.ybdeal.list_buy, 1
+	LOOP BLOCK #6
+	GO OUT TO BLOCK #13
+
+	--- BLOCK #6 96-96, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 97-103, warpins: 1 ---
+	local cellData = g_data.ybdeal.list_buy[i]
+	--- END OF BLOCK #7 ---
+
+	if cellData.timeOut == 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 104-106, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if cellData.cancel ~= 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 107-107, warpins: 2 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 108-200, warpins: 1 ---
+	index = index + 1
+	local cell = self.createCell(self, cellData, true):addTo(scroll):pos(scroll.getw(scroll)/2, y - 5 - (index - 1)*sy):anchor(0.5, 1)
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-43, warpins: 1 ---
+		sound.playSound("103")
+
+		local _, bg = common.msgbox("", {
+			okFunc = function ()
+				--- BLOCK #0 1-10, warpins: 1 ---
+				net.send({
+					CM_YBDEAL_BUY,
+					recog = cellData.id
+				})
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+
+		an.newLabel(string.format("确认花费%d元宝购买这些物品么?", cellData.num), 20, 1):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg)/2):anchor(0.5, 0.5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/ybdeal/buy.png")
+	}):addTo(cell):pos(405, 100):anchor(0.5, 0.5)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-38, warpins: 1 ---
+		sound.playSound("103")
+
+		local _, bg = common.msgbox("", {
+			okFunc = function ()
+				--- BLOCK #0 1-10, warpins: 1 ---
+				net.send({
+					CM_YBDEAL_BUY_CANCEL,
+					recog = cellData.id
+				})
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+
+		an.newLabel("确认取消此单交易么?", 20, 1):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg)/2):anchor(0.5, 0.5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/ybdeal/cancel.png")
+	}):addTo(cell):pos(405, 45):anchor(0.5, 0.5)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 201-201, warpins: 0 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #12 202-202, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #13 203-206, warpins: 1 ---
+	defaultMsg(index)
+
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #44
+
+
+	--- BLOCK #14 207-208, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if tag == 2 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #15 209-216, warpins: 1 ---
+	index = 0
+	--- END OF BLOCK #15 ---
+
+	for i=1, #g_data.ybdeal.list_sell, 1
+	LOOP BLOCK #16
+	GO OUT TO BLOCK #27
+
+	--- BLOCK #16 217-217, warpins: 3 ---
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 218-224, warpins: 1 ---
+	local cellData = g_data.ybdeal.list_sell[i]
+	--- END OF BLOCK #17 ---
+
+	slot13 = if cellData.getLost then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #18 225-227, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if cellData.getLost ~= 0 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 228-228, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #20 229-291, warpins: 2 ---
+	index = index + 1
+	local cell = self.createCell(self, cellData, nil, nil, true):addTo(scroll):pos(scroll.getw(scroll)/2, y - 5 - (index - 1)*sy):anchor(0.5, 1)
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-15, warpins: 1 ---
+		sound.playSound("103")
+
+		local _, bg = common.msgbox("", {
+			okFunc = function ()
+				--- BLOCK #0 1-10, warpins: 1 ---
+				net.send({
+					CM_YBDEAL_SELL_CANCEL,
+					recog = cellData.id
+				})
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+		--- END OF BLOCK #0 ---
+
+		if cellData.timeOut ~= 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 16-17, warpins: 1 ---
+		slot3 = "订单已超时,取回物品需支付1元宝。\n是否取回?"
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 18-18, warpins: 1 ---
+		local str = "确认取消此单交易,取回物品么?"
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 19-45, warpins: 2 ---
+		an.newLabel(str, 20, 1):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg)/2):anchor(0.5, 0.5)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/ybdeal/cancel.png")
+	}):addTo(cell):pos(405, 75):anchor(0.5, 0.5)
+	--- END OF BLOCK #20 ---
+
+	if cellData.timeOut ~= 0 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 292-316, warpins: 1 ---
+	an.newLabel("已过期", 18, 1, {
+		color = display.COLOR_RED
+	}):addTo(cell):pos(405, 35):anchor(0.5, 0.5)
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #24
+
+
+	--- BLOCK #22 317-319, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if cellData.cancel ~= 0 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 320-343, warpins: 1 ---
+	an.newLabel("买家已取消", 18, 1, {
+		color = display.COLOR_RED
+	}):addTo(cell):pos(405, 35):anchor(0.5, 0.5)
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 344-344, warpins: 3 ---
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #26
+
+
+	--- BLOCK #25 345-345, warpins: 0 ---
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #16
+
+
+	--- BLOCK #26 346-346, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #27 347-350, warpins: 1 ---
+	defaultMsg(index)
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #44
+
+
+	--- BLOCK #28 351-352, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	if tag == 4 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #29 353-359, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	for i=1, #g_data.ybdeal.list_buyHis, 1
+	LOOP BLOCK #30
+	GO OUT TO BLOCK #31
+
+	--- BLOCK #30 360-389, warpins: 2 ---
+	self.createCell(self, g_data.ybdeal.list_buyHis[i], true, true):addTo(scroll):pos(scroll.getw(scroll)/2, y - 5 - (i - 1)*sy):anchor(0.5, 1)
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #29
+
+
+	--- BLOCK #31 390-396, warpins: 1 ---
+	defaultMsg(#g_data.ybdeal.list_buyHis)
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #44
+
+
+	--- BLOCK #32 397-398, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if tag == 5 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #33 399-405, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	for i=1, #g_data.ybdeal.list_sellHis, 1
+	LOOP BLOCK #34
+	GO OUT TO BLOCK #35
+
+	--- BLOCK #34 406-436, warpins: 2 ---
+	self.createCell(self, g_data.ybdeal.list_sellHis[i], false, true, true):addTo(scroll):pos(scroll.getw(scroll)/2, y - 5 - (i - 1)*sy):anchor(0.5, 1)
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #33
+
+
+	--- BLOCK #35 437-443, warpins: 1 ---
+	defaultMsg(#g_data.ybdeal.list_sellHis)
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #44
+
+
+	--- BLOCK #36 444-445, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	if tag == 3 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #37 446-561, warpins: 1 ---
+	main_scene.ui:showPanel("bag")
+	main_scene.ui.panels.bag:resetPanelPosition("ybdeal")
+	main_scene.ui.panels.bag:setScaleMul(1)
+	self.resetPanelPosition(self, "left")
+
+	local node = display.newNode():addTo(self.context):size(490, 335):pos(135, 65):anchor(0, 0)
+	local bg = display.newScale9Sprite(res.getframe2("pic/scale/scale22.png"), 0, 0, cc.size(390, 175)):addTo(node):pos(node.getw(node)/2, 315):anchor(0.5, 1)
+	local itembg = display.newScale9Sprite(res.getframe2("pic/scale/scale23.png"), 0, 0, cc.size(350, 150)):addTo(bg):pos(bg.getw(bg)/2, 12):anchor(0.5, 0)
+	self.itembgs = {}
+	--- END OF BLOCK #37 ---
+
+	for j=1, 2, 1
+	LOOP BLOCK #38
+	GO OUT TO BLOCK #41
+
+	--- BLOCK #38 562-565, warpins: 2 ---
+	--- END OF BLOCK #38 ---
+
+	for i=1, 5, 1
+	LOOP BLOCK #39
+	GO OUT TO BLOCK #40
+
+	--- BLOCK #39 566-593, warpins: 2 ---
+	self.itembgs[#self.itembgs + 1] = res.get2("pic/panels/ybdeal/item.png"):addTo(itembg):pos((i - 1)*61 + 25, (j - 1)*65 - 135):anchor(0, 1)
+
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #38
+
+
+	--- BLOCK #40 594-594, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #41 595-765, warpins: 1 ---
+	an.newLabel("买家姓名：", 20, 1, {
+		color = def.colors.labelYellow
+	}):addTo(node):pos(175, 100):anchor(1, 0.5)
+	an.newLabel("价格：", 20, 1, {
+		color = def.colors.labelYellow
+	}):addTo(node):pos(175, 50):anchor(1, 0.5)
+
+	local name = an.newInput(190, 100, 200, 42, 14, {
+		checkCLen = true,
+		donotClip = true,
+		bg = {
+			h = 42,
+			tex = res.gettex2("pic/scale/scale23.png"),
+			offset = {
+				-10,
+				0
+			}
+		}
+	}):addTo(node):anchor(0, 0.5)
+	local price = an.newInput(190, 50, 200, 42, 5, {
+		donotClip = true,
+		bg = {
+			h = 42,
+			tex = res.gettex2("pic/scale/scale23.png"),
+			offset = {
+				-10,
+				0
+			}
+		}
+	}):addTo(node):anchor(0, 0.5)
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-23, warpins: 1 ---
+		sound.playSound("103")
+
+		local num = table.nums(self.items)
+		local strName = name:getText()
+		local strPrice = price:getText()
+		local numPrice = tonumber(strPrice)
+
+		--- END OF BLOCK #0 ---
+
+		if num <= 0 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 24-30, warpins: 1 ---
+		main_scene.ui:tip("请先选择物品出售！")
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #2 31-36, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if string.len(strName)
+		 == 0 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 37-43, warpins: 1 ---
+		main_scene.ui:tip("请输入买家姓名！")
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #4 44-49, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if string.len(strPrice)
+		 ~= 0 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 50-51, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		slot4 = if not numPrice then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 52-58, warpins: 2 ---
+		main_scene.ui:tip("请输入正确价格(1~99999)！")
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #7 59-60, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot4 = if numPrice then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #17
+		end
+
+
+		--- BLOCK #8 61-66, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		if math.floor(numPrice)
+		 < numPrice then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 67-73, warpins: 1 ---
+		main_scene.ui:tip("请输入整数价格！")
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #10 74-76, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		if numPrice >= 1 then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 77-79, warpins: 1 ---
+		--- END OF BLOCK #11 ---
+
+		if 99999 < numPrice then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 80-86, warpins: 2 ---
+		main_scene.ui:tip("请输入正确价格(1~99999)！")
+
+		--- END OF BLOCK #12 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #13 87-99, warpins: 1 ---
+		local buf = {}
+		buf[MULTRES] = getRecord("TYBDealDataHead", {
+			name = strName,
+			price = numPrice
+		})
+
+		--- END OF BLOCK #13 ---
+
+		for k, v in pairs(self.items)
+
+
+		LOOP BLOCK #14
+		GO OUT TO BLOCK #16
+
+
+		--- BLOCK #14 100-117, warpins: 1 ---
+		buf[#buf + 1] = getRecord("TYBDealData", {
+			name = v.data.getVar("name"),
+			makeIndex = v.data:get("makeIndex")
+		})
+
+		--- END OF BLOCK #14 ---
+
+		FLOW; TARGET BLOCK #15
+
+
+		--- BLOCK #15 118-119, warpins: 2 ---
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+		--- BLOCK #16 120-133, warpins: 1 ---
+		g_data.ybdeal:resetSign()
+		net.send({
+			CM_YBDEAL_REFER_ITEMS,
+			tag = num
+		}, nil, buf)
+
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 134-134, warpins: 7 ---
+		return 
+		--- END OF BLOCK #17 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/ybdeal/confirm_sell.png")
+	}):addTo(self.context):pos(270, 33):anchor(0.5, 0.5)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function (btn)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		sound.playSound("103")
+		self:upt(3)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/ybdeal/cancel.png")
+	}):addTo(self.context):pos(475, 33):anchor(0.5, 0.5)
+
+	return 
+
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 766-767, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	if tag == 6 then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 768-1011, warpins: 1 ---
+	local posY = y - 10
+	slot9 = text
+	text = an.newLabel("交易设置", 22, 1, {
+		color = def.colors.labelYellow
+	}):addTo(scroll):pos(scroll.getw(scroll)/2, posY):anchor(0.5, 1)
+	posY = posY - text:geth() - 10
+	text = an.newLabel("设置接受交易的卖家最低等级", 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(scroll):pos(30, posY):anchor(0, 1)
+	local level = nil
+	level = an.newInput(text:getw() + 30 + 10, posY - text:geth()/2, 84, 30, 3, {
+		donotClip = true,
+		bg = {
+			h = 30,
+			tex = res.gettex2("pic/scale/edit.png")
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-15, warpins: 1 ---
+			local lvNum = tonumber(level:getString())
+
+			--- END OF BLOCK #0 ---
+
+			if string.len(level:getString())
+			 ~= 0 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #1 16-17, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			slot0 = if lvNum then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #2 18-20, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if lvNum >= 1 then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 21-23, warpins: 1 ---
+			--- END OF BLOCK #3 ---
+
+			if 999 < lvNum then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 24-30, warpins: 4 ---
+			main_scene.ui:tip("请输入正确等级！")
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+			--- BLOCK #5 31-37, warpins: 1 ---
+			net.send({
+				CM_YBDEAL_SET_OPERATE,
+				param = lvNum
+			})
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 38-38, warpins: 2 ---
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end
+	}):addTo(scroll):anchor(0, 0.5)
+
+	level.setString(level, g_data.ybdeal.level .. "")
+
+	posY = posY - text:geth() - 10
+	text = an.newLabel("设置成功后低于该等级的玩家无法向您进行元宝交易。", 18, 1, {
+		color = cc.c3b(255, 191, 0)
+	}):addTo(scroll):pos(30, posY):anchor(0, 1)
+	posY = posY - text:geth() - 10
+	text = an.newLabel("交易协议", 22, 1, {
+		color = def.colors.labelYellow
+	}):addTo(scroll):pos(scroll.getw(scroll)/2, posY):anchor(0.5, 1)
+	posY = posY - text:geth() - 10
+
+	an.newLabelM(445, 18, 1):addTo(scroll):pos(20, posY):anchor(0, 1):nextLine():addLabel("您确定已仔细阅读了《元宝交易协议》并接受协议内的所有条款"):nextLine():addLabel("1.充值元宝是针对同一服务器的账号进行的，同一服务器下该账号的所有角色均可以使用这些元宝。"):nextLine():addLabel("2.如果物品放在NPC处出售超过3天，交易将被终止，同时卖方取回物品时需额外再支付1个元宝。"):nextLine():addLabel("3.每个角色最多同时出售4笔未完成的交易。"):nextLine():addLabel("4.卖家等级低于目标设置的交易最低等级将无法进行下单。"):nextLine()
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 1012-1013, warpins: 7 ---
+	--- END OF BLOCK #44 ---
+
+
+
+end
+ybdeal.createCell = function (self, data, toMe, history, notLv)
+	--- BLOCK #0 1-37, warpins: 1 ---
+	local bg = display.newScale9Sprite(res.getframe2("pic/scale/scale22.png"), 0, 0, cc.size(480, 200))
+
+	res.get2("pic/panels/ybdeal/yb.png"):addTo(bg):pos(-2, 170):anchor(0, 0.5)
+
+	slot6 = an.newLabel
+	--- END OF BLOCK #0 ---
+
+	slot7 = if data.num then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 38-40, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot7 = if not data.num then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 41-41, warpins: 2 ---
+	slot7 = "0"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 42-69, warpins: 2 ---
+	slot6(slot7 .. "", 20, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(48, 170):anchor(0, 0.5)
+
+	local posx = 140
+	slot7 = an.newLabel
+	--- END OF BLOCK #3 ---
+
+	slot2 = if toMe then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 70-71, warpins: 1 ---
+	slot8 = "卖家："
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 72-72, warpins: 1 ---
+	slot8 = "买家："
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 73-125, warpins: 2 ---
+	local label = slot7(slot8, 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(posx, 170):anchor(0, 0)
+	posx = posx + label.getw(label)
+	label = an.newLabel(data.name, 22, 1, {
+		color = def.colors.labelYellow
+	}):addTo(bg):pos(posx, 168):anchor(0, 0)
+	--- END OF BLOCK #6 ---
+
+	slot4 = if not notLv then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 126-157, warpins: 1 ---
+	posx = posx + label.getw(label)
+	label = an.newLabel(" (Lv" .. data.level .. ")", 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(posx, 170):anchor(0, 0)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 158-166, warpins: 2 ---
+	slot8 = an.newLabel
+	slot9 = os.date
+	slot10 = "%m-%d-%Y  %X"
+	slot11 = TDateTimeToUnixDate
+	--- END OF BLOCK #8 ---
+
+	slot12 = if data.time then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 167-169, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot12 = if not data.time then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 170-172, warpins: 2 ---
+	slot12 = os.time()
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 173-198, warpins: 2 ---
+	slot8(slot9(slot10, slot11(slot12)), 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(140, 165):anchor(0, 1)
+
+	local size = nil
+	--- END OF BLOCK #11 ---
+
+	slot3 = if history then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 199-205, warpins: 1 ---
+	size = cc.size(330, 135)
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #13 206-211, warpins: 1 ---
+	size = cc.size(450, 135)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 212-243, warpins: 2 ---
+	local itembg = display.newScale9Sprite(res.getframe2("pic/scale/scale23.png"), 0, 0, size):addTo(bg):pos(bg.getw(bg)/2, 7):anchor(0.5, 0)
+	local x, y = nil
+	--- END OF BLOCK #14 ---
+
+	for i=1, 10, 1
+	LOOP BLOCK #15
+	GO OUT TO BLOCK #25
+
+	--- BLOCK #15 244-246, warpins: 2 ---
+	--- END OF BLOCK #15 ---
+
+	if i < 6 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 247-251, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	slot10 = if not ((i - 1)*61 + 15) then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 252-254, warpins: 2 ---
+	x = (i - 6)*61 + 15
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 255-257, warpins: 2 ---
+	--- END OF BLOCK #18 ---
+
+	if i < 6 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 258-259, warpins: 1 ---
+	y = 96
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 260-260, warpins: 1 ---
+	y = 34
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 261-281, warpins: 2 ---
+	local grid = res.get2("pic/panels/ybdeal/item.png"):addTo(itembg):pos(x, y):anchor(0, 0.5)
+
+	--- END OF BLOCK #21 ---
+
+	slot17 = if data.items then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #22 282-285, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot17 = if data.items[i] then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 286-312, warpins: 1 ---
+	item.new(data.items[i], self, {
+		donotMove = true
+	}):addTo(grid):pos(grid.getw(grid)/2, grid.geth(grid)/2):anchor(0.5, 0.5)
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 313-313, warpins: 3 ---
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #25 314-314, warpins: 1 ---
+	return bg
+	--- END OF BLOCK #25 ---
+
+
+
+end
+ybdeal.sellUpt = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.items = {}
+
+	self.tabs.click(2)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.putItem = function (self, bagItem, x, y)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	FLOW; TARGET BLOCK #1
+
+
+	--- BLOCK #1 2-4, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if self.tag ~= 3 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 5-5, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #3 6-10, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot4 = if bagItem.data.isBinded()
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 11-17, warpins: 1 ---
+	main_scene.ui:tip("绑定的物品不可出售！")
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #5 18-24, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if 10 <= table.nums(self.items)
+	 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 25-31, warpins: 1 ---
+	main_scene.ui:tip("只能出售十个物品！")
+
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #7 32-41, warpins: 1 ---
+	local find = nil
+	local makeIndex = bagItem.data:get("makeIndex")
+
+	--- END OF BLOCK #7 ---
+
+	for i, v in ipairs(self.items)
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #11
+
+
+	--- BLOCK #8 42-48, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if makeIndex == v.data:get("makeIndex")
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 49-50, warpins: 1 ---
+	find = true
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #10 51-52, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #11 53-54, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	slot4 = if find then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 55-61, warpins: 1 ---
+	main_scene.ui:tip("已选中该物品！")
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #13 62-65, warpins: 1 ---
+	local form = bagItem.formPanel.__cname
+
+	--- END OF BLOCK #13 ---
+
+	if form == "bag" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 66-70, warpins: 1 ---
+	self.putInItem(self, bagItem)
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #15 71-72, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if form == "ybdeal" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 73-73, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 74-79, warpins: 1 ---
+	main_scene.ui:tip("只能出售包裹里的道具！")
+
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 80-81, warpins: 7 ---
+	return false
+	--- END OF BLOCK #18 ---
+
+
+
+end
+ybdeal.putInItem = function (self, bagItem)
+	--- BLOCK #0 1-48, warpins: 1 ---
+	local idx = self.getCurIdx(self)
+	local bg = self.itembgs[idx]
+	local newItem = item.new(bagItem.data, self, {
+		form = "ybdeal"
+	}):addTo(bg.getParent(bg), 1):pos(bg.getPositionX(bg) + bg.getw(bg)/2, bg.getPositionY(bg) - bg.geth(bg)/2):anchor(0.5, 0.5)
+
+	self.addItem(self, newItem, idx)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.getBackItem = function (self, item)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.removeItem(self, item.data:get("makeIndex"))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.getCurIdx = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.items then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	self.items = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	for i=1, 10, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #6
+
+	--- BLOCK #3 10-13, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot5 = if not self.items[i] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 14-14, warpins: 1 ---
+	return i
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 15-15, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #6 16-16, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+ybdeal.addItem = function (self, item, idx)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.items[idx] = item
+
+	self.delBagItem(self, item.data:get("makeIndex"))
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+ybdeal.removeItem = function (self, makeIndex)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for i, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #1 5-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.data:get("makeIndex")
+	 == makeIndex then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-22, warpins: 1 ---
+	self.addBagItem(self, v.data)
+	v.removeSelf(v)
+
+	self.items[i] = nil
+
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 23-24, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #4 25-25, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+ybdeal.clearItems = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local makeIndexs = {}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 6-13, warpins: 1 ---
+	makeIndexs[#makeIndexs + 1] = v.data:get("makeIndex")
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 14-15, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 16-19, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	for i=1, #makeIndexs, 1
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #5
+
+	--- BLOCK #4 20-24, warpins: 2 ---
+	self.removeItem(self, makeIndexs[i])
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #5 25-27, warpins: 1 ---
+	self.items = {}
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+ybdeal.addBagItem = function (self, data)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	g_data.bag:addItem(data)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-23, warpins: 1 ---
+	main_scene.ui.panels.bag:addItem(data.get(data, "makeIndex"))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 24-24, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+ybdeal.delBagItem = function (self, makeIndex)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	g_data.bag:delItem(makeIndex)
+	--- END OF BLOCK #0 ---
+
+	slot2 = if main_scene.ui.panels.bag then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 13-20, warpins: 1 ---
+	main_scene.ui.panels.bag:delItem(makeIndex)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-21, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+return ybdeal
+--- END OF BLOCK #0 ---
+
+
+

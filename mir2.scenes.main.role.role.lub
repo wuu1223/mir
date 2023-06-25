@@ -1,0 +1,5234 @@
+--- BLOCK #0 1-110, warpins: 1 ---
+local magic = import("..common.magic")
+local mapDef = import("..map.def")
+local ani = import(".ani")
+local info = import(".info")
+local role = class("role")
+local __position = cc.Node.setPosition
+
+table.merge(role, {
+	isUnderOtherRole
+})
+
+role.ctor = function (self, params)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-19, warpins: 2 ---
+	self.node = display.newNode()
+	self.node.onEnter = function (node)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		self:onEnter()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	self.map = params.map
+	self.isPlayer = params.isPlayer
+	self.roleid = params.roleid
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not params.x then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 20-20, warpins: 1 ---
+	slot2 = 0
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 21-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not params.y then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-24, warpins: 1 ---
+	slot3 = 0
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 25-29, warpins: 2 ---
+	self.y = slot3
+	self.x = slot2
+	--- END OF BLOCK #6 ---
+
+	slot2 = if not params.dir then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 30-33, warpins: 1 ---
+	slot2 = def.role.dir.bottom
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 34-37, warpins: 2 ---
+	self.dir = slot2
+	--- END OF BLOCK #8 ---
+
+	slot2 = if not params.feature then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 38-40, warpins: 1 ---
+	slot2 = getRecord("TFeature")
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 41-44, warpins: 2 ---
+	self.feature = slot2
+	--- END OF BLOCK #10 ---
+
+	slot2 = if not params.state then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 45-47, warpins: 1 ---
+	slot2 = getRecord("TAllBodyState")
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 48-51, warpins: 2 ---
+	self.state = slot2
+	--- END OF BLOCK #12 ---
+
+	slot2 = if not params.level then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 52-52, warpins: 1 ---
+	slot2 = 1
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 53-129, warpins: 2 ---
+	self.level = slot2
+	self.hitSpeed = avoidPlugValue(0)
+	self.shield = nil
+	self.sounds = {}
+	self.filters = {}
+	self.acts = {}
+	self.parts = {}
+	self.sprites = {}
+	self.cur = {}
+	self.last = {
+		x = self.x,
+		y = self.y,
+		dir = self.dir,
+		state = self.state,
+		pos = cc.p(-1, -1)
+	}
+	self.lock = {
+		execute = false
+	}
+	self.waits = {}
+	self.actions = nil
+
+	self.node:setCascadeOpacityEnabled(true)
+
+	local size = def.role.size
+
+	self.node:size(size.w, size.h)
+
+	self.info = info.new(self, self.map)
+
+	self.node:setNodeEventEnabled(true)
+
+	self.isIgnore = false
+	self.hitStatus = def.role.EHitStatus.stand
+	self.lastHitedTime = 0
+
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+role.initEnd = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.onEnter = function (self)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	self.changeFeature(self, self.feature, true)
+	--- END OF BLOCK #0 ---
+
+	if #self.acts <= 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 11-20, warpins: 1 ---
+	self.addAct(self, {
+		type = "stand",
+		loadMap = true,
+		dir = self.dir,
+		x = self.x,
+		y = self.y
+	})
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 21-27, warpins: 2 ---
+	self.uptInfoShow(self)
+	self.uptSelfShow(self)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.uptIsIgnore = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.isInScreen then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if self.isUnderOtherRole then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 7-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not self.die then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 10-12, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot1 = if not self.isMoving then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 13-15, warpins: 1 ---
+	slot1 = not self.isPlayer
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #5 16-17, warpins: 2 ---
+	slot1 = false
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 18-18, warpins: 1 ---
+	local isIgnore = true
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 19-21, warpins: 4 ---
+	--- END OF BLOCK #7 ---
+
+	if isIgnore ~= self.isIgnore then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 22-28, warpins: 1 ---
+	self.isIgnore = isIgnore
+
+	self.uptInfoShow(self)
+	self.uptSelfShow(self)
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 29-29, warpins: 2 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+role.setIsUnderOtherRole = function (self, b)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.isUnderOtherRole ~= b then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	self.isUnderOtherRole = b
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-5, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.uptInfoShow = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.noInfo then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not self.isIgnore then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.die then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-14, warpins: 3 ---
+	self.info:hide()
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 15-18, warpins: 1 ---
+	self.info:show()
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-19, warpins: 2 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+role.uptSelfShow = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local show = not self.isIgnore
+	--- END OF BLOCK #0 ---
+
+	slot1 = if show then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self.die then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-12, warpins: 1 ---
+	show = not g_data.setting.base.hideCorpse
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-16, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(self.sprites)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 17-20, warpins: 1 ---
+	v.setVisible(v, show)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 21-22, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 23-23, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+role.clearLock = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not main_scene then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-14, warpins: 2 ---
+	local lock = main_scene.ui.console.controller.lock
+	--- END OF BLOCK #2 ---
+
+	if lock.target.skill == self.roleid then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-17, warpins: 1 ---
+	lock.target.skill = nil
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 18-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	if type(lock.target.attack)
+
+	 == "number" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 24-28, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if lock.target.attack == self.roleid then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 29-32, warpins: 1 ---
+	lock.target.attack = nil
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #7 33-36, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if lock.target.attack == self then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 37-39, warpins: 1 ---
+	lock.target.attack = nil
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 40-40, warpins: 4 ---
+	return 
+	--- END OF BLOCK #9 ---
+
+
+
+end
+role.getDis = function (self, other)
+	--- BLOCK #0 1-18, warpins: 1 ---
+	local x = math.abs(self.x - other.x)
+	local y = math.abs(self.y - other.y)
+
+	return math.sqrt(x*x + y*y)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.getRace = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return self.feature:get("race")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.getAppr = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return self.feature:get("dress")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.getWeapon = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return self.feature:get("weapon")
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.openFilter = function (self, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.filters[name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	self.filters[name] = true
+
+	self.checkFilter(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.closeFilter = function (self, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.filters[name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-10, warpins: 1 ---
+	self.filters[name] = nil
+
+	self.checkFilter(self)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-11, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.checkFilter = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if table.nums(self.filters)
+	 == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	for k, v in pairs(self.sprites)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 11-14, warpins: 1 ---
+	v.spr:clearFilter()
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 15-16, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 17-17, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 18-22, warpins: 2 ---
+	local f = nil
+	--- END OF BLOCK #5 ---
+
+	slot2 = if not self.filters.die then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 23-26, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if self.filters.gray then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 27-32, warpins: 2 ---
+	f = res.getFilter("gray")
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 33-36, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if self.filters.outline then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 37-41, warpins: 1 ---
+	f = res.getFilter("outline_role")
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 42-43, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	slot1 = if f then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #11 44-47, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	for k, v in pairs(self.sprites)
+
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #14
+
+
+	--- BLOCK #12 48-52, warpins: 1 ---
+	v.spr:setFilter(f)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 53-54, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #14 55-55, warpins: 2 ---
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+role.getParts = function (self, feature)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return {}, 0
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.changeFeature = function (self, newFeature, force)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type(newFeature)
+
+	 == "number" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-11, warpins: 1 ---
+	newFeature = def.role.makeTFeature(newFeature)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-16, warpins: 2 ---
+	local diff = false
+
+	--- END OF BLOCK #2 ---
+
+	for k, v in pairs(self.feature)
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #3 17-21, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if type(v)
+
+	 == "number" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 22-24, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if v ~= newFeature[k] then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 25-26, warpins: 1 ---
+	diff = true
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 27-28, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #7 29-30, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot3 = if not diff then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 31-32, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if not force then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 33-33, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 34-41, warpins: 3 ---
+	local parts, sex = self.getParts(self, newFeature)
+
+	--- END OF BLOCK #10 ---
+
+	for k, v in pairs(parts)
+
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #17
+
+
+	--- BLOCK #11 42-45, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot11 = if self.parts[k] then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #12 46-48, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot11 = if not v.delete then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #13 49-54, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if self.parts[k].imgid == v.imgid then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 55-60, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if self.parts[k].id ~= v.id then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 61-65, warpins: 4 ---
+	v.type = k
+
+	self.addAct(self, v)
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 66-67, warpins: 3 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #17 68-71, warpins: 1 ---
+	self.parts = parts
+	self.sex = sex
+	self.feature = newFeature
+
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+role.updateSpriteForState = function (self, type, sprite)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	local function update(t, spr)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		local state = self.last.state
+		local hasColor = nil
+
+		--- END OF BLOCK #0 ---
+
+		slot4 = if def.role.stateHas(state, "stPoisonStone")
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 13-18, warpins: 1 ---
+		self:openFilter("gray")
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+		--- BLOCK #2 19-31, warpins: 1 ---
+		self:closeFilter("gray")
+		--- END OF BLOCK #2 ---
+
+		slot4 = if def.role.stateHas(state, "stPoisonFuchsia")
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 32-41, warpins: 1 ---
+		spr.setColor(spr, cc.c3b(255, 60, 255))
+
+		hasColor = true
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 42-49, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot4 = if def.role.stateHas(state, "stPoisonGreen")
+		 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #5 50-51, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if t ~= "dress" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 52-53, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if t == "hair" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 54-59, warpins: 2 ---
+		spr.setColor(spr, display.COLOR_GREEN)
+
+		hasColor = true
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 60-67, warpins: 3 ---
+		--- END OF BLOCK #8 ---
+
+		slot4 = if def.role.stateHas(state, "stPoisonRed")
+		 then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #9 68-69, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		if t ~= "dress" then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 70-71, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		if t == "hair" then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 72-77, warpins: 2 ---
+		spr.setColor(spr, display.COLOR_RED)
+
+		hasColor = true
+
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 78-79, warpins: 4 ---
+		--- END OF BLOCK #12 ---
+
+		slot3 = if not hasColor then
+		JUMP TO BLOCK #13
+		else
+		JUMP TO BLOCK #14
+		end
+
+
+		--- BLOCK #13 80-84, warpins: 1 ---
+		spr.setColor(spr, display.COLOR_WHITE)
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 85-92, warpins: 2 ---
+		--- END OF BLOCK #14 ---
+
+		slot4 = if def.role.stateHas(state, "stHidden")
+		 then
+		JUMP TO BLOCK #15
+		else
+		JUMP TO BLOCK #16
+		end
+
+
+		--- BLOCK #15 93-97, warpins: 1 ---
+		spr.opacity(spr, 128)
+		--- END OF BLOCK #15 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+		--- BLOCK #16 98-101, warpins: 1 ---
+		spr.opacity(spr, 255)
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 102-109, warpins: 2 ---
+		--- END OF BLOCK #17 ---
+
+		slot4 = if def.role.stateHas(state, "stMagicShield")
+
+		 then
+		JUMP TO BLOCK #18
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #18 110-113, warpins: 1 ---
+		--- END OF BLOCK #18 ---
+
+		slot4 = if not self.shield then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 114-137, warpins: 1 ---
+		self.shield = m2spr.playAnimation("magic", 3890, 2, 0.15, true):add2(self.node, 2)
+
+		__position(self.shield, 0, mapDef.tile.h)
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 138-143, warpins: 2 ---
+		self.shield:show()
+		--- END OF BLOCK #20 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #23
+
+
+		--- BLOCK #21 144-147, warpins: 1 ---
+		--- END OF BLOCK #21 ---
+
+		slot4 = if self.shield then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #22 148-152, warpins: 1 ---
+		self.shield:hide()
+
+		--- END OF BLOCK #22 ---
+
+		FLOW; TARGET BLOCK #23
+
+
+		--- BLOCK #23 153-153, warpins: 3 ---
+		return 
+		--- END OF BLOCK #23 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	slot1 = if type then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if sprite then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-10, warpins: 1 ---
+	return update(type, sprite.spr)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 11-14, warpins: 3 ---
+	--- END OF BLOCK #3 ---
+
+	for k, v in pairs(self.sprites)
+
+	LOOP BLOCK #4
+	GO OUT TO BLOCK #6
+
+
+	--- BLOCK #4 15-18, warpins: 1 ---
+	update(k, v.spr)
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 19-20, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #6 21-22, warpins: 1 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+role.selected = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.selectedSpr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if not WIN32_OPERATE then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 7-25, warpins: 1 ---
+	local x, y = self.node:centerPos()
+	self.selectedSpr = res.get2("pic/common/selectRole.png"):add2(self.node, -1):pos(x, 15)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 26-26, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+role.unselected = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not tolua.isnull(self.selectedSpr)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-12, warpins: 1 ---
+	self.selectedSpr:removeFromParent()
+
+	self.selectedSpr = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-13, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+role.highLight = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, sprite in pairs(self.sprites)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-11, warpins: 1 ---
+	sprite.setFilter(sprite, res.getFilter("high_light"))
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 14-14, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+role.unHighLight = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for _, sprite in pairs(self.sprites)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	sprite.clearFilter(sprite)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-9, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+role.getSize = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.parts.dress then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if self.parts.dress.ani then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 10-15, warpins: 1 ---
+	return self.parts.dress.ani:getContentSizeInPixels()
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 16-19, warpins: 3 ---
+	return self.node:getContentSize()
+	--- END OF BLOCK #3 ---
+
+
+
+end
+role.isHeroForPlayer = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if g_data.hero ~= self.roleid then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-9, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+role.isLocked = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.lock.execute then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot1 = if self.cur.act then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 9-13, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if self.cur.act.type == "struck" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-15, warpins: 1 ---
+	return false
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-18, warpins: 4 ---
+	return self.lock.execute
+	--- END OF BLOCK #4 ---
+
+
+
+end
+role.executeAct = function (self)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	self.lock.execute = true
+	self.curActEnd = false
+	self.cur.act = self.acts[1]
+	local act = self.cur.act
+	local checkExist = checkExist
+	slot3 = self.last
+	--- END OF BLOCK #0 ---
+
+	slot4 = if not act.x then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 17-18, warpins: 1 ---
+	slot4 = self.last.x
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 19-23, warpins: 2 ---
+	slot3.x = slot4
+	slot3 = self.last
+	--- END OF BLOCK #2 ---
+
+	slot4 = if not act.y then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 24-25, warpins: 1 ---
+	slot4 = self.last.y
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 26-30, warpins: 2 ---
+	slot3.y = slot4
+	slot3 = self.last
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not act.dir then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 31-32, warpins: 1 ---
+	slot4 = self.last.dir
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 33-37, warpins: 2 ---
+	slot3.dir = slot4
+	slot3 = self.last
+	--- END OF BLOCK #6 ---
+
+	slot4 = if not act.state then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 38-39, warpins: 1 ---
+	slot4 = self.last.state
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 40-43, warpins: 2 ---
+	slot3.state = slot4
+
+	--- END OF BLOCK #8 ---
+
+	if act.type == "state" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 44-49, warpins: 1 ---
+	self.updateSpriteForState(self)
+
+	return self.executeEnd(self)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 50-58, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot3 = if checkExist(act.type, "dress", "weapon", "hair", "humEffect")
+	 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #11 59-63, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot3 = if self.sprites[act.type] then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 64-73, warpins: 1 ---
+	self.sprites[act.type]:removeSelf()
+
+	self.sprites[act.type] = nil
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 74-76, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot3 = if not act.delete then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #14 77-83, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot3 = if checkExist(act.type, "hair", "humEffect")
+
+	 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 84-85, warpins: 1 ---
+	slot3 = 1
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #16 86-86, warpins: 1 ---
+	local z = 0
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 87-116, warpins: 2 ---
+	local spr = ani.new(act, self):addto(self.node, z):pos(0, mapDef.tile.h)
+	self.sprites[act.type] = spr
+
+	self.updateSpriteForState(self, act.type, self.sprites[act.type])
+	--- END OF BLOCK #17 ---
+
+	slot5 = if self.isIgnore then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 117-122, warpins: 1 ---
+	self.sprites[act.type]:hide()
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 123-128, warpins: 3 ---
+	self.executeSound(self)
+
+	return self.executeEnd(self)
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 129-134, warpins: 1 ---
+	local delay = nil
+
+	--- END OF BLOCK #20 ---
+
+	slot4 = if self.isExecuteFast(self)
+
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 135-139, warpins: 1 ---
+	delay = def.role.speed.fast
+
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #22 140-146, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	slot4 = if checkExist(act.type, "rushLeft", "rushRight")
+
+	 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 147-151, warpins: 1 ---
+	delay = def.role.speed.rush
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #24 152-154, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if act.type == "rushKung" then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 155-159, warpins: 1 ---
+	delay = def.role.speed.rushKung
+
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #26 160-170, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	slot4 = if checkExist(act.type, "run", "walk", "hit", "spell", "heavyHit", "bigHit")
+
+	 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 171-175, warpins: 1 ---
+	delay = def.role.speed.normal
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #28 176-178, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	if act.type == "struck" then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 179-179, warpins: 1 ---
+	delay = act.delay
+
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 180-183, warpins: 6 ---
+	--- END OF BLOCK #30 ---
+
+	for k, v in pairs(self.sprites)
+
+
+	LOOP BLOCK #31
+	GO OUT TO BLOCK #33
+
+
+	--- BLOCK #31 184-189, warpins: 1 ---
+	delay = v.play(v, act, delay)
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 190-191, warpins: 2 ---
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #30
+
+
+	--- BLOCK #33 192-193, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	slot3 = if not delay then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 194-197, warpins: 1 ---
+	delay = def.role.speed.normal
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 198-201, warpins: 2 ---
+	--- END OF BLOCK #35 ---
+
+	slot4 = if self.sprites.weapon then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #36 202-213, warpins: 1 ---
+	slot5 = self.sprites.weapon.spr
+	slot4 = self.sprites.weapon.spr.setLocalZOrder
+	--- END OF BLOCK #36 ---
+
+	if def.role.dir.rightBottom >= act.dir then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 214-220, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	if act.dir == def.role.dir.up then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 221-222, warpins: 2 ---
+	slot6 = -1
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #40
+
+
+	--- BLOCK #39 223-223, warpins: 1 ---
+	slot6 = 1
+
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 224-224, warpins: 2 ---
+	slot4(slot5, slot6)
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 225-227, warpins: 2 ---
+	--- END OF BLOCK #41 ---
+
+	slot4 = if not self.isIgnore then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #42 228-230, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	slot4 = if act.hitEffect then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 231-247, warpins: 1 ---
+	magic.showHitEffect(act.hitEffect.magicId, {
+		x = act.x,
+		y = act.y,
+		dir = act.dir,
+		delay = delay,
+		type = act.hitEffect.type,
+		role = self
+	})
+	--- END OF BLOCK #43 ---
+
+	FLOW; TARGET BLOCK #44
+
+
+	--- BLOCK #44 248-250, warpins: 2 ---
+	--- END OF BLOCK #44 ---
+
+	slot4 = if act.effect then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 251-263, warpins: 1 ---
+	magic.showSpellEffect(act.effect.effectID, {
+		x = act.x,
+		y = act.y,
+		delay = delay,
+		job = self.job
+	})
+
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 264-266, warpins: 3 ---
+	--- END OF BLOCK #46 ---
+
+	slot4 = if act.flyaxe then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 267-279, warpins: 1 ---
+	local params = {}
+	params.role = self
+
+	table.merge(params, act.flyaxe)
+	self.map:showEffectForName("flyaxe", params)
+
+	--- END OF BLOCK #47 ---
+
+	FLOW; TARGET BLOCK #48
+
+
+	--- BLOCK #48 280-282, warpins: 2 ---
+	--- END OF BLOCK #48 ---
+
+	slot4 = if act.otherEffect then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #57
+	end
+
+
+	--- BLOCK #49 283-287, warpins: 1 ---
+	local begin = nil
+	--- END OF BLOCK #49 ---
+
+	slot5 = if act.otherEffect.isFixed then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #50 288-290, warpins: 1 ---
+	begin = act.otherEffect.begin
+	--- END OF BLOCK #50 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #52
+
+
+	--- BLOCK #51 291-300, warpins: 1 ---
+	begin = act.otherEffect.begin + act.dir*(act.otherEffect.frame + act.otherEffect.skip)
+	--- END OF BLOCK #51 ---
+
+	FLOW; TARGET BLOCK #52
+
+
+	--- BLOCK #52 301-320, warpins: 2 ---
+	local spr = m2spr.new(nil, nil, {
+		blend = true,
+		setOffset = true
+	}):addto(self.node):pos(0, mapDef.tile.h)
+
+	--- END OF BLOCK #52 ---
+
+	slot6 = if act.otherEffect.delayFrame then
+	JUMP TO BLOCK #53
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #53 321-324, warpins: 1 ---
+	--- END OF BLOCK #53 ---
+
+	slot6 = if act.otherEffect.delayMax then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #55
+	end
+
+
+	--- BLOCK #54 325-354, warpins: 1 ---
+	spr.runs(spr, {
+		cc.DelayTime:create(delay/act.otherEffect.delayMax*act.otherEffect.delayFrame),
+		cc.Show:create(),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-20, warpins: 1 ---
+			spr:playAni(act.otherEffect.img, begin, act.otherEffect.frame, delay/act.otherEffect.frame, true, true, true)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+	--- END OF BLOCK #54 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #56
+
+
+	--- BLOCK #55 355-368, warpins: 2 ---
+	spr.playAni(spr, act.otherEffect.img, begin, act.otherEffect.frame, delay/act.otherEffect.frame, true, true, true)
+
+	--- END OF BLOCK #55 ---
+
+	FLOW; TARGET BLOCK #56
+
+
+	--- BLOCK #56 369-369, warpins: 2 ---
+	--- END OF BLOCK #56 ---
+
+	FLOW; TARGET BLOCK #57
+
+
+	--- BLOCK #57 370-372, warpins: 2 ---
+	local acttype = act.type
+
+	--- END OF BLOCK #57 ---
+
+	if acttype == "stand" then
+	JUMP TO BLOCK #58
+	else
+	JUMP TO BLOCK #59
+	end
+
+
+	--- BLOCK #58 373-385, warpins: 1 ---
+	__position(self.node, self.map:getMapPos(act.x, act.y))
+	self.executeEnd(self)
+
+	--- END OF BLOCK #58 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #59 386-387, warpins: 1 ---
+	--- END OF BLOCK #59 ---
+
+	if acttype ~= "walk" then
+	JUMP TO BLOCK #60
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #60 388-389, warpins: 1 ---
+	--- END OF BLOCK #60 ---
+
+	if acttype ~= "run" then
+	JUMP TO BLOCK #61
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #61 390-391, warpins: 1 ---
+	--- END OF BLOCK #61 ---
+
+	if acttype ~= "rushLeft" then
+	JUMP TO BLOCK #62
+	else
+	JUMP TO BLOCK #63
+	end
+
+
+	--- BLOCK #62 392-393, warpins: 1 ---
+	--- END OF BLOCK #62 ---
+
+	if acttype == "rushRight" then
+	JUMP TO BLOCK #63
+	else
+	JUMP TO BLOCK #70
+	end
+
+
+	--- BLOCK #63 394-410, warpins: 4 ---
+	local disx = math.abs(self.last.x - act.x)
+	local disy = math.abs(self.last.y - act.y)
+	--- END OF BLOCK #63 ---
+
+	if disx <= 2 then
+	JUMP TO BLOCK #64
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #64 411-413, warpins: 1 ---
+	--- END OF BLOCK #64 ---
+
+	if disy <= 2 then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #65 414-415, warpins: 1 ---
+	--- END OF BLOCK #65 ---
+
+	if disx ~= disy then
+	JUMP TO BLOCK #66
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #66 416-417, warpins: 1 ---
+	--- END OF BLOCK #66 ---
+
+	if disx ~= 0 then
+	JUMP TO BLOCK #67
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #67 418-419, warpins: 1 ---
+	--- END OF BLOCK #67 ---
+
+	if disy == 0 then
+	JUMP TO BLOCK #68
+	else
+	JUMP TO BLOCK #69
+	end
+
+
+	--- BLOCK #68 420-453, warpins: 3 ---
+	local x, y = self.getPosition(self)
+	local destx, desty = self.map:getMapPos(act.x, act.y)
+
+	self.addAction(self, {
+		{
+			"moveto",
+			delay,
+			x,
+			y,
+			destx,
+			desty
+		},
+		{
+			"function",
+			handler(self, self.executeEnd)
+		}
+	})
+	self.map:uptRoleXY(self, true)
+
+	--- END OF BLOCK #68 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #69 454-469, warpins: 3 ---
+	act.type = "stand"
+
+	self.node:pos(self.map:getMapPos(act.x, act.y))
+	self.executeEnd(self)
+	--- END OF BLOCK #69 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #70 470-471, warpins: 1 ---
+	--- END OF BLOCK #70 ---
+
+	if acttype ~= "hit" then
+	JUMP TO BLOCK #71
+	else
+	JUMP TO BLOCK #74
+	end
+
+
+	--- BLOCK #71 472-473, warpins: 1 ---
+	--- END OF BLOCK #71 ---
+
+	if acttype ~= "attack" then
+	JUMP TO BLOCK #72
+	else
+	JUMP TO BLOCK #74
+	end
+
+
+	--- BLOCK #72 474-475, warpins: 1 ---
+	--- END OF BLOCK #72 ---
+
+	if acttype ~= "heavyHit" then
+	JUMP TO BLOCK #73
+	else
+	JUMP TO BLOCK #74
+	end
+
+
+	--- BLOCK #73 476-477, warpins: 1 ---
+	--- END OF BLOCK #73 ---
+
+	if acttype == "bigHit" then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #75
+	end
+
+
+	--- BLOCK #74 478-502, warpins: 4 ---
+	self.node:pos(self.map:getMapPos(act.x, act.y))
+	self.addAction(self, {
+		{
+			"delay",
+			delay
+		},
+		{
+			"function",
+			handler(self, self.executeEnd)
+		}
+	})
+
+	--- END OF BLOCK #74 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #75 503-504, warpins: 1 ---
+	--- END OF BLOCK #75 ---
+
+	if acttype == "rushKung" then
+	JUMP TO BLOCK #76
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #76 505-547, warpins: 1 ---
+	local x, y = self.getPosition(self)
+	local destx, desty = self.map:getMapPos(act.x, act.y)
+
+	self.addAction(self, {
+		{
+			"moveto",
+			delay/2,
+			x,
+			y,
+			destx,
+			desty
+		},
+		{
+			"moveto",
+			delay/2,
+			destx,
+			desty,
+			x,
+			y
+		},
+		{
+			"function",
+			handler(self, self.executeEnd)
+		}
+	})
+	self.map:uptRoleXY(self, true)
+	--- END OF BLOCK #76 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #77 548-549, warpins: 1 ---
+	--- END OF BLOCK #77 ---
+
+	if acttype == "digdown" then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #78 550-552, warpins: 1 ---
+	--- END OF BLOCK #78 ---
+
+	if self.__cname == "mon" then
+	JUMP TO BLOCK #79
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #79 553-564, warpins: 1 ---
+	self.addAction(self, {
+		{
+			"delay",
+			delay
+		},
+		{
+			"function",
+			function ()
+				--- BLOCK #0 1-4, warpins: 1 ---
+				self.readyRemove = true
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}
+	})
+	--- END OF BLOCK #79 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #80 565-566, warpins: 2 ---
+	--- END OF BLOCK #80 ---
+
+	if acttype == "spell" then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #86
+	end
+
+
+	--- BLOCK #81 567-569, warpins: 1 ---
+	--- END OF BLOCK #81 ---
+
+	slot5 = if self.isPlayer then
+	JUMP TO BLOCK #82
+	else
+	JUMP TO BLOCK #86
+	end
+
+
+	--- BLOCK #82 570-572, warpins: 1 ---
+	--- END OF BLOCK #82 ---
+
+	slot5 = if act.x then
+	JUMP TO BLOCK #83
+	else
+	JUMP TO BLOCK #85
+	end
+
+
+	--- BLOCK #83 573-575, warpins: 1 ---
+	--- END OF BLOCK #83 ---
+
+	slot5 = if act.y then
+	JUMP TO BLOCK #84
+	else
+	JUMP TO BLOCK #85
+	end
+
+
+	--- BLOCK #84 576-585, warpins: 1 ---
+	self.node:pos(self.map:getMapPos(act.x, act.y))
+	--- END OF BLOCK #84 ---
+
+	FLOW; TARGET BLOCK #85
+
+
+	--- BLOCK #85 586-600, warpins: 3 ---
+	self.addAction(self, {
+		{
+			"delay",
+			delay
+		},
+		{
+			"function",
+			handler(self, self.executeEnd)
+		}
+	})
+	--- END OF BLOCK #85 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #86 601-602, warpins: 2 ---
+	--- END OF BLOCK #86 ---
+
+	if acttype == "struck" then
+	JUMP TO BLOCK #87
+	else
+	JUMP TO BLOCK #88
+	end
+
+
+	--- BLOCK #87 603-614, warpins: 1 ---
+	self.addAction(self, {
+		{
+			"delay",
+			delay
+		},
+		{
+			"function",
+			function ()
+				--- BLOCK #0 1-6, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				if act == self.cur.act then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #1 7-12, warpins: 1 ---
+				--- END OF BLOCK #1 ---
+
+				if self.cur.act.type == "struck" then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #2 13-16, warpins: 1 ---
+				self:executeEnd()
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 17-17, warpins: 3 ---
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end
+		}
+	})
+	--- END OF BLOCK #87 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #88 615-617, warpins: 1 ---
+	--- END OF BLOCK #88 ---
+
+	slot5 = if act.x then
+	JUMP TO BLOCK #89
+	else
+	JUMP TO BLOCK #91
+	end
+
+
+	--- BLOCK #89 618-620, warpins: 1 ---
+	--- END OF BLOCK #89 ---
+
+	slot5 = if act.y then
+	JUMP TO BLOCK #90
+	else
+	JUMP TO BLOCK #91
+	end
+
+
+	--- BLOCK #90 621-629, warpins: 1 ---
+	__position(self.node, self.map:getMapPos(act.x, act.y))
+	--- END OF BLOCK #90 ---
+
+	FLOW; TARGET BLOCK #91
+
+
+	--- BLOCK #91 630-643, warpins: 3 ---
+	self.addAction(self, {
+		{
+			"delay",
+			delay
+		},
+		{
+			"function",
+			handler(self, self.executeEnd)
+		}
+	})
+	--- END OF BLOCK #91 ---
+
+	FLOW; TARGET BLOCK #92
+
+
+	--- BLOCK #92 644-649, warpins: 9 ---
+	self.executeSound(self, delay)
+
+	return 
+	--- END OF BLOCK #92 ---
+
+	FLOW; TARGET BLOCK #93
+
+
+	--- BLOCK #93 650-650, warpins: 2 ---
+	--- END OF BLOCK #93 ---
+
+	FLOW; TARGET BLOCK #94
+
+
+	--- BLOCK #94 651-651, warpins: 2 ---
+	--- END OF BLOCK #94 ---
+
+
+
+end
+role.addAction = function (self, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.actions = params
+	self.actionsCache = {}
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.executeActions = function (self, dt)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	local v = self.actions[1]
+	--- END OF BLOCK #0 ---
+
+	if v[1] == "moveto" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #1 6-15, warpins: 1 ---
+	local delay = v[2]
+	local x = v[3]
+	local y = v[4]
+	local destx = v[5]
+	local desty = v[6]
+	slot8 = self.actionsCache
+	--- END OF BLOCK #1 ---
+
+	slot9 = if not self.actionsCache.dt then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 16-16, warpins: 1 ---
+	slot9 = 0
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 17-24, warpins: 2 ---
+	slot8.dt = slot9 + dt
+	self.isMoving = true
+	local cur = self.actionsCache.dt
+	--- END OF BLOCK #3 ---
+
+	if delay <= cur then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 25-44, warpins: 1 ---
+	self.isMoving = false
+
+	self.node:pos(destx, desty)
+
+	self.actionsCache = {}
+
+	table.remove(self.actions, 1)
+	--- END OF BLOCK #4 ---
+
+	if 0 < #self.actions then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #5 45-49, warpins: 1 ---
+	self.executeActions(self, cur - delay)
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #6 50-54, warpins: 1 ---
+	slot9 = self.actionsCache
+	--- END OF BLOCK #6 ---
+
+	slot10 = if not self.actionsCache.speed then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 55-61, warpins: 1 ---
+	slot10 = {
+		(destx - x)/delay,
+		(desty - y)/delay
+	}
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 62-80, warpins: 2 ---
+	slot9.speed = slot10
+
+	__position(self.node, x + self.actionsCache.dt*self.actionsCache.speed[1], y + self.actionsCache.dt*self.actionsCache.speed[2])
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #9 81-83, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if v[1] == "delay" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #10 84-89, warpins: 1 ---
+	local delay = v[2]
+	slot4 = self.actionsCache
+	--- END OF BLOCK #10 ---
+
+	slot5 = if not self.actionsCache.dt then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 90-90, warpins: 1 ---
+	slot5 = 0
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 91-96, warpins: 2 ---
+	slot4.dt = slot5 + dt
+	local cur = self.actionsCache.dt
+	--- END OF BLOCK #12 ---
+
+	if delay <= cur then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #13 97-108, warpins: 1 ---
+	self.actionsCache = {}
+
+	table.remove(self.actions, 1)
+	--- END OF BLOCK #13 ---
+
+	if 0 < #self.actions then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #14 109-113, warpins: 1 ---
+	self.executeActions(self, cur - delay)
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #15 114-116, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if v[1] == "function" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 117-123, warpins: 1 ---
+	table.remove(self.actions, 1)
+	v[2]()
+
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 124-124, warpins: 8 ---
+	return 
+	--- END OF BLOCK #17 ---
+
+
+
+end
+role.isExecuteFast = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if 1 >= #self.acts then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 6-7, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-9, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+role.executeSound = function (self, delay)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local act = self.cur.act
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not act then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-8, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if self.isPlayer then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 9-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot3 = if checkExist(act.type, "walk", "run", "rushLeft", "rushRight", "rushKung")
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-28, warpins: 1 ---
+	sound.play("footStep", {
+		role = self,
+		map = self.map,
+		delay = delay
+	})
+
+	return 
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 29-31, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	if self.__cname == "npc" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 32-32, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #7 33-35, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if self.__cname == "mon" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 36-45, warpins: 1 ---
+	sound.play("mon", {
+		role = self,
+		act = act,
+		map = self.map
+	})
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #9 46-48, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if self.__cname == "hero" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #10 49-51, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	slot3 = if not self.isIgnore then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #11 52-54, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if act.type ~= "hit" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 55-57, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if act.type ~= "heavyHit" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 58-60, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if act.type == "bigHit" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 61-70, warpins: 3 ---
+	sound.play("hit", {
+		role = self,
+		effect = act.hitEffect,
+		delay = delay
+	})
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #15 71-73, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if act.type == "hited" then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 74-81, warpins: 1 ---
+	sound.play("hited", {
+		role = self,
+		delay = delay
+	})
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #17 82-84, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if act.type == "spell" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #18 85-87, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	slot3 = if act.effect then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 88-96, warpins: 1 ---
+	sound.play("skillSpell", {
+		role = self,
+		magicId = act.effect.magicId
+	})
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 97-97, warpins: 9 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+role.spellDone = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not main_scene then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-14, warpins: 2 ---
+	local controller = main_scene.ui.console.controller
+	local map = main_scene.ground.map
+	--- END OF BLOCK #2 ---
+
+	slot3 = if controller.stopAttack then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-16, warpins: 1 ---
+	controller.stopAttack = false
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 17-17, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+role.executeEnd = function (self, act)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.curActEnd = true
+
+	--- END OF BLOCK #0 ---
+
+	if 0 < #self.waits then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-16, warpins: 2 ---
+	self.actions = nil
+	self.lock.execute = false
+	slot2 = self.last
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not act then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-18, warpins: 1 ---
+	slot3 = self.cur.act
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-40, warpins: 2 ---
+	slot2.act = slot3
+	self.cur.act = nil
+
+	table.remove(self.acts, 1)
+	self.map:uptRoleXY(self, false, self.last.x, self.last.y)
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.isPlayer then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #5 41-45, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if 0 < #self.acts then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 46-48, warpins: 1 ---
+	self.executeAct(self)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 49-52, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if self.last.act then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #8 53-57, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if self.last.act.type ~= "spell" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 58-62, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if self.last.act.type == "state" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #10 63-66, warpins: 2 ---
+	self.spellDone(self)
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+	--- BLOCK #11 67-70, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if #self.acts == 0 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 71-73, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot2 = if not self.isExecuteEnd then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 74-76, warpins: 1 ---
+	self.allExecuteEnd(self)
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 77-77, warpins: 6 ---
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+role.allExecuteEnd = function (self)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.isExecuteEnd = true
+
+	self.addStandAct(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.executeFail = function (self, x, y, dir)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	local act = nil
+	--- END OF BLOCK #0 ---
+
+	if 0 < #self.waits then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #1 7-10, warpins: 1 ---
+	act = self.waits[1]
+	--- END OF BLOCK #1 ---
+
+	slot5 = if not x then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 11-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot5 = if not act.wait.x then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-15, warpins: 1 ---
+	slot5 = self.x
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-17, warpins: 3 ---
+	--- END OF BLOCK #4 ---
+
+	slot6 = if not y then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 18-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot6 = if not act.wait.y then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-22, warpins: 1 ---
+	slot6 = self.y
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 23-24, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	slot7 = if not dir then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #8 25-28, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot7 = if not act.wait.dir then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 29-29, warpins: 1 ---
+	slot7 = self.dir
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 30-34, warpins: 3 ---
+	self.dir = slot7
+	self.y = slot6
+	self.x = slot5
+	self.waits = {}
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 35-38, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	for k, v in pairs(self.parts)
+
+	LOOP BLOCK #12
+	GO OUT TO BLOCK #15
+
+
+	--- BLOCK #12 39-41, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot10 = if v.ani then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 42-47, warpins: 1 ---
+	v.ani:play("stand", self.dir)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 48-49, warpins: 3 ---
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+	--- BLOCK #15 50-68, warpins: 1 ---
+	self.node:stopAllActions()
+	self.node:pos(self.map:getMapPos(self.x, self.y))
+	self.executeEnd(self, act)
+
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+role.executeSuccess = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	local act = self.waits[1]
+	--- END OF BLOCK #0 ---
+
+	slot1 = if act then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if act.type == "hit" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-13, warpins: 1 ---
+	self.hitStatus = def.role.EHitStatus.hit
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #3 14-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot1 = if act then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 16-18, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if act.type == "stand" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 19-23, warpins: 1 ---
+	self.hitStatus = def.role.EHitStatus.stand
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 24-31, warpins: 4 ---
+	table.remove(self.waits, 1)
+	--- END OF BLOCK #6 ---
+
+	slot2 = if self.curActEnd then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 32-34, warpins: 1 ---
+	self.executeEnd(self)
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 35-35, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+role.addAct = function (self, params)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.die then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-6, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if params.type ~= "die" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 7-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not params.gutou then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-11, warpins: 0 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #5 12-14, warpins: 3 ---
+	--- END OF BLOCK #5 ---
+
+	if params.type == "die" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 15-20, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot2 = if not self.node:isRunning()
+	 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 21-23, warpins: 1 ---
+	self.onEnter(self)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 24-27, warpins: 4 ---
+	--- END OF BLOCK #8 ---
+
+	slot2 = if self.cur.act then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 28-32, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if self.cur.act.type == "struck" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 33-36, warpins: 1 ---
+	self.executeEnd(self)
+
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #11 37-39, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	if params.type == "struck" then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 40-44, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if 0 < #self.acts then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #13 45-47, warpins: 4 ---
+	--- END OF BLOCK #13 ---
+
+	if params.type == "stand" then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #14 48-51, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot2 = if self.last.act then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #15 52-57, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if self.last.act.type == params.type then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #16 58-63, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if self.last.act.dir == params.dir then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #17 64-66, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot2 = if not params.loadMap then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #18 67-69, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	slot2 = if not params.stone then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 70-70, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 71-76, warpins: 6 ---
+	local function loadMapTest()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if self.isPlayer then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #1 5-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if params.x then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #2 9-12, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot0 = if params.y then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #3 13-16, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if params.type ~= "walk" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #4 17-20, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if params.type ~= "run" then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #5 21-24, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if params.type ~= "rushLeft" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 25-28, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		if params.type == "rushRight" then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 29-48, warpins: 4 ---
+		self.map:load(self.x, self.y, params.x - self.x, params.y - self.y)
+		--- END OF BLOCK #7 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+		--- BLOCK #8 49-54, warpins: 1 ---
+		--- END OF BLOCK #8 ---
+
+		if self.x == params.x then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #9 55-60, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		if self.y == params.y then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 61-64, warpins: 1 ---
+		--- END OF BLOCK #10 ---
+
+		slot0 = if params.loadMap then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 65-73, warpins: 3 ---
+		self.map:load(params.x, params.y)
+
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 74-74, warpins: 6 ---
+		return 
+		--- END OF BLOCK #12 ---
+
+
+
+	end
+
+	loadMapTest()
+
+	--- END OF BLOCK #20 ---
+
+	slot3 = if not params.x then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 77-77, warpins: 1 ---
+	slot3 = self.x
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 78-81, warpins: 2 ---
+	params.x = slot3
+	--- END OF BLOCK #22 ---
+
+	slot3 = if not params.y then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 82-82, warpins: 1 ---
+	slot3 = self.y
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 83-86, warpins: 2 ---
+	params.y = slot3
+	--- END OF BLOCK #24 ---
+
+	slot3 = if not params.dir then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 87-87, warpins: 1 ---
+	slot3 = self.dir
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 88-91, warpins: 2 ---
+	params.dir = slot3
+	--- END OF BLOCK #26 ---
+
+	slot3 = if params.wait then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 92-96, warpins: 1 ---
+	self.waits[#self.waits + 1] = params
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 97-112, warpins: 2 ---
+	self.acts[#self.acts + 1] = params
+	self.dir = params.dir
+	self.x = params.x
+	self.y = params.y
+	self.isExecuteEnd = false
+	--- END OF BLOCK #28 ---
+
+	if params.type == "die" then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #29 113-126, warpins: 1 ---
+	self.die = true
+
+	self.uptInfoShow(self)
+	self.uptSelfShow(self)
+	self.clearLock(self)
+	--- END OF BLOCK #29 ---
+
+	slot3 = if main_scene then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #30 127-132, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot3 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 133-140, warpins: 1 ---
+	main_scene.ui.panels.minimap:removePoint(self.roleid)
+	--- END OF BLOCK #31 ---
+
+	FLOW; TARGET BLOCK #32
+
+
+	--- BLOCK #32 141-145, warpins: 3 ---
+	--- END OF BLOCK #32 ---
+
+	slot3 = if self.isHeroForPlayer(self)
+	 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #33 146-148, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	slot3 = if main_scene then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #34 149-154, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	slot3 = if main_scene.ui.panels.heroHead then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #35 155-161, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot3 = if main_scene.ui.panels.heroHead.headshot then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 162-173, warpins: 1 ---
+	main_scene.ui.panels.heroHead.headshot:setFilter(res.getFilter("gray"))
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 174-176, warpins: 6 ---
+	--- END OF BLOCK #37 ---
+
+	slot3 = if self.isPlayer then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #38 177-180, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	if #self.acts == 1 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 181-183, warpins: 1 ---
+	self.executeAct(self)
+
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 184-185, warpins: 3 ---
+	return 
+	--- END OF BLOCK #40 ---
+
+	FLOW; TARGET BLOCK #41
+
+
+	--- BLOCK #41 186-186, warpins: 2 ---
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 187-187, warpins: 2 ---
+	--- END OF BLOCK #42 ---
+
+
+
+end
+role.addStandAct = function (self)
+	--- BLOCK #0 1-16, warpins: 1 ---
+	self.hitStatus = def.role.EHitStatus.stand
+
+	self.addAct(self, {
+		type = "stand",
+		dir = self.dir,
+		x = self.x,
+		y = self.y
+	})
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.processMsg = function (self, ident, x, y, dir, feature, state, params)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if SM_TURN == ident then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 4-16, warpins: 1 ---
+	self.hitStatus = def.role.EHitStatus.stand
+	slot9 = self
+	slot8 = self.addAct
+	slot10 = {
+		type = "stand",
+		x = x,
+		y = y,
+		dir = dir
+	}
+	--- END OF BLOCK #1 ---
+
+	slot11 = if state then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 17-22, warpins: 1 ---
+	slot11 = def.role.stateHas(state, "stStone")
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 23-27, warpins: 2 ---
+	slot10.stone = slot11
+
+	slot8(slot9, slot10)
+	--- END OF BLOCK #3 ---
+
+	if self.__cname == "mon" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #92
+	end
+
+
+	--- BLOCK #4 28-34, warpins: 1 ---
+	sound.play("born", self.sounds.born)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #5 35-37, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if SM_WALK ~= ident then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 38-40, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if SM_NPCWALK == ident then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 41-53, warpins: 2 ---
+	self.hitStatus = def.role.EHitStatus.walk
+
+	self.addAct(self, {
+		type = "walk",
+		x = x,
+		y = y,
+		dir = dir
+	})
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #8 54-56, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if SM_RUN == ident then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 57-69, warpins: 1 ---
+	self.hitStatus = def.role.EHitStatus.run
+
+	self.addAct(self, {
+		type = "run",
+		x = x,
+		y = y,
+		dir = dir
+	})
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #10 70-72, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if SM_BACKSTEP == ident then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 73-80, warpins: 1 ---
+	self.addAct(self, {
+		type = "walk",
+		x = x,
+		y = y,
+		dir = dir
+	})
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #12 81-83, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if SM_DEATH == ident then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 84-91, warpins: 1 ---
+	self.addAct(self, {
+		corpse = true,
+		type = "die",
+		x = x,
+		y = y,
+		dir = dir
+	})
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #14 92-94, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if SM_NOWDEATH == ident then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 95-102, warpins: 1 ---
+	self.addAct(self, {
+		type = "die",
+		x = x,
+		y = y,
+		dir = dir
+	})
+
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #16 103-105, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if SM_HIT == ident then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #17 106-116, warpins: 1 ---
+	self.hitStatus = def.role.EHitStatus.hit
+	slot9 = self
+	slot8 = self.addAct
+	slot10 = {}
+	--- END OF BLOCK #17 ---
+
+	if self.__cname == "hero" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 117-118, warpins: 1 ---
+	slot11 = "hit"
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 119-119, warpins: 1 ---
+	slot11 = "attack"
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 120-125, warpins: 2 ---
+	slot10.type = slot11
+	slot10.x = x
+	slot10.y = y
+	slot10.dir = dir
+
+	slot8(slot9, slot10)
+	--- END OF BLOCK #20 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #21 126-128, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if SM_HEAVYHIT == ident then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 129-136, warpins: 1 ---
+	self.addAct(self, {
+		type = "heavyHit",
+		x = x,
+		y = y,
+		dir = dir
+	})
+	--- END OF BLOCK #22 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #23 137-139, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	if SM_BIGHIT == ident then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #25
+	end
+
+
+	--- BLOCK #24 140-147, warpins: 1 ---
+	self.addAct(self, {
+		type = "bigHit",
+		x = x,
+		y = y,
+		dir = dir
+	})
+	--- END OF BLOCK #24 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #25 148-150, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if SM_POWERHIT == ident then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #26 151-160, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "pow",
+			magicId = 7
+		}
+	})
+	--- END OF BLOCK #26 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #27 161-163, warpins: 1 ---
+	--- END OF BLOCK #27 ---
+
+	if SM_LONGHIT == ident then
+	JUMP TO BLOCK #28
+	else
+	JUMP TO BLOCK #29
+	end
+
+
+	--- BLOCK #28 164-173, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "long",
+			magicId = 12
+		}
+	})
+	--- END OF BLOCK #28 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #29 174-176, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	if SM_WIDEHIT == ident then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #31
+	end
+
+
+	--- BLOCK #30 177-186, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "wide",
+			magicId = 25
+		}
+	})
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #31 187-189, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	if SM_FIREHIT == ident then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #33
+	end
+
+
+	--- BLOCK #32 190-199, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "fire",
+			magicId = 26
+		}
+	})
+	--- END OF BLOCK #32 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #33 200-202, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if SM_4FIREHIT == ident then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 203-212, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "fire4",
+			magicId = 26
+		}
+	})
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #35 213-215, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	if SM_HERO_LONGHIT == ident then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 216-225, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "twn1",
+			magicId = 34
+		}
+	})
+	--- END OF BLOCK #36 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #37 226-228, warpins: 1 ---
+	--- END OF BLOCK #37 ---
+
+	if SM_HERO_LASTHIT == ident then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 229-238, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "twn2",
+			magicId = 34
+		}
+	})
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #39 239-241, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if SM_SWORD_HIT == ident then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 242-251, warpins: 1 ---
+	self.addAct(self, {
+		type = "bigHit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "sword",
+			effectID = 75,
+			magicId = 58
+		}
+	})
+
+	--- END OF BLOCK #40 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #41 252-254, warpins: 1 ---
+	--- END OF BLOCK #41 ---
+
+	if SM_RUSH == ident then
+	JUMP TO BLOCK #42
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #42 255-260, warpins: 1 ---
+	slot9 = self
+	slot8 = self.addAct
+	slot10 = {}
+	--- END OF BLOCK #42 ---
+
+	slot11 = if self.lastRushLeft then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 261-262, warpins: 1 ---
+	slot11 = "rushRight"
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #45
+
+
+	--- BLOCK #44 263-263, warpins: 1 ---
+	slot11 = "rushLeft"
+	--- END OF BLOCK #44 ---
+
+	FLOW; TARGET BLOCK #45
+
+
+	--- BLOCK #45 264-272, warpins: 2 ---
+	slot10.type = slot11
+	slot10.x = x
+	slot10.y = y
+	slot10.dir = dir
+
+	slot8(slot9, slot10)
+
+	self.lastRushLeft = not self.lastRushLeft
+
+	--- END OF BLOCK #45 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #46 273-275, warpins: 1 ---
+	--- END OF BLOCK #46 ---
+
+	if SM_RUSHKUNG == ident then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 276-283, warpins: 1 ---
+	self.addAct(self, {
+		type = "rushKung",
+		rushx = x,
+		rushy = y,
+		dir = dir
+	})
+
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #48 284-286, warpins: 1 ---
+	--- END OF BLOCK #48 ---
+
+	if SM_STRUCK == ident then
+	JUMP TO BLOCK #49
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #49 287-289, warpins: 1 ---
+	--- END OF BLOCK #49 ---
+
+	slot8 = if self.isPlayer then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #50 290-296, warpins: 1 ---
+	--- END OF BLOCK #50 ---
+
+	if self.hitStatus == def.role.EHitStatus.stand then
+	JUMP TO BLOCK #51
+	else
+	JUMP TO BLOCK #92
+	end
+
+
+	--- BLOCK #51 297-304, warpins: 1 ---
+	local time = socket.gettime()
+
+	--- END OF BLOCK #51 ---
+
+	if 1 < time - self.lastHitedTime then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #92
+	end
+
+
+	--- BLOCK #52 305-317, warpins: 1 ---
+	self.addAct(self, {
+		delay = 0.22,
+		type = "struck",
+		hiter = x
+	})
+	sound.play("hited", {
+		role = self
+	})
+
+	self.lastHitedTime = time
+	--- END OF BLOCK #52 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #53 318-325, warpins: 1 ---
+	local time = socket.gettime()
+	--- END OF BLOCK #53 ---
+
+	if 1 < time - self.lastHitedTime then
+	JUMP TO BLOCK #54
+	else
+	JUMP TO BLOCK #92
+	end
+
+
+	--- BLOCK #54 326-333, warpins: 1 ---
+	local delay = nil
+	--- END OF BLOCK #54 ---
+
+	if self.hitStatus == def.role.EHitStatus.stand then
+	JUMP TO BLOCK #55
+	else
+	JUMP TO BLOCK #56
+	end
+
+
+	--- BLOCK #55 334-335, warpins: 1 ---
+	delay = 0.22
+	--- END OF BLOCK #55 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #57
+
+
+	--- BLOCK #56 336-336, warpins: 1 ---
+	delay = 0.1
+
+	--- END OF BLOCK #56 ---
+
+	FLOW; TARGET BLOCK #57
+
+
+	--- BLOCK #57 337-350, warpins: 2 ---
+	self.addAct(self, {
+		type = "struck",
+		delay = delay,
+		hiter = x
+	})
+	sound.play("hited", {
+		role = self
+	})
+
+	self.lastHitedTime = time
+
+	--- END OF BLOCK #57 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #58 351-353, warpins: 1 ---
+	--- END OF BLOCK #58 ---
+
+	if SM_SHOWBODY_EFFECT == ident then
+	JUMP TO BLOCK #59
+	else
+	JUMP TO BLOCK #60
+	end
+
+
+	--- BLOCK #59 354-354, warpins: 1 ---
+	--- END OF BLOCK #59 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #60 355-357, warpins: 1 ---
+	--- END OF BLOCK #60 ---
+
+	if SM_FEATURECHANGED == ident then
+	JUMP TO BLOCK #61
+	else
+	JUMP TO BLOCK #62
+	end
+
+
+	--- BLOCK #61 358-362, warpins: 1 ---
+	self.changeFeature(self, feature)
+
+	--- END OF BLOCK #61 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #62 363-365, warpins: 1 ---
+	--- END OF BLOCK #62 ---
+
+	if SM_CHARSTATUSCHANGED == ident then
+	JUMP TO BLOCK #63
+	else
+	JUMP TO BLOCK #64
+	end
+
+
+	--- BLOCK #63 366-373, warpins: 1 ---
+	self.state = state
+
+	self.addAct(self, {
+		type = "state",
+		state = self.state
+	})
+	--- END OF BLOCK #63 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #64 374-376, warpins: 1 ---
+	--- END OF BLOCK #64 ---
+
+	if SM_SKELETON == ident then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #66
+	end
+
+
+	--- BLOCK #65 377-383, warpins: 1 ---
+	self.addAct(self, {
+		dir = 0,
+		gutou = true,
+		type = "die",
+		x = x,
+		y = y
+	})
+	--- END OF BLOCK #65 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #66 384-386, warpins: 1 ---
+	--- END OF BLOCK #66 ---
+
+	if SM_DIGUP == ident then
+	JUMP TO BLOCK #67
+	else
+	JUMP TO BLOCK #68
+	end
+
+
+	--- BLOCK #67 387-397, warpins: 1 ---
+	self.addAct(self, {
+		type = "digup"
+	})
+	sound.play("appr", self.sounds.appr)
+	--- END OF BLOCK #67 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #68 398-400, warpins: 1 ---
+	--- END OF BLOCK #68 ---
+
+	if SM_DIGDOWN == ident then
+	JUMP TO BLOCK #69
+	else
+	JUMP TO BLOCK #70
+	end
+
+
+	--- BLOCK #69 401-413, warpins: 1 ---
+	self.addAct(self, {
+		type = "digdown",
+		x = x,
+		y = y
+	})
+	sound.play("sitdown", self.sounds.attack)
+
+	--- END OF BLOCK #69 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #70 414-416, warpins: 1 ---
+	--- END OF BLOCK #70 ---
+
+	if SM_ALIVE == ident then
+	JUMP TO BLOCK #71
+	else
+	JUMP TO BLOCK #72
+	end
+
+
+	--- BLOCK #71 417-432, warpins: 1 ---
+	self.die = false
+
+	self.uptInfoShow(self)
+	self.addAct(self, {
+		type = "death"
+	})
+	sound.play("born", self.sounds.born)
+	--- END OF BLOCK #71 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #72 433-435, warpins: 1 ---
+	--- END OF BLOCK #72 ---
+
+	if SM_SPACEMOVE_SHOW ~= ident then
+	JUMP TO BLOCK #73
+	else
+	JUMP TO BLOCK #74
+	end
+
+
+	--- BLOCK #73 436-438, warpins: 1 ---
+	--- END OF BLOCK #73 ---
+
+	if SM_SPACEMOVE_SHOW2 == ident then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #75
+	end
+
+
+	--- BLOCK #74 439-446, warpins: 2 ---
+	self.addAct(self, {
+		type = "spacemove",
+		x = x,
+		y = y,
+		dir = dir
+	})
+	--- END OF BLOCK #74 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #75 447-449, warpins: 1 ---
+	--- END OF BLOCK #75 ---
+
+	if SM_FLYAXE == ident then
+	JUMP TO BLOCK #76
+	else
+	JUMP TO BLOCK #77
+	end
+
+
+	--- BLOCK #76 450-458, warpins: 1 ---
+	self.addAct(self, {
+		type = "attack",
+		x = x,
+		y = y,
+		dir = dir,
+		flyaxe = params
+	})
+	--- END OF BLOCK #76 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #77 459-461, warpins: 1 ---
+	--- END OF BLOCK #77 ---
+
+	if SM_BUTCH == ident then
+	JUMP TO BLOCK #78
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #78 462-466, warpins: 1 ---
+	self.addAct(self, {
+		type = "sitdown"
+	})
+	--- END OF BLOCK #78 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #79 467-469, warpins: 1 ---
+	--- END OF BLOCK #79 ---
+
+	if SM_SPELL == ident then
+	JUMP TO BLOCK #80
+	else
+	JUMP TO BLOCK #81
+	end
+
+
+	--- BLOCK #80 470-485, warpins: 1 ---
+	self.addAct(self, {
+		type = "spell",
+		dir = def.role.getMoveDir(self.x, self.y, params.targetX, params.targetY),
+		effect = params.effect
+	})
+	--- END OF BLOCK #80 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #81 486-488, warpins: 1 ---
+	--- END OF BLOCK #81 ---
+
+	if SM_HERO_LOGON == ident then
+	JUMP TO BLOCK #82
+	else
+	JUMP TO BLOCK #83
+	end
+
+
+	--- BLOCK #82 489-489, warpins: 1 ---
+	--- END OF BLOCK #82 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #83 490-492, warpins: 1 ---
+	--- END OF BLOCK #83 ---
+
+	if SM_HEALTHSPELLCHANGED == ident then
+	JUMP TO BLOCK #84
+	else
+	JUMP TO BLOCK #85
+	end
+
+
+	--- BLOCK #84 493-493, warpins: 1 ---
+	--- END OF BLOCK #84 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #85 494-496, warpins: 1 ---
+	--- END OF BLOCK #85 ---
+
+	if SM_UNITEHIT0 == ident then
+	JUMP TO BLOCK #86
+	else
+	JUMP TO BLOCK #87
+	end
+
+
+	--- BLOCK #86 497-506, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "zz",
+			magicId = 50
+		}
+	})
+	--- END OF BLOCK #86 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #87 507-509, warpins: 1 ---
+	--- END OF BLOCK #87 ---
+
+	if SM_UNITEHIT1 == ident then
+	JUMP TO BLOCK #88
+	else
+	JUMP TO BLOCK #89
+	end
+
+
+	--- BLOCK #88 510-519, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "zf",
+			magicId = 52
+		}
+	})
+	--- END OF BLOCK #88 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #89 520-522, warpins: 1 ---
+	--- END OF BLOCK #89 ---
+
+	if SM_UNITEHIT2 == ident then
+	JUMP TO BLOCK #90
+	else
+	JUMP TO BLOCK #91
+	end
+
+
+	--- BLOCK #90 523-532, warpins: 1 ---
+	self.addAct(self, {
+		type = "hit",
+		x = x,
+		y = y,
+		dir = dir,
+		hitEffect = {
+			type = "zd",
+			magicId = 51
+		}
+	})
+	--- END OF BLOCK #90 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #92
+
+
+	--- BLOCK #91 533-536, warpins: 1 ---
+	print("roleÎ´´¦Àí: ", ident)
+
+	--- END OF BLOCK #91 ---
+
+	FLOW; TARGET BLOCK #92
+
+
+	--- BLOCK #92 537-537, warpins: 42 ---
+	return self
+	--- END OF BLOCK #92 ---
+
+
+
+end
+local __getPosition = cc.Node.getPosition
+role.getPosition = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return __getPosition(self.node)
+	--- END OF BLOCK #0 ---
+
+
+
+end
+role.update = function (self, dt)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.isPlayer then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not self.lock.execute then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 8-12, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 0 < #self.acts then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-15, warpins: 1 ---
+	self.executeAct(self)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 16-18, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.actions then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 19-22, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if #self.actions ~= 0 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 23-26, warpins: 1 ---
+	self.executeActions(self, dt)
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 27-29, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if self.readyRemove then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 30-37, warpins: 1 ---
+	self.map:addMsg({
+		remove = true,
+		roleid = self.roleid
+	})
+
+	return 
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 38-45, warpins: 2 ---
+	local x, y = self.getPosition(self)
+	local lpos = self.last.pos
+	--- END OF BLOCK #9 ---
+
+	if lpos.x == x then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 46-48, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if lpos.y ~= y then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #11 49-70, warpins: 2 ---
+	lpos.x = x
+	lpos.y = y
+
+	self.info:uptPos(x, y)
+
+	local _, y = self.map:getGamePos(x, y)
+
+	self.node:setLocalZOrder(y)
+	--- END OF BLOCK #11 ---
+
+	slot7 = if main_scene then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #12 71-76, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	slot7 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 77-85, warpins: 1 ---
+	main_scene.ui.panels.minimap:pointUpt(self.map, self)
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 86-88, warpins: 3 ---
+	--- END OF BLOCK #14 ---
+
+	slot7 = if self.isPlayer then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #15 89-98, warpins: 1 ---
+	self.map:scroll()
+	--- END OF BLOCK #15 ---
+
+	slot7 = if main_scene.ui.panels.minimap then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 99-107, warpins: 1 ---
+	main_scene.ui.panels.minimap:scroll(self.map, self)
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 108-113, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	slot7 = if main_scene.ui.panels.bigmap then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 114-122, warpins: 1 ---
+	main_scene.ui.panels.bigmap:pointUpt(self.map, self)
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 123-128, warpins: 2 ---
+	--- END OF BLOCK #19 ---
+
+	slot7 = if main_scene.ui.panels.bigmapOther then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 129-137, warpins: 1 ---
+	main_scene.ui.panels.bigmapOther:pointUpt(self.map, self)
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 138-138, warpins: 4 ---
+	return 
+	--- END OF BLOCK #21 ---
+
+
+
+end
+
+return role
+--- END OF BLOCK #0 ---
+
+
+

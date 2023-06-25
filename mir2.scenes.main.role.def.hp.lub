@@ -1,0 +1,581 @@
+--- BLOCK #0 1-10, warpins: 1 ---
+local zArr = {
+	19,
+	24,
+	30,
+	37,
+	44,
+	52,
+	60,
+	69,
+	79,
+	89,
+	100,
+	111,
+	123,
+	136,
+	149,
+	163,
+	177,
+	192,
+	208,
+	224,
+	241,
+	258,
+	276,
+	295,
+	314,
+	334,
+	354,
+	375,
+	397,
+	419,
+	442,
+	465,
+	489,
+	514,
+	539,
+	565,
+	591,
+	618,
+	646,
+	674,
+	703,
+	732,
+	762,
+	793,
+	824,
+	856,
+	888,
+	921,
+	955,
+	989,
+	1024,
+	1059,
+	1095,
+	1132,
+	1169,
+	1207,
+	1245,
+	1284,
+	1324,
+	1364,
+	1405,
+	1446,
+	1488,
+	1531,
+	1574,
+	1618,
+	1662,
+	1707,
+	1753,
+	1799,
+	1846,
+	1893,
+	1941,
+	1990,
+	2039,
+	2089,
+	2139,
+	2190,
+	2242,
+	2294,
+	2347,
+	2400,
+	2454,
+	2509,
+	2564,
+	2620,
+	2676,
+	2733,
+	2791,
+	2849,
+	2908,
+	2967,
+	3027,
+	3088,
+	3149,
+	3211,
+	3273,
+	3336,
+	3400,
+	3464
+}
+local dArr = {
+	17,
+	20,
+	23,
+	27,
+	31,
+	35,
+	40,
+	45,
+	50,
+	56,
+	62,
+	68,
+	75,
+	82,
+	89,
+	97,
+	105,
+	113,
+	122,
+	131,
+	140,
+	150,
+	160,
+	170,
+	181,
+	192,
+	203,
+	215,
+	227,
+	239,
+	252,
+	265,
+	278,
+	292,
+	306,
+	320,
+	335,
+	350,
+	365,
+	381,
+	397,
+	413,
+	430,
+	447,
+	464,
+	482,
+	500,
+	518,
+	537,
+	556,
+	575,
+	595,
+	615,
+	635,
+	656,
+	677,
+	698,
+	720,
+	742,
+	764,
+	787,
+	810,
+	833,
+	857,
+	881,
+	905,
+	930,
+	955,
+	950,
+	1006,
+	1032,
+	1058,
+	1085,
+	1112,
+	1139,
+	1167,
+	1195,
+	1223,
+	1252,
+	1281,
+	1310,
+	1370,
+	1400,
+	1431,
+	1462,
+	1493,
+	1525,
+	1557,
+	1589,
+	1622,
+	1655,
+	1688,
+	1722,
+	1756,
+	1790,
+	1825,
+	1860,
+	1860,
+	1895,
+	1931
+}
+local fArr = {
+	16,
+	18,
+	20,
+	22,
+	24,
+	27,
+	30,
+	33,
+	36,
+	39,
+	42,
+	45,
+	48,
+	52,
+	56,
+	60,
+	64,
+	68,
+	72,
+	77,
+	81,
+	86,
+	91,
+	96,
+	101,
+	106,
+	111,
+	117,
+	122,
+	128,
+	134,
+	140,
+	146,
+	152,
+	159,
+	165,
+	172,
+	179,
+	186,
+	193,
+	200,
+	207,
+	215,
+	222,
+	230,
+	238,
+	246,
+	254,
+	262,
+	271,
+	279,
+	288,
+	297,
+	306,
+	315,
+	324,
+	333,
+	343,
+	352,
+	362,
+	372,
+	382,
+	392,
+	402,
+	413,
+	423,
+	434,
+	445,
+	456,
+	467,
+	478,
+	489,
+	501,
+	512,
+	524,
+	536,
+	548,
+	560,
+	572,
+	585,
+	597,
+	610,
+	623,
+	636,
+	649,
+	662,
+	675,
+	689,
+	702,
+	716,
+	730,
+	744,
+	758,
+	772,
+	787,
+	801,
+	816,
+	831,
+	846,
+	861
+}
+local z = {}
+local d = {}
+local f = {}
+
+--- END OF BLOCK #0 ---
+
+for i, v in ipairs(zArr)
+
+
+LOOP BLOCK #1
+GO OUT TO BLOCK #3
+
+
+--- BLOCK #1 11-14, warpins: 1 ---
+z[v] = "Z" .. i
+
+--- END OF BLOCK #1 ---
+
+FLOW; TARGET BLOCK #2
+
+
+--- BLOCK #2 15-16, warpins: 2 ---
+--- END OF BLOCK #2 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+--- BLOCK #3 17-20, warpins: 1 ---
+--- END OF BLOCK #3 ---
+
+for i, v in ipairs(dArr)
+
+
+LOOP BLOCK #4
+GO OUT TO BLOCK #6
+
+
+--- BLOCK #4 21-24, warpins: 1 ---
+d[v] = "D" .. i
+
+--- END OF BLOCK #4 ---
+
+FLOW; TARGET BLOCK #5
+
+
+--- BLOCK #5 25-26, warpins: 2 ---
+--- END OF BLOCK #5 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+--- BLOCK #6 27-30, warpins: 1 ---
+--- END OF BLOCK #6 ---
+
+for i, v in ipairs(fArr)
+
+
+LOOP BLOCK #7
+GO OUT TO BLOCK #9
+
+
+--- BLOCK #7 31-34, warpins: 1 ---
+f[v] = "M" .. i
+--- END OF BLOCK #7 ---
+
+FLOW; TARGET BLOCK #8
+
+
+--- BLOCK #8 35-36, warpins: 2 ---
+--- END OF BLOCK #8 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+--- BLOCK #9 37-49, warpins: 1 ---
+zArr, dArr = nil
+fArr = nil
+local jobs = {}
+jobs[1] = z
+jobs[2] = f
+jobs[3] = d
+local def = {}
+def.hp2level = function (hp, job)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	hp = tonumber(hp)
+	--- END OF BLOCK #0 ---
+
+	slot1 = if job then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not jobs[job + 1] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 12-12, warpins: 1 ---
+	slot2 = {}
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 13-15, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not slot2[hp] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-16, warpins: 1 ---
+	slot2 = "?"
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-18, warpins: 2 ---
+	return slot2
+
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #6 19-27, warpins: 1 ---
+	local zstr = z[hp]
+	local dstr = d[hp]
+	local fstr = f[hp]
+	local ret = ""
+	--- END OF BLOCK #6 ---
+
+	slot2 = if zstr then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 28-30, warpins: 1 ---
+	ret = ret .. zstr
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 31-32, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot3 = if dstr then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #9 33-34, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot2 = if zstr then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 35-37, warpins: 1 ---
+	ret = ret .. "/"
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 38-40, warpins: 2 ---
+	ret = ret .. dstr
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 41-42, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot4 = if fstr then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #13 43-44, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot3 = if not dstr then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 45-46, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot2 = if zstr then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 47-49, warpins: 2 ---
+	ret = ret .. "/"
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 50-52, warpins: 2 ---
+	ret = ret .. fstr
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 53-54, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	if ret == "" then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 55-55, warpins: 1 ---
+	ret = "?"
+
+	--- END OF BLOCK #18 ---
+
+	FLOW; TARGET BLOCK #19
+
+
+	--- BLOCK #19 56-56, warpins: 2 ---
+	return ret
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 57-57, warpins: 2 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+
+
+end
+
+return def
+--- END OF BLOCK #9 ---
+
+
+

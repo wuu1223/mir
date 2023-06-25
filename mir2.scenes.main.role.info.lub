@@ -1,0 +1,1708 @@
+--- BLOCK #0 1-85, warpins: 1 ---
+local mapDef = import("..map.def")
+local common = import("..common.common")
+local info = class("role.info")
+
+table.merge(info, {
+	map,
+	role,
+	x,
+	y,
+	hp,
+	name,
+	sayLabel,
+	buf,
+	isShow,
+	dirty,
+	forceShowName
+})
+
+info.ctor = function (self, role, map)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.map = map
+	self.role = role
+	slot3 = {}
+	--- END OF BLOCK #0 ---
+
+	if role.__cname == "npc" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-8, warpins: 1 ---
+	slot4 = 250
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #2 9-10, warpins: 1 ---
+	slot4 = false
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 11-11, warpins: 0 ---
+	slot4 = true
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-32, warpins: 3 ---
+	slot3.color = slot4
+	slot3.texts = {}
+	slot3.labels = {}
+	self.name = slot3
+	self.hp = {}
+	self.buf = {}
+
+	self.showName(self, true)
+
+	self.y = role.y
+	self.x = role.x
+	self.dirty = true
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+info.remove = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.hp.spr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	self.hp.spr:removeSelf()
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-13, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.hp.sprBg then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 14-18, warpins: 1 ---
+	self.hp.sprBg:removeSelf()
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-22, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if self.hp.label then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 23-27, warpins: 1 ---
+	self.hp.label:removeSelf()
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-31, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot1 = if self.name.node then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 32-36, warpins: 1 ---
+	self.name.node:removeSelf()
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 37-37, warpins: 2 ---
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+info.show = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.isShow then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.hp.spr then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-13, warpins: 1 ---
+	self.hp.spr:show()
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-17, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if self.hp.sprBg then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-22, warpins: 1 ---
+	self.hp.sprBg:show()
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-26, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot1 = if self.hp.label then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 27-31, warpins: 1 ---
+	self.hp.label:show()
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 32-40, warpins: 2 ---
+	self.showName(self, true)
+
+	self.isShow = true
+	self.dirty = true
+
+	return self
+	--- END OF BLOCK #8 ---
+
+
+
+end
+info.hide = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.isShow then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-8, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if self.hp.spr then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 9-13, warpins: 1 ---
+	self.hp.spr:hide()
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 14-17, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if self.hp.sprBg then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 18-22, warpins: 1 ---
+	self.hp.sprBg:hide()
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 23-26, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot1 = if self.hp.label then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 27-31, warpins: 1 ---
+	self.hp.label:hide()
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 32-40, warpins: 2 ---
+	self.showName(self, false)
+
+	self.isShow = false
+	self.dirty = true
+
+	return self
+	--- END OF BLOCK #8 ---
+
+
+
+end
+local __position = cc.Node.setPosition
+info.uptPos = function (self, x, y)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local size = def.role.size
+
+	--- END OF BLOCK #0 ---
+
+	slot4 = if self.hp.spr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-17, warpins: 1 ---
+	__position(self.hp.spr, (x + size.w/2) - 16, y + size.h)
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 18-21, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot4 = if self.hp.sprBg then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 22-31, warpins: 1 ---
+	__position(self.hp.sprBg, (x + size.w/2) - 16, y + size.h)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 32-35, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if self.hp.label then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 36-45, warpins: 1 ---
+	__position(self.hp.label, x + size.w/2, y + size.h + 2)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 46-49, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	slot4 = if self.name.node then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 50-55, warpins: 1 ---
+	__position(self.name.node, x, y)
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 56-58, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	slot4 = if self.sayLabel then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 59-67, warpins: 1 ---
+	__position(self.sayLabel, x + size.w/2, y + size.h + 20)
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 68-71, warpins: 2 ---
+	self.y = y
+	self.x = x
+
+	return self
+	--- END OF BLOCK #10 ---
+
+
+
+end
+info.createHpSpr = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.noHp then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-11, warpins: 2 ---
+	local size = def.role.size
+	--- END OF BLOCK #2 ---
+
+	slot2 = if not self.hp.sprBg then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-40, warpins: 1 ---
+	self.hp.sprBg = res.getui(3, 0):anchor(0, 0):pos((self.x + size.w/2) - 16, self.y + size.h):addto(self.map.layers.infoHpBg)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 41-44, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not self.hp.spr then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #5 45-49, warpins: 1 ---
+	local hptex = nil
+	--- END OF BLOCK #5 ---
+
+	slot3 = if self.role.isPlayer then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 50-55, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if g_data.setting.base.hiBlood then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 56-61, warpins: 1 ---
+	hptex = res.gettex2("pic/common/hp_green.png")
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 62-68, warpins: 1 ---
+	hptex = res.getuitex(3, 1)
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #9 69-72, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	if self.role.__cname == "npc" then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 73-78, warpins: 1 ---
+	hptex = res.gettex2("pic/common/hp_blue.png")
+	--- END OF BLOCK #10 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #11 79-84, warpins: 1 ---
+	hptex = res.getuitex(3, 1)
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 85-112, warpins: 4 ---
+	self.hp.spr = display.newSprite(hptex):anchor(0, 0):pos((self.x + size.w/2) - 16, self.y + size.h):addto(self.map.layers.infoHpSpr)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 113-115, warpins: 2 ---
+	--- END OF BLOCK #13 ---
+
+	slot2 = if self.isShow then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 116-133, warpins: 1 ---
+	self.hp.sprBg:setVisible(not not self.hp.max)
+	self.hp.spr:setVisible(not not self.hp.max)
+
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 134-134, warpins: 2 ---
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+info.setName = function (self, name, force)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	self.name.texts = {}
+	self.name.labels = {}
+
+	--- END OF BLOCK #0 ---
+
+	if type(name)
+
+	 == "string" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 12-16, warpins: 1 ---
+	self.name.texts = {
+		name
+	}
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #2 17-20, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	for i, v in ipairs(name)
+
+
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #3 21-22, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v == "" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-23, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #5 24-30, warpins: 1 ---
+	self.name.texts[#self.name.texts + 1] = v
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 31-32, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #7 33-34, warpins: 3 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if force then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 35-38, warpins: 1 ---
+	self.updateSetName(self)
+
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 39-41, warpins: 1 ---
+	self.buf.name = true
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 42-46, warpins: 2 ---
+	self.setDirty(self, true)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+info.updateSetName = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.name.node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-12, warpins: 1 ---
+	self.name.node:removeSelf()
+
+	self.name.node = nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 13-17, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if not self.isShowName(self)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 18-18, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-44, warpins: 2 ---
+	self.name.node = display.newNode():add2(self.map, 0, mapDef.topTag):pos(self.x, self.y):hide()
+	--- END OF BLOCK #4 ---
+
+	slot1 = if g_data.setting.base.showNameOnly then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 45-46, warpins: 1 ---
+	slot1 = 1
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #6 47-49, warpins: 1 ---
+	local nameLine = #self.name.texts
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 50-57, warpins: 2 ---
+	local size = def.role.size
+
+	--- END OF BLOCK #7 ---
+
+	for i, v in ipairs(self.name.texts)
+
+
+	LOOP BLOCK #8
+	GO OUT TO BLOCK #18
+
+
+	--- BLOCK #8 58-64, warpins: 1 ---
+	local color = self.name.color
+
+	--- END OF BLOCK #8 ---
+
+	if type(color)
+	 ~= "table" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #9 65-72, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot8 = if not def.colors.get(self.name.color)
+
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 73-74, warpins: 1 ---
+	color = display.COLOR_WHITE
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 75-89, warpins: 3 ---
+	slot9 = self.name.labels
+	slot10 = #self.name.labels + 1
+	slot11 = an.newLabel
+	slot12 = v
+	slot13 = 14
+	slot14 = 1
+	slot15 = {
+		bufferChannel = 1,
+		color = color
+	}
+	--- END OF BLOCK #11 ---
+
+	if i == 1 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 90-93, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if self.role.__cname ~= "mon" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 94-95, warpins: 2 ---
+	slot16 = false
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+	--- BLOCK #14 96-96, warpins: 1 ---
+	slot16 = true
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 97-128, warpins: 2 ---
+	slot15.needSave = slot16
+	slot9[slot10] = slot11(slot12, slot13, slot14, slot15):anchor(0.5, 0.5):pos(size.w/2, size.h/2 - ((nameLine - 1)/2 - i - 1)*15):addTo(self.name.node)
+
+	--- END OF BLOCK #15 ---
+
+	slot9 = if g_data.setting.base.showNameOnly then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 129-129, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #18
+
+
+	--- BLOCK #17 130-131, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+	--- BLOCK #18 132-136, warpins: 2 ---
+	self.showName(self, true)
+
+	return 
+	--- END OF BLOCK #18 ---
+
+
+
+end
+info.getName = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	return self.name.texts[1]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+info.isHero = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.name.color ~= 147 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-6, warpins: 1 ---
+	slot1 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 7-7, warpins: 1 ---
+	slot1 = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 8-8, warpins: 2 ---
+	return slot1
+	--- END OF BLOCK #3 ---
+
+
+
+end
+info.setNameColor = function (self, color)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.role.__cname == "npc" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-12, warpins: 2 ---
+	self.name.color = color
+
+	--- END OF BLOCK #2 ---
+
+	if type(color)
+
+	 == "number" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 13-18, warpins: 1 ---
+	color = def.colors.get(color)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 19-23, warpins: 2 ---
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(self.name.labels)
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #5 24-27, warpins: 1 ---
+	v.setColor(v, color)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 28-29, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #7 30-34, warpins: 1 ---
+	self.setDirty(self, true)
+
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+info.setForceName = function (self, force)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.forceShowName = force
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+info.isShowName = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.forceShowName then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	return true
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-12, warpins: 2 ---
+	local show = true
+	local race = self.role:getRace()
+
+	--- END OF BLOCK #2 ---
+
+	if race ~= 98 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 13-14, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if race ~= 99 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 15-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if race == 153 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-18, warpins: 3 ---
+	return false
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 19-22, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	if self.role.__cname == "npc" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 23-27, warpins: 1 ---
+	show = g_data.setting.base.NPCShowName
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #8 28-31, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if self.role.__cname == "hero" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 32-36, warpins: 1 ---
+	show = g_data.setting.base.heroShowName
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #12
+
+
+	--- BLOCK #10 37-40, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if self.role.__cname == "mon" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 41-44, warpins: 1 ---
+	show = g_data.setting.base.monShowName
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 45-51, warpins: 4 ---
+	slot3 = string.find
+
+	--- END OF BLOCK #12 ---
+
+	slot4 = if not self.getName(self)
+
+	 then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 52-52, warpins: 1 ---
+	slot4 = ""
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 53-56, warpins: 2 ---
+	--- END OF BLOCK #14 ---
+
+	slot3 = if slot3(slot4, "%(")
+
+	 then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 57-60, warpins: 1 ---
+	show = g_data.setting.base.petShowName
+
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 61-61, warpins: 2 ---
+	return show
+	--- END OF BLOCK #16 ---
+
+
+
+end
+info.showName = function (self, b)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.name.node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 5-7, warpins: 1 ---
+	local show = b
+	--- END OF BLOCK #1 ---
+
+	slot1 = if b then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-11, warpins: 1 ---
+	show = self.isShowName(self)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 12-17, warpins: 2 ---
+	self.name.node:setVisible(show)
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 18-18, warpins: 2 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+info.showOutHP = function (self, outHP)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if outHP then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 3-5, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if outHP > 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 6-9, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if self.role.isPlayer then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 10-10, warpins: 3 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-16, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if not g_data.setting.base.showOutHP then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 17-17, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 18-99, warpins: 1 ---
+	local size = def.role.size
+	local label = nil
+	label = cc.Label:createWithCharMap(res.gettex2("pic/common/num1.png"), 20, 33, string.byte("0")):scale(0.7):anchor(0.5, 0.5):pos(self.x + size.w/2, self.y + size.h/2 + 40):add2(self.map.layers.infoHpOut):fadeOut(1):runs({
+		cc.MoveBy:create(1, cc.p(0, 40)),
+		cc.CallFunc:create(function ()
+			--- BLOCK #0 1-5, warpins: 1 ---
+			label:removeSelf()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+	})
+
+	label.setString(label, tostring(outHP))
+
+	return 
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 100-100, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 101-101, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+
+
+end
+info.setHP = function (self, hp, maxhp, outHP)
+	--- BLOCK #0 1-12, warpins: 1 ---
+	self.setDirty(self, true)
+
+	self.buf.hp = {
+		hp,
+		maxhp
+	}
+	self.buf.hpOut = outHP
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+info.updateSetHp = function (self, hp, maxhp)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.hp.cur = hp
+	self.hp.max = maxhp
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.hp.spr then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #1 9-18, warpins: 1 ---
+	local size = def.role.size
+	slot4 = math.min
+	slot5 = 1
+	slot6 = math.max
+	--- END OF BLOCK #1 ---
+
+	if maxhp == 0 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 19-20, warpins: 1 ---
+	slot7 = 1
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #3 21-21, warpins: 1 ---
+	slot7 = maxhp
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 22-50, warpins: 2 ---
+	local value = slot4(slot5, slot6(hp/slot7, 0))
+
+	self.hp.spr:setTextureRect(cc.rect(0, 0, self.hp.sprBg:getw()*value, self.hp.sprBg:geth()))
+
+	--- END OF BLOCK #4 ---
+
+	slot5 = if not self.hp.label then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 51-82, warpins: 1 ---
+	self.hp.label = an.newLabel("", 11, 1, {
+		bufferChannel = 0
+	}):pos(self.x + size.w/2, self.y + size.h + 2):anchor(0.5, 0):addTo(self.map, 0, mapDef.topTag)
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 83-89, warpins: 2 ---
+	local level = ""
+
+	--- END OF BLOCK #6 ---
+
+	slot6 = if g_data.setting.base.levelShow then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #7 90-93, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if self.role.__cname == "hero" then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #8 94-98, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot6 = if not self.isHero(self)
+
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #9 99-107, warpins: 1 ---
+	slot6 = "/"
+	slot7 = def.role.hp2level
+	slot8 = maxhp
+	--- END OF BLOCK #9 ---
+
+	slot9 = if self.role.isPlayer then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 108-110, warpins: 1 ---
+	slot9 = g_data.player.job
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 111-112, warpins: 2 ---
+	level = slot6 .. slot7(slot8, slot9)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 113-122, warpins: 4 ---
+	self.hp.label:setString(hp .. "/" .. maxhp .. level)
+
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 123-123, warpins: 2 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+info.updateHpOut = function (self, outHP)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	self.showOutHP(self, outHP)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+info.say = function (self, msg)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	self.setDirty(self, true)
+
+	self.buf.msg = msg
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+info.setDirty = function (self, b)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	self.dirty = b
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+info.updateSay = function (self, msg)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.sayLabel then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.sayLabel:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-18, warpins: 2 ---
+	local size = def.role.size
+	self.sayLabel = common.createChatLabel(msg)
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if msg.adapt then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #3 19-23, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot3 = if not msg.adapt(self.sayLabel)
+
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 24-24, warpins: 1 ---
+	slot3 = self.sayLabel
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 25-25, warpins: 2 ---
+	self.sayLabel = slot3
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 26-59, warpins: 2 ---
+	slot4 = self.sayLabel:add2(self.map, 0, mapDef.topTag):anchor(0.5, 0):pos(self.x + size.w/2, self.y + size.h + 20)
+	slot3 = self.sayLabel.add2(self.map, 0, mapDef.topTag).anchor(0.5, 0).pos(self.x + size.w/2, self.y + size.h + 20).runs
+	slot5 = {}
+	slot7 = cc.DelayTime
+	slot6 = cc.DelayTime.create
+	--- END OF BLOCK #6 ---
+
+	slot8 = if not msg.duration then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 60-60, warpins: 1 ---
+	slot8 = 5
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 61-72, warpins: 2 ---
+	slot5[1] = slot6(slot7, slot8)
+	slot5[MULTRES] = cc.CallFunc:create(function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		self.sayLabel:removeSelf()
+
+		self.sayLabel = nil
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	slot3(slot4, slot5)
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+info.update = function (self, dt)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if not self.dirty then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if not self.role.isPlayer then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 8-8, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 9-14, warpins: 3 ---
+	self.dirty = false
+
+	--- END OF BLOCK #3 ---
+
+	slot2 = if not self.role.isIgnore then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #4 15-17, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot2 = if self.isShow then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 18-21, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot2 = if self.buf.hp then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 22-31, warpins: 1 ---
+	self.updateSetHp(self, unpack(self.buf.hp))
+
+	self.buf.hp = nil
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 32-35, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot2 = if self.buf.name then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 36-41, warpins: 1 ---
+	self.updateSetName(self)
+
+	self.buf.name = nil
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 42-44, warpins: 2 ---
+	self.createHpSpr(self)
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 45-48, warpins: 3 ---
+	--- END OF BLOCK #10 ---
+
+	slot2 = if self.buf.hpOut then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 49-56, warpins: 1 ---
+	self.updateHpOut(self, self.buf.hpOut)
+
+	self.buf.hpOut = nil
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 57-60, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	slot2 = if self.buf.msg then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 61-68, warpins: 1 ---
+	self.updateSay(self, self.buf.msg)
+
+	self.buf.msg = nil
+
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 69-69, warpins: 2 ---
+	return 
+	--- END OF BLOCK #14 ---
+
+
+
+end
+
+return info
+--- END OF BLOCK #0 ---
+
+
+

@@ -1,0 +1,6651 @@
+--- BLOCK #0 1-61, warpins: 1 ---
+local setting = class("setting", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local magic = import("..common.magic")
+local common = import("..common.common")
+local hotKeySetting = import("..pc.hotKeySetting")
+
+table.merge(setting, {
+	tabs,
+	name,
+	content,
+	btns,
+	cfg = {
+		base = false,
+		autoRat = false,
+		item = false,
+		job = false,
+		drugs = false,
+		display = false,
+		protected = false,
+		chat = false
+	}
+})
+
+setting.onCleanup = function (self)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(g_data.setting)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 6-10, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if type(v)
+	 == "table" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 11-14, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot6 = if self.cfg[k] then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 15-24, warpins: 1 ---
+	cache.saveSetting(common.getPlayerName(), k)
+
+	self.cfg[k] = false
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 25-26, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 27-29, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot1 = if self.modifiedItem then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 30-42, warpins: 1 ---
+	main_scene.ground.map:updateItems()
+	main_scene.ui.console.autoRat:updateModifyProperty()
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 43-43, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+setting.ctor = function (self, name)
+	--- BLOCK #0 1-146, warpins: 1 ---
+	self._supportMove = true
+
+	self.setNodeEventEnabled(self, true)
+	self.setCascadeOpacityEnabled(self, true)
+
+	local bg = res.get2("pic/common/black_2.png"):anchor(0, 0):add2(self)
+
+	self.size(self, bg.getw(bg), bg.geth(bg)):anchor(0.5, 0.5):pos(display.cx, display.cy + 20)
+	res.get2("pic/panels/setting/title.png"):anchor(0.5, 1):pos(self.getw(self)/2, self.geth(self) - 12):add2(bg)
+	display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(127, 390)):addTo(bg):pos(12, 15):anchor(0, 0)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):anchor(1, 1):pos(self.getw(self) - 9, self.geth(self) - 8):addto(self)
+
+	self.name = nil
+	self.content = nil
+
+	self.initTabList(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.initTabList = function (self)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	self.tabs = {}
+	local name = 物品
+	local btns = {
+		"基本",
+		"物品",
+		"保护",
+		"药品",
+		"辅助",
+		"显示",
+		"聊天"
+	}
+	local sprs = {
+		"jb",
+		"wp",
+		"bh",
+		"yp",
+		"fz",
+		"xs",
+		"lt"
+	}
+	--- END OF BLOCK #0 ---
+
+	slot4 = if WIN32_OPERATE then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #1 9-15, warpins: 1 ---
+	local extendBtns = {}
+	extendBtns[1] = {
+		name = "快捷键",
+		spr = "kj"
+	}
+
+	--- END OF BLOCK #1 ---
+
+	for _, v in ipairs(extendBtns)
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #4
+
+
+	--- BLOCK #2 16-25, warpins: 1 ---
+	table.insert(btns, v.name)
+	table.insert(sprs, v.spr)
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 26-27, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #4 28-81, warpins: 2 ---
+	local enable = true
+
+	local function click(btn)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		sound.playSound("103")
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not enable then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-8, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 9-14, warpins: 2 ---
+		local clickedIndex = 1
+
+		--- END OF BLOCK #2 ---
+
+		for i, v in ipairs(self.tabs)
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #7
+
+
+		--- BLOCK #3 15-16, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if v == btn then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 17-21, warpins: 1 ---
+		v.select(v)
+
+		clickedIndex = i
+
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #5 22-24, warpins: 1 ---
+		v.unselect(v)
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 25-26, warpins: 3 ---
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #7 27-32, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if btns[clickedIndex] ~= self.name then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 33-38, warpins: 1 ---
+		self:load(btns[clickedIndex])
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 39-39, warpins: 2 ---
+		return 
+		--- END OF BLOCK #9 ---
+
+
+
+	end
+
+	self.tabList = an.newScroll(12, 20, 127, 375):add2(self)
+
+	self.tabList:enableTouch(WIN32_OPERATE)
+
+	local checkDrag = display.newNode():pos(12, 15):size(127, 390):add2(self)
+
+	checkDrag.setTouchEnabled(checkDrag, true)
+	checkDrag.setTouchSwallowEnabled(checkDrag, false)
+	checkDrag.addNodeEventListener(checkDrag, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-10, warpins: 1 ---
+		checkDrag.offsetBeginY = event.y
+		enable = true
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #2 11-13, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "moved" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 14-24, warpins: 1 ---
+		local offsetY = event.y - checkDrag.offsetBeginY
+
+		--- END OF BLOCK #3 ---
+
+		if 5 <= math.abs(offsetY)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 25-25, warpins: 1 ---
+		enable = false
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 26-26, warpins: 4 ---
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end)
+	--- END OF BLOCK #4 ---
+
+	for i, v in ipairs(btns)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #10
+
+
+	--- BLOCK #5 82-137, warpins: 1 ---
+	self.tabs[i] = an.newBtn(res.gettex2("pic/common/btn60.png"), click, {
+		sprite = res.gettex2("pic/panels/setting/" .. sprs[i] .. ".png"),
+		select = {
+			res.gettex2("pic/common/btn61.png"),
+			manual = true
+		}
+	}):anchor(0.5, 0):add2(self.tabList):pos(63, (i - 1)*50 - 325)
+
+	self.tabs[i]:setCascadeOpacityEnabled(true)
+	self.tabs[i]:setTouchSwallowEnabled(false)
+
+	--- END OF BLOCK #5 ---
+
+	slot12 = if not name then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 138-138, warpins: 1 ---
+	slot12 = btns[1]
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 139-140, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	if slot12 == v then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 141-144, warpins: 1 ---
+	click(self.tabs[i])
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 145-146, warpins: 3 ---
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #10 147-148, warpins: 1 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+
+local function createToggle(cb, default, label, config)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not config then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	config = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-40, warpins: 2 ---
+	local base = display.newNode()
+	local selsp = display.newFilteredSprite(res.gettex2("pic/common/toggle00.png")):anchor(0, 0):add2(base)
+
+	base.setContentSize(base, selsp.getContentSize(selsp))
+
+	base.setIsSelect = function (self, enable)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		base.isSelected = enable
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if enable then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		base:select()
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 10-13, warpins: 1 ---
+		base:unselect()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 14-14, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	base.isSelect = function (self)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		return base.isSelected
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	base.select = function (self)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		base.isSelected = true
+
+		--- END OF BLOCK #0 ---
+
+		slot1 = if base.temp then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-15, warpins: 1 ---
+		base.temp:removeSelf()
+
+		base.temp = nil
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-24, warpins: 2 ---
+		slot2 = selsp
+		slot1 = selsp.setTex
+		slot3 = res.gettex2
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not config.selectImg then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 25-25, warpins: 1 ---
+		slot4 = "pic/common/toggle02.png"
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 26-28, warpins: 2 ---
+		slot1(slot2, slot3(slot4))
+
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+	base.select_temp = function (self)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if base.temp then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-5, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 6-14, warpins: 2 ---
+		slot1 = base
+		slot2 = display.newFilteredSprite
+		slot3 = res.gettex2
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not config.selectImg then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 15-15, warpins: 1 ---
+		slot4 = "pic/common/toggle00.png"
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 16-34, warpins: 2 ---
+		slot1.temp = slot2(slot3(slot4)):anchor(0, 0):add2(base)
+
+		base.temp:setOpacity(80)
+
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+	base.unselect = function (self)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if base.temp then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-12, warpins: 1 ---
+		base.temp:removeSelf()
+
+		base.temp = nil
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 13-24, warpins: 2 ---
+		base.isSelected = false
+
+		selsp:setTex(res.gettex2("pic/common/toggle00.png"))
+
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	--- END OF BLOCK #2 ---
+
+	if default ~= nil then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 41-44, warpins: 1 ---
+	base.setIsSelect(base, default)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 45-60, warpins: 2 ---
+	base.setTouchEnabled(base, true)
+	base.addNodeEventListener(base, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-12, warpins: 1 ---
+		base.offsetBeginY = event.y
+		base.offsetBeginX = event.x
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #2 13-15, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 16-30, warpins: 1 ---
+		local offsetY = event.y - base.offsetBeginY
+		local offsetX = event.x - base.offsetBeginX
+
+		--- END OF BLOCK #3 ---
+
+		if math.abs(offsetY)
+		 <= 20 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 31-37, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if math.abs(offsetX)
+		 <= 20 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 38-48, warpins: 1 ---
+		base:setIsSelect(not base.isSelected)
+		cb(base.isSelected)
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 49-49, warpins: 5 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end)
+	base.setTouchSwallowEnabled(base, false)
+
+	--- END OF BLOCK #4 ---
+
+	slot2 = if label then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 61-89, warpins: 1 ---
+	base.label = an.newLabel(unpack(label)):add2(base):pos(base.getw(base) + 7, base.geth(base)/2):anchor(0, 0.5)
+	base.getw = function (self)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		return base.label:getw() + 40
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 90-98, warpins: 2 ---
+	base.btn = base
+	base.gray = function (self)
+		--- BLOCK #0 1-18, warpins: 1 ---
+		local f = res.getFilter("gray")
+
+		selsp:setFilter(f)
+		base:setTouchEnabled(false)
+		--- END OF BLOCK #0 ---
+
+		slot2 = if base.temp then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 19-24, warpins: 1 ---
+		base.temp:setFilter(f)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 25-25, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	base.disGray = function (self)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		selsp:clearFilter()
+		base:setTouchEnabled(true)
+		--- END OF BLOCK #0 ---
+
+		slot1 = if base.temp then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 14-19, warpins: 1 ---
+		base.temp:clearFilter(f)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 20-20, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+	base.setGray = function (self, enable)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if enable then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-7, warpins: 1 ---
+		base:gray()
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 8-11, warpins: 1 ---
+		base:disGray()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 12-13, warpins: 2 ---
+		return base
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	return base
+	--- END OF BLOCK #6 ---
+
+
+
+end
+
+setting.add = function (data, key, name, func, externHandle)
+	--- BLOCK #0 1-42, warpins: 1 ---
+	local node = display.newNode():size(120, 28):anchor(0, 0.5)
+	node.btn = createToggle(function (b)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if not externHandle then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		data[key] = b
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 7-9, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot1 = if func then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 10-15, warpins: 1 ---
+		func(data[key])
+
+		return 
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 16-16, warpins: 2 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, data[key], {
+		name,
+		20,
+		1,
+		{
+			color = def.colors.labelGray
+		}
+	}):anchor(0, 0.5):pos(0, 14):add2(node)
+
+	return node
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.addWith = function (types, data, key, name, func, externHandle)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.loadBase = function (self)
+	--- BLOCK #0 1-417, warpins: 1 ---
+	baseAdd = handler(g_data.setting.base, setting.add)
+	local bg = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 50, cc.size(480, 340)):addTo(self.content):anchor(0, 0)
+	local left = 20
+	local top = self.content:geth() - 30
+	local interval = 47
+	self.btns.heroShowName = baseAdd("heroShowName", "人物显名", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnHeroName")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left, top):add2(self.content).btn
+	nextY = top - interval
+	self.btns.NPCShowName = baseAdd("NPCShowName", "NPC显名", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnNPCShowName")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.petShowName = baseAdd("petShowName", "宠物显名", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnPetShowName")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.monShowName = baseAdd("monShowName", "怪物显名", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnMonShowName")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.hiBlood = baseAdd("hiBlood", "高亮显血", function (b)
+		--- BLOCK #0 1-27, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "hiBlood")
+
+		slot2 = main_scene.ground.player.info.hp.spr
+		slot1 = main_scene.ground.player.info.hp.spr.setTex
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if g_data.setting.base.hiBlood then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 28-33, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot3 = if not res.gettex2("pic/common/hp_green.png")
+
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 34-38, warpins: 2 ---
+		slot3 = res.getuitex(3, 1)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 39-40, warpins: 2 ---
+		slot1(slot2, slot3)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, true):pos(left, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.lockColor = baseAdd("lockColor", "锁定提示", function (b)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		self.cfg.base = true
+
+		--- END OF BLOCK #0 ---
+
+		slot0 = if b then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #1 7-13, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		for k, v in pairs(main_scene.ground.map.heros)
+
+		LOOP BLOCK #2
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #2 14-16, warpins: 1 ---
+		v.unselected(v)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 17-18, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+		--- BLOCK #4 19-25, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		for k, v in pairs(main_scene.ground.map.mons)
+
+		LOOP BLOCK #5
+		GO OUT TO BLOCK #7
+
+
+		--- BLOCK #5 26-28, warpins: 1 ---
+		v.unselected(v)
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 29-30, warpins: 2 ---
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #7 31-40, warpins: 2 ---
+		main_scene.ui.console.btnCallbacks:handle("setting", "lockColor")
+
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end, true):pos(left, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.warningDura = baseAdd("warningDura", "持久警告", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "warningDura")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	nextY = top
+	self.btns.showExpEnable = baseAdd("showExpEnable", "经验显示过滤", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "showExpEnable")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	local valueInput = nil
+	valueInput = an.newInput(self.btns.showExpEnable:getw() + 225, nextY - 2, 80, 34, 5, {
+		label = {
+			"" .. g_data.setting.base.showExpValue,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-15, warpins: 1 ---
+			self.cfg.base = true
+			slot0 = g_data.setting.base
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(valueInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 16-19, warpins: 1 ---
+			slot1 = g_data.setting.base.showExpValue
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 20-31, warpins: 2 ---
+			slot0.showExpValue = slot1
+
+			valueInput:setText("" .. g_data.setting.base.showExpValue)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(self.content):anchor(0, 0.5)
+	nextY = nextY - interval
+	self.btns.soundEnable = baseAdd("soundEnable", "音效", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnSoundEnable")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.touchRun = baseAdd("touchRun", "触屏跑步", function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnTouchRun")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.hideCorpse = baseAdd("hideCorpse", "隐藏尸体", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnHideCorpse")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.showOutHP = baseAdd("showOutHP", "数字飘血", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnShowOutHP")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.quickexit = baseAdd("quickexit", "快速小退", function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnquickexit")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	nextY = nextY - interval
+	self.btns.autoUnpack = baseAdd("autoUnpack", "自动解包", function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.base = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnautoUnpack")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):pos(left + 180, nextY):add2(self.content).btn
+	nextY = nextY - interval
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-32, warpins: 1 ---
+		sound.playSound("103")
+
+		local msgbox = an.newMsgbox("", function (idx)
+			--- BLOCK #0 1-2, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if idx == 1 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #1 3-11, warpins: 1 ---
+			g_data.setting.reset()
+			--- END OF BLOCK #1 ---
+
+			for k, v in pairs(g_data.setting)
+
+			LOOP BLOCK #2
+			GO OUT TO BLOCK #4
+
+
+			--- BLOCK #2 12-15, warpins: 1 ---
+			cache.removeSetting(k)
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 16-17, warpins: 2 ---
+			--- END OF BLOCK #3 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+			--- BLOCK #4 18-21, warpins: 1 ---
+			main_scene:smallExit()
+
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 22-22, warpins: 2 ---
+			return 
+			--- END OF BLOCK #5 ---
+
+
+
+		end, {
+			disableScroll = true,
+			hasCancel = true
+		})
+
+		an.newLabel("所有的设置恢复默认, 并且将立即小退。\n 是否继续？", 20, 1):addTo(msgbox):pos(msgbox.centerPos(msgbox)):anchor(0.5, 0.5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/czqb.png")
+	}):anchor(1, 0):pos(self.content:getw() - 3, 1):add2(self.content)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.loadItem = function (self)
+	--- BLOCK #0 1-195, warpins: 1 ---
+	local indexBtn, cateFilt, valueInput = nil
+
+	local function frash()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		self.modifiedItem = true
+
+		indexBtn(valueInput:getText(), cateFilt.category, true)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local itemSetting = g_data.setting.item
+
+	local function addS(...)
+		--- BLOCK #0 1-26, warpins: 1 ---
+		local btn = self.add(itemSetting, ...)
+		local tog = btn.btn
+
+		tog.label:pos(-tog.label:getw()/2 + 10, tog.label:getPositionY()):scale(0.9)
+
+		return btn
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local bg = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 50, cc.size(480, 340)):addTo(self.content):anchor(0, 0)
+	local line = res.get2("pic/panels/setting/line.png"):anchor(0, 1):pos(0, bg.geth(bg) - 55):add2(bg)
+	local nameTitle = an.newLabel("物品名称", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(self.content):pos(self.cleft + 10, self.ctop - 40)
+	local arItemTitle = addS("pickOnRatting", "挂机\n捡取", frash, false):add2(self.content):pos((self.content:getw() - 45)/5 + 70, self.ctop - 29)
+	local pickUp = addS("pickUp", "捡取\n物品", frash, false):add2(self.content):pos(((self.content:getw() - 45)*2)/5 + 70, self.ctop - 29)
+	local shownameTitle = addS("showName", "物品\n显名", frash, false):add2(self.content):pos(((self.content:getw() - 45)*3)/5 + 70, self.ctop - 29)
+	local goodTitle = addS("hindGood", "极品\n特显", frash, false):add2(self.content):pos(((self.content:getw() - 45)*4)/5 + 70, self.ctop - 29)
+	local scroll = an.newScroll(0, self.ctop - 58, self.cright, bg.geth(bg) - 65, {
+		labelM = {
+			18,
+			1
+		}
+	}):anchor(0, 1):add2(self.content)
+	local itemHeight = 42
+	local orgItems = {}
+	orgItems[1] = {
+		"极品属性道具",
+		0,
+		hightLight = true
+	}
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(def.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #8
+
+
+	--- BLOCK #1 196-200, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if type(v)
+
+	 == "table" then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #2 201-203, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot22 = if v.get then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #3 204-209, warpins: 1 ---
+	local itemName = v.get(v, "name")
+	--- END OF BLOCK #3 ---
+
+	if itemName == "金币1" then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 210-210, warpins: 1 ---
+	itemName = "金币"
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 211-214, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	slot23 = if itemSetting.filt[itemName] then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 215-220, warpins: 1 ---
+	orgItems[#orgItems + 1] = {
+		itemName,
+		k
+	}
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 221-222, warpins: 5 ---
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #8 223-277, warpins: 1 ---
+	local items = orgItems
+
+	scroll.setScrollSize(scroll, self.cright, itemHeight*#items)
+
+	local tog2title = {}
+	tog2title.isGood = goodTitle
+	tog2title.pickOnRatting = arItemTitle
+	tog2title.hintName = shownameTitle
+	tog2title.pickUp = pickUp
+
+	local function addItemToggle(key, itemName, img)
+		--- BLOCK #0 1-20, warpins: 1 ---
+		local btn = nil
+		btn = createToggle(function (b)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot1 = if btn.name then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #6
+			end
+
+
+			--- BLOCK #1 5-20, warpins: 1 ---
+			self.cfg.item = true
+			slot1 = itemSetting.filt
+			slot2 = btn.name
+
+			--- END OF BLOCK #1 ---
+
+			slot3 = if not rawget(itemSetting.filt, btn.name)
+
+			 then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #2 21-29, warpins: 1 ---
+			slot3 = clone
+			--- END OF BLOCK #2 ---
+
+			slot4 = if not def.items.filt[btn.name] then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 30-30, warpins: 1 ---
+			slot4 = {}
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 31-31, warpins: 2 ---
+			slot3 = slot3(slot4)
+			--- END OF BLOCK #4 ---
+
+			FLOW; TARGET BLOCK #5
+
+
+			--- BLOCK #5 32-42, warpins: 2 ---
+			slot1[slot2] = slot3
+			itemSetting.filt[btn.name][key] = b
+			self.modifiedItem = true
+
+			--- END OF BLOCK #5 ---
+
+			FLOW; TARGET BLOCK #6
+
+
+			--- BLOCK #6 43-43, warpins: 2 ---
+			return 
+			--- END OF BLOCK #6 ---
+
+
+
+		end, selected, nil, {
+			selectImg = "pic/common/" .. img .. ".png"
+		}):anchor(0, 0)
+
+		return btn
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local function setSubData(ident, sub, height, disable)
+		--- BLOCK #0 1-19, warpins: 1 ---
+		local data = items[ident]
+		local itemName = data[1]
+		sub.ident = ident
+		sub.height = height
+
+		data.label:pos(10, height + 3):setVisible(not disable)
+		--- END OF BLOCK #0 ---
+
+		for k, v in ipairs({
+			"isGood",
+			"pickOnRatting",
+			"hintName",
+			"pickUp"
+		})
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #11
+
+
+		--- BLOCK #1 20-41, warpins: 1 ---
+		sub[v].name = itemName
+
+		sub[v]:pos(sub[v]:getPositionX(), height)
+		sub[v]:setVisible(not disable)
+
+		local selected = nil
+		--- END OF BLOCK #1 ---
+
+		slot12 = if not itemSetting.filt[itemName] then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 42-43, warpins: 1 ---
+		selected = true
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #3 44-47, warpins: 1 ---
+		selected = itemSetting.filt[itemName][v]
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 48-49, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot11 = if selected then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 50-55, warpins: 1 ---
+		sub[v].btn:select()
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 56-60, warpins: 1 ---
+		sub[v].btn:unselect()
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 61-68, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		slot12 = if tog2title[v].btn:isSelect()
+		 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 69-79, warpins: 1 ---
+		sub[v].btn:select_temp()
+		sub[v].btn:gray()
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 80-84, warpins: 1 ---
+		sub[v].btn:disGray()
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 85-86, warpins: 3 ---
+		--- END OF BLOCK #10 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #11 87-87, warpins: 1 ---
+		return 
+		--- END OF BLOCK #11 ---
+
+
+
+	end
+
+	local function addSubItem(ident)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if items[ident] then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #1 5-19, warpins: 1 ---
+		local data = items[ident]
+		local subData = {}
+		subData.height = scroll:getScrollSize().height - ident*itemHeight
+		--- END OF BLOCK #1 ---
+
+		slot3 = if not data.added then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #2 20-25, warpins: 1 ---
+		local color = def.colors.labelYellow
+		--- END OF BLOCK #2 ---
+
+		slot4 = if data.hightLight then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 26-28, warpins: 1 ---
+		color = def.colors.clRed
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 29-41, warpins: 2 ---
+		data.label = an.newLabel(data[1], 20, 1, {
+			bufferChannel = 0,
+			color = color
+		}):add2(scroll)
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 42-138, warpins: 2 ---
+		subData.pickOnRatting = addItemToggle("pickOnRatting", data[1], "toggle03"):add2(scroll):pos((scroll:getw() - 45)/5 + 70, subData.height)
+		subData.pickUp = addItemToggle("pickUp", data[1], "toggle04"):add2(scroll):pos(((scroll:getw() - 45)*2)/5 + 70, subData.height)
+		subData.hintName = addItemToggle("hintName", data[1], "toggle04"):add2(scroll):pos(((scroll:getw() - 45)*3)/5 + 70, subData.height)
+		subData.isGood = addItemToggle("isGood", data[1], "toggle02"):add2(scroll):pos(((scroll:getw() - 45)*4)/5 + 70, subData.height)
+
+		setSubData(ident, subData, subData.height)
+
+		data.added = true
+		data.showing = true
+
+		return subData
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 139-139, warpins: 2 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local itemSetters = {}
+
+	local function setSubItem(ident, data, top, bottom)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		local curheight = scroll:getScrollSize().height - ident*itemHeight
+
+		--- END OF BLOCK #0 ---
+
+		slot5 = if items[ident].showing then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 14-14, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 15-18, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		for k, v in ipairs(itemSetters)
+
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #12
+
+
+		--- BLOCK #3 19-21, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if top >= v.height then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 22-24, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if v.height < bottom then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #5 25-29, warpins: 2 ---
+		local pdata = items[v.ident]
+		--- END OF BLOCK #5 ---
+
+		slot10 = if pdata then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #6 30-32, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot11 = if pdata.showing then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 33-44, warpins: 1 ---
+		pdata.showing = false
+
+		pdata.label:pos(0, 0):setVisible(false)
+
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 45-51, warpins: 3 ---
+		v.ident = ident
+		v.height = curheight
+		--- END OF BLOCK #8 ---
+
+		slot11 = if not items[ident].added then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 52-80, warpins: 1 ---
+		items[ident].label = an.newLabel(items[ident][1], 20, 1, {
+			bufferChannel = 0,
+			color = def.colors.labelYellow
+		}):add2(scroll):pos(25, curheight + 3)
+		items[ident].added = true
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 81-90, warpins: 2 ---
+		setSubData(ident, v, curheight)
+
+		items[ident].showing = true
+
+		return 
+
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 91-92, warpins: 3 ---
+		--- END OF BLOCK #11 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #12 93-101, warpins: 1 ---
+		local subData = addSubItem(ident)
+
+		table.insert(itemSetters, subData)
+
+		return 
+		--- END OF BLOCK #12 ---
+
+
+
+	end
+
+	local preSearchName, preCate = nil
+
+	function indexBtn(name, category, force)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if preSearchName == name then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if preCate == category then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 7-8, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if not force then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 9-9, warpins: 1 ---
+		return 
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 10-17, warpins: 4 ---
+		preSearchName = name
+		preCate = category
+		local titems = {}
+		local temp = {}
+
+		--- END OF BLOCK #4 ---
+
+		for k, v in ipairs(orgItems)
+
+
+		LOOP BLOCK #5
+		GO OUT TO BLOCK #15
+
+
+		--- BLOCK #5 18-23, warpins: 1 ---
+		local fs = itemSetting.filt[v[1]]
+
+		--- END OF BLOCK #5 ---
+
+		slot1 = if category then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #6 24-25, warpins: 1 ---
+		--- END OF BLOCK #6 ---
+
+		slot10 = if fs then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #7 26-28, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		if fs.category == category then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #8 29-30, warpins: 2 ---
+		--- END OF BLOCK #8 ---
+
+		slot0 = if name then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 31-37, warpins: 1 ---
+		--- END OF BLOCK #9 ---
+
+		slot11 = if string.find(v[1], name)
+
+		 then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 38-40, warpins: 2 ---
+		temp[#temp + 1] = v
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 41-45, warpins: 4 ---
+		v.showing = false
+
+		--- END OF BLOCK #11 ---
+
+		slot11 = if v.label then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 46-49, warpins: 1 ---
+		v.label:removeFromParent()
+
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 50-53, warpins: 2 ---
+		v.label = nil
+		v.added = false
+
+		--- END OF BLOCK #13 ---
+
+		FLOW; TARGET BLOCK #14
+
+
+		--- BLOCK #14 54-55, warpins: 2 ---
+		--- END OF BLOCK #14 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+		--- BLOCK #15 56-59, warpins: 1 ---
+		--- END OF BLOCK #15 ---
+
+		for k, v in ipairs(itemSetters)
+
+		LOOP BLOCK #16
+		GO OUT TO BLOCK #18
+
+
+		--- BLOCK #16 60-75, warpins: 1 ---
+		v.isGood:removeFromParent()
+		v.pickOnRatting:removeFromParent()
+		v.hintName:removeFromParent()
+		v.pickUp:removeFromParent()
+
+		--- END OF BLOCK #16 ---
+
+		FLOW; TARGET BLOCK #17
+
+
+		--- BLOCK #17 76-77, warpins: 2 ---
+		--- END OF BLOCK #17 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #15
+
+
+		--- BLOCK #18 78-97, warpins: 1 ---
+		itemSetters = {}
+		items = temp
+
+		scroll:setScrollOffset(0, 0)
+		scroll:setScrollSize(self.cright, itemHeight*#items)
+
+		return 
+		--- END OF BLOCK #18 ---
+
+
+
+	end
+
+	local inputBack = display.newScale9Sprite(res.getframe2("pic/scale/edit.png")):anchor(0, 0):size(220, 45):add2(self.content)
+	slot27 = an.newInput
+	slot28 = 10
+	slot29 = 3
+	slot30 = 150
+	slot31 = 38
+	slot32 = 12
+	slot33 = {
+		label = {
+			"",
+			20,
+			1
+		},
+		return_call = function ()
+			--- BLOCK #0 1-7, warpins: 1 ---
+			self.cfg.item = true
+
+			frash()
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}
+	slot34 = {
+		nil,
+		20,
+		1
+	}
+	slot35 = " <输入关键字查找>"
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 278-278, warpins: 0 ---
+	slot35 = ""
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 279-446, warpins: 2 ---
+	slot34[1] = slot35
+	slot34[4] = {
+		color = def.colors.labelGray
+	}
+	slot33.tip = slot34
+	valueInput = slot27(slot28, slot29, slot30, slot31, slot32, slot33):add2(inputBack):anchor(0, 0):pos(10, 1)
+
+	an.newBtn(res.gettex2("pic/common/button_search.png"), function ()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		sound.playSound("103")
+		indexBtn(valueInput:getText(), cateFilt.category)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end):add2(self.content):pos(inputBack.getw(inputBack), inputBack.geth(inputBack)/2):anchor(1, 0.5)
+
+	local cates = clone(def.items.category)
+
+	table.insert(cates, 1, "全  部")
+
+	local labels = {
+		"全  部",
+		"书籍类",
+		"其它类",
+		"武器类",
+		"药品类",
+		"勋章",
+		"首饰类",
+		"防具类"
+	}
+	local sprs = {
+		"qbl",
+		"sjl",
+		"qtl",
+		"wql",
+		"ypl",
+		"xzl",
+		"ssl",
+		"fjl"
+	}
+
+	local function getSpr(tType)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		for i, v in ipairs(labels)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+
+		--- BLOCK #1 5-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if v == tType then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 7-9, warpins: 1 ---
+		return sprs[i]
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 10-11, warpins: 3 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 12-14, warpins: 1 ---
+		return sprs[1]
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	cateFilt = an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-10, warpins: 1 ---
+		sound.playSound("103")
+
+		local menuList = {}
+		local menu = nil
+
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(cates)
+
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #3
+
+
+		--- BLOCK #1 11-24, warpins: 1 ---
+		local sub = {}
+		sub.w = 110
+		sub.h = 40
+		sub.cate = v
+		sub.cellCls = function ()
+			--- BLOCK #0 1-9, warpins: 1 ---
+			local tex = "pic/common/btn20.png"
+			local pretex = "pic/common/btn21.png"
+			--- END OF BLOCK #0 ---
+
+			if cateFilt.labelInfo == v .. "  " then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 10-11, warpins: 1 ---
+			tex = "pic/common/btn10.png"
+			pretex = "pic/common/btn11.png"
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 12-38, warpins: 2 ---
+			return an.newBtn(res.gettex2(tex), function ()
+				--- BLOCK #0 1-11, warpins: 1 ---
+				sound.playSound("103")
+
+				--- END OF BLOCK #0 ---
+
+				if cateFilt.labelInfo == v .. "  " then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 12-12, warpins: 1 ---
+				return 
+
+				--- END OF BLOCK #1 ---
+
+				FLOW; TARGET BLOCK #2
+
+
+				--- BLOCK #2 13-40, warpins: 2 ---
+				self.cfg.item = true
+
+				menu:removeSelf()
+				cateFilt.sprite:setTex(res.gettex2("pic/panels/setting/" .. getSpr(v) .. ".png"))
+
+				cateFilt.category = v
+				--- END OF BLOCK #2 ---
+
+				if v == "全  部" then
+				JUMP TO BLOCK #3
+				else
+				JUMP TO BLOCK #4
+				end
+
+
+				--- BLOCK #3 41-43, warpins: 1 ---
+				cateFilt.category = nil
+
+				--- END OF BLOCK #3 ---
+
+				FLOW; TARGET BLOCK #4
+
+
+				--- BLOCK #4 44-52, warpins: 2 ---
+				indexBtn(valueInput:getText(), cateFilt.category)
+
+				return 
+				--- END OF BLOCK #4 ---
+
+
+
+			end, {
+				pressImage = res.gettex2(pretex),
+				labelInfo = v,
+				sprite = res.gettex2("pic/panels/setting/" .. getSpr(v) .. ".png")
+			})
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+
+		table.insert(menuList, sub)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 25-26, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #3 27-45, warpins: 1 ---
+		menu = common.createOperationMenu(menuList, 10, function (pnl, cell)
+			--- BLOCK #0 1-5, warpins: 1 ---
+			self.cfg.item = true
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			drag = true
+		}):add2(cateFilt):pos(-14, 40)
+
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		labelInfo = "全  部",
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/qbarr.png")
+	}):anchor(1, 0):pos(self.content:getw() - 120, 1):add2(self.content)
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-22, warpins: 1 ---
+		sound.playSound("103")
+
+		self.cfg.item = true
+
+		g_data.setting.resetItemFilt()
+
+		preSearchName = nil
+
+		indexBtn(valueInput:getText(), cateFilt.category)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/hfmr.png")
+	}):anchor(1, 0):pos(self.content:getw() - 3, 1):add2(self.content)
+
+	local listener = cc.EventListenerCustom:create("director_after_update", function ()
+		--- BLOCK #0 1-29, warpins: 1 ---
+		local x, y = scroll:getScrollOffset()
+		local ssheight = scroll:getScrollSize().height
+		local tItemIndex = math.ceil((y + scroll:geth())/itemHeight)
+		local bItemIndex = math.floor(y/itemHeight)
+		local str = ""
+		--- END OF BLOCK #0 ---
+
+		for i=bItemIndex, tItemIndex, 1
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #4
+
+		--- BLOCK #1 30-41, warpins: 2 ---
+		local ident = i + 1
+		str = string.format("%s,%d", str, ident)
+
+		--- END OF BLOCK #1 ---
+
+		slot11 = if items[ident] then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 42-54, warpins: 1 ---
+		setSubItem(ident, items[ident], ssheight - y, ssheight - y - scroll:geth() - 30)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 55-55, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #4 56-56, warpins: 1 ---
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+
+	cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(listener, 1)
+
+	scroll.onCleanup = function ()
+		--- BLOCK #0 1-13, warpins: 1 ---
+		cc.Director:getInstance():getEventDispatcher():removeEventListener(listener)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	scroll.setNodeEventEnabled(scroll, true)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+setting.loadPro = function (self)
+	--- BLOCK #0 1-34, warpins: 1 ---
+	local function add(type, key, name, info, color)
+		--- BLOCK #0 1-118, warpins: 1 ---
+		local data = g_data.setting.protected[type][key]
+		local node = display.newNode():anchor(0, 0.5):size(400, 30)
+
+		createToggle(function (b)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			self.cfg.protected = true
+			data.enable = b
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, data.enable, {
+			name,
+			20,
+			1,
+			{
+				color = def.colors.labelGray
+			}
+		}):anchor(0, 0.5):pos(0, node.geth(node)/2):add2(node)
+
+		local valueInput = nil
+		valueInput = an.newInput(120, node.geth(node)/2 - 2, 80, 34, 5, {
+			label = {
+				"" .. data.value,
+				20,
+				1
+			},
+			bg = {
+				h = 32,
+				tex = res.gettex2("pic/scale/edit.png"),
+				offset = {
+					-3,
+					4
+				}
+			},
+			stop_call = function ()
+				--- BLOCK #0 1-13, warpins: 1 ---
+				self.cfg.protected = true
+				slot0 = data
+
+				--- END OF BLOCK #0 ---
+
+				slot1 = if not tonumber(valueInput:getText())
+
+				 then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 14-15, warpins: 1 ---
+				slot1 = data.value
+				--- END OF BLOCK #1 ---
+
+				FLOW; TARGET BLOCK #2
+
+
+				--- BLOCK #2 16-20, warpins: 2 ---
+				slot0.value = slot1
+				--- END OF BLOCK #2 ---
+
+				slot0 = if data.isPercent then
+				JUMP TO BLOCK #3
+				else
+				JUMP TO BLOCK #4
+				end
+
+
+				--- BLOCK #3 21-28, warpins: 1 ---
+				data.value = math.min(data.value, 100)
+
+				--- END OF BLOCK #3 ---
+
+				FLOW; TARGET BLOCK #4
+
+
+				--- BLOCK #4 29-37, warpins: 2 ---
+				valueInput:setText("" .. data.value)
+
+				return 
+				--- END OF BLOCK #4 ---
+
+
+
+			end
+		}):add2(node):anchor(0, 0.5)
+
+		an.newLabel(info, 20, 1, {
+			color = def.colors.labelGray
+		}):anchor(0.5, 0.5):pos(230, node.geth(node)/2):add2(node)
+
+		return node
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local function addHeroProtected(type, key, color)
+		--- BLOCK #0 1-117, warpins: 1 ---
+		local data = g_data.setting.protected[type][key]
+		local node = display.newNode():anchor(0, 0.5):size(400, 30)
+
+		an.newLabel("躲闪血量", 20, 1, {
+			color = def.colors.labelGray
+		}):anchor(0, 0.5):pos(0, node.geth(node)/2):add2(node)
+
+		local valueInput = nil
+		valueInput = an.newInput(84, node.geth(node)/2 - 2, 80, 34, 5, {
+			label = {
+				"" .. data.value,
+				20,
+				1
+			},
+			bg = {
+				h = 32,
+				tex = res.gettex2("pic/scale/edit.png"),
+				offset = {
+					-3,
+					4
+				}
+			},
+			stop_call = function ()
+				--- BLOCK #0 1-13, warpins: 1 ---
+				self.cfg.protected = true
+				slot0 = data
+
+				--- END OF BLOCK #0 ---
+
+				slot1 = if not tonumber(valueInput:getText())
+
+				 then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 14-15, warpins: 1 ---
+				slot1 = data.value
+				--- END OF BLOCK #1 ---
+
+				FLOW; TARGET BLOCK #2
+
+
+				--- BLOCK #2 16-56, warpins: 2 ---
+				slot0.value = slot1
+				data.value = math.max(data.value, 40)
+				data.value = math.min(data.value, g_data.hero.ability:get("maxHP"))
+
+				valueInput:setText("" .. data.value)
+				net.send({
+					CM_COMMON_INFORMATION,
+					param = 2,
+					recog = data.value
+				})
+
+				return 
+				--- END OF BLOCK #2 ---
+
+
+
+			end
+		}):add2(node):anchor(0, 0.5)
+
+		an.newLabel("HP", 20, 1, {
+			color = def.colors.labelGray
+		}):anchor(0, 0.5):pos(160, node.geth(node)/2):add2(node)
+
+		return node
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local cellNode = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(480, 390)):addTo(self.content):anchor(0, 0)
+	local tabs = {}
+	local curName = nil
+	local btns = {
+		"role",
+		"hero"
+	}
+	local offTop = 0
+
+	local function click(selectIndex)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		self.cfg.protected = true
+
+		cellNode:removeAllChildren()
+
+		--- END OF BLOCK #0 ---
+
+		if selectIndex == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 11-171, warpins: 1 ---
+		local data = g_data.setting.protected.role
+
+		an.newLabel("主号保护设置", 20, 1, {
+			color = def.colors.labelYellow
+		}):add2(cellNode):pos(15, cellNode:geth() - 42 - offTop)
+
+		local labels = "随机传送卷,地牢逃脱卷,回城,行会回城卷,随机传送石,小退"
+		local icons = {
+			"pic/panels/setting/icon_1.png",
+			"pic/panels/setting/icon_2.png",
+			nil,
+			"pic/panels/setting/icon_4.png",
+			"pic/panels/setting/icon_7.png",
+			"pic/panels/setting/icon_8.png"
+		}
+		icons[3] = {
+			"pic/console/skill_base-icons/back.png",
+			0.65
+		}
+
+		self:createSelectTab({
+			scale = 1,
+			texts = labels,
+			res = icons,
+			curtext = data.hp.uses,
+			size = cc.size(128, 24),
+			endFunc = function (obj)
+				--- BLOCK #0 1-4, warpins: 1 ---
+				data.hp.uses = obj
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}):anchor(0, 0.5):pos(280, cellNode:geth() - 70 - offTop):add2(cellNode, 2)
+		self:createSelectTab({
+			scale = 1,
+			texts = labels,
+			res = icons,
+			curtext = data.mp.uses,
+			size = cc.size(128, 24),
+			endFunc = function (obj)
+				--- BLOCK #0 1-4, warpins: 1 ---
+				data.mp.uses = obj
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		}):anchor(0, 0.5):pos(280, cellNode:geth() - 140 - offTop):add2(cellNode, 1)
+		add("role", "hp", "HP低于", "时使用", def.colors.labelGray):pos(15, cellNode:geth() - 70 - offTop):add2(cellNode)
+		add("role", "mp", "MP低于", "时使用", def.colors.labelGray):pos(15, cellNode:geth() - 140 - offTop):add2(cellNode)
+
+		return 
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 172-267, warpins: 1 ---
+		an.newLabel("英雄保护设置", 20, 1, {
+			color = def.colors.labelYellow
+		}):add2(cellNode):pos(15, cellNode:geth() - 42 - offTop)
+		add("hero", "hp", "HP低于", "收英雄", def.colors.labelGray):pos(15, cellNode:geth() - 70 - offTop):add2(cellNode)
+		add("hero", "mp", "MP低于", "收英雄", def.colors.labelGray):pos(15, cellNode:geth() - 120 - offTop):add2(cellNode)
+		addHeroProtected("hero", "miss", def.colors.labelGray):pos(280, cellNode:geth() - 260 - offTop):add2(cellNode)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 268-268, warpins: 2 ---
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+
+	--- END OF BLOCK #0 ---
+
+	if def.gameVersionType == "185" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #1 35-39, warpins: 1 ---
+	local preState = nil
+
+	--- END OF BLOCK #1 ---
+
+	for k, v in ipairs({
+		"主号",
+		"英雄"
+	})
+
+
+	LOOP BLOCK #2
+	GO OUT TO BLOCK #9
+
+
+	--- BLOCK #2 40-153, warpins: 1 ---
+	local index = k
+	local sp = display.newScale9Sprite(res.getframe2("pic/scale/scale15.png")):size(cellNode.getw(cellNode)/2 - 4, 50):add2(self.content):anchor(0, 1):pos((self.content:getw()/2 - 5)*(k - 1) + 5, self.ctop - 5)
+	local label = an.newLabel(v, 20, 1, {
+		color = def.colors.labelYellow
+	}):anchor(0, 0)
+	local selsp = res.get2("pic/common/button_click.png"):add2(sp):pos(sp.getw(sp)/2 - label.getw(label)/2, sp.geth(sp)/2)
+
+	label.add2(label, selsp):pos(selsp.getw(selsp), 0)
+
+	local selstate = res.get2("pic/common/button_click02.png"):add2(selsp):pos(selsp.getw(selsp)/2, selsp.geth(selsp)/2)
+	slot21 = selstate
+	slot20 = selstate.setVisible
+	--- END OF BLOCK #2 ---
+
+	if index ~= 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 154-155, warpins: 1 ---
+	slot22 = false
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+	--- BLOCK #4 156-156, warpins: 1 ---
+	slot22 = true
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 157-169, warpins: 2 ---
+	slot20(slot21, slot22)
+	sp.setTouchEnabled(sp, true)
+	sp.addNodeEventListener(sp, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		sp.offsetBeginY = event.y
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #2 10-12, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 13-23, warpins: 1 ---
+		local offsetY = event.y - sp.offsetBeginY
+
+		--- END OF BLOCK #3 ---
+
+		if math.abs(offsetY)
+		 <= 10 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 24-29, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot2 = if not selstate:isVisible()
+		 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 30-44, warpins: 1 ---
+		preState:setVisible(false)
+		click(index)
+		selstate:setVisible(true)
+
+		preState = selstate
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 45-45, warpins: 5 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #5 ---
+
+	slot9 = if not preState then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 170-170, warpins: 1 ---
+	preState = selstate
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 171-171, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 172-173, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+	--- BLOCK #9 174-175, warpins: 1 ---
+	offTop = 50
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 176-180, warpins: 2 ---
+	click(1)
+
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+setting.loadDrugs = function (self)
+	--- BLOCK #0 1-33, warpins: 1 ---
+	local function add(settingData, key, name, min, info0, info1)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		local data = settingData[key]
+		--- END OF BLOCK #0 ---
+
+		slot3 = if not min then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-4, warpins: 1 ---
+		min = 10
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 5-6, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot4 = if not info0 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 7-7, warpins: 1 ---
+		info0 = "请输入数字"
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 8-9, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		slot5 = if not info1 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 10-10, warpins: 1 ---
+		info1 = "请输入数字"
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 11-50, warpins: 2 ---
+		local node = display.newNode():size(460, 30)
+
+		createToggle(function (b)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			self.cfg.drugs = true
+			data.enable = b
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, data.enable, {
+			name,
+			20,
+			1,
+			{
+				color = def.colors.labelGray
+			}
+		}):anchor(0, 0.5):pos(10, node.geth(node)/2):add2(node)
+
+		--- END OF BLOCK #6 ---
+
+		if data.value < min then
+		JUMP TO BLOCK #7
+		else
+		JUMP TO BLOCK #8
+		end
+
+
+		--- BLOCK #7 51-51, warpins: 1 ---
+		data.value = min
+		--- END OF BLOCK #7 ---
+
+		FLOW; TARGET BLOCK #8
+
+
+		--- BLOCK #8 52-86, warpins: 2 ---
+		local inputBack = display.newScale9Sprite(res.getframe2("pic/scale/edit.png")):anchor(0, 0.5):pos(170, node.geth(node)/2):add2(node):size(85, 41)
+		slot9 = an.newLabel
+		slot10 = ""
+		--- END OF BLOCK #8 ---
+
+		slot11 = if not data.value then
+		JUMP TO BLOCK #9
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #9 87-87, warpins: 1 ---
+		slot11 = min
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 88-152, warpins: 2 ---
+		local inputLabel = slot9(slot10 .. slot11, 18, 1, {
+			color = def.colors.labelGray
+		}):anchor(0, 0.5):add2(inputBack):pos(10, inputBack.geth(inputBack)*0.5)
+
+		inputBack.enableClick(inputBack, function ()
+			--- BLOCK #0 1-61, warpins: 1 ---
+			local msgbox = nil
+			msgbox = an.newMsgbox(info0, function (idx)
+				--- BLOCK #0 1-2, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				if idx == 1 then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #12
+				end
+
+
+				--- BLOCK #1 3-9, warpins: 1 ---
+				--- END OF BLOCK #1 ---
+
+				if msgbox.input:getString()
+
+				 == "" then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #2 10-10, warpins: 1 ---
+				return 
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 11-23, warpins: 2 ---
+				self.cfg.drugs = true
+				local inputValue = tonumber(msgbox.input:getText())
+				--- END OF BLOCK #3 ---
+
+				slot1 = if inputValue then
+				JUMP TO BLOCK #4
+				else
+				JUMP TO BLOCK #8
+				end
+
+
+				--- BLOCK #4 24-26, warpins: 1 ---
+				--- END OF BLOCK #4 ---
+
+				if min < inputValue then
+				JUMP TO BLOCK #5
+				else
+				JUMP TO BLOCK #6
+				end
+
+
+				--- BLOCK #5 27-28, warpins: 1 ---
+				--- END OF BLOCK #5 ---
+
+				slot1 = if not inputValue then
+				JUMP TO BLOCK #6
+				else
+				JUMP TO BLOCK #7
+				end
+
+
+				--- BLOCK #6 29-29, warpins: 2 ---
+				inputValue = min
+				--- END OF BLOCK #6 ---
+
+				FLOW; TARGET BLOCK #7
+
+
+				--- BLOCK #7 30-30, warpins: 2 ---
+				--- END OF BLOCK #7 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+				--- BLOCK #8 31-35, warpins: 1 ---
+				--- END OF BLOCK #8 ---
+
+				if min < data.value then
+				JUMP TO BLOCK #9
+				else
+				JUMP TO BLOCK #10
+				end
+
+
+				--- BLOCK #9 36-39, warpins: 1 ---
+				--- END OF BLOCK #9 ---
+
+				slot1 = if not data.value then
+				JUMP TO BLOCK #10
+				else
+				JUMP TO BLOCK #11
+				end
+
+
+				--- BLOCK #10 40-40, warpins: 2 ---
+				inputValue = min
+				--- END OF BLOCK #10 ---
+
+				FLOW; TARGET BLOCK #11
+
+
+				--- BLOCK #11 41-50, warpins: 3 ---
+				data.value = inputValue
+
+				inputLabel:setString("" .. data.value)
+
+				--- END OF BLOCK #11 ---
+
+				FLOW; TARGET BLOCK #12
+
+
+				--- BLOCK #12 51-51, warpins: 2 ---
+				return 
+				--- END OF BLOCK #12 ---
+
+
+
+			end, {
+				disableScroll = true,
+				btnTexts = {
+					"确定",
+					"关闭"
+				}
+			})
+			msgbox.input = an.newInput(0, 0, msgbox.bg:getw() - 60, 40, 7, {
+				label = {
+					inputLabel:getString(),
+					20,
+					1
+				},
+				bg = {
+					tex = res.gettex2("pic/scale/scale16.png"),
+					offset = {
+						-10,
+						2
+					}
+				}
+			}):add2(msgbox.bg):pos(msgbox.bg:getw()*0.5 + 10, msgbox.bg:geth()*0.5 + 20)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+
+		local inputTimeBack = display.newScale9Sprite(res.getframe2("pic/scale/edit.png")):anchor(0, 0.5):pos(330, node.geth(node)/2):add2(node):size(85, 41)
+		slot11 = an.newLabel
+		slot12 = ""
+		--- END OF BLOCK #10 ---
+
+		slot13 = if not data.space then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 153-153, warpins: 1 ---
+		slot13 = 0
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 154-185, warpins: 2 ---
+		local inputTimeLabel = slot11(slot12 .. slot13, 18, 1, {
+			color = def.colors.labelGray
+		}):anchor(0, 0.5):add2(inputTimeBack):pos(10, inputTimeBack.geth(inputTimeBack)*0.5)
+
+		inputTimeBack.enableClick(inputTimeBack, function ()
+			--- BLOCK #0 1-61, warpins: 1 ---
+			local msgbox = nil
+			msgbox = an.newMsgbox(info1, function (idx)
+				--- BLOCK #0 1-2, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				if idx == 1 then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #8
+				end
+
+
+				--- BLOCK #1 3-9, warpins: 1 ---
+				--- END OF BLOCK #1 ---
+
+				if msgbox.input:getString()
+
+				 == "" then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #2 10-10, warpins: 1 ---
+				return 
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 11-24, warpins: 2 ---
+				self.cfg.drugs = true
+				slot1 = data
+
+				--- END OF BLOCK #3 ---
+
+				slot2 = if not tonumber(msgbox.input:getText())
+
+				 then
+				JUMP TO BLOCK #4
+				else
+				JUMP TO BLOCK #5
+				end
+
+
+				--- BLOCK #4 25-26, warpins: 1 ---
+				slot2 = data.space
+				--- END OF BLOCK #4 ---
+
+				FLOW; TARGET BLOCK #5
+
+
+				--- BLOCK #5 27-35, warpins: 2 ---
+				slot1.space = slot2
+				slot2 = inputTimeLabel
+				slot1 = inputTimeLabel.setString
+				slot3 = ""
+				--- END OF BLOCK #5 ---
+
+				slot4 = if not data.space then
+				JUMP TO BLOCK #6
+				else
+				JUMP TO BLOCK #7
+				end
+
+
+				--- BLOCK #6 36-36, warpins: 1 ---
+				slot4 = 0
+
+				--- END OF BLOCK #6 ---
+
+				FLOW; TARGET BLOCK #7
+
+
+				--- BLOCK #7 37-38, warpins: 2 ---
+				slot1(slot2, slot3 .. slot4)
+
+				--- END OF BLOCK #7 ---
+
+				FLOW; TARGET BLOCK #8
+
+
+				--- BLOCK #8 39-39, warpins: 2 ---
+				return 
+				--- END OF BLOCK #8 ---
+
+
+
+			end, {
+				disableScroll = true,
+				btnTexts = {
+					"确定",
+					"关闭"
+				}
+			})
+			msgbox.input = an.newInput(0, 0, msgbox.bg:getw() - 60, 40, 7, {
+				label = {
+					inputTimeLabel:getString(),
+					20,
+					1
+				},
+				bg = {
+					tex = res.gettex2("pic/scale/scale16.png"),
+					offset = {
+						-10,
+						2
+					}
+				}
+			}):add2(msgbox.bg):pos(msgbox.bg:getw()*0.5 + 10, msgbox.bg:geth()*0.5 + 20)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end)
+
+		return node
+		--- END OF BLOCK #12 ---
+
+
+
+	end
+
+	local function addPerItem(settingData, key, label)
+		--- BLOCK #0 1-107, warpins: 1 ---
+		local data = settingData[key]
+		local node = display.newNode()
+		local lb = an.newLabel(label, 20, 1, {
+			color = def.colors.labelGray
+		}):add2(node):pos(0, 0):anchor(0, 0.5)
+		local lbValue = an.newLabel(math.ceil(tonumber(data.value)*100) .. "%", 20, 1, {
+			color = def.colors.labelGray
+		}):add2(node):pos(370, 0):anchor(0, 0.5)
+
+		local function valueChg(value)
+			--- BLOCK #0 1-24, warpins: 1 ---
+			local per = math.ceil(tonumber(value)*100)
+			self.cfg.drugs = true
+			data.value = per/100
+
+			lbValue:setString(tostring(per) .. "%")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		local slider = an.newSlider(res.gettex2("pic/scale/sliderBar.png"), nil, res.gettex2("pic/panels/setting/button.png"), {
+			scale9 = cc.size(250, 15),
+			value = data.value,
+			valueChange = valueChg,
+			valueChangeEnd = valueChg
+		}):add2(node):pos(100, 0):anchor(0, 0.5)
+
+		slider.block:setScale(0.7)
+
+		return node
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local cellNode = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(480, 390)):addTo(self.content):anchor(0, 0)
+	local space = 65
+	local contentSize = cellNode.getContentSize(cellNode)
+	--- END OF BLOCK #0 ---
+
+	if def.gameVersionType ~= "185" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 34-35, warpins: 1 ---
+	slot6 = false
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 36-36, warpins: 1 ---
+	local hasHero = true
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 37-43, warpins: 2 ---
+	function click(k)
+		--- BLOCK #0 1-11, warpins: 1 ---
+		local top = cellNode:geth() - 35
+		local contentHeight = contentSize.height - 75
+		--- END OF BLOCK #0 ---
+
+		slot3 = if hasHero then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 12-13, warpins: 1 ---
+		top = top - 50
+		contentHeight = contentHeight - 50
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 14-27, warpins: 2 ---
+		cellNode:removeAllChildren()
+
+		local settingData = g_data.setting.drugs.hero
+		local cfg = g_data.setting.drugs.heroSetting
+		--- END OF BLOCK #2 ---
+
+		if k == 1 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 28-35, warpins: 1 ---
+		settingData = g_data.setting.drugs.role
+		cfg = g_data.setting.drugs.roleSetting
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 36-97, warpins: 2 ---
+		local settingNode = an.newScroll(0, 20, contentSize.width, contentHeight):add2(cellNode)
+
+		local function putItemsPercent(topPos)
+			--- BLOCK #0 1-67, warpins: 1 ---
+			local data = settingData.percentDrug
+
+			addPerItem(data, "normalHP", "普通红药"):add2(settingNode):pos(25, topPos)
+
+			topPos = topPos - space
+
+			addPerItem(data, "normalMP", "普通蓝药"):add2(settingNode):pos(25, topPos)
+
+			topPos = topPos - space
+
+			addPerItem(data, "quickHP", "瞬回红药"):add2(settingNode):pos(25, topPos)
+
+			topPos = topPos - space
+
+			addPerItem(data, "quickMP", "瞬回蓝药"):add2(settingNode):pos(25, topPos)
+
+			topPos = topPos - space
+
+			return topPos
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		local function putItemsNumber(topPos)
+			--- BLOCK #0 1-163, warpins: 1 ---
+			topPos = topPos + space/2
+
+			an.newLabel("剩余HP/MP", 18, 1, {
+				color = def.colors.labelYellow
+			}):anchor(0, 0.5):add2(settingNode):pos(196, topPos)
+			an.newLabel("间隔(毫秒)", 18, 1, {
+				color = def.colors.labelYellow
+			}):anchor(0, 0.5):add2(settingNode):pos(364, topPos)
+			res.get2("pic/common/b4.png"):anchor(0.5, 0.5):pos(230, topPos - 12):add2(settingNode)
+
+			topPos = topPos - 40
+			local data = settingData.numberDrug
+
+			add(data, "normalHP", "普通红药", 0):pos(25, topPos):add2(settingNode):anchor(0, 0.5)
+
+			topPos = topPos - space
+
+			add(data, "normalMP", "普通蓝药", 0):pos(25, topPos):add2(settingNode):anchor(0, 0.5)
+
+			topPos = topPos - space
+
+			add(data, "quickHP", "瞬回红药", 0):pos(25, topPos):add2(settingNode):anchor(0, 0.5)
+
+			topPos = topPos - space
+
+			add(data, "quickMP", "瞬回蓝药", 0):pos(25, topPos):add2(settingNode):anchor(0, 0.5)
+
+			topPos = topPos - space
+
+			return topPos
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		local dataTypes = nil
+
+		local function showItems(putItems)
+			--- BLOCK #0 1-10, warpins: 1 ---
+			local topPos = contentHeight - space/2
+			topPos = putItems(topPos)
+
+			return topPos + 30
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		local function showAnnotation(topPos)
+			--- BLOCK #0 1-41, warpins: 1 ---
+			local lb = an.newLabelM(settingNode:getw() - 20, 20, 1):add2(settingNode):pos(10, topPos - 90)
+
+			local function put(title, annotation)
+				--- BLOCK #0 1-17, warpins: 1 ---
+				lb:addLabel(title, def.colors.labelYellow)
+				lb:addLabel(annotation, def.colors.clRed)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+
+			lb.addLabel(lb, "注:\n", def.colors.labelYellow)
+			put("普通红药:", "金创药(小量)、金创药(中量)、强效金创药\n")
+			put("普通蓝药:", "魔法药(小量)、魔法药(中量)、强效魔法药\n")
+			put("瞬回药:", "太阳水、强效太阳水、万年雪霜、疗伤药")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		local curTop = top
+		local perTog, numTog = nil
+
+		local function switch(b)
+			--- BLOCK #0 1-32, warpins: 1 ---
+			self.cfg.drugs = true
+			top = curTop - space
+
+			settingNode:removeSelf()
+
+			settingNode = an.newScroll(0, 20, contentSize.width, contentHeight):add2(cellNode)
+			cfg.withPercent = b
+			cfg.withNumber = not b
+
+			--- END OF BLOCK #0 ---
+
+			slot0 = if b then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 33-47, warpins: 1 ---
+			perTog.btn:select()
+			numTog.btn:unselect()
+
+			top = showItems(putItemsPercent)
+
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 48-61, warpins: 1 ---
+			perTog.btn:unselect()
+			numTog.btn:select()
+
+			top = showItems(putItemsNumber)
+
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 62-65, warpins: 2 ---
+			showAnnotation(top)
+
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+
+		perTog = setting.add(cfg, "withPercent", "按百分比自动喝药", function (b)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			switch(not b)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, true):add2(cellNode):pos(20, top)
+		numTog = setting.add(cfg, "withNumber", "按血量自动喝药", switch, true):add2(cellNode):pos(250, top)
+		top = top - space + 20
+		--- END OF BLOCK #4 ---
+
+		slot15 = if cfg.withPercent then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 98-102, warpins: 1 ---
+		top = showItems(putItemsPercent)
+		--- END OF BLOCK #5 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #6 103-106, warpins: 1 ---
+		top = showItems(putItemsNumber)
+
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 107-111, warpins: 2 ---
+		showAnnotation(top)
+
+		return 
+		--- END OF BLOCK #7 ---
+
+
+
+	end
+
+	click(1)
+
+	--- END OF BLOCK #3 ---
+
+	slot6 = if hasHero then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #4 44-48, warpins: 1 ---
+	local preState = nil
+
+	--- END OF BLOCK #4 ---
+
+	for k, v in ipairs({
+		"主号",
+		"英雄"
+	})
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #12
+
+
+	--- BLOCK #5 49-162, warpins: 1 ---
+	local index = k
+	local sp = display.newScale9Sprite(res.getframe2("pic/scale/scale15.png")):size(cellNode.getw(cellNode)/2 - 4, 50):add2(self.content):anchor(0, 1):pos((self.content:getw()/2 - 5)*(k - 1) + 5, self.ctop - 5)
+	local label = an.newLabel(v, 20, 1, {
+		color = def.colors.labelYellow
+	}):anchor(0, 0)
+	local selsp = res.get2("pic/common/button_click.png"):add2(sp):pos(sp.getw(sp)/2 - label.getw(label)/2, sp.geth(sp)/2)
+
+	label.add2(label, selsp):pos(selsp.getw(selsp), 0)
+
+	local selstate = res.get2("pic/common/button_click02.png"):add2(selsp):pos(selsp.getw(selsp)/2, selsp.geth(selsp)/2)
+	slot19 = selstate
+	slot18 = selstate.setVisible
+	--- END OF BLOCK #5 ---
+
+	if index ~= 1 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 163-164, warpins: 1 ---
+	slot20 = false
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 165-165, warpins: 1 ---
+	slot20 = true
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 166-178, warpins: 2 ---
+	slot18(slot19, slot20)
+	sp.setTouchEnabled(sp, true)
+	sp.addNodeEventListener(sp, cc.NODE_TOUCH_EVENT, function (event)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if event.name == "began" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-9, warpins: 1 ---
+		sp.offsetBeginY = event.y
+
+		return true
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #2 10-12, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if event.name == "ended" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #3 13-23, warpins: 1 ---
+		local offsetY = event.y - sp.offsetBeginY
+
+		--- END OF BLOCK #3 ---
+
+		if math.abs(offsetY)
+		 <= 10 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #4 24-29, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		slot2 = if not selstate:isVisible()
+		 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 30-44, warpins: 1 ---
+		preState:setVisible(false)
+		click(index)
+		selstate:setVisible(true)
+
+		preState = selstate
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 45-45, warpins: 5 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end)
+
+	--- END OF BLOCK #8 ---
+
+	slot7 = if not preState then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 179-179, warpins: 1 ---
+	preState = selstate
+
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 180-180, warpins: 2 ---
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 181-182, warpins: 2 ---
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #12 183-183, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 184-185, warpins: 2 ---
+	return 
+	--- END OF BLOCK #13 ---
+
+
+
+end
+setting.loadJob = function (self)
+	--- BLOCK #0 1-85, warpins: 1 ---
+	local cellNode = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(480, 390)):addTo(self.content):anchor(0, 0)
+	local playerName = common.getPlayerName()
+	local scroll = an.newScroll(0, 5, cellNode.getw(cellNode), cellNode.geth(cellNode) - 10, {
+		labelM = {
+			18,
+			1
+		}
+	}):add2(cellNode)
+	local offsetX = 25
+
+	local function generateSklSelectData(skillNames, func)
+		--- BLOCK #0 1-7, warpins: 1 ---
+		local labels = {}
+		local icons = {}
+		local curText, default = nil
+
+		--- END OF BLOCK #0 ---
+
+		for k, v in pairs(skillNames)
+
+		LOOP BLOCK #1
+		GO OUT TO BLOCK #10
+
+
+		--- BLOCK #1 8-15, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot11 = if g_data.player:getMagic(v)
+		 then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #2 16-34, warpins: 1 ---
+		table.insert(icons, string.format("pic/console/skill-icons/%d.png", v))
+		table.insert(labels, k)
+		--- END OF BLOCK #2 ---
+
+		if type(func)
+
+		 == "number" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #3 35-36, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if func == v then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #4 37-39, warpins: 1 ---
+		curText = k
+		default = v
+
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #5 40-44, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if type(func)
+		 == "function" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 45-49, warpins: 1 ---
+		func(k, v)
+
+		--- END OF BLOCK #6 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+		--- BLOCK #7 50-51, warpins: 1 ---
+		--- END OF BLOCK #7 ---
+
+		slot1 = if not func then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 52-54, warpins: 1 ---
+		curText = k
+		default = v
+		func = v
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 55-56, warpins: 7 ---
+		--- END OF BLOCK #9 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+		--- BLOCK #10 57-60, warpins: 1 ---
+		slot6 = labels
+		slot7 = icons
+		--- END OF BLOCK #10 ---
+
+		slot8 = if not curText then
+		JUMP TO BLOCK #11
+		else
+		JUMP TO BLOCK #12
+		end
+
+
+		--- BLOCK #11 61-61, warpins: 1 ---
+		slot8 = ""
+
+		--- END OF BLOCK #11 ---
+
+		FLOW; TARGET BLOCK #12
+
+
+		--- BLOCK #12 62-63, warpins: 2 ---
+		return slot6, slot7, slot8, default
+		--- END OF BLOCK #12 ---
+
+
+
+	end
+
+	local nextPosY = 0
+
+	local function add(key, name, func, externHandle, setting, gray)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		slot6 = g_data.setting
+		--- END OF BLOCK #0 ---
+
+		slot7 = if not setting then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-5, warpins: 1 ---
+		slot7 = "job"
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 6-20, warpins: 2 ---
+		local data = slot6[slot7]
+		local node = display.newNode():anchor(0, 0.5)
+		local enable = data[key]
+
+		--- END OF BLOCK #2 ---
+
+		if type(enable)
+
+		 == "table" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 21-21, warpins: 1 ---
+		enable = enable.enable
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 22-61, warpins: 2 ---
+		node.btn = createToggle(function (b)
+			--- BLOCK #0 1-7, warpins: 1 ---
+			self.cfg.autoRat = true
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not externHandle then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 8-10, warpins: 1 ---
+			data[key] = b
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 11-13, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			slot1 = if func then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 14-19, warpins: 1 ---
+			func(data[key])
+
+			return 
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 20-20, warpins: 2 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end, enable, {
+			name,
+			20,
+			1,
+			{
+				color = def.colors.labelGray
+			}
+		}):anchor(0, 0.5):pos(0, 14):add2(node)
+
+		node.size(node, node.btn:getw(), node.btn:geth())
+
+		return node
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	local titleOff = -10
+
+	an.newLabel("技能", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(scroll):pos(offsetX + titleOff, self.content:geth() - 50)
+
+	nextPosY = self.content:geth() - 68
+
+	local function addHeroCfg()
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if g_data.hero then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-9, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot0 = if not g_data.hero.roleid then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 10-10, warpins: 2 ---
+		return 
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-19, warpins: 1 ---
+		local x = offsetX
+
+		--- END OF BLOCK #3 ---
+
+		slot1 = if g_data.hero:getMagic(31)
+
+		 then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 20-43, warpins: 1 ---
+		self.btns.btnautoDunHero = add("autoDunHero", "英雄持续开盾", function (b)
+			--- BLOCK #0 1-14, warpins: 1 ---
+			self.cfg.job = true
+
+			main_scene.ui.console.btnCallbacks:handle("setting", "btnautoDunHero")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, true):add2(scroll):pos(x, nextPosY).btn
+		hasSkill = true
+		nextPosY = nextPosY - 43
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 44-46, warpins: 2 ---
+		return nextPosY
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 47-47, warpins: 2 ---
+		--- END OF BLOCK #6 ---
+
+
+
+	end
+
+	local playerJob = g_data.player.job
+	--- END OF BLOCK #0 ---
+
+	if playerJob == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 86-373, warpins: 1 ---
+	local x = offsetX
+	self.btns.btnAutoAllSpace = add("autoAllSpace", "刀刀刺杀", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoAllSpace")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(x, nextPosY).btn:setGray(not g_data.player:getMagic(12))
+	x = x + 240
+	self.btns.btnAutoAllSpace = add("autoSpace", "隔位刺杀", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoSpace")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(x, nextPosY).btn:setGray(not g_data.player:getMagic(12))
+	x = offsetX
+	nextPosY = nextPosY - 45
+	self.btns.btnAutoFire = add("autoFire", "自动烈火", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoFire")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(x, nextPosY).btn:setGray(not g_data.player:getMagic(26))
+	x = x + 240
+	self.btns.btnAutoWide = add("autoWide", "智能半月", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoWide")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(x, nextPosY).btn:setGray(not g_data.player:getMagic(25))
+	x = offsetX
+	nextPosY = nextPosY - 45
+	self.btns.btnAutoSword = add("autoSword", "逐日剑法", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoSword")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(x, nextPosY).btn:setGray(not g_data.player:getMagic(58))
+	nextPosY = nextPosY - 45
+
+	addHeroCfg()
+	an.newLabel("挂机设置", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(scroll):pos(titleOff + 25, nextPosY - 6):anchor(0, 0)
+
+	nextPosY = nextPosY - 36
+	self.btns.btnAutoRoar = add("autoRoar", "身边有", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoRoar")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn:setGray(not g_data.player:getMagic(43))
+	local roarInput = nil
+	roarInput = an.newInput(self.btns.btnAutoRoar:getw() + 30, nextPosY - 7, 70, 34, 5, {
+		donotClip = true,
+		label = {
+			"" .. g_data.setting.autoRat.autoRoar.cnt,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self.cfg.autoRat = true
+			slot0 = g_data.setting.autoRat.autoRoar
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(roarInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-21, warpins: 1 ---
+			slot1 = g_data.setting.autoRat.autoRoar.cnt
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-34, warpins: 2 ---
+			slot0.cnt = slot1
+
+			roarInput:setText("" .. g_data.setting.autoRat.autoRoar.cnt)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(scroll):anchor(0, 0.5)
+
+	an.newLabel("个怪时使用狮子吼", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(roarInput.getw(roarInput) + roarInput.getPositionX(roarInput), nextPosY - 3):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoRoar")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	nextPosY = nextPosY - 45
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #2 374-375, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if playerJob == 1 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #3 376-446, warpins: 1 ---
+	self.btns.btnAutoDun = add("autoDun", "自动魔法盾", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoDun")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(offsetX, nextPosY).btn:setGray(not g_data.player:getMagic(31))
+	nextPosY = nextPosY - 42
+
+	addHeroCfg()
+	an.newLabel("挂机设置", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(scroll):pos(titleOff + 25, nextPosY - 6):anchor(0, 0)
+
+	nextPosY = nextPosY - 30
+	local skillNames = {
+		雷电术 = 11,
+		冰咆哮 = 33,
+		大火球 = 5,
+		爆裂火焰 = 23,
+		灭天火 = 35,
+		疾光电影 = 10,
+		流星火雨 = 59,
+		火球术 = 1,
+		地狱火 = 9,
+		地狱雷光 = 24
+	}
+	local curAtkMagic, curAreaMagic = nil
+	local atkMagic = g_data.setting.autoRat.atkMagic
+	local labels, icons, curAtkMagic, magicId = generateSklSelectData(skillNames, atkMagic.magicId)
+	atkMagic.magicId = magicId
+
+	--- END OF BLOCK #3 ---
+
+	if atkMagic.enable == nil then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #4 447-454, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot19 = if g_data.player:getMagic(1)
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 455-459, warpins: 1 ---
+	atkMagic.magicId = 1
+	curAtkMagic = "火球术"
+	atkMagic.enable = true
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 460-461, warpins: 3 ---
+	--- END OF BLOCK #6 ---
+
+	slot17 = if not curAtkMagic then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 462-462, warpins: 1 ---
+	curAtkMagic = ""
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 463-465, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if #labels ~= 0 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 466-558, warpins: 1 ---
+	self.btns.btnAtkMagic = add("atkMagic", "挂机技能", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAtkMagic")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	local atkMagic = self.createSelectTab(self, {
+		parent = self.content,
+		texts = labels,
+		res = icons,
+		curtext = curAtkMagic,
+		size = cc.size(128, 24),
+		endFunc = function (obj)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			self.cfg.autoRat = true
+			g_data.setting.autoRat.atkMagic.magicId = skillNames[obj]
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}, self.content):anchor(0, 0.5):pos(offsetX + self.btns.btnAtkMagic:getw(), nextPosY):add2(scroll, 2)
+
+	an.newLabel("不勾选默认平砍", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(atkMagic.getw(atkMagic) + atkMagic.getPositionX(atkMagic), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAtkMagic")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	nextPosY = nextPosY - 50
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 559-572, warpins: 2 ---
+	local areaSkillNames = {
+		流星火雨 = 59,
+		地狱火 = 9,
+		爆裂火焰 = 23,
+		冰咆哮 = 33,
+		疾光电影 = 10,
+		地狱雷光 = 24
+	}
+	local areaMagic = g_data.setting.autoRat.areaMagic
+	local areaLabels, areaIcons, curAreaMagic, magicId = generateSklSelectData(areaSkillNames, areaMagic.magicId)
+	areaMagic.magicId = magicId
+	--- END OF BLOCK #10 ---
+
+	if 0 < #areaLabels then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 573-711, warpins: 1 ---
+	local areaMagic = add("areaMagic", "目标身边有", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnareaMagic")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY)
+	self.btns.btnareaMagic = areaMagic.btn
+	local roarInput = nil
+	roarInput = an.newInput(areaMagic.getw(areaMagic) + 30, nextPosY - 7, 35, 34, 5, {
+		donotClip = true,
+		label = {
+			"" .. g_data.setting.autoRat.areaMagic.cnt,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self.cfg.autoRat = true
+			slot0 = g_data.setting.autoRat.areaMagic
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(roarInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-21, warpins: 1 ---
+			slot1 = g_data.setting.autoRat.areaMagic.cnt
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-34, warpins: 2 ---
+			slot0.cnt = slot1
+
+			roarInput:setText("" .. g_data.setting.autoRat.areaMagic.cnt)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(scroll):anchor(0, 0.5)
+	local label = an.newLabel("个怪时使用", 20, 1, {
+		color = def.colors.labelGray
+	})
+
+	label.anchor(label, 0, 0.5):add2(scroll):pos(roarInput.getw(roarInput) + roarInput.getPositionX(roarInput), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnareaMagic")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	self.createSelectTab(self, {
+		parent = self.content,
+		texts = areaLabels,
+		res = areaIcons,
+		curtext = curAreaMagic,
+		size = cc.size(128, 24),
+		endFunc = function (obj)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			self.cfg.autoRat = true
+			g_data.setting.autoRat.areaMagic.magicId = areaSkillNames[obj]
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}, self.content):anchor(0, 0.5):pos(label.getPositionX(label) + label.getw(label), nextPosY):add2(scroll, 2)
+
+	nextPosY = nextPosY - 50
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 712-712, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #13 713-714, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	if playerJob == 2 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #14 715-899, warpins: 1 ---
+	local nextPosX = offsetX
+	self.btns.btnAutoInvisible = add("autoInvisible", "自动隐身", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoInvisible")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(nextPosX, nextPosY).btn:setGray(not g_data.player:getMagic(18))
+	nextPosX = 180
+	self.btns.btnAutoPoison = add("autoPoison", "自动施毒", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoPoison")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(nextPosX, nextPosY).btn:setGray(not g_data.player:getMagic(6))
+	nextPosY = nextPosY - 40
+	nextPosX = offsetX
+	self.btns.btnAutoYoulingDun = add("autoYoulingDun", "自动幽灵盾", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoYoulingDun")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "job"):add2(scroll):pos(nextPosX, nextPosY).btn:setGray(not g_data.player:getMagic(14))
+	nextPosX = 180
+	self.btns.btnAutoZhanjiashu = add("autoZhanjiashu", "自动神圣战甲术", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.job = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoZhanjiashu")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "job"):add2(scroll):pos(nextPosX, nextPosY).btn:setGray(not g_data.player:getMagic(15))
+	nextPosY = nextPosY - 40
+	nextPosY = addHeroCfg(nextPosY)
+
+	an.newLabel("挂机设置", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(scroll):pos(titleOff + 25, nextPosY - 6):anchor(0, 0)
+
+	nextPosY = nextPosY - 36
+	local skillNames = {
+		灵魂火符 = 13,
+		噬血术 = 48
+	}
+	local atkMagic = g_data.setting.autoRat.atkMagic
+	local labels, icons, curText, magicId = generateSklSelectData(skillNames, atkMagic.magicId)
+	atkMagic.magicId = magicId
+	local skillNames1 = {
+		召唤骷髅 = 17,
+		召唤神兽 = 30
+	}
+	local autoPet = g_data.setting.autoRat.autoPet
+	local labels1, icons1, curText1, magicId = generateSklSelectData(skillNames1, autoPet.magicId)
+	autoPet.magicId = magicId
+	local skillNames2 = {
+		治愈术 = 2,
+		群体治疗术 = 29
+	}
+	local autoCure = g_data.setting.autoRat.autoCure
+	local labels2, icons2, curText2, magicId = generateSklSelectData(skillNames2, autoCure.magicId)
+	autoCure.magicId = magicId
+	--- END OF BLOCK #14 ---
+
+	if 0 < #labels then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 900-993, warpins: 1 ---
+	self.btns.btnAtkMagic = add("atkMagic", "", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAtkMagic")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	local atkMagic = self.createSelectTab(self, {
+		parent = self.content,
+		texts = labels,
+		res = icons,
+		curtext = curText,
+		size = cc.size(128, 24),
+		endFunc = function (obj)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			self.cfg.autoRat = true
+			g_data.setting.autoRat.atkMagic.magicId = skillNames[obj]
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}, self.content):anchor(0, 0.5):pos(offsetX + self.btns.btnAtkMagic:getw(), nextPosY):add2(scroll, 2)
+
+	an.newLabel("不勾选默认平砍", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(atkMagic.getw(atkMagic) + atkMagic.getPositionX(atkMagic), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAtkMagic")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	nextPosY = nextPosY - 50
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #16 994-999, warpins: 1 ---
+	g_data.setting.autoRat.atkMagic.enable = false
+	--- END OF BLOCK #16 ---
+
+	FLOW; TARGET BLOCK #17
+
+
+	--- BLOCK #17 1000-1003, warpins: 2 ---
+	--- END OF BLOCK #17 ---
+
+	if 0 < #labels1 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #18 1004-1031, warpins: 1 ---
+	self.btns.btnAutoPet = add("autoPet", "自动召唤宠物", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoPet")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	slot31 = self
+	slot30 = self.createSelectTab
+	slot32 = {
+		parent = self.content,
+		texts = labels1,
+		res = icons1
+	}
+	--- END OF BLOCK #18 ---
+
+	slot33 = if not curText1 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 1032-1032, warpins: 1 ---
+	slot33 = ""
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 1033-1064, warpins: 2 ---
+	slot32.curtext = slot33
+	slot32.size = cc.size(128, 24)
+	slot32.endFunc = function (obj)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		self.cfg.autoRat = true
+		g_data.setting.autoRat.autoPet.magicId = skillNames1[obj]
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	slot30(slot31, slot32, self.content):anchor(0, 0.5):pos(offsetX + self.btns.btnAutoPet:getw(), nextPosY):add2(scroll, 2)
+
+	nextPosY = nextPosY - 50
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 1065-1068, warpins: 2 ---
+	--- END OF BLOCK #21 ---
+
+	if 0 < #labels2 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 1069-1209, warpins: 1 ---
+	self.btns.btnAutoCure = add("autoCure", "人物血量低于", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoCure")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	local percentInput = nil
+	percentInput = an.newInput(offsetX + self.btns.btnAutoCure:getw(), nextPosY - 3, 40, 34, 5, {
+		donotClip = true,
+		label = {
+			"" .. g_data.setting.autoRat.autoCure.percent,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self.cfg.autoRat = true
+			slot0 = g_data.setting.autoRat.autoCure
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(percentInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-21, warpins: 1 ---
+			slot1 = g_data.setting.autoRat.autoCure.percent
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-34, warpins: 2 ---
+			slot0.percent = slot1
+
+			percentInput:setText("" .. g_data.setting.autoRat.autoCure.percent)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(scroll):anchor(0, 0.5)
+	local autoSkillText = an.newLabel("%时使用", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(percentInput.getw(percentInput) + percentInput.getPositionX(percentInput), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoCure")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	self.createSelectTab(self, {
+		parent = self.content,
+		texts = labels2,
+		res = icons2,
+		curtext = curText2,
+		size = cc.size(128, 24),
+		endFunc = function (obj)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			self.cfg.autoRat = true
+			g_data.setting.autoRat.autoCure.magicId = skillNames2[obj]
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}, self.content):anchor(0, 0.5):pos(autoSkillText.getw(autoSkillText) + autoSkillText.getPositionX(autoSkillText), nextPosY):add2(scroll, 2)
+
+	nextPosY = nextPosY - 50
+	--- END OF BLOCK #22 ---
+
+	FLOW; TARGET BLOCK #23
+
+
+	--- BLOCK #23 1210-1213, warpins: 2 ---
+	--- END OF BLOCK #23 ---
+
+	if 0 < #skillNames1 then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #24 1214-1225, warpins: 1 ---
+	local skillNames = {
+		治愈术 = 2,
+		群体治疗术 = 29
+	}
+	local autoCurePet = autoCurePet.magicId
+	local labels, icons, curText, magicId = generateSklSelectData(skillNames, autoCurePet.magicId)
+	autoCurePet.magicId = magicId
+	--- END OF BLOCK #24 ---
+
+	if 0 < #labels then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 1226-1366, warpins: 1 ---
+	self.btns.btnAutoCurePet = add("autoCurePet", "宠物血量低于", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoCurePet")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	local percentInput = nil
+	percentInput = an.newInput(offsetX + self.btns.btnAutoCurePet:getw(), nextPosY - 3, 40, 34, 5, {
+		donotClip = true,
+		label = {
+			"" .. g_data.setting.autoRat.autoCurePet.percent,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self.cfg.autoRat = true
+			slot0 = g_data.setting.autoRat.autoCurePet
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(percentInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-21, warpins: 1 ---
+			slot1 = g_data.setting.autoRat.autoCurePet.percent
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-34, warpins: 2 ---
+			slot0.percent = slot1
+
+			percentInput:setText("" .. g_data.setting.autoRat.autoCurePet.percent)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(scroll):anchor(0, 0.5)
+	local autoSkillText = an.newLabel("%时使用", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(percentInput.getw(percentInput) + percentInput.getPositionX(percentInput), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoCurePet")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+
+	self.createSelectTab(self, {
+		parent = self.content,
+		texts = labels,
+		res = icons,
+		curtext = curText,
+		size = cc.size(128, 24),
+		endFunc = function (obj)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			self.cfg.autoRat = true
+			g_data.setting.autoRat.autoCurePet.magicId = skillNames[obj]
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}, self.content):anchor(0, 0.5):pos(autoSkillText.getw(autoSkillText) + autoSkillText.getPositionX(autoSkillText), nextPosY):add2(scroll, 2)
+
+	nextPosY = nextPosY - 50
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 1367-1367, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 1368-1368, warpins: 2 ---
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 1369-1551, warpins: 4 ---
+	self.btns.btnIgnoreCripple = add("ignoreCripple", "只打满血怪", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnIgnoreCripple")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	nextPosY = nextPosY - 50
+	self.btns.btnAutoSpaceMove = add("autoSpaceMove", "", function (b)
+		--- BLOCK #0 1-10, warpins: 1 ---
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoSpaceMove")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	local skillInput = nil
+	skillInput = an.newInput(offsetX + self.btns.btnAutoSpaceMove:getw(), nextPosY - 3, 45, 34, 5, {
+		donotClip = true,
+		label = {
+			"" .. g_data.setting.autoRat.autoSpaceMove.space,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self.cfg.autoRat = true
+			slot0 = g_data.setting.autoRat.autoSpaceMove
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(skillInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-21, warpins: 1 ---
+			slot1 = g_data.setting.autoRat.autoSpaceMove.space
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-34, warpins: 2 ---
+			slot0.space = slot1
+
+			skillInput:setText("" .. g_data.setting.autoRat.autoSpaceMove.space)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(scroll):anchor(0, 0.5)
+	local spaceMoveText = an.newLabel("分钟无经验增加使用", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(skillInput.getw(skillInput) + skillInput.getPositionX(skillInput), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoSpaceMove")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	local labels = "随机传送卷,随机传送石"
+	local icons = {
+		"pic/panels/setting/icon_1.png",
+		"pic/panels/setting/icon_7.png"
+	}
+
+	self.createSelectTab(self, {
+		scale = 1,
+		parent = self.content,
+		texts = labels,
+		res = icons,
+		curtext = g_data.setting.autoRat.autoSpaceMove.use,
+		size = cc.size(128, 24),
+		endFunc = function (obj)
+			--- BLOCK #0 1-10, warpins: 1 ---
+			self.cfg.autoRat = true
+			g_data.setting.autoRat.autoSpaceMove.use = obj
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}, self.content):anchor(0, 0.5):pos(spaceMoveText.getw(spaceMoveText) + spaceMoveText.getPositionX(spaceMoveText), nextPosY):add2(scroll, 2)
+
+	nextPosY = nextPosY - 50
+	local keys = def.magic.getMagicIds(g_data.player.job, false)
+	local labels = {}
+	local icons = {}
+	local kList = {}
+	local curSkillName = nil
+
+	--- END OF BLOCK #28 ---
+
+	for i, v in ipairs(keys)
+
+	LOOP BLOCK #29
+	GO OUT TO BLOCK #36
+
+
+	--- BLOCK #29 1552-1561, warpins: 1 ---
+	--- END OF BLOCK #29 ---
+
+	slot25 = if g_data.player:getMagic(tonumber(v))
+	 then
+	JUMP TO BLOCK #30
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #30 1562-1577, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	slot25 = if not checkExist(tonumber(v), 12, 25, 26, 31, 18, 3, 4, 7, 67)
+
+	 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #31 1578-1606, warpins: 1 ---
+	local magicCfg = def.magic.getMagicConfigByUid(v)
+	labels[#labels + 1] = magicCfg.name
+	icons[#icons + 1] = string.format("pic/console/skill-icons/%d.png", v)
+	kList[magicCfg.name] = tonumber(v)
+
+	--- END OF BLOCK #31 ---
+
+	slot26 = if g_data.setting.job.autoSkill.magicId then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #32 1607-1613, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot26 = if g_data.setting.job.autoSkill.magicId then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #33 1614-1623, warpins: 1 ---
+	--- END OF BLOCK #33 ---
+
+	if tonumber(v)
+
+	 == g_data.setting.job.autoSkill.magicId then
+	JUMP TO BLOCK #34
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #34 1624-1624, warpins: 2 ---
+	curSkillName = magicCfg.name
+
+	--- END OF BLOCK #34 ---
+
+	FLOW; TARGET BLOCK #35
+
+
+	--- BLOCK #35 1625-1626, warpins: 6 ---
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #28
+
+
+	--- BLOCK #36 1627-1630, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	if 0 < #labels then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #37 1631-1764, warpins: 1 ---
+	an.newLabel("自动练功", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(scroll):pos(titleOff + 25, nextPosY - 6):anchor(0, 0)
+
+	nextPosY = nextPosY - 30
+	self.btns.btnAutoSkill = add("autoSkill", "间隔", function (b)
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoSkill")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, true):add2(scroll):pos(offsetX, nextPosY).btn
+	local skillInput = nil
+	skillInput = an.newInput(offsetX + self.btns.btnAutoSkill:getw(), nextPosY, 70, 34, 5, {
+		donotClip = true,
+		label = {
+			"" .. g_data.setting.job.autoSkill.space,
+			20,
+			1
+		},
+		bg = {
+			h = 32,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-3,
+				4
+			}
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-16, warpins: 1 ---
+			self.cfg.autoRat = true
+			slot0 = g_data.setting.job.autoSkill
+
+			--- END OF BLOCK #0 ---
+
+			slot1 = if not tonumber(skillInput:getText())
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 17-21, warpins: 1 ---
+			slot1 = g_data.setting.job.autoSkill.space
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 22-34, warpins: 2 ---
+			slot0.space = slot1
+
+			skillInput:setText("" .. g_data.setting.job.autoSkill.space)
+
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+	}):add2(scroll):anchor(0, 0.5)
+	local autoSkillText = an.newLabel("秒使用", 20, 1, {
+		color = def.colors.labelGray
+	}):anchor(0, 0.5):add2(scroll):pos(skillInput.getw(skillInput) + skillInput.getPositionX(skillInput), nextPosY):enableClick(function ()
+		--- BLOCK #0 1-14, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnAutoSkill")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	slot23 = self
+	slot22 = self.createSelectTab
+	slot24 = {
+		parent = self.content,
+		texts = labels,
+		res = icons
+	}
+	--- END OF BLOCK #37 ---
+
+	slot25 = if not curSkillName then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 1765-1765, warpins: 1 ---
+	slot25 = ""
+	--- END OF BLOCK #38 ---
+
+	FLOW; TARGET BLOCK #39
+
+
+	--- BLOCK #39 1766-1799, warpins: 2 ---
+	slot24.curtext = slot25
+	slot24.size = cc.size(128, 24)
+	slot24.endFunc = function (obj)
+		--- BLOCK #0 1-12, warpins: 1 ---
+		self.cfg.autoRat = true
+		g_data.setting.job.autoSkill.magicId = kList[obj]
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	slot22(slot23, slot24, self.content):anchor(0, 0.5):pos(autoSkillText.getw(autoSkillText) + autoSkillText.getPositionX(autoSkillText), nextPosY):add2(scroll, 2)
+
+	nextPosY = nextPosY - 50
+
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 1800-1866, warpins: 2 ---
+	an.newLabel("挂机捡取设置", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(scroll):pos(titleOff + 25, nextPosY):anchor(0, 0)
+
+	nextPosY = nextPosY - 25
+	self.btns.btnNoPickUpItem = add("noPickUpItem", "挂机时不捡取任何道具", function (b)
+		--- BLOCK #0 1-19, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnNoPickUpItem")
+		--- END OF BLOCK #0 ---
+
+		slot1 = if g_data.setting.autoRat.pickUpRatting then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 20-28, warpins: 1 ---
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnPickUpGood")
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 29-29, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+	nextPosY = nextPosY - 45
+	self.btns.btnPickUpGood = add("pickUpRatting", "捡取挂机道具", function (b)
+		--- BLOCK #0 1-19, warpins: 1 ---
+		self.cfg.autoRat = true
+
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnPickUpGood")
+		--- END OF BLOCK #0 ---
+
+		slot1 = if g_data.setting.autoRat.noPickUpItem then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 20-28, warpins: 1 ---
+		main_scene.ui.console.btnCallbacks:handle("setting", "btnNoPickUpItem")
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 29-29, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, true, "autoRat"):add2(scroll):pos(offsetX, nextPosY).btn
+
+	return 
+	--- END OF BLOCK #40 ---
+
+
+
+end
+setting.loadView = function (self)
+	--- BLOCK #0 1-226, warpins: 1 ---
+	local bg = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 50, cc.size(480, 340)):addTo(self.content):anchor(0, 0)
+	local num = an.newLabel("地图缩放(1.0倍)", 22, 1, {
+		color = def.colors.labelYellow
+	}):add2(bg):pos(50, self.content:geth() - 150)
+
+	local function upt(scale)
+		--- BLOCK #0 1-13, warpins: 1 ---
+		self.cfg.display = true
+
+		num:setString("地图缩放(" .. scale .. "倍)")
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	upt(g_data.setting.display.mapScale)
+
+	local scaleMin = 0.7
+	local scaleMax = 2.3
+	local scaleDefault = 1
+	local scaleDefault2 = 1.25
+	local scaleDefault3 = 1.5
+	local slider = an.newSlider(res.gettex2("pic/scale/sliderBar.png"), nil, res.gettex2("pic/panels/setting/button.png"), {
+		scale9 = cc.size(bg.getw(bg) - 100, 15),
+		value = (g_data.setting.display.mapScale - scaleMin)/(scaleMax - scaleMin),
+		valueChange = function (value)
+			--- BLOCK #0 1-29, warpins: 1 ---
+			self:opacity(64)
+
+			local scale = (scaleMax - scaleMin)*value + scaleMin
+			scale = tonumber(string.format("%.2f", scale))
+
+			upt(scale)
+			main_scene.ground:scale(scale)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		valueChangeEnd = function (value)
+			--- BLOCK #0 1-54, warpins: 1 ---
+			self:opacity(255)
+
+			local scale = (scaleMax - scaleMin)*value + scaleMin
+			scale = tonumber(string.format("%.2f", scale))
+
+			upt(scale)
+
+			g_data.setting.display.mapScale = scale
+
+			main_scene.ground:scale(scale)
+			main_scene.ground.map:updateMapScale(scale)
+			main_scene.ground.map:load(main_scene.ground.player.x, main_scene.ground.player.y)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):add2(self.content):pos(bg.getw(bg)/2, self.content:geth() - 170):anchor(0.5, 0.5)
+
+	function default(v)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		return function ()
+			--- BLOCK #0 1-63, warpins: 1 ---
+			sound.playSound("103")
+
+			g_data.setting.display.mapScale = v
+
+			upt(g_data.setting.display.mapScale)
+			main_scene.ground:stopAllActions()
+			main_scene.ground:scaleTo(0.3, v)
+			main_scene.ground.map:updateMapScale(v)
+			main_scene.ground.map:load(main_scene.ground.player.x, main_scene.ground.player.y)
+			slider:setValue((g_data.setting.display.mapScale - scaleMin)/(scaleMax - scaleMin))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	an.newBtn(res.gettex2("pic/common/btn20.png"), default(scaleDefault), {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/tj1.png")
+	}):pos(bg.getw(bg)/6, self.cbottom + 22):add2(self.content)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), default(scaleDefault2), {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/tj2.png")
+	}):pos((bg.getw(bg)*3)/6, self.cbottom + 22):add2(self.content)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), default(scaleDefault3), {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/setting/tj3.png")
+	}):pos((bg.getw(bg)*5)/6, self.cbottom + 22):add2(self.content)
+	traversalNodeTree(self, function (n)
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if n ~= num then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 4-6, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if n ~= slider then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 7-10, warpins: 1 ---
+		n.setCascadeOpacityEnabled(n, true)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-12, warpins: 3 ---
+		return true
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.loadChat = function (self)
+	--- BLOCK #0 1-260, warpins: 1 ---
+	local bg = display.newScale9Sprite(res.getframe2("pic/common/black_5.png"), 0, 0, cc.size(480, 390)):addTo(self.content):anchor(0, 0)
+	local cnt = 0
+	local y = 240
+
+	local function add(root, key, name, y, func)
+		--- BLOCK #0 1-22, warpins: 1 ---
+		local data = g_data.setting.chat[root]
+		local col = cnt%3
+		local line = math.modf(cnt/3)
+		slot8 = cc.p
+		slot9 = col*170 + 40
+		slot10 = self.content:geth()
+		--- END OF BLOCK #0 ---
+
+		slot11 = if not y then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 23-23, warpins: 1 ---
+		slot11 = 140
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 24-33, warpins: 2 ---
+		local pos = slot8(slot9, slot10 - slot11 - line*60)
+		slot9 = createToggle
+
+		function slot10(b)
+			--- BLOCK #0 1-12, warpins: 1 ---
+			self.cfg.chat = true
+			self.needSaveSetting = true
+			data[key] = b
+
+			--- END OF BLOCK #0 ---
+
+			slot0 = if not b then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 13-16, warpins: 1 ---
+			voice.removeAutoPlayItemWithChannel(key)
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 17-19, warpins: 2 ---
+			--- END OF BLOCK #2 ---
+
+			slot1 = if func then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 20-24, warpins: 1 ---
+			func(data[key])
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 25-25, warpins: 2 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end
+
+		slot11 = data[key]
+		slot12 = {
+			nil,
+			18,
+			1
+		}
+		--- END OF BLOCK #2 ---
+
+		slot13 = if not name then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 34-34, warpins: 1 ---
+		slot13 = key
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 35-62, warpins: 2 ---
+		slot12[1] = slot13
+		slot12[4] = {
+			color = def.colors.labelGray
+		}
+
+		slot9(slot10, slot11, slot12):anchor(0, 0.5):pos(pos.x, pos.y):add2(self.content)
+
+		cnt = cnt + 1
+
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end
+
+	local limitLabel1 = an.newLabel("拒绝", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(self.content):pos(40, self.content:geth() - 65)
+	local inputBack = display.newScale9Sprite(res.getframe2("pic/scale/edit.png")):anchor(0, 0):size(55, 34):add2(self.content):pos(limitLabel1.getPositionX(limitLabel1) + limitLabel1.getw(limitLabel1) + 3, self.content:geth() - 70)
+	local valueInput = nil
+	valueInput = an.newInput(10, 3, 150, 38, 3, {
+		label = {
+			tostring(g_data.setting.chat.whisperLimit),
+			20,
+			1
+		},
+		stop_call = function ()
+			--- BLOCK #0 1-15, warpins: 1 ---
+			self.cfg.chat = true
+			g_data.setting.chat.whisperLimit = tonumber(valueInput:getString())
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):add2(inputBack):anchor(0, 0):pos(10, -5)
+
+	an.newLabel("级以下玩家私聊", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(self.content):pos(inputBack.getPositionX(inputBack) + inputBack.getw(inputBack) + 4, self.content:geth() - 65)
+	an.newLabel("(此项填0时屏蔽所有人的私聊消息)", 18, 1, {
+		color = def.colors.labelYellow
+	}):add2(self.content):pos(50, self.content:geth() - 100)
+	self.add(g_data.setting.chat, "alwaysTranslate", "只发送语音翻译文字"):add2(self.content):pos(40, self.content:geth() - 135)
+	an.newLabel("自动播放语音", 20, 1, {
+		color = def.colors.labelYellow
+	}):add2(self.content):pos(40, self.content:geth() - 205)
+	add("autoPlayVoice", "附近", "公聊", 240)
+	add("autoPlayVoice", "私聊", nil, 240)
+	add("autoPlayVoice", "喊话", nil, 240)
+	add("autoPlayVoice", "组队", nil, 240)
+	add("autoPlayVoice", "行会", nil, 240)
+	add("autoPlayVoice", "战队", nil, 240)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+setting.load = function (self, name)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self.name = name
+
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.content then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-8, warpins: 1 ---
+	self.content:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-44, warpins: 2 ---
+	self.btns = {}
+	self.content = display.newNode():pos(146, 15):size(480, 390):add2(self)
+	self.ctop = self.content:geth()
+	self.cbottom = 0
+	self.cleft = 0
+	self.cright = self.content:getw()
+
+	--- END OF BLOCK #2 ---
+
+	if name == "基本" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 45-48, warpins: 1 ---
+	self.loadBase(self)
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #4 49-50, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if name == "物品" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 51-54, warpins: 1 ---
+	self.loadItem(self)
+	--- END OF BLOCK #5 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #6 55-56, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if name == "保护" then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 57-60, warpins: 1 ---
+	self.loadPro(self)
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #8 61-62, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	if name == "药品" then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 63-66, warpins: 1 ---
+	self.loadDrugs(self)
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #10 67-68, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if name == "辅助" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 69-72, warpins: 1 ---
+	self.loadJob(self)
+	--- END OF BLOCK #11 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #12 73-74, warpins: 1 ---
+	--- END OF BLOCK #12 ---
+
+	if name == "显示" then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 75-78, warpins: 1 ---
+	self.loadView(self)
+	--- END OF BLOCK #13 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #14 79-80, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	if name == "帮助" then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 81-84, warpins: 1 ---
+	self.loadHelp(self)
+	--- END OF BLOCK #15 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #16 85-86, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if name == "聊天" then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 87-90, warpins: 1 ---
+	self.loadChat(self)
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #18 91-92, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	if name == "快捷键" then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 93-96, warpins: 1 ---
+	self.loadHotKeyView(self)
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #20 97-134, warpins: 1 ---
+	an.newLabel("功能研发中...", 18, 1):add2(self.content):anchor(0.5, 0.5):pos((self.content:getw()*self.content:getScale())/2, (self.content:geth()*self.content:getScale())/2)
+
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 135-135, warpins: 10 ---
+	return 
+	--- END OF BLOCK #21 ---
+
+
+
+end
+setting.createSelectTab = function (self, params, content)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-3, warpins: 1 ---
+	params = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 4-6, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot3 = if not params.size then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 7-10, warpins: 1 ---
+	slot3 = size(60, 30)
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 11-14, warpins: 2 ---
+	params.size = slot3
+	--- END OF BLOCK #4 ---
+
+	slot3 = if not params.texts then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 15-15, warpins: 1 ---
+	slot3 = {
+		""
+	}
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 16-19, warpins: 2 ---
+	params.texts = slot3
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not params.res then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 20-20, warpins: 1 ---
+	slot3 = ""
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 21-24, warpins: 2 ---
+	params.res = slot3
+	--- END OF BLOCK #8 ---
+
+	slot3 = if not params.curtext then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 25-25, warpins: 1 ---
+	slot3 = "随机传送卷"
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 26-29, warpins: 2 ---
+	params.curtext = slot3
+	--- END OF BLOCK #10 ---
+
+	slot3 = if not params.fontSize then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 30-30, warpins: 1 ---
+	slot3 = 20
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 31-34, warpins: 2 ---
+	params.fontSize = slot3
+	--- END OF BLOCK #12 ---
+
+	slot3 = if not params.strokeSize then
+	JUMP TO BLOCK #13
+	else
+	JUMP TO BLOCK #14
+	end
+
+
+	--- BLOCK #13 35-35, warpins: 1 ---
+	slot3 = 1
+	--- END OF BLOCK #13 ---
+
+	FLOW; TARGET BLOCK #14
+
+
+	--- BLOCK #14 36-39, warpins: 2 ---
+	params.strokeSize = slot3
+	--- END OF BLOCK #14 ---
+
+	slot3 = if not params.color then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #16
+	end
+
+
+	--- BLOCK #15 40-42, warpins: 1 ---
+	slot3 = def.colors.labelGray
+	--- END OF BLOCK #15 ---
+
+	FLOW; TARGET BLOCK #16
+
+
+	--- BLOCK #16 43-46, warpins: 2 ---
+	params.color = slot3
+	--- END OF BLOCK #16 ---
+
+	slot3 = if not params.tabBackColor then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #17 47-52, warpins: 1 ---
+	slot3 = cc.c3b(120, 120, 120)
+	--- END OF BLOCK #17 ---
+
+	FLOW; TARGET BLOCK #18
+
+
+	--- BLOCK #18 53-58, warpins: 2 ---
+	params.tabBackColor = slot3
+
+	--- END OF BLOCK #18 ---
+
+	if type(params.texts)
+
+	 == "string" then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 59-64, warpins: 1 ---
+	params.texts = string.split(params.texts, ",")
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 65-132, warpins: 2 ---
+	local function getIconTex(i)
+		--- BLOCK #0 1-6, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if type(params.res)
+
+		 == "table" then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		slot1 = if not params.res[i] then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-17, warpins: 2 ---
+		local iconImg = string.format(params.res, i)
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 18-24, warpins: 2 ---
+		local scale = params.scale
+
+		--- END OF BLOCK #3 ---
+
+		if type(iconImg)
+
+		 == "table" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 25-26, warpins: 1 ---
+		scale = iconImg[2]
+		iconImg = iconImg[1]
+
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 27-29, warpins: 2 ---
+		return iconImg, scale
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	local control, showLabel, showIcon = nil
+	control = res.get2("pic/panels/setting/tab_frame.png"):enableClick(function (eventX, eventY)
+		--- BLOCK #0 1-22, warpins: 1 ---
+		local pt = control:getParent():convertToNodeSpace(cc.p(eventX, eventY))
+
+		--- END OF BLOCK #0 ---
+
+		slot3 = if cc.rectContainsPoint(control:getBoundingBox(), pt)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #1 23-38, warpins: 1 ---
+		control:setTouchSwallowEnabled(false)
+
+		params.size = control:getContentSize()
+
+		local function createTabCell(index, object)
+			--- BLOCK #0 1-30, warpins: 1 ---
+			local cell = res.get2("pic/panels/setting/tab_frame.png")
+			local img, scale = getIconTex(index)
+			local icon = res.get2(img):anchor(0.5, 0.5):pos(32, 32):add2(cell, 2)
+			slot7 = icon
+			slot6 = icon.setScale
+			--- END OF BLOCK #0 ---
+
+			slot8 = if not scale then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 31-34, warpins: 1 ---
+			slot8 = icon.getw(icon)/50
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 35-68, warpins: 2 ---
+			slot6(slot7, slot8)
+			an.newLabel(object, params.fontSize, params.strokeSize, {
+				color = params.color
+			}):anchor(0.5, 0.5):pos(cell.getw(cell)*0.6, cell.geth(cell)*0.5):addTo(cell)
+
+			return cell
+			--- END OF BLOCK #2 ---
+
+
+
+		end
+
+		--- END OF BLOCK #1 ---
+
+		slot4 = if params.texts then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #10
+		end
+
+
+		--- BLOCK #2 39-44, warpins: 1 ---
+		local cellList = {}
+
+		--- END OF BLOCK #2 ---
+
+		for i, v in ipairs(params.texts)
+
+
+		LOOP BLOCK #3
+		GO OUT TO BLOCK #5
+
+
+		--- BLOCK #3 45-57, warpins: 1 ---
+		local cell = {}
+		cell.cellCls = function ()
+			--- BLOCK #0 1-4, warpins: 1 ---
+			return createTabCell(i, v)
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+		cell.w = 190
+		cell.h = 50
+		cell.object = v
+		cell.index = i
+		cellList[#cellList + 1] = cell
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 58-59, warpins: 2 ---
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+		--- BLOCK #5 60-66, warpins: 1 ---
+		local h = 240
+		--- END OF BLOCK #5 ---
+
+		if #params.texts < 5 then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 67-71, warpins: 1 ---
+		h = #params.texts*55 + 10
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 72-90, warpins: 2 ---
+		local menu = common.createOperationMenu(cellList, 5, function (popMenu, cell)
+			--- BLOCK #0 1-23, warpins: 1 ---
+			local object = cell.object
+			local index = cell.index
+
+			showLabel:setString(object)
+
+			local img, scale = getIconTex(index)
+
+			showIcon:setTex(res.gettex2(img))
+
+			slot7 = showIcon
+			slot6 = showIcon.scale
+			--- END OF BLOCK #0 ---
+
+			slot8 = if not scale then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 24-28, warpins: 1 ---
+			slot8 = showIcon:getw()/45
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 29-36, warpins: 2 ---
+			slot6(slot7, slot8)
+			popMenu.removeSelf(popMenu)
+			--- END OF BLOCK #2 ---
+
+			slot6 = if params.endFunc then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 37-40, warpins: 1 ---
+			params.endFunc(object)
+
+			--- END OF BLOCK #3 ---
+
+			FLOW; TARGET BLOCK #4
+
+
+			--- BLOCK #4 41-41, warpins: 2 ---
+			return 
+			--- END OF BLOCK #4 ---
+
+
+
+		end, {
+			scroll = {
+				w = 190,
+				h = h
+			}
+		}):anchor(0, 1)
+
+		--- END OF BLOCK #7 ---
+
+		slot7 = if params.parent then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 91-120, warpins: 1 ---
+		menu.add2(menu, params.parent)
+
+		local pos = cc.p(0, 0)
+		pos = control:convertToWorldSpace(pos)
+		pos = params.parent:convertToNodeSpace(pos)
+
+		menu.pos(menu, pos.x, pos.y + 50)
+
+		--- END OF BLOCK #8 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+		--- BLOCK #9 121-137, warpins: 1 ---
+		local x, y = control:getPosition()
+
+		menu.add2(menu, control:getParent(), 50):pos(x, y - 20)
+
+		--- END OF BLOCK #9 ---
+
+		FLOW; TARGET BLOCK #10
+
+
+		--- BLOCK #10 138-138, warpins: 3 ---
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 139-139, warpins: 2 ---
+		return 
+		--- END OF BLOCK #11 ---
+
+
+
+	end)
+	showLabel = an.newLabel(params.curtext, params.fontSize, params.strokeSize, {
+		color = params.color
+	}):anchor(0.5, 0.5):pos(control.getw(control)*0.6, control.geth(control)*0.5):addTo(control)
+	local img, scale = getIconTex(1)
+	showIcon = res.get2(img):anchor(0.5, 0.5):pos(31, 34):add2(control, 2)
+	slot10 = showIcon
+	slot9 = showIcon.setScale
+	--- END OF BLOCK #20 ---
+
+	slot11 = if not scale then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 133-136, warpins: 1 ---
+	slot11 = showIcon.getw(showIcon)/45
+
+	--- END OF BLOCK #21 ---
+
+	FLOW; TARGET BLOCK #22
+
+
+	--- BLOCK #22 137-141, warpins: 2 ---
+	slot9(slot10, slot11)
+	--- END OF BLOCK #22 ---
+
+	for i, v in ipairs(params.texts)
+
+
+	LOOP BLOCK #23
+	GO OUT TO BLOCK #28
+
+
+	--- BLOCK #23 142-144, warpins: 1 ---
+	--- END OF BLOCK #23 ---
+
+	if v == params.curtext then
+	JUMP TO BLOCK #24
+	else
+	JUMP TO BLOCK #27
+	end
+
+
+	--- BLOCK #24 145-158, warpins: 1 ---
+	local img, scale = getIconTex(i)
+
+	showIcon.setTex(showIcon, res.gettex2(img))
+
+	slot17 = showIcon
+	slot16 = showIcon.setScale
+	--- END OF BLOCK #24 ---
+
+	slot18 = if not scale then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 159-162, warpins: 1 ---
+	slot18 = showIcon.getw(showIcon)/45
+
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 163-163, warpins: 2 ---
+	slot16(slot17, slot18)
+
+	--- END OF BLOCK #26 ---
+
+	FLOW; TARGET BLOCK #27
+
+
+	--- BLOCK #27 164-165, warpins: 3 ---
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #22
+
+
+	--- BLOCK #28 166-167, warpins: 1 ---
+	return control
+	--- END OF BLOCK #28 ---
+
+
+
+end
+setting.loadHotKeyView = function (self)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	self.hotKeyView = hotKeySetting.new():addTo(self.content)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return setting
+--- END OF BLOCK #0 ---
+
+
+

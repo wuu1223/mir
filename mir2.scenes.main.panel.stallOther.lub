@@ -1,0 +1,925 @@
+--- BLOCK #0 1-37, warpins: 1 ---
+local common = import("..common.common")
+local item = import("..common.item")
+local stallOther = class("stallOther", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(stallOther, {})
+
+stallOther.resetPanelPosition = function (self, type)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if type == "left" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-16, warpins: 1 ---
+	self.anchor(self, 1, 0.5):pos(display.cx - 70, display.cy + 50)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 17-17, warpins: 2 ---
+	return self
+	--- END OF BLOCK #2 ---
+
+
+
+end
+stallOther.ctor = function (self)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	self._supportMove = true
+	self.items = {}
+	self.sItem = nil
+
+	self.showStallPanel(self)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+stallOther.showStallPanel = function (self)
+	--- BLOCK #0 1-118, warpins: 1 ---
+	self.bg = res.get2("pic/panels/stall/bg1.png"):addTo(self):anchor(0, 0)
+
+	res.get2("pic/panels/stall/title.png"):addTo(self.bg):anchor(0.5, 0.5):pos(self.bg:getw()/2, self.bg:geth() - 23)
+	self.size(self, self.bg:getContentSize()):resetPanelPosition("left")
+
+	local namebg = display.newScale9Sprite(res.getframe2("pic/scale/edit.png"), self.bg:getw()/2, 381, cc.size(231, 32)):addTo(self.bg):anchor(0.5, 0.5)
+
+	an.newLabel(g_data.stallOther.name, 20, 1, {
+		color = def.colors.labelGray
+	}):addTo(self.bg):pos(self.bg:getw()/2, 381):anchor(0.5, 0.5)
+	self.createItemsPanel(self)
+	--- END OF BLOCK #0 ---
+
+	for i, v in ipairs(g_data.stallOther.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #3
+
+
+	--- BLOCK #1 119-126, warpins: 1 ---
+	self.addItem(self, v.info:get("makeIndex"))
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 127-128, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #3 129-248, warpins: 1 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not self.sItem then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-15, warpins: 1 ---
+		main_scene.ui:tip("请先选择需要购买的物品")
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+		--- BLOCK #2 16-19, warpins: 1 ---
+		self:showBuyPanel()
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 20-20, warpins: 2 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/stall/buy.png")
+	}):addTo(self.bg):pos(self.bg:getw()/2 - 20, 55):anchor(1, 0)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-66, warpins: 1 ---
+		sound.playSound("103")
+
+		local input = nil
+		local _, bg = common.msgbox("", {
+			okFunc = function ()
+				--- BLOCK #0 1-1, warpins: 1 ---
+				--- END OF BLOCK #0 ---
+
+				FLOW; TARGET BLOCK #1
+
+
+				--- BLOCK #1 2-12, warpins: 1 ---
+				local str = input:getText()
+
+				--- END OF BLOCK #1 ---
+
+				if string.utf8len(str)
+				 <= 0 then
+				JUMP TO BLOCK #2
+				else
+				JUMP TO BLOCK #3
+				end
+
+
+				--- BLOCK #2 13-19, warpins: 1 ---
+				main_scene.ui:tip("请输入留言信息.")
+				--- END OF BLOCK #2 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+				--- BLOCK #3 20-26, warpins: 1 ---
+				--- END OF BLOCK #3 ---
+
+				if 25 < string.utf8len(str)
+				 then
+				JUMP TO BLOCK #4
+				else
+				JUMP TO BLOCK #5
+				end
+
+
+				--- BLOCK #4 27-33, warpins: 1 ---
+				main_scene.ui:tip("留言信息过长.")
+				--- END OF BLOCK #4 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+				--- BLOCK #5 34-50, warpins: 1 ---
+				net.send({
+					CM_MESSAGE_STALL
+				}, nil, getRecord("TStallMsg", {
+					id = g_data.stallOther.id,
+					msg = str
+				}))
+
+				return 
+				--- END OF BLOCK #5 ---
+
+				FLOW; TARGET BLOCK #6
+
+
+				--- BLOCK #6 51-52, warpins: 3 ---
+				return true
+				--- END OF BLOCK #6 ---
+
+
+
+			end
+		})
+
+		an.newLabel("请输入留言信息", 20, 1):addTo(bg):pos(bg.getw(bg)/2, 180):anchor(0.5, 0.5)
+
+		input = an.newInput(bg.getw(bg)/2, 140, 250, 36, 25, {
+			bg = {
+				h = 36,
+				tex = res.gettex2("pic/scale/edit.png")
+			}
+		}):addTo(bg):anchor(0.5, 0.5)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/stall/msg.png")
+	}):addTo(self.bg):pos(self.bg:getw()/2 + 20, 55):anchor(0, 0)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):addTo(self.bg):anchor(1, 1):pos(self.bg:getw() - 5, self.bg:geth() - 5)
+
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+stallOther.createItemsPanel = function (self)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if self.bg.node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-9, warpins: 1 ---
+	self.bg.node:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 10-68, warpins: 2 ---
+	self.bg.node = display.newNode():addTo(self.bg)
+	local w = 245
+	local h = ({
+		57,
+		104,
+		153,
+		199
+	})[g_data.stallOther.level]
+
+	display.newScale9Sprite(res.getframe2("pic/scale/scale27.png"), 0, 0, cc.size(w, h)):anchor(0, 0):addTo(self.bg.node):anchor(0.5, 1):pos(self.bg:getw()/2, 356)
+	--- END OF BLOCK #2 ---
+
+	for i=1, g_data.stallOther.level, 1
+	LOOP BLOCK #3
+	GO OUT TO BLOCK #4
+
+	--- BLOCK #3 69-93, warpins: 2 ---
+	res.get2("pic/panels/stall/items.png"):addTo(self.bg.node):pos(self.bg:getw()/2, i*47 - 397):anchor(0.5, 1)
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+	--- BLOCK #4 94-94, warpins: 1 ---
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+stallOther.showBuyPanel = function (self)
+	--- BLOCK #0 1-86, warpins: 1 ---
+	local i, v = g_data.stallOther:getItem(self.sItem.data:get("makeIndex"))
+	local data = v.info
+	local cnt = 1
+	local noError = true
+	local tips, bg = nil
+
+	local function addTips()
+		--- BLOCK #0 1-3, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if tips then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 4-7, warpins: 1 ---
+		tips:removeSelf()
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-16, warpins: 2 ---
+		slot0 = "是否以"
+		slot1 = v.price*cnt
+		--- END OF BLOCK #2 ---
+
+		if v.type == 0 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 17-18, warpins: 1 ---
+		slot2 = "金币"
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #5
+
+
+		--- BLOCK #4 19-19, warpins: 1 ---
+		slot2 = "元宝"
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 20-51, warpins: 2 ---
+		local str = slot0 .. slot1 .. slot2 .. "的价格购买该物品"
+		tips = an.newLabel(str, 20, 1, {
+			color = display.COLOR_WHITE
+		}):addTo(bg):pos(bg:getw()/2, 200):anchor(0.5, 0.5)
+
+		return 
+		--- END OF BLOCK #5 ---
+
+
+
+	end
+
+	_, bg = common.msgbox("", {
+		okFunc = function ()
+			--- BLOCK #0 1-3, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			slot0 = if noError then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 4-35, warpins: 1 ---
+			self.sItem.mask:removeSelf()
+
+			self.sItem = nil
+
+			net.send({
+				CM_BUY_STALLITEM,
+				recog = data:get("makeIndex"),
+				series = cnt
+			}, nil, {
+				{
+					"ID",
+					g_data.stallOther.id
+				}
+			})
+			--- END OF BLOCK #1 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+			--- BLOCK #2 36-43, warpins: 1 ---
+			main_scene.ui:tip("请输入正确的数字!")
+
+			return true
+			--- END OF BLOCK #2 ---
+
+			FLOW; TARGET BLOCK #3
+
+
+			--- BLOCK #3 44-44, warpins: 2 ---
+			return 
+			--- END OF BLOCK #3 ---
+
+
+
+		end
+	})
+
+	addTips()
+	res.get2("pic/common/itembg3.png"):addTo(bg):pos(125, 150)
+	res.get("items", data.getVar("looks")):addTo(bg):pos(125, 150)
+	an.newLabel("价格 :", 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(180, 165):anchor(0, 0.5)
+
+	slot9 = an.newLabel
+	slot10 = v.price
+	--- END OF BLOCK #0 ---
+
+	if v.type == 0 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 87-88, warpins: 1 ---
+	slot11 = "金币"
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 89-89, warpins: 1 ---
+	slot11 = "元宝"
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 90-140, warpins: 2 ---
+	slot9(slot10 .. slot11, 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(250, 165):anchor(0, 0.5)
+	an.newLabel("数量 : ", 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(180, 135):anchor(0, 0.5)
+	--- END OF BLOCK #3 ---
+
+	slot9 = if not v.info.isPileUp()
+	 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 141-165, warpins: 1 ---
+	an.newLabel("1", 18, 1, {
+		color = display.COLOR_WHITE
+	}):addTo(bg):pos(250, 135):anchor(0, 0.5)
+
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 166-206, warpins: 1 ---
+	local inputL = nil
+	inputL = an.newInput(250, 135, 90, 33, 3, {
+		label = {
+			"1",
+			18
+		},
+		bg = {
+			h = 33,
+			tex = res.gettex2("pic/scale/edit.png"),
+			offset = {
+				-1,
+				0
+			}
+		},
+		start_call = function ()
+			--- BLOCK #0 1-6, warpins: 1 ---
+			inputL:setText("")
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end,
+		stop_call = function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			local num = tonumber(inputL:getText())
+
+			--- END OF BLOCK #0 ---
+
+			slot0 = if num then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #1 9-11, warpins: 1 ---
+			--- END OF BLOCK #1 ---
+
+			if num > 0 then
+			JUMP TO BLOCK #2
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #2 12-14, warpins: 1 ---
+			--- END OF BLOCK #2 ---
+
+			if 999 >= num then
+			JUMP TO BLOCK #3
+			else
+			JUMP TO BLOCK #4
+			end
+
+
+			--- BLOCK #3 15-20, warpins: 1 ---
+			--- END OF BLOCK #3 ---
+
+			if math.floor(num)
+			 < num then
+			JUMP TO BLOCK #4
+			else
+			JUMP TO BLOCK #5
+			end
+
+
+			--- BLOCK #4 21-28, warpins: 4 ---
+			main_scene.ui:tip("请输入正确的数字！")
+
+			noError = false
+
+			--- END OF BLOCK #4 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+			--- BLOCK #5 29-35, warpins: 1 ---
+			--- END OF BLOCK #5 ---
+
+			slot1 = if not self.sItem.data.isPileUp()
+			 then
+			JUMP TO BLOCK #6
+			else
+			JUMP TO BLOCK #7
+			end
+
+
+			--- BLOCK #6 36-38, warpins: 1 ---
+			--- END OF BLOCK #6 ---
+
+			if 1 >= num then
+			JUMP TO BLOCK #7
+			else
+			JUMP TO BLOCK #9
+			end
+
+
+			--- BLOCK #7 39-45, warpins: 2 ---
+			--- END OF BLOCK #7 ---
+
+			slot1 = if self.sItem.data.isPileUp()
+			 then
+			JUMP TO BLOCK #8
+			else
+			JUMP TO BLOCK #10
+			end
+
+
+			--- BLOCK #8 46-54, warpins: 1 ---
+			--- END OF BLOCK #8 ---
+
+			if self.sItem.data:get("dura")
+			 < num then
+			JUMP TO BLOCK #9
+			else
+			JUMP TO BLOCK #10
+			end
+
+
+			--- BLOCK #9 55-62, warpins: 2 ---
+			main_scene.ui:tip("输入数量大于出售数量,请重新输入！")
+
+			noError = false
+			--- END OF BLOCK #9 ---
+
+			UNCONDITIONAL JUMP; TARGET BLOCK #11
+
+
+			--- BLOCK #10 63-66, warpins: 2 ---
+			cnt = num
+
+			addTips()
+
+			noError = true
+
+			--- END OF BLOCK #10 ---
+
+			FLOW; TARGET BLOCK #11
+
+
+			--- BLOCK #11 67-67, warpins: 3 ---
+			return 
+			--- END OF BLOCK #11 ---
+
+
+
+		end
+	}):addTo(bg):pos(235, 135):anchor(0, 0.5)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 207-208, warpins: 2 ---
+	return 
+	--- END OF BLOCK #6 ---
+
+
+
+end
+stallOther.addItem = function (self, makeIndex)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local i, v = g_data.stallOther:getItem(makeIndex)
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if v then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #1 9-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot4 = if self.items[i] then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 13-17, warpins: 1 ---
+	self.items[i]:removeSelf()
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-22, warpins: 2 ---
+	slot4 = "价格:"
+	slot5 = v.price
+	--- END OF BLOCK #3 ---
+
+	if v.type == 0 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 23-24, warpins: 1 ---
+	slot6 = "金币"
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+	--- BLOCK #5 25-25, warpins: 1 ---
+	slot6 = "元宝"
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 26-52, warpins: 2 ---
+	local price = slot4 .. slot5 .. slot6
+	self.items[i] = item.new(v.info, self, {
+		donotMove = true,
+		idx = i,
+		extend = {
+			price
+		},
+		clickcb = function (item)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:clickItem(item)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):addTo(self.bg, 1):pos(self.idx2pos(self, i))
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 53-54, warpins: 2 ---
+	return 
+	--- END OF BLOCK #7 ---
+
+
+
+end
+stallOther.delItem = function (self, makeIndex)
+	--- BLOCK #0 1-10, warpins: 1 ---
+	local i, data = g_data.stallOther:getItem(makeIndex)
+
+	--- END OF BLOCK #0 ---
+
+	for k, v in pairs(self.items)
+
+	LOOP BLOCK #1
+	GO OUT TO BLOCK #5
+
+
+	--- BLOCK #1 11-20, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if v.data:get("makeIndex")
+	 == tonumber(makeIndex)
+	 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #2 21-28, warpins: 1 ---
+	v.removeSelf(v)
+
+	self.items[k] = nil
+	--- END OF BLOCK #2 ---
+
+	slot3 = if data then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 29-55, warpins: 1 ---
+	self.items[k] = item.new(data.info, self, {
+		idx = k,
+		extend = {
+			data.price
+		},
+		clickcb = function (item)
+			--- BLOCK #0 1-6, warpins: 1 ---
+			self:clickItem(item)
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	}):addTo(self.bg, 1):pos(self.idx2pos(self, k))
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 56-57, warpins: 4 ---
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+	--- BLOCK #5 58-59, warpins: 1 ---
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+stallOther.clickItem = function (self, item)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if self.sItem == item then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-4, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 5-7, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	slot2 = if self.sItem then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 8-11, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if self.sItem.mask then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 12-16, warpins: 1 ---
+	self.sItem.mask:removeSelf()
+
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 17-48, warpins: 3 ---
+	self.sItem = item
+	self.sItem.mask = display.newColorLayer(cc.c4f(0, 255, 0, 60)):addTo(item):size(item.w, item.h):pos(-item.w/2, -item.h/2)
+
+	return 
+	--- END OF BLOCK #5 ---
+
+
+
+end
+stallOther.idx2pos = function (self, idx)
+	--- BLOCK #0 1-11, warpins: 1 ---
+	idx = idx - 1
+	local h = idx%5
+	local v = math.modf(idx/5)
+
+	return h*47 + 59, v*48 - 328
+	--- END OF BLOCK #0 ---
+
+
+
+end
+stallOther.pos2idx = function (self, x, y)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local h = (x - 59)/47 + 0.5
+	local v = (y - 328)/48 + 0.5
+
+	--- END OF BLOCK #0 ---
+
+	if 0 < h then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #1 10-12, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if h < 5 then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #2 13-15, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	if 0 < v then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 16-18, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if v < 4 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 19-30, warpins: 1 ---
+	return math.floor(v)*8 + math.floor(h) + 1
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 31-32, warpins: 5 ---
+	return -1
+	--- END OF BLOCK #5 ---
+
+
+
+end
+
+return stallOther
+--- END OF BLOCK #0 ---
+
+
+

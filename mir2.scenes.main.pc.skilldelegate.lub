@@ -1,0 +1,16 @@
+--- BLOCK #0 1-5, warpins: 1 ---
+local skilldelegate = {}
+skilldelegate.extend = function (target)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return skilldelegate
+--- END OF BLOCK #0 ---
+
+
+

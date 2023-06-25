@@ -1,0 +1,1823 @@
+--- BLOCK #0 1-29, warpins: 1 ---
+local current = ...
+uiEditor = class("uiEditor")
+local serialize = require("mir2.data.serialize")
+
+table.merge(uiEditor, {})
+
+uiEditor.sers__ = {}
+uiEditor.ctor = function (self)
+	--- BLOCK #0 1-1, warpins: 1 ---
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uiEditor.startEdit = function (self, name, cfg_key, root)
+	--- BLOCK #0 1-8, warpins: 1 ---
+	local ser = uiEditor.sers__[name]
+
+	--- END OF BLOCK #0 ---
+
+	if root.getName(root)
+	 ~= "" then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 9-13, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	if root.getName(root)
+	 == nil then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #3
+	end
+
+
+	--- BLOCK #2 14-17, warpins: 2 ---
+	root.setName(root, "root")
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 18-21, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+	if 0 < DEBUG then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #4 22-23, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot4 = if not ser then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #6
+	end
+
+
+	--- BLOCK #5 24-36, warpins: 1 ---
+	local filename = "src/mir2/scenes/main/panel/UIConfig/" .. name .. ".lua"
+	ser = serialize.new()
+
+	ser.open(ser, filename, true)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 37-45, warpins: 2 ---
+	self.ser = ser.data
+	self.root = root
+	self.cfg_key = cfg_key
+	slot5 = self.ser
+	--- END OF BLOCK #6 ---
+
+	slot6 = if not self.ser[cfg_key] then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 46-46, warpins: 1 ---
+	slot6 = {}
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 47-50, warpins: 2 ---
+	slot5[cfg_key] = slot6
+
+	--- END OF BLOCK #8 ---
+
+	slot5 = if not self.debug_ then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #9 51-54, warpins: 1 ---
+	self.debug(self)
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #13
+
+
+	--- BLOCK #10 55-62, warpins: 1 ---
+	local mod = package.preload["mir2.scenes.main.panel.UIConfig." .. name]
+
+	--- END OF BLOCK #10 ---
+
+	slot5 = if not mod then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 63-66, warpins: 1 ---
+	print("target cofnig not exist")
+
+	return 
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 67-75, warpins: 2 ---
+	local data = {}
+
+	setfenv(mod, data)
+	mod()
+
+	data = data.v
+	self.ser = data
+	--- END OF BLOCK #12 ---
+
+	FLOW; TARGET BLOCK #13
+
+
+	--- BLOCK #13 76-79, warpins: 3 ---
+	--- END OF BLOCK #13 ---
+
+	slot5 = if not self.ser.id_ then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 80-80, warpins: 1 ---
+	slot5 = 0
+	--- END OF BLOCK #14 ---
+
+	FLOW; TARGET BLOCK #15
+
+
+	--- BLOCK #15 81-86, warpins: 2 ---
+	self.id_ = slot5
+
+	self.setConfig(self, root)
+
+	return 
+	--- END OF BLOCK #15 ---
+
+
+
+end
+uiEditor.setConfig = function (self, root)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	local data = self.ser[self.cfg_key]
+
+	traversalNodeTree(root, function (n)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		local name = n.getName(n)
+		--- END OF BLOCK #0 ---
+
+		slot2 = if name then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 6-7, warpins: 1 ---
+		local cfg = data[name]
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 8-9, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if cfg then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #3 10-12, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		slot3 = if cfg.pos then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 13-19, warpins: 1 ---
+		n.pos(n, cfg.pos.x, cfg.pos.y)
+		--- END OF BLOCK #4 ---
+
+		FLOW; TARGET BLOCK #5
+
+
+		--- BLOCK #5 20-22, warpins: 2 ---
+		--- END OF BLOCK #5 ---
+
+		slot3 = if cfg.anchor then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 23-29, warpins: 1 ---
+		n.anchor(n, cfg.anchor.x, cfg.anchor.y)
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 30-32, warpins: 2 ---
+		--- END OF BLOCK #7 ---
+
+		slot3 = if cfg.scale then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 33-42, warpins: 1 ---
+		n.setScaleX(n, cfg.scale.x)
+		n.setScaleY(n, cfg.scale.y)
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 43-45, warpins: 2 ---
+		--- END OF BLOCK #9 ---
+
+		slot3 = if cfg.size then
+		JUMP TO BLOCK #10
+		else
+		JUMP TO BLOCK #11
+		end
+
+
+		--- BLOCK #10 46-52, warpins: 1 ---
+		n.size(n, cfg.size.w, cfg.size.h)
+		--- END OF BLOCK #10 ---
+
+		FLOW; TARGET BLOCK #11
+
+
+		--- BLOCK #11 53-55, warpins: 2 ---
+		--- END OF BLOCK #11 ---
+
+		slot3 = if cfg.color then
+		JUMP TO BLOCK #12
+		else
+		JUMP TO BLOCK #13
+		end
+
+
+		--- BLOCK #12 56-59, warpins: 1 ---
+		n.color(n, cfg.color)
+		--- END OF BLOCK #12 ---
+
+		FLOW; TARGET BLOCK #13
+
+
+		--- BLOCK #13 60-62, warpins: 2 ---
+		--- END OF BLOCK #13 ---
+
+		slot3 = if cfg.children then
+		JUMP TO BLOCK #14
+		else
+		JUMP TO BLOCK #28
+		end
+
+
+		--- BLOCK #14 63-66, warpins: 1 ---
+		--- END OF BLOCK #14 ---
+
+		for k, v in pairs(cfg.children)
+
+
+		LOOP BLOCK #15
+		GO OUT TO BLOCK #28
+
+
+		--- BLOCK #15 67-70, warpins: 1 ---
+		local child = nil
+		--- END OF BLOCK #15 ---
+
+		if v.type == "label" then
+		JUMP TO BLOCK #16
+		else
+		JUMP TO BLOCK #21
+		end
+
+
+		--- BLOCK #16 71-76, warpins: 1 ---
+		slot9 = an.newLabel
+		slot10 = v.text
+		--- END OF BLOCK #16 ---
+
+		slot11 = if not v.fontSize then
+		JUMP TO BLOCK #17
+		else
+		JUMP TO BLOCK #18
+		end
+
+
+		--- BLOCK #17 77-77, warpins: 1 ---
+		slot11 = 18
+		--- END OF BLOCK #17 ---
+
+		FLOW; TARGET BLOCK #18
+
+
+		--- BLOCK #18 78-80, warpins: 2 ---
+		--- END OF BLOCK #18 ---
+
+		slot12 = if not v.stroke then
+		JUMP TO BLOCK #19
+		else
+		JUMP TO BLOCK #20
+		end
+
+
+		--- BLOCK #19 81-81, warpins: 1 ---
+		slot12 = 1
+		--- END OF BLOCK #19 ---
+
+		FLOW; TARGET BLOCK #20
+
+
+		--- BLOCK #20 82-89, warpins: 2 ---
+		child = slot9(slot10, slot11, slot12, {
+			color = v.color,
+			sc = v.sc
+		})
+		--- END OF BLOCK #20 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+		--- BLOCK #21 90-92, warpins: 1 ---
+		--- END OF BLOCK #21 ---
+
+		if v.type == "sprite" then
+		JUMP TO BLOCK #22
+		else
+		JUMP TO BLOCK #23
+		end
+
+
+		--- BLOCK #22 93-98, warpins: 1 ---
+		child = res.get2(v.imgPath)
+		--- END OF BLOCK #22 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+		--- BLOCK #23 99-101, warpins: 1 ---
+		--- END OF BLOCK #23 ---
+
+		if v.type == "node" then
+		JUMP TO BLOCK #24
+		else
+		JUMP TO BLOCK #25
+		end
+
+
+		--- BLOCK #24 102-106, warpins: 1 ---
+		child = display.newNode()
+		--- END OF BLOCK #24 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+		--- BLOCK #25 107-109, warpins: 1 ---
+		--- END OF BLOCK #25 ---
+
+		if v.type == "layer" then
+		JUMP TO BLOCK #26
+		else
+		JUMP TO BLOCK #27
+		end
+
+
+		--- BLOCK #26 110-116, warpins: 1 ---
+		child = cc.LayerColor:create(v.color)
+
+		--- END OF BLOCK #26 ---
+
+		FLOW; TARGET BLOCK #27
+
+
+		--- BLOCK #27 117-118, warpins: 6 ---
+		--- END OF BLOCK #27 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #14
+
+
+		--- BLOCK #28 119-120, warpins: 3 ---
+		return true
+		--- END OF BLOCK #28 ---
+
+
+
+	end)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+--- END OF BLOCK #0 ---
+
+if 0 < DEBUG then
+JUMP TO BLOCK #1
+else
+JUMP TO BLOCK #2
+end
+
+
+--- BLOCK #1 30-67, warpins: 1 ---
+uiEditor.debug = function (self)
+	--- BLOCK #0 1-33, warpins: 1 ---
+	self.debug_ = true
+	self._mouseEventListener = cc.EventListenerMouse:create()
+
+	self._mouseEventListener:registerScriptHandler(handler(self, self.onMouseDown), cc.Handler.EVENT_MOUSE_DOWN)
+
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+	eventDispatcher.addEventListenerWithFixedPriority(eventDispatcher, self._mouseEventListener, 1000)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uiEditor.disDebug = function (self)
+	--- BLOCK #0 1-13, warpins: 1 ---
+	local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+
+	eventDispatcher.removeEventListener(eventDispatcher, self._mouseEventListener)
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uiEditor.getNodesByPos = function (self, pos)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local nodes = {}
+
+	traversalNodeTree(self.root, function (n)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if n.getName(n)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #1 6-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if n.getName(n)
+		 ~= "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #2 11-17, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		slot1 = if n.hitTest(n, pos, false)
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 18-22, warpins: 1 ---
+		table.insert(nodes, n)
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 23-24, warpins: 4 ---
+		return true
+		--- END OF BLOCK #4 ---
+
+
+
+	end)
+
+	return nodes
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uiEditor.getAllChildren = function (self)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local nodes = {}
+
+	traversalNodeTree(self.root, function (n)
+		--- BLOCK #0 1-5, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot1 = if n.getName(n)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 6-10, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if n.getName(n)
+		 ~= "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 11-15, warpins: 1 ---
+		table.insert(nodes, n)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 16-17, warpins: 3 ---
+		return true
+		--- END OF BLOCK #3 ---
+
+
+
+	end)
+
+	return nodes
+	--- END OF BLOCK #0 ---
+
+
+
+end
+local common = import("..common.common", current)
+uiEditor.showOperators = function (self)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not self.pre then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-5, warpins: 1 ---
+	return nil
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-128, warpins: 1 ---
+	function createInputCell(name, w, default, max, callback)
+		--- BLOCK #0 1-114, warpins: 1 ---
+		local lb = an.newLabel(name, 22, 1):pos(3, 20):anchor(0, 0.5)
+		local inputBack = display.newScale9Sprite(res.getframe2("pic/scale/edit.png")):anchor(0, 0.5):size(w - lb.getw(lb) - 6, 34):pos(lb.getw(lb) + 3, 20)
+		local valueInput = nil
+		valueInput = an.newInput(10, 3, w - 25, 38, max, {
+			label = {
+				tostring(default),
+				20,
+				1
+			}
+		}):add2(inputBack):anchor(0, 0):pos(10, -5)
+		valueInput.preValue__ = tostring(default)
+
+		valueInput.schedule(valueInput, function ()
+			--- BLOCK #0 1-8, warpins: 1 ---
+			--- END OF BLOCK #0 ---
+
+			if valueInput.preValue__ ~= valueInput:getString()
+
+			 then
+			JUMP TO BLOCK #1
+			else
+			JUMP TO BLOCK #2
+			end
+
+
+			--- BLOCK #1 9-18, warpins: 1 ---
+			valueInput.preValue__ = valueInput:getString()
+
+			callback(valueInput.preValue__)
+
+			--- END OF BLOCK #1 ---
+
+			FLOW; TARGET BLOCK #2
+
+
+			--- BLOCK #2 19-19, warpins: 2 ---
+			return 
+			--- END OF BLOCK #2 ---
+
+
+
+		end, 0.1)
+
+		local n = display.newColorLayer(cc.c4b(128, 128, 128, 65)):size(w, 40)
+
+		n.addChild(n, lb)
+		n.addChild(n, inputBack)
+
+		n.setValue = function (self, v)
+			--- BLOCK #0 1-8, warpins: 1 ---
+			valueInput:setString(tostring(v))
+
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+		n.getValue = function (self)
+			--- BLOCK #0 1-4, warpins: 1 ---
+			return valueInput:getString()
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+
+		return n
+		--- END OF BLOCK #0 ---
+
+
+
+	end
+
+	local function craeteNode(creator, clsName)
+		--- BLOCK #0 1-31, warpins: 1 ---
+		local name = string.format("%s_%d", clsName, self.id_)
+		self.ser.id_ = self.id_ + 1
+		self.id_ = self.ser.id_
+		local pname = self.pre:getName()
+
+		--- END OF BLOCK #0 ---
+
+		slot4 = if not self:getData(pname, "children")
+
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 32-32, warpins: 1 ---
+		local children = {}
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 33-75, warpins: 2 ---
+		self:save(pname, "children", children)
+		self:save(name, "type", clsName)
+		self:save(name, "parent", self:get(pname))
+
+		children[name] = self:get(name)
+		local n = creator():add2(self.pre)
+
+		n.setName(n, name)
+
+		return n
+		--- END OF BLOCK #2 ---
+
+
+
+	end
+
+	local ops = {}
+
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-99, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg1 = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(125, 50):add2(n)
+			local lb1 = an.newLabel("添加Label", 22, 1):add2(bg1):pos(10, 10)
+
+			lb1.setTouchEnabled(lb1, true)
+			lb1.enableClick(lb1, function ()
+				--- BLOCK #0 1-13, warpins: 1 ---
+				local p = self.pre
+				local n = craeteNode(function ()
+					--- BLOCK #0 1-6, warpins: 1 ---
+					return an.newLabel("", 22, 1)
+					--- END OF BLOCK #0 ---
+
+
+
+				end, "label")
+
+				main_scene.ui:tip("添加成功")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+
+			local bg2 = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(125, 50):add2(n):pos(126, 0)
+			local lb2 = an.newLabel("添加Sprite", 22, 1):add2(bg2):pos(10, 10)
+
+			lb2.setTouchEnabled(lb2, true)
+			lb2.enableClick(lb2, function ()
+				--- BLOCK #0 1-13, warpins: 1 ---
+				local p = self.pre
+				local n = craeteNode(function ()
+					--- BLOCK #0 1-5, warpins: 1 ---
+					return cc.Sprite:create()
+					--- END OF BLOCK #0 ---
+
+
+
+				end, "sprite")
+
+				main_scene.ui:tip("添加成功")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-99, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg1 = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(125, 50):add2(n)
+			local lb1 = an.newLabel("添加Node", 22, 1):add2(bg1):pos(10, 10)
+
+			lb1.setTouchEnabled(lb1, true)
+			lb1.enableClick(lb1, function ()
+				--- BLOCK #0 1-13, warpins: 1 ---
+				local p = self.pre
+				local n = craeteNode(function ()
+					--- BLOCK #0 1-3, warpins: 1 ---
+					return display.newNode()
+					--- END OF BLOCK #0 ---
+
+
+
+				end, "node")
+
+				main_scene.ui:tip("添加成功")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+
+			local bg2 = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(125, 50):add2(n):pos(126, 0)
+			local lb2 = an.newLabel("添加ColorLayer", 22, 1):add2(bg2):pos(10, 10)
+
+			lb2.setTouchEnabled(lb2, true)
+			lb2.enableClick(lb2, function ()
+				--- BLOCK #0 1-13, warpins: 1 ---
+				local p = self.pre
+				local n = craeteNode(function ()
+					--- BLOCK #0 1-10, warpins: 1 ---
+					return display.newColorLayer(cc.c4b(0, 0, 0, 128))
+					--- END OF BLOCK #0 ---
+
+
+
+				end, "layer")
+
+				main_scene.ui:tip("添加成功")
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-68, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+			local function setPos(key, value)
+				--- BLOCK #0 1-3, warpins: 1 ---
+				local x, y = nil
+				--- END OF BLOCK #0 ---
+
+				if key == "x" then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 4-14, warpins: 1 ---
+				x = tonumber(value)
+				y = self.pre:getPositionY()
+				--- END OF BLOCK #1 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+				--- BLOCK #2 15-24, warpins: 1 ---
+				y = tonumber(value)
+				x = self.pre:getPositionX()
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 25-47, warpins: 2 ---
+				self.pre:pos(x, y)
+				self:save(self.pre:getName(), "pos", cc.p(x, y))
+
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end
+
+			local xi = createInputCell("  x:", 120, 0, 6, handler("x", setPos)):add2(bg):pos(4, 5)
+			local yi = createInputCell("  y:", 120, 0, 6, handler("y", setPos)):add2(bg):pos(126, 5)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-68, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+			local function setAnchor(key, value)
+				--- BLOCK #0 1-3, warpins: 1 ---
+				local x, y = nil
+				--- END OF BLOCK #0 ---
+
+				if key == "x" then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 4-14, warpins: 1 ---
+				x = tonumber(value)
+				y = self.pre:getAnchorPoint().y
+				--- END OF BLOCK #1 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+				--- BLOCK #2 15-24, warpins: 1 ---
+				y = tonumber(value)
+				x = self.pre:getAnchorPoint().x
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 25-47, warpins: 2 ---
+				self.pre:anchor(x, y)
+				self:save(self.pre:getName(), "anchor", cc.p(x, y))
+
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end
+
+			local xi = createInputCell("ax:", 120, 0, 6, handler("x", setAnchor)):add2(bg):pos(4, 5)
+			local yi = createInputCell("ay:", 120, 0, 6, handler("y", setAnchor)):add2(bg):pos(126, 5)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-68, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+			local function setScale(key, value)
+				--- BLOCK #0 1-3, warpins: 1 ---
+				local x, y = nil
+				--- END OF BLOCK #0 ---
+
+				if key == "x" then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 4-14, warpins: 1 ---
+				x = tonumber(value)
+				y = self.pre:getScaleY()
+				--- END OF BLOCK #1 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+				--- BLOCK #2 15-24, warpins: 1 ---
+				y = tonumber(value)
+				x = self.pre:getScaleX()
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 25-52, warpins: 2 ---
+				self.pre:setScaleX(x)
+				self.pre:setScaleY(y)
+				self:save(self.pre:getName(), "scale", cc.p(x, y))
+
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end
+
+			local xi = createInputCell("sx:", 120, 0, 6, handler("x", setScale)):add2(bg):pos(4, 5)
+			local yi = createInputCell("sy:", 120, 0, 6, handler("y", setScale)):add2(bg):pos(126, 5)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-68, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+			local function setSize(key, value)
+				--- BLOCK #0 1-3, warpins: 1 ---
+				local w, h = nil
+				--- END OF BLOCK #0 ---
+
+				if key == "w" then
+				JUMP TO BLOCK #1
+				else
+				JUMP TO BLOCK #2
+				end
+
+
+				--- BLOCK #1 4-14, warpins: 1 ---
+				w = tonumber(value)
+				h = self.pre:geth()
+				--- END OF BLOCK #1 ---
+
+				UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+				--- BLOCK #2 15-24, warpins: 1 ---
+				h = tonumber(value)
+				w = self.pre:getw()
+
+				--- END OF BLOCK #2 ---
+
+				FLOW; TARGET BLOCK #3
+
+
+				--- BLOCK #3 25-47, warpins: 2 ---
+				self.pre:size(w, h)
+				self:save(self.pre:getName(), "size", cc.size(w, h))
+
+				return 
+				--- END OF BLOCK #3 ---
+
+
+
+			end
+
+			local xi = createInputCell("  w:", 120, 0, 6, handler("w", setSize)):add2(bg):pos(4, 5)
+			local yi = createInputCell("  h:", 120, 0, 6, handler("h", setSize)):add2(bg):pos(126, 5)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+	table.insert(ops, {
+		w = 250,
+		h = 52,
+		cellCls = function ()
+			--- BLOCK #0 1-106, warpins: 1 ---
+			local n = display.newNode():size(250, 50)
+			local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+			local function setColor(key, value)
+				--- BLOCK #0 1-24, warpins: 1 ---
+				local color = self.pre:getColor()
+				color[key] = value
+
+				self.pre:setColor(color)
+				self:save(self.pre:getName(), "color", color)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+
+			local xi = createInputCell("r", 60, 0, 3, handler("r", setColor)):add2(bg):pos(3, 5)
+			local yi = createInputCell("g", 60, 0, 3, handler("g", setColor)):add2(bg):pos(64, 5)
+			local yi = createInputCell("b", 60, 0, 3, handler("b", setColor)):add2(bg):pos(126, 5)
+			local yi = createInputCell("a", 60, 0, 3, handler("a", setColor)):add2(bg):pos(188, 5)
+
+			return n
+			--- END OF BLOCK #0 ---
+
+
+
+		end
+	})
+
+	local n = display.newNode():size(50, 50):debug():add2(main_scene, 999998):center()
+	self.operatorNode = n
+
+	n.setTouchEnabled(n, true)
+	n.enableClick(n, function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot0 = if not tolua.isnull(n.menu)
+		 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 8-15, warpins: 1 ---
+		n.menu:removeFromParent()
+
+		n.menu = nil
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-32, warpins: 2 ---
+		print(self.pre.__cname, tolua.type(self.pre))
+		--- END OF BLOCK #2 ---
+
+		if tolua.type(self.pre)
+		 ~= "cc.Sprite" then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 33-39, warpins: 1 ---
+		--- END OF BLOCK #3 ---
+
+		if tolua.type(self.pre)
+		 == "ccui.Scale9Sprite" then
+		JUMP TO BLOCK #4
+		else
+		JUMP TO BLOCK #5
+		end
+
+
+		--- BLOCK #4 40-47, warpins: 2 ---
+		table.insert(ops, {
+			w = 250,
+			h = 52,
+			cellCls = function ()
+				--- BLOCK #0 1-49, warpins: 1 ---
+				local n = display.newNode():size(250, 50)
+				local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+				local function setFile(key, value)
+					--- BLOCK #0 1-21, warpins: 1 ---
+					self.pre:setTex(res.gettex2(value))
+					self:save(self.pre:getName(), "tex", value)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end
+
+				local xi = createInputCell("file:", 244, 0, 3, handler("tex", setColor)):add2(bg):pos(3, 5)
+
+				return n
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+		--- END OF BLOCK #4 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #7
+
+
+		--- BLOCK #5 48-52, warpins: 1 ---
+		--- END OF BLOCK #5 ---
+
+		if self.pre.__cname == "an.label" then
+		JUMP TO BLOCK #6
+		else
+		JUMP TO BLOCK #7
+		end
+
+
+		--- BLOCK #6 53-66, warpins: 1 ---
+		table.insert(ops, {
+			w = 250,
+			h = 52,
+			cellCls = function ()
+				--- BLOCK #0 1-49, warpins: 1 ---
+				local n = display.newNode():size(250, 50)
+				local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+				local function setString(key, value)
+					--- BLOCK #0 1-18, warpins: 1 ---
+					self.pre:setString(value)
+					self:save(self.pre:getName(), "text", value)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end
+
+				local xi = createInputCell("text:", 244, 0, 256, handler("text", setString)):add2(bg):pos(3, 5)
+
+				return n
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+		table.insert(ops, {
+			w = 250,
+			h = 52,
+			cellCls = function ()
+				--- BLOCK #0 1-49, warpins: 1 ---
+				local n = display.newNode():size(250, 50)
+				local bg = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(250, 50):add2(n)
+
+				local function fontSize(key, value)
+					--- BLOCK #0 1-23, warpins: 1 ---
+					self.pre.fontSize = tonumber(value)
+
+					self.pre:upt()
+					self:save(self.pre:getName(), "fontSize", value)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end
+
+				local xi = createInputCell("fontSize:", 244, 0, 3, handler("text", fontSize)):add2(bg):pos(3, 5)
+
+				return n
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+		--- END OF BLOCK #6 ---
+
+		FLOW; TARGET BLOCK #7
+
+
+		--- BLOCK #7 67-78, warpins: 3 ---
+		--- END OF BLOCK #7 ---
+
+		slot0 = if self:getData(self.pre:getName(), "parent")
+		 then
+		JUMP TO BLOCK #8
+		else
+		JUMP TO BLOCK #9
+		end
+
+
+		--- BLOCK #8 79-85, warpins: 1 ---
+		table.insert(ops, {
+			w = 250,
+			h = 52,
+			cellCls = function ()
+				--- BLOCK #0 1-52, warpins: 1 ---
+				local n = display.newNode():size(250, 50)
+				local bg1 = display.newColorLayer(cc.c4b(0, 0, 0, 128)):size(244, 50):add2(n)
+				local lb1 = an.newLabel("删除节点", 22, 1):add2(bg1):pos(10, 10)
+
+				lb1.setTouchEnabled(lb1, true)
+				lb1.enableClick(lb1, function ()
+					--- BLOCK #0 1-25, warpins: 1 ---
+					local function delByName(name)
+						--- BLOCK #0 1-9, warpins: 1 ---
+						local data = self:get(name)
+						local index = 1
+
+						--- END OF BLOCK #0 ---
+
+						slot3 = if data.children then
+						JUMP TO BLOCK #1
+						else
+						JUMP TO BLOCK #4
+						end
+
+
+						--- BLOCK #1 10-13, warpins: 1 ---
+						--- END OF BLOCK #1 ---
+
+						for k, v in pairs(data.children)
+
+						LOOP BLOCK #2
+						GO OUT TO BLOCK #4
+
+
+						--- BLOCK #2 14-16, warpins: 1 ---
+						delByName(k)
+						--- END OF BLOCK #2 ---
+
+						FLOW; TARGET BLOCK #3
+
+
+						--- BLOCK #3 17-18, warpins: 2 ---
+						--- END OF BLOCK #3 ---
+
+						UNCONDITIONAL JUMP; TARGET BLOCK #1
+
+
+						--- BLOCK #4 19-24, warpins: 2 ---
+						self:delData(name)
+
+						return 
+						--- END OF BLOCK #4 ---
+
+
+
+					end
+
+					local p = self.pre
+					local name = p.getName(p)
+					local parent = self:getData(name, "parent")
+
+					self:delByName(name)
+
+					parent.children[name] = nil
+
+					p.removeSelf(p)
+
+					return 
+					--- END OF BLOCK #0 ---
+
+
+
+				end)
+
+				return n
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+
+		--- END OF BLOCK #8 ---
+
+		FLOW; TARGET BLOCK #9
+
+
+		--- BLOCK #9 86-108, warpins: 2 ---
+		n.menu = common.createOperationMenu(ops, 3, function (pnl, cell)
+			--- BLOCK #0 1-1, warpins: 1 ---
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end):add2(n):anchor(1, 0):pos(50, 50)
+
+		return 
+		--- END OF BLOCK #9 ---
+
+
+
+	end, {
+		support = "drag"
+	})
+	display.newColorLayer(cc.c4b(255, 255, 0, 128)):size(50, 50):add2(n)
+	an.newLabel("编辑", 26, 1):pos(25, 25):anchor(0.5, 0.5):add2(n)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 129-129, warpins: 2 ---
+	--- END OF BLOCK #3 ---
+
+
+
+end
+uiEditor.onMouseDown = function (self, event)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if event.getMouseButton(event)
+
+	 == 1 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #1 6-8, warpins: 1 ---
+	--- END OF BLOCK #1 ---
+
+	slot2 = if self.root then
+	JUMP TO BLOCK #2
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #2 9-20, warpins: 1 ---
+	local mousePos = cc.p(event.getCursorX(event), event.getCursorY(event))
+
+	--- END OF BLOCK #2 ---
+
+	slot3 = if self.pre then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 21-24, warpins: 1 ---
+	self.pre:disableDebugdraw()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 25-33, warpins: 2 ---
+	local nodes = self.getAllChildren(self, mousePos)
+	local cells = {}
+
+	--- END OF BLOCK #4 ---
+
+	for k, v in pairs(nodes)
+
+
+	LOOP BLOCK #5
+	GO OUT TO BLOCK #7
+
+
+	--- BLOCK #5 34-48, warpins: 1 ---
+	local cell = {}
+	cell.w = 250
+	cell.h = 25
+	cell.cellCls = function ()
+		--- BLOCK #0 1-6, warpins: 1 ---
+		local lb = v:getName()
+		--- END OF BLOCK #0 ---
+
+		slot0 = if lb then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 7-8, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if lb == "" then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 9-10, warpins: 2 ---
+		lb = v.listener_id__
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 11-28, warpins: 2 ---
+		cell.stack = cell.node.stack__
+		cell.lb = lb
+
+		return an.newLabel(lb, 22, 1):anchor(0.5, 0.5)
+		--- END OF BLOCK #3 ---
+
+
+
+	end
+	cell.node = v
+
+	table.insert(cells, cell)
+
+	--- END OF BLOCK #5 ---
+
+	FLOW; TARGET BLOCK #6
+
+
+	--- BLOCK #6 49-50, warpins: 2 ---
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #4
+
+
+	--- BLOCK #7 51-54, warpins: 1 ---
+	--- END OF BLOCK #7 ---
+
+	if #cells <= 0 then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 55-56, warpins: 1 ---
+	return 
+
+	--- END OF BLOCK #8 ---
+
+	FLOW; TARGET BLOCK #9
+
+
+	--- BLOCK #9 57-89, warpins: 2 ---
+	local menu = common.createOperationMenu(cells, 5, function (pnl, cell)
+		--- BLOCK #0 1-4, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		slot2 = if self.pre then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 5-15, warpins: 1 ---
+		self.pre:setTouchEnabled(false)
+		self.pre:disableDebugdraw()
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-21, warpins: 2 ---
+		--- END OF BLOCK #2 ---
+
+		slot2 = if not tolua.isnull(cell.node)
+
+		 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 22-24, warpins: 1 ---
+		self.pre = cell.node
+
+		--- END OF BLOCK #3 ---
+
+		FLOW; TARGET BLOCK #4
+
+
+		--- BLOCK #4 25-55, warpins: 2 ---
+		self.pre:debug()
+		self.pre:setTouchEnabled(true)
+		cell.node:enableClick(function ()
+			--- BLOCK #0 1-1, warpins: 1 ---
+			return 
+			--- END OF BLOCK #0 ---
+
+
+
+		end, {
+			support = "drag",
+			size = cc.size(display.width, display.height),
+			call_drag_moving = function (x, y)
+				--- BLOCK #0 1-6, warpins: 1 ---
+				cell.node:disableDebugdraw()
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end,
+			call_drag_end = function (pos)
+				--- BLOCK #0 1-18, warpins: 1 ---
+				cell.node:debug()
+
+				local name = cell.node:getName()
+
+				self:save(name, "pos", pos)
+
+				return 
+				--- END OF BLOCK #0 ---
+
+
+
+			end
+		})
+
+		return 
+		--- END OF BLOCK #4 ---
+
+
+
+	end, {
+		scroll = {
+			w = 300,
+			h = display.height
+		}
+	}):add2(main_scene, 999999):anchor(0, 0):pos(0, 0)
+
+	--- END OF BLOCK #9 ---
+
+	slot6 = if not tolua.isnull(self.preMenu)
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #11
+	end
+
+
+	--- BLOCK #10 90-93, warpins: 1 ---
+	self.preMenu:removeSelf()
+
+	--- END OF BLOCK #10 ---
+
+	FLOW; TARGET BLOCK #11
+
+
+	--- BLOCK #11 94-97, warpins: 2 ---
+	self.preMenu = menu
+
+	self.showOperators(self)
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 98-99, warpins: 3 ---
+	return 
+	--- END OF BLOCK #12 ---
+
+
+
+end
+uiEditor.save = function (self, name, key, value)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	slot4 = self.ser[self.cfg_key]
+	--- END OF BLOCK #0 ---
+
+	slot5 = if not self.ser[self.cfg_key][name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	slot5 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-17, warpins: 2 ---
+	slot4[name] = slot5
+	self.ser[self.cfg_key][name][key] = value
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+uiEditor.get = function (self, name)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	slot2 = self.ser[self.cfg_key]
+	--- END OF BLOCK #0 ---
+
+	slot3 = if not self.ser[self.cfg_key][name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-10, warpins: 1 ---
+	slot3 = {}
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 11-16, warpins: 2 ---
+	slot2[name] = slot3
+
+	return self.ser[self.cfg_key][name]
+	--- END OF BLOCK #2 ---
+
+
+
+end
+uiEditor.getData = function (self, name, key)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.ser[self.cfg_key][name] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-11, warpins: 1 ---
+	slot3 = self.ser[self.cfg_key][name][key]
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 12-12, warpins: 2 ---
+	return slot3
+	--- END OF BLOCK #2 ---
+
+
+
+end
+uiEditor.delData = function (self, name)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.ser[self.cfg_key][name] = nil
+
+	return 
+	--- END OF BLOCK #0 ---
+
+
+
+end
+uiEditor.chgDataName = function (self, name, new)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.ser[self.cfg_key][new] then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-7, warpins: 1 ---
+	return name
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-21, warpins: 2 ---
+	self.ser[self.cfg_key][new] = self.ser[self.cfg_key][name]
+	self.ser[self.cfg_key][name] = nil
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+
+--- END OF BLOCK #1 ---
+
+FLOW; TARGET BLOCK #2
+
+
+--- BLOCK #2 68-70, warpins: 2 ---
+return uiEditor
+--- END OF BLOCK #2 ---
+
+
+

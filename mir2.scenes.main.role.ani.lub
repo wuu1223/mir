@@ -1,0 +1,571 @@
+--- BLOCK #0 1-15, warpins: 1 ---
+local ani = class("role.ani", function (act)
+	--- BLOCK #0 1-5, warpins: 1 ---
+	return m2spr.new(nil, nil, {
+		setOffset = true
+	})
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+
+table.merge(ani, {})
+
+ani.ctor = function (self, act, role)
+	--- BLOCK #0 1-6, warpins: 1 ---
+	self.act = act
+	self.role = role
+
+	--- END OF BLOCK #0 ---
+
+	slot3 = if self.act.alwaysPlay then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 7-19, warpins: 1 ---
+	self.playAni(self, act.imgid, act.offset, act.offsetEnd - act.offset + 1, nil, true, nil, nil, nil, 1)
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 20-20, warpins: 2 ---
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+ani.play = function (self, act, delay)
+	--- BLOCK #0 1-7, warpins: 1 ---
+	local actType = act.type
+	local dir = act.dir
+	local blend = nil
+	local mact = self.act
+
+	--- END OF BLOCK #0 ---
+
+	slot7 = if mact.alwaysPlay then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 8-8, warpins: 1 ---
+	return delay
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 9-11, warpins: 2 ---
+	local frameKey = actType
+	--- END OF BLOCK #2 ---
+
+	if actType == "rushKung" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 12-13, warpins: 1 ---
+	frameKey = "run"
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #4 14-15, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	if actType == "digup" then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 16-19, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot8 = if not mact.frame.digup then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 20-23, warpins: 1 ---
+	print("not have digup state")
+
+	return delay
+
+	--- END OF BLOCK #6 ---
+
+	FLOW; TARGET BLOCK #7
+
+
+	--- BLOCK #7 24-28, warpins: 2 ---
+	--- END OF BLOCK #7 ---
+
+	slot8 = if mact.frame.digup.fixed then
+	JUMP TO BLOCK #8
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #8 29-30, warpins: 1 ---
+	dir = 0
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #9
+
+
+	--- BLOCK #9 31-34, warpins: 2 ---
+	blend = mact.frame.digup.blend
+
+	--- END OF BLOCK #9 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #10 35-36, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if actType == "digdown" then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #11 37-40, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	slot8 = if not mact.frame.digdown then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #12 41-45, warpins: 1 ---
+	print("not have digdown state")
+
+	return delay
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #13 46-48, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot8 = if act.stone then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #18
+	end
+
+
+	--- BLOCK #14 49-53, warpins: 1 ---
+	frameKey = "death"
+	--- END OF BLOCK #14 ---
+
+	slot8 = if mact.frame.digup then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #15 54-58, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	slot8 = if mact.frame.digup.fixed then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #16 59-60, warpins: 1 ---
+	dir = 0
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #17
+
+
+	--- BLOCK #17 61-61, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #21
+
+
+	--- BLOCK #18 62-64, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	slot8 = if act.gutou then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #19 65-68, warpins: 1 ---
+	--- END OF BLOCK #19 ---
+
+	if self.role.__cname == "mon" then
+	JUMP TO BLOCK #20
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #20 69-69, warpins: 1 ---
+	frameKey = "death"
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 70-73, warpins: 10 ---
+	local config = mact.frame[frameKey]
+
+	--- END OF BLOCK #21 ---
+
+	slot8 = if config then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 74-76, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if config.frame == 0 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 77-77, warpins: 2 ---
+	return delay
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 78-79, warpins: 2 ---
+	--- END OF BLOCK #24 ---
+
+	slot2 = if not delay then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 80-83, warpins: 1 ---
+	delay = config.ftime/1000*config.frame
+	--- END OF BLOCK #25 ---
+
+	FLOW; TARGET BLOCK #26
+
+
+	--- BLOCK #26 84-87, warpins: 2 ---
+	--- END OF BLOCK #26 ---
+
+	if self.role.__cname == "npc" then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 88-89, warpins: 1 ---
+	dir = dir%mact.direction
+	--- END OF BLOCK #27 ---
+
+	FLOW; TARGET BLOCK #28
+
+
+	--- BLOCK #28 90-92, warpins: 2 ---
+	--- END OF BLOCK #28 ---
+
+	slot9 = if mact.cannotMove then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 93-93, warpins: 1 ---
+	dir = 0
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 94-96, warpins: 2 ---
+	--- END OF BLOCK #30 ---
+
+	slot9 = if not act.corpse then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 97-99, warpins: 1 ---
+	--- END OF BLOCK #31 ---
+
+	slot9 = if act.gutou then
+	JUMP TO BLOCK #32
+	else
+	JUMP TO BLOCK #35
+	end
+
+
+	--- BLOCK #32 100-123, warpins: 2 ---
+	local begin = mact.offset + config.start + dir*(config.frame + config.skip)
+
+	self.stopAnimation(self)
+	self.setImg(self, mact.imgid, (begin + config.frame) - 1, true)
+
+	slot11 = self
+	slot10 = self.setBlend
+	--- END OF BLOCK #32 ---
+
+	slot12 = if not mact.blend then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 124-124, warpins: 1 ---
+	slot12 = blend
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 125-128, warpins: 2 ---
+	slot10(slot11, slot12)
+
+	return 0
+
+	--- END OF BLOCK #34 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #37
+
+
+	--- BLOCK #35 129-131, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot9 = if act.stone then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 132-150, warpins: 1 ---
+	local begin = mact.offset + config.start + dir*(config.frame + config.skip)
+
+	self.stopAnimation(self)
+	self.setImg(self, mact.imgid, begin, true)
+
+	return 0
+
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 151-154, warpins: 3 ---
+	local signOffset = 0
+	--- END OF BLOCK #37 ---
+
+	slot10 = if act.sign then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #38 155-157, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	if act.sign == "SabukDoor-1" then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #39 158-159, warpins: 1 ---
+	--- END OF BLOCK #39 ---
+
+	if actType ~= "stand" then
+	JUMP TO BLOCK #40
+	else
+	JUMP TO BLOCK #41
+	end
+
+
+	--- BLOCK #40 160-161, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	if actType == "struck" then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 162-163, warpins: 2 ---
+	signOffset = 8
+	--- END OF BLOCK #41 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #42 164-166, warpins: 2 ---
+	--- END OF BLOCK #42 ---
+
+	if act.sign == "SabukDoor-2" then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #43 167-168, warpins: 1 ---
+	--- END OF BLOCK #43 ---
+
+	if actType ~= "stand" then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #45
+	end
+
+
+	--- BLOCK #44 169-170, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if actType == "struck" then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 171-171, warpins: 2 ---
+	signOffset = 16
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 172-174, warpins: 5 ---
+	local noForever, aniDelay = nil
+	--- END OF BLOCK #46 ---
+
+	if actType == "stand" then
+	JUMP TO BLOCK #47
+	else
+	JUMP TO BLOCK #48
+	end
+
+
+	--- BLOCK #47 175-176, warpins: 1 ---
+	aniDelay = 0.3
+	--- END OF BLOCK #47 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #49
+
+
+	--- BLOCK #48 177-180, warpins: 1 ---
+	aniDelay = delay/config.frame
+	noForever = true
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 181-192, warpins: 2 ---
+	local begin = mact.offset + config.start + dir*(config.frame + config.skip) + signOffset
+
+	--- END OF BLOCK #49 ---
+
+	if mact.id == 50149 then
+	JUMP TO BLOCK #50
+	else
+	JUMP TO BLOCK #51
+	end
+
+
+	--- BLOCK #50 193-196, warpins: 1 ---
+	print("------------------begin", dir)
+
+	--- END OF BLOCK #50 ---
+
+	FLOW; TARGET BLOCK #51
+
+
+	--- BLOCK #51 197-205, warpins: 2 ---
+	slot14 = self
+	slot13 = self.playAni
+	slot15 = mact.imgid
+	slot16 = begin
+	slot17 = config.frame
+	slot18 = aniDelay
+	--- END OF BLOCK #51 ---
+
+	slot19 = if not mact.blend then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #52 206-206, warpins: 1 ---
+	slot19 = blend
+
+	--- END OF BLOCK #52 ---
+
+	FLOW; TARGET BLOCK #53
+
+
+	--- BLOCK #53 207-210, warpins: 2 ---
+	slot13(slot14, slot15, slot16, slot17, slot18, slot19, nil, noForever)
+
+	return delay
+	--- END OF BLOCK #53 ---
+
+
+
+end
+
+return ani
+--- END OF BLOCK #0 ---
+
+
+

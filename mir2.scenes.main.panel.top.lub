@@ -1,0 +1,1410 @@
+--- BLOCK #0 1-47, warpins: 1 ---
+local top = class("top", function ()
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return display.newNode()
+	--- END OF BLOCK #0 ---
+
+
+
+end)
+local common = import("..common.common")
+
+table.merge(top, {
+	content,
+	currentpage,
+	ordertype
+})
+
+local tags = {}
+tags.mafa = {
+	var = 4,
+	tag1 = "single"
+}
+tags.mars = {
+	var = 1,
+	tag1 = "single"
+}
+tags.fasheng = {
+	var = 2,
+	tag1 = "single"
+}
+tags.respect = {
+	var = 3,
+	tag1 = "single"
+}
+tags.heroall = {
+	var = 8,
+	tag1 = "hero"
+}
+tags.zhanshi = {
+	var = 5,
+	tag1 = "hero"
+}
+tags.fashi = {
+	var = 6,
+	tag1 = "hero"
+}
+tags.daoshi = {
+	var = 7,
+	tag1 = "hero"
+}
+top.ctor = function (self, params)
+	--- BLOCK #0 1-4, warpins: 1 ---
+	self._supportMove = true
+	--- END OF BLOCK #0 ---
+
+	slot1 = if not params then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 5-5, warpins: 1 ---
+	params = {}
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 6-10, warpins: 2 ---
+	--- END OF BLOCK #2 ---
+
+	if type(params.tag2)
+
+	 == "string" then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-15, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	slot2 = if tag[params.tag2] then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 16-17, warpins: 2 ---
+	params.tag2 = "mafa"
+	--- END OF BLOCK #4 ---
+
+	FLOW; TARGET BLOCK #5
+
+
+	--- BLOCK #5 18-118, warpins: 2 ---
+	params.tag1 = tags[params.tag2].tag1
+	local bg = res.get2("pic/common/black_0.png"):addTo(self):anchor(0, 0)
+
+	self.size(self, bg.getContentSize(bg)):anchor(0.5, 0.5):center()
+	res.get2("pic/panels/top/title.png"):addTo(bg):pos(bg.getw(bg)/2, bg.geth(bg) - 12):anchor(0.5, 1)
+	an.newBtn(res.gettex2("pic/common/close10.png"), function ()
+		--- BLOCK #0 1-9, warpins: 1 ---
+		sound.playSound("103")
+		self:hidePanel()
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/close11.png"),
+		size = cc.size(64, 64)
+	}):addTo(bg):pos(bg.getw(bg) - 9, bg.geth(bg) - 8):anchor(1, 1)
+
+	local sprs = nil
+	--- END OF BLOCK #5 ---
+
+	if def.gameVersionType == "185" then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 119-120, warpins: 1 ---
+	sprs = {
+		"pic/panels/top/grph.png",
+		"pic/panels/top/yxph.png"
+	}
+	--- END OF BLOCK #6 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #8
+
+
+	--- BLOCK #7 121-121, warpins: 1 ---
+	sprs = {
+		"pic/panels/top/grph.png"
+	}
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 122-144, warpins: 2 ---
+	common.tabs(bg, {
+		oy = 10,
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-2, warpins: 1 ---
+		--- END OF BLOCK #0 ---
+
+		if idx == 1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 3-11, warpins: 1 ---
+		self.tag1 = "single"
+
+		self:load("mafa")
+
+		--- END OF BLOCK #1 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #2 12-13, warpins: 1 ---
+		--- END OF BLOCK #2 ---
+
+		if idx == 2 then
+		JUMP TO BLOCK #3
+		else
+		JUMP TO BLOCK #4
+		end
+
+
+		--- BLOCK #3 14-22, warpins: 1 ---
+		self.tag1 = "hero"
+
+		self:load("heroall")
+
+		--- END OF BLOCK #3 ---
+
+		UNCONDITIONAL JUMP; TARGET BLOCK #6
+
+
+		--- BLOCK #4 23-24, warpins: 1 ---
+		--- END OF BLOCK #4 ---
+
+		if idx == 3 then
+		JUMP TO BLOCK #5
+		else
+		JUMP TO BLOCK #6
+		end
+
+
+		--- BLOCK #5 25-32, warpins: 1 ---
+		self.tag1 = "prestige"
+
+		self:load("master")
+
+		--- END OF BLOCK #5 ---
+
+		FLOW; TARGET BLOCK #6
+
+
+		--- BLOCK #6 33-33, warpins: 4 ---
+		return 
+		--- END OF BLOCK #6 ---
+
+
+
+	end, {
+		tabTp = 3,
+		pos = {
+			offset = 100,
+			x = 1,
+			y = bg.geth(bg) - 38,
+			anchor = cc.p(1, 1)
+		}
+	})
+
+	return 
+	--- END OF BLOCK #8 ---
+
+
+
+end
+top.load = function (self, tag2)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.tag1Node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.tag1Node:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-51, warpins: 2 ---
+	self.tag1Node = display.newNode():addTo(self)
+	local sprs = ({
+		single = {
+			"pic/panels/top/mafa.png",
+			"pic/panels/top/mars.png",
+			"pic/panels/top/fasheng.png",
+			"pic/panels/top/respect.png"
+		},
+		hero = {
+			"pic/panels/top/mafa.png",
+			"pic/panels/top/mars.png",
+			"pic/panels/top/fasheng.png",
+			"pic/panels/top/respect.png"
+		},
+		prestige = {
+			"pic/panels/top/mafa.png"
+		}
+	})[self.tag1]
+
+	common.tabs(self.tag1Node, {
+		sprs = sprs
+	}, function (idx, btn)
+		--- BLOCK #0 1-33, warpins: 1 ---
+		self.tag2 = ({
+			single = {
+				"mafa",
+				"mars",
+				"fasheng",
+				"respect"
+			},
+			hero = {
+				"heroall",
+				"zhanshi",
+				"fashi",
+				"daoshi"
+			},
+			prestige = {
+				"master"
+			}
+		})[self.tag1][idx]
+		self.curSubIdx = tags[self.tag2].var - 1
+
+		sound.playSound("103")
+		self:query(0, self.curSubIdx)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		tabTp = 2,
+		pos = {
+			offset = 54,
+			x = 18,
+			y = self.geth(self) - 85,
+			anchor = cc.p(0, 0.5)
+		}
+	})
+	self.processUpt(self, -1)
+
+	return 
+	--- END OF BLOCK #2 ---
+
+
+
+end
+top.load2 = function (self, tag2)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot2 = if self.tag1Node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.tag1Node:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-18, warpins: 2 ---
+	self.tag1Node = display.newNode():addTo(self)
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if self.tag2Node then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 19-22, warpins: 1 ---
+	self.tag2Node:removeSelf()
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 23-65, warpins: 2 ---
+	self.tag2Node = display.newNode():addTo(self)
+	self.curSubIdx = nil
+
+	display.newScale9Sprite(res.getframe2("pic/scale/scale14.png")):addto(self.tag2Node):anchor(0, 0):pos(14, 14):size(self.getw(self) - 28, self.geth(self) - 60)
+
+	return 
+	--- END OF BLOCK #4 ---
+
+
+
+end
+top.processUpt = function (self, tag2Var, msg, buf, bufLen)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot5 = if self.tag2Node then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 4-7, warpins: 1 ---
+	self.tag2Node:removeSelf()
+
+	--- END OF BLOCK #1 ---
+
+	FLOW; TARGET BLOCK #2
+
+
+	--- BLOCK #2 8-31, warpins: 2 ---
+	self.tag2Node = display.newNode():addTo(self)
+	local width = {}
+	local Titlelabel = {}
+	local infoView = an.newScroll(143, 68, 482, 296):add2(self.tag2Node)
+	--- END OF BLOCK #2 ---
+
+	if 0 <= tag2Var then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #3 32-34, warpins: 1 ---
+	--- END OF BLOCK #3 ---
+
+	if tag2Var <= 3 then
+	JUMP TO BLOCK #4
+	else
+	JUMP TO BLOCK #5
+	end
+
+
+	--- BLOCK #4 35-37, warpins: 1 ---
+	width = {
+		162,
+		162,
+		159
+	}
+	Titlelabel = {
+		"序位",
+		"角色名",
+		"等级"
+	}
+	--- END OF BLOCK #4 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #5 38-40, warpins: 2 ---
+	--- END OF BLOCK #5 ---
+
+	if 4 <= tag2Var then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #6 41-43, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if tag2Var <= 7 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 44-46, warpins: 1 ---
+	width = {
+		72,
+		160,
+		160,
+		91
+	}
+	Titlelabel = {
+		"序位",
+		"角色名",
+		"英雄名",
+		"英雄等级"
+	}
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #8 47-48, warpins: 2 ---
+	--- END OF BLOCK #8 ---
+
+	if tag2Var == 8 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #9 49-50, warpins: 1 ---
+	width = {
+		162,
+		162,
+		159
+	}
+	Titlelabel = {
+		"序位",
+		"角色名",
+		"出师玩家数"
+	}
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 51-55, warpins: 4 ---
+	local posOffset = 142
+
+	--- END OF BLOCK #10 ---
+
+	for i, v in ipairs(width)
+
+	LOOP BLOCK #11
+	GO OUT TO BLOCK #13
+
+
+	--- BLOCK #11 56-120, warpins: 1 ---
+	display.newScale9Sprite(res.getframe2("pic/scale/scale15.png"), 0, 0, cc.size(v + 2, 42)):anchor(0.5, 0.5):pos(posOffset + v*0.5, self.geth(self) - 72):add2(self.tag2Node)
+	an.newLabel(Titlelabel[i], 20, 1, {
+		color = def.colors.labelTitle
+	}):anchor(0.5, 0.5):pos(posOffset + v*0.5, self.geth(self) - 72):add2(self.tag2Node)
+
+	posOffset = posOffset + v
+
+	print(Titlelabel[i])
+
+	--- END OF BLOCK #11 ---
+
+	FLOW; TARGET BLOCK #12
+
+
+	--- BLOCK #12 121-122, warpins: 2 ---
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #13 123-130, warpins: 1 ---
+	local sortType = 0
+	local orderType = tag2Var
+	local pageCount = 0
+	local page = 0
+	local minePos = -1
+	local trueCount = 0
+	--- END OF BLOCK #13 ---
+
+	slot2 = if msg then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #14 131-132, warpins: 1 ---
+	--- END OF BLOCK #14 ---
+
+	slot3 = if buf then
+	JUMP TO BLOCK #15
+	else
+	JUMP TO BLOCK #79
+	end
+
+
+	--- BLOCK #15 133-138, warpins: 1 ---
+	sortType = msg.tag
+	orderType = msg.param
+	pageCount = msg.series
+	page = msg.recog
+
+	--- END OF BLOCK #15 ---
+
+	if page == -2 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #21
+	end
+
+
+	--- BLOCK #16 139-141, warpins: 1 ---
+	--- END OF BLOCK #16 ---
+
+	if 4 <= orderType then
+	JUMP TO BLOCK #17
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #17 142-144, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	if orderType <= 7 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 145-152, warpins: 1 ---
+	main_scene.ui.leftTopTip:show("你的英雄没有上榜或不在该榜。")
+	--- END OF BLOCK #18 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #20
+
+
+	--- BLOCK #19 153-159, warpins: 2 ---
+	main_scene.ui.leftTopTip:show("你没有上榜或不在该榜。")
+
+	--- END OF BLOCK #19 ---
+
+	FLOW; TARGET BLOCK #20
+
+
+	--- BLOCK #20 160-160, warpins: 2 ---
+	return 
+	--- END OF BLOCK #20 ---
+
+	FLOW; TARGET BLOCK #21
+
+
+	--- BLOCK #21 161-162, warpins: 1 ---
+	--- END OF BLOCK #21 ---
+
+	if page ~= -1 then
+	JUMP TO BLOCK #22
+	else
+	JUMP TO BLOCK #23
+	end
+
+
+	--- BLOCK #22 163-164, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if bufLen == 0 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 165-165, warpins: 2 ---
+	return 
+
+	--- END OF BLOCK #23 ---
+
+	FLOW; TARGET BLOCK #24
+
+
+	--- BLOCK #24 166-168, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	if 0 <= orderType then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #25 169-171, warpins: 1 ---
+	--- END OF BLOCK #25 ---
+
+	if orderType <= 3 then
+	JUMP TO BLOCK #26
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #26 172-177, warpins: 1 ---
+	local tmpPlayerName = common.getPlayerName()
+	local tmpLabel = nil
+	--- END OF BLOCK #26 ---
+
+	if sortType == 2 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #43
+	end
+
+
+	--- BLOCK #27 178-188, warpins: 1 ---
+	local bufSize = getRecordSize("TXinfaNormalOrderItem")
+	local listSize = bufLen/bufSize
+	local h = 42
+	local item = nil
+	local items = {}
+	--- END OF BLOCK #27 ---
+
+	for i=1, listSize, 1
+	LOOP BLOCK #28
+	GO OUT TO BLOCK #31
+
+	--- BLOCK #28 189-204, warpins: 2 ---
+	item, buf, bufLen = net.record("TXinfaNormalOrderItem", buf, bufLen)
+
+	--- END OF BLOCK #28 ---
+
+	if 0 < item.get(item, "value")
+
+	 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 205-207, warpins: 1 ---
+	items[#items + 1] = item
+	--- END OF BLOCK #29 ---
+
+	FLOW; TARGET BLOCK #30
+
+
+	--- BLOCK #30 208-208, warpins: 2 ---
+	--- END OF BLOCK #30 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #27
+
+
+	--- BLOCK #31 209-233, warpins: 1 ---
+	listSize = #items
+
+	print(listSize)
+	infoView.setScrollSize(infoView, 492, math.max(300, listSize*h))
+	infoView.enableTouch(infoView, false)
+	infoView.enableClick(infoView, function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #31 ---
+
+	for i, v in ipairs(items)
+
+	LOOP BLOCK #32
+	GO OUT TO BLOCK #43
+
+
+	--- BLOCK #32 234-239, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	if tmpPlayerName == v.get(v, "charName")
+
+	 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 240-240, warpins: 1 ---
+	minePos = i
+
+	--- END OF BLOCK #33 ---
+
+	FLOW; TARGET BLOCK #34
+
+
+	--- BLOCK #34 241-246, warpins: 2 ---
+	--- END OF BLOCK #34 ---
+
+	if tmpPlayerName == v.get(v, "charName")
+	 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 247-256, warpins: 1 ---
+	--- END OF BLOCK #35 ---
+
+	slot27 = if not {
+		color = cc.c3b(255, 0, 0)
+
+	} then
+	JUMP TO BLOCK #36
+	else
+	JUMP TO BLOCK #37
+	end
+
+
+	--- BLOCK #36 257-261, warpins: 2 ---
+	local tmpColor = {}
+	tmpColor.color = def.colors.labelGray
+	--- END OF BLOCK #36 ---
+
+	FLOW; TARGET BLOCK #37
+
+
+	--- BLOCK #37 262-268, warpins: 2 ---
+	slot28 = display.newScale9Sprite
+	slot29 = res.getframe2
+	--- END OF BLOCK #37 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #38
+	else
+	JUMP TO BLOCK #39
+	end
+
+
+	--- BLOCK #38 269-270, warpins: 1 ---
+	slot30 = "pic/scale/scale18.png"
+	--- END OF BLOCK #38 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #40
+
+
+	--- BLOCK #39 271-271, warpins: 1 ---
+	slot30 = "pic/scale/scale19.png"
+	--- END OF BLOCK #39 ---
+
+	FLOW; TARGET BLOCK #40
+
+
+	--- BLOCK #40 272-385, warpins: 2 ---
+	local cell = slot28(slot29(slot30), 0, 0, cc.size(530, h)):anchor(0, 0):pos(0, infoView.getScrollSize(infoView).height - i*h):add2(infoView)
+
+	an.newLabel(page*7 + i, 18, 1, tmpColor):anchor(0.5, 0.5):pos(81, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "charName"), 18, 1, tmpColor):anchor(0.5, 0.5):pos(242, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "value"), 18, 1, tmpColor):anchor(0, 0.5):pos(390, cell.geth(cell)*0.5):add2(cell)
+
+	local xinfa = v.get(v, "xinfaLv")
+
+	--- END OF BLOCK #40 ---
+
+	if 0 < xinfa then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 386-421, warpins: 1 ---
+	an.newLabel("+" .. v.get(v, "xinfaLv"), 18, 1, {
+		color = cc.c3b(255, 255, 0)
+	}):anchor(0, 0.5):pos(430, cell.geth(cell)*0.5):add2(cell)
+
+	--- END OF BLOCK #41 ---
+
+	FLOW; TARGET BLOCK #42
+
+
+	--- BLOCK #42 422-423, warpins: 3 ---
+	--- END OF BLOCK #42 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #31
+
+
+	--- BLOCK #43 424-426, warpins: 4 ---
+	--- END OF BLOCK #43 ---
+
+	if 4 <= orderType then
+	JUMP TO BLOCK #44
+	else
+	JUMP TO BLOCK #61
+	end
+
+
+	--- BLOCK #44 427-429, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if orderType <= 7 then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #61
+	end
+
+
+	--- BLOCK #45 430-435, warpins: 1 ---
+	local tmpPlayerName = common.getPlayerName()
+	local tmpLabel = nil
+	--- END OF BLOCK #45 ---
+
+	if sortType == 2 then
+	JUMP TO BLOCK #46
+	else
+	JUMP TO BLOCK #61
+	end
+
+
+	--- BLOCK #46 436-446, warpins: 1 ---
+	local bufSize = getRecordSize("TXFHeroOrderItem")
+	local listSize = bufLen/bufSize
+	local h = 42
+	local item = nil
+	local items = {}
+	--- END OF BLOCK #46 ---
+
+	for i=1, listSize, 1
+	LOOP BLOCK #47
+	GO OUT TO BLOCK #50
+
+	--- BLOCK #47 447-462, warpins: 2 ---
+	item, buf, bufLen = net.record("TXFHeroOrderItem", buf, bufLen)
+
+	--- END OF BLOCK #47 ---
+
+	if 0 < item.get(item, "level")
+
+	 then
+	JUMP TO BLOCK #48
+	else
+	JUMP TO BLOCK #49
+	end
+
+
+	--- BLOCK #48 463-465, warpins: 1 ---
+	items[#items + 1] = item
+	--- END OF BLOCK #48 ---
+
+	FLOW; TARGET BLOCK #49
+
+
+	--- BLOCK #49 466-466, warpins: 2 ---
+	--- END OF BLOCK #49 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #50 467-491, warpins: 1 ---
+	listSize = #items
+
+	print(listSize)
+	infoView.setScrollSize(infoView, 492, math.max(300, listSize*h))
+	infoView.enableTouch(infoView, false)
+	infoView.enableClick(infoView, function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #50 ---
+
+	for i, v in ipairs(items)
+
+	LOOP BLOCK #51
+	GO OUT TO BLOCK #61
+
+
+	--- BLOCK #51 492-497, warpins: 1 ---
+	--- END OF BLOCK #51 ---
+
+	if tmpPlayerName == v.get(v, "masterName")
+	 then
+	JUMP TO BLOCK #52
+	else
+	JUMP TO BLOCK #53
+	end
+
+
+	--- BLOCK #52 498-507, warpins: 1 ---
+	--- END OF BLOCK #52 ---
+
+	slot27 = if not {
+		color = cc.c3b(255, 0, 0)
+
+	} then
+	JUMP TO BLOCK #53
+	else
+	JUMP TO BLOCK #54
+	end
+
+
+	--- BLOCK #53 508-512, warpins: 2 ---
+	local tmpColor = {}
+	tmpColor.color = def.colors.labelGray
+
+	--- END OF BLOCK #53 ---
+
+	FLOW; TARGET BLOCK #54
+
+
+	--- BLOCK #54 513-518, warpins: 2 ---
+	--- END OF BLOCK #54 ---
+
+	if tmpPlayerName == v.get(v, "charName")
+
+	 then
+	JUMP TO BLOCK #55
+	else
+	JUMP TO BLOCK #56
+	end
+
+
+	--- BLOCK #55 519-519, warpins: 1 ---
+	minePos = i
+	--- END OF BLOCK #55 ---
+
+	FLOW; TARGET BLOCK #56
+
+
+	--- BLOCK #56 520-526, warpins: 2 ---
+	slot28 = display.newScale9Sprite
+	slot29 = res.getframe2
+	--- END OF BLOCK #56 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #57
+	else
+	JUMP TO BLOCK #58
+	end
+
+
+	--- BLOCK #57 527-528, warpins: 1 ---
+	slot30 = "pic/scale/scale18.png"
+	--- END OF BLOCK #57 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #59
+
+
+	--- BLOCK #58 529-529, warpins: 1 ---
+	slot30 = "pic/scale/scale19.png"
+	--- END OF BLOCK #58 ---
+
+	FLOW; TARGET BLOCK #59
+
+
+	--- BLOCK #59 530-663, warpins: 2 ---
+	local cell = slot28(slot29(slot30), 0, 0, cc.size(530, h)):anchor(0, 0):pos(0, infoView.getScrollSize(infoView).height - i*h):add2(infoView)
+
+	an.newLabel(page*7 + i, 18, 1, tmpColor):anchor(0.5, 0.5):pos(36, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "masterName"), 18, 1, tmpColor):anchor(0.5, 0.5):pos(152, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "heroName"), 18, 1, tmpColor):anchor(0.5, 0.5):pos(312, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "level"), 18, 1, tmpColor):anchor(0.5, 0.5):pos(442, cell.geth(cell)*0.5):add2(cell)
+
+	--- END OF BLOCK #59 ---
+
+	FLOW; TARGET BLOCK #60
+
+
+	--- BLOCK #60 664-665, warpins: 2 ---
+	--- END OF BLOCK #60 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #50
+
+
+	--- BLOCK #61 666-667, warpins: 4 ---
+	--- END OF BLOCK #61 ---
+
+	if orderType == 8 then
+	JUMP TO BLOCK #62
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #62 668-673, warpins: 1 ---
+	local tmpPlayerName = common.getPlayerName()
+	local tmpLabel = nil
+	--- END OF BLOCK #62 ---
+
+	if sortType == 2 then
+	JUMP TO BLOCK #63
+	else
+	JUMP TO BLOCK #80
+	end
+
+
+	--- BLOCK #63 674-684, warpins: 1 ---
+	local bufSize = getRecordSize("TXinfaNormalOrderItem")
+	local listSize = bufLen/bufSize
+	local h = 42
+	local item = nil
+	local items = {}
+	--- END OF BLOCK #63 ---
+
+	for i=1, listSize, 1
+	LOOP BLOCK #64
+	GO OUT TO BLOCK #67
+
+	--- BLOCK #64 685-700, warpins: 2 ---
+	item, buf, bufLen = net.record("TXinfaNormalOrderItem", buf, bufLen)
+
+	--- END OF BLOCK #64 ---
+
+	if 0 < item.get(item, "value")
+
+	 then
+	JUMP TO BLOCK #65
+	else
+	JUMP TO BLOCK #66
+	end
+
+
+	--- BLOCK #65 701-703, warpins: 1 ---
+	items[#items + 1] = item
+	--- END OF BLOCK #65 ---
+
+	FLOW; TARGET BLOCK #66
+
+
+	--- BLOCK #66 704-704, warpins: 2 ---
+	--- END OF BLOCK #66 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #63
+
+
+	--- BLOCK #67 705-729, warpins: 1 ---
+	listSize = #items
+
+	print(listSize)
+	infoView.setScrollSize(infoView, 492, math.max(300, listSize*h))
+	infoView.enableTouch(infoView, false)
+	infoView.enableClick(infoView, function ()
+		--- BLOCK #0 1-1, warpins: 1 ---
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end)
+	--- END OF BLOCK #67 ---
+
+	for i, v in ipairs(items)
+
+	LOOP BLOCK #68
+	GO OUT TO BLOCK #78
+
+
+	--- BLOCK #68 730-735, warpins: 1 ---
+	--- END OF BLOCK #68 ---
+
+	if tmpPlayerName == v.get(v, "charName")
+	 then
+	JUMP TO BLOCK #69
+	else
+	JUMP TO BLOCK #70
+	end
+
+
+	--- BLOCK #69 736-745, warpins: 1 ---
+	--- END OF BLOCK #69 ---
+
+	slot27 = if not {
+		color = cc.c3b(255, 0, 0)
+
+	} then
+	JUMP TO BLOCK #70
+	else
+	JUMP TO BLOCK #71
+	end
+
+
+	--- BLOCK #70 746-750, warpins: 2 ---
+	local tmpColor = {}
+	tmpColor.color = def.colors.labelGray
+
+	--- END OF BLOCK #70 ---
+
+	FLOW; TARGET BLOCK #71
+
+
+	--- BLOCK #71 751-756, warpins: 2 ---
+	--- END OF BLOCK #71 ---
+
+	if tmpPlayerName == v.get(v, "charName")
+
+	 then
+	JUMP TO BLOCK #72
+	else
+	JUMP TO BLOCK #73
+	end
+
+
+	--- BLOCK #72 757-757, warpins: 1 ---
+	minePos = i
+	--- END OF BLOCK #72 ---
+
+	FLOW; TARGET BLOCK #73
+
+
+	--- BLOCK #73 758-764, warpins: 2 ---
+	slot28 = display.newScale9Sprite
+	slot29 = res.getframe2
+	--- END OF BLOCK #73 ---
+
+	if i%2 == 0 then
+	JUMP TO BLOCK #74
+	else
+	JUMP TO BLOCK #75
+	end
+
+
+	--- BLOCK #74 765-766, warpins: 1 ---
+	slot30 = "pic/scale/scale18.png"
+	--- END OF BLOCK #74 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #76
+
+
+	--- BLOCK #75 767-767, warpins: 1 ---
+	slot30 = "pic/scale/scale19.png"
+	--- END OF BLOCK #75 ---
+
+	FLOW; TARGET BLOCK #76
+
+
+	--- BLOCK #76 768-874, warpins: 2 ---
+	local cell = slot28(slot29(slot30), 0, 0, cc.size(530, h)):anchor(0, 0):pos(0, infoView.getScrollSize(infoView).height - i*h):add2(infoView)
+
+	an.newLabel(page*7 + i, 18, 1, tmpColor):anchor(0.5, 0.5):pos(81, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "charName"), 18, 1, tmpColor):anchor(0.5, 0.5):pos(242, cell.geth(cell)*0.5):add2(cell)
+	an.newLabel(v.get(v, "value"), 18, 1, tmpColor):anchor(0, 0.5):pos(390, cell.geth(cell)*0.5):add2(cell)
+	--- END OF BLOCK #76 ---
+
+	FLOW; TARGET BLOCK #77
+
+
+	--- BLOCK #77 875-876, warpins: 2 ---
+	--- END OF BLOCK #77 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #67
+
+
+	--- BLOCK #78 877-877, warpins: 1 ---
+	--- END OF BLOCK #78 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #80
+
+
+	--- BLOCK #79 878-906, warpins: 2 ---
+	an.newLabel("你没有上榜或不在该榜", 22, 1, def.colors.labelGray):anchor(0.5, 0.5):pos(infoView.getw(infoView)/2, infoView.geth(infoView)*0.5):add2(infoView)
+
+	--- END OF BLOCK #79 ---
+
+	FLOW; TARGET BLOCK #80
+
+
+	--- BLOCK #80 907-910, warpins: 4 ---
+	local tmpDixY = minePos
+
+	--- END OF BLOCK #80 ---
+
+	if 7 < minePos then
+	JUMP TO BLOCK #81
+	else
+	JUMP TO BLOCK #82
+	end
+
+
+	--- BLOCK #81 911-916, warpins: 1 ---
+	infoView.setScrollOffset(infoView, 0, (tmpDixY - 7)*42)
+	--- END OF BLOCK #81 ---
+
+	FLOW; TARGET BLOCK #82
+
+
+	--- BLOCK #82 917-1046, warpins: 2 ---
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		sound.playSound("103")
+		self:query(0, orderType)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/guild/sy.png")
+	}):pos((self.getw(self) + 34) - 400, 38):addto(self.tag2Node)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-7, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		if page ~= -1 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #1 8-11, warpins: 1 ---
+		--- END OF BLOCK #1 ---
+
+		if 0 < page then
+		JUMP TO BLOCK #2
+		else
+		JUMP TO BLOCK #3
+		end
+
+
+		--- BLOCK #2 12-18, warpins: 1 ---
+		self:query(page - 1, orderType)
+
+		--- END OF BLOCK #2 ---
+
+		FLOW; TARGET BLOCK #3
+
+
+		--- BLOCK #3 19-19, warpins: 3 ---
+		return 
+		--- END OF BLOCK #3 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/guild/syy.png")
+	}):pos((self.getw(self) + 34) - 300, 38):addto(self.tag2Node)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-8, warpins: 1 ---
+		sound.playSound("103")
+		--- END OF BLOCK #0 ---
+
+		if page < 200 then
+		JUMP TO BLOCK #1
+		else
+		JUMP TO BLOCK #2
+		end
+
+
+		--- BLOCK #1 9-15, warpins: 1 ---
+		self:query(page + 1, orderType)
+
+		--- END OF BLOCK #1 ---
+
+		FLOW; TARGET BLOCK #2
+
+
+		--- BLOCK #2 16-16, warpins: 2 ---
+		return 
+		--- END OF BLOCK #2 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/guild/xyy.png")
+	}):pos((self.getw(self) + 34) - 200, 38):addto(self.tag2Node)
+	an.newBtn(res.gettex2("pic/common/btn20.png"), function ()
+		--- BLOCK #0 1-11, warpins: 1 ---
+		sound.playSound("103")
+		self:query(-1, orderType)
+
+		return 
+		--- END OF BLOCK #0 ---
+
+
+
+	end, {
+		pressImage = res.gettex2("pic/common/btn21.png"),
+		sprite = res.gettex2("pic/panels/top/wdpm.png")
+	}):pos((self.getw(self) + 34) - 100, 38):addto(self.tag2Node)
+
+	return 
+	--- END OF BLOCK #82 ---
+
+	FLOW; TARGET BLOCK #83
+
+
+	--- BLOCK #83 1047-1047, warpins: 2 ---
+	--- END OF BLOCK #83 ---
+
+	FLOW; TARGET BLOCK #84
+
+
+	--- BLOCK #84 1048-1048, warpins: 2 ---
+	--- END OF BLOCK #84 ---
+
+
+
+end
+top.query = function (self, page, type)
+	--- BLOCK #0 1-9, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	slot3 = if g_data.client:checkLastTime("top", 4)
+	 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 10-25, warpins: 1 ---
+	g_data.client:setLastTime("top", true)
+	net.send({
+		CM_QUEST_ORDER,
+		recog = page,
+		param = type
+	})
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #3
+
+
+	--- BLOCK #2 26-31, warpins: 1 ---
+	main_scene.ui:tip("你操作太快了, 请稍候再试.")
+
+	--- END OF BLOCK #2 ---
+
+	FLOW; TARGET BLOCK #3
+
+
+	--- BLOCK #3 32-32, warpins: 2 ---
+	return 
+	--- END OF BLOCK #3 ---
+
+
+
+end
+
+return top
+--- END OF BLOCK #0 ---
+
+
+

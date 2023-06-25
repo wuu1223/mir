@@ -1,0 +1,5262 @@
+--- BLOCK #0 1-2029, warpins: 1 ---
+local def = {}
+def.HA = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 64,
+		ftime = 90,
+		skip = 2
+	},
+	run = {
+		frame = 6,
+		start = 128,
+		ftime = 120,
+		skip = 2
+	},
+	rushLeft = {
+		frame = 3,
+		start = 128,
+		ftime = 120,
+		skip = 5
+	},
+	rushRight = {
+		frame = 3,
+		start = 131,
+		ftime = 120,
+		skip = 5
+	},
+	warMode = {
+		frame = 1,
+		start = 192,
+		ftime = 200,
+		skip = 0
+	},
+	hit = {
+		frame = 6,
+		start = 200,
+		ftime = 85,
+		skip = 2
+	},
+	heavyHit = {
+		frame = 6,
+		start = 264,
+		ftime = 90,
+		skip = 2
+	},
+	bigHit = {
+		frame = 8,
+		start = 328,
+		ftime = 70,
+		skip = 0
+	},
+	fireHitReady = {
+		frame = 6,
+		start = 192,
+		ftime = 70,
+		skip = 4
+	},
+	spell = {
+		frame = 6,
+		start = 392,
+		ftime = 60,
+		skip = 2
+	},
+	sitdown = {
+		frame = 2,
+		start = 456,
+		ftime = 300,
+		skip = 0
+	},
+	struck = {
+		frame = 3,
+		start = 472,
+		ftime = 70,
+		skip = 5
+	},
+	die = {
+		frame = 4,
+		start = 536,
+		ftime = 120,
+		skip = 4
+	},
+	ckWarMode = {
+		frame = 2,
+		start = 600,
+		ftime = 200,
+		skip = 0
+	},
+	doubleHit = {
+		frame = 10,
+		start = 616,
+		ftime = 60,
+		skip = 0
+	},
+	legHit = {
+		frame = 8,
+		start = 760,
+		ftime = 70,
+		skip = 0
+	},
+	sneak = {
+		frame = 6,
+		start = 824,
+		ftime = 120,
+		skip = 2
+	}
+}
+def.HORSERIDER = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 64,
+		ftime = 90,
+		skip = 2
+	},
+	run = {
+		frame = 6,
+		start = 128,
+		ftime = 120,
+		skip = 2
+	},
+	spell = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	struck = {
+		frame = 3,
+		start = 192,
+		ftime = 70,
+		skip = 5
+	},
+	die = {
+		frame = 8,
+		start = 256,
+		ftime = 120,
+		skip = 0
+	}
+}
+def.MA09 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 7
+	},
+	walk = {
+		frame = 6,
+		start = 64,
+		ftime = 120,
+		skip = 2
+	},
+	attack = {
+		frame = 6,
+		start = 64,
+		ftime = 150,
+		skip = 2
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 6,
+		start = 64,
+		ftime = 100,
+		skip = 2
+	},
+	die = {
+		frame = 1,
+		start = 0,
+		ftime = 140,
+		skip = 7
+	},
+	death = {
+		frame = 1,
+		start = 0,
+		ftime = 0,
+		skip = 7
+	}
+}
+def.MA10 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 64,
+		ftime = 120,
+		skip = 2
+	},
+	attack = {
+		frame = 4,
+		start = 128,
+		ftime = 150,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 192,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 208,
+		ftime = 140,
+		skip = 4
+	},
+	death = {
+		frame = 1,
+		start = 272,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA11 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 120,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA12 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 64,
+		ftime = 120,
+		skip = 2
+	},
+	attack = {
+		frame = 6,
+		start = 128,
+		ftime = 150,
+		skip = 2
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 192,
+		ftime = 150,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 208,
+		ftime = 160,
+		skip = 4
+	},
+	death = {
+		frame = 1,
+		start = 272,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA13 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 8,
+		start = 10,
+		ftime = 160,
+		skip = 2
+	},
+	attack = {
+		frame = 6,
+		start = 30,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 110,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 130,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 9,
+		start = 20,
+		ftime = 150,
+		skip = 0
+	}
+}
+def.MA14 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 340,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA15 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 1,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA16 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 160,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 260,
+		ftime = 160,
+		skip = 6
+	},
+	death = {
+		frame = 1,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	}
+}
+def.MA17 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 60,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA18 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 340,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 160,
+		skip = 0
+	},
+	death = {
+		frame = 6,
+		start = 420,
+		ftime = 170,
+		skip = 4
+	}
+}
+def.MA19 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA20 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 340,
+		ftime = 170,
+		skip = 0
+	}
+}
+def.MA21 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 10,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 20,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 30,
+		ftime = 160,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA22 = {
+	stand = {
+		frame = 4,
+		start = 80,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 160,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 240,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 320,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 340,
+		ftime = 160,
+		skip = 0
+	},
+	death = {
+		frame = 6,
+		start = 0,
+		ftime = 170,
+		skip = 4
+	}
+}
+def.MA23 = {
+	stand = {
+		frame = 4,
+		start = 20,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 100,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 180,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 280,
+		ftime = 160,
+		skip = 0
+	},
+	death = {
+		frame = 20,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA24 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 240,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 320,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 420,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA25 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 10,
+		start = 70,
+		ftime = 200,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 20,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 10,
+		ftime = 120,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 50,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 60,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 80,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA26 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 7
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 56,
+		ftime = 500,
+		skip = 2
+	},
+	critical = {
+		frame = 6,
+		start = 64,
+		ftime = 500,
+		skip = 2
+	},
+	struck = {
+		frame = 4,
+		start = 0,
+		ftime = 100,
+		skip = 4
+	},
+	die = {
+		frame = 10,
+		start = 24,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 150,
+		skip = 0
+	}
+}
+def.MA27 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 7
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 250,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 250,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 1,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 150,
+		skip = 0
+	}
+}
+def.MA28 = {
+	stand = {
+		frame = 4,
+		start = 80,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 160,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 0,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA29 = {
+	stand = {
+		frame = 4,
+		start = 80,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 160,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 240,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 10,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 320,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 340,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA30 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 10,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 10,
+		ftime = 120,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 20,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 20,
+		start = 30,
+		ftime = 150,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA31 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 10,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 0,
+		ftime = 120,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 0,
+		ftime = 100,
+		skip = 8
+	},
+	die = {
+		frame = 10,
+		start = 20,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA32 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 9
+	},
+	walk = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 0,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 0,
+		ftime = 120,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 0,
+		ftime = 100,
+		skip = 8
+	},
+	die = {
+		frame = 10,
+		start = 80,
+		ftime = 80,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 80,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA33 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 30,
+		ftime = 150,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 1,
+		start = 0,
+		ftime = 0,
+		skip = 9
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA34 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 20,
+		start = 30,
+		ftime = 150,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 1,
+		start = 0,
+		ftime = 0,
+		skip = 9
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA35 = {
+	stand = {
+		frame = 4,
+		start = 30,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 4,
+		start = 30,
+		ftime = 150,
+		skip = 6
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 1,
+		start = 0,
+		ftime = 0,
+		skip = 9
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA36 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 340,
+		ftime = 120,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA37 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 320,
+		ftime = 120,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 400,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 20,
+		start = 420,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 20,
+		start = 420,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA38 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 80,
+		ftime = 150,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA39 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 300,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 10,
+		ftime = 150,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 20,
+		ftime = 150,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 30,
+		ftime = 80,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA40 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 250,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 210,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 110,
+		skip = 4
+	},
+	critical = {
+		frame = 20,
+		start = 580,
+		ftime = 135,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 120,
+		skip = 0
+	},
+	die = {
+		frame = 20,
+		start = 260,
+		ftime = 130,
+		skip = 0
+	},
+	death = {
+		frame = 20,
+		start = 260,
+		ftime = 130,
+		skip = 0
+	}
+}
+def.MA41 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA42 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 8,
+		start = 160,
+		ftime = 160,
+		skip = 2
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 30,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 30,
+		ftime = 150,
+		skip = 0
+	}
+}
+def.MA43 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 160,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 160,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 150,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 340,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA44 = {
+	stand = {
+		frame = 10,
+		start = 0,
+		ftime = 300,
+		skip = 0
+	},
+	walk = {
+		frame = 6,
+		start = 10,
+		ftime = 150,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 20,
+		ftime = 150,
+		skip = 4
+	},
+	critical = {
+		frame = 10,
+		start = 40,
+		ftime = 150,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 40,
+		ftime = 150,
+		skip = 8
+	},
+	die = {
+		frame = 6,
+		start = 30,
+		ftime = 150,
+		skip = 4
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA45 = {
+	stand = {
+		frame = 10,
+		start = 0,
+		ftime = 300,
+		skip = 0
+	},
+	walk = {
+		frame = 10,
+		start = 0,
+		ftime = 300,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 10,
+		ftime = 300,
+		skip = 0
+	},
+	critical = {
+		frame = 10,
+		start = 10,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 1,
+		start = 0,
+		ftime = 300,
+		skip = 9
+	},
+	die = {
+		frame = 1,
+		start = 0,
+		ftime = 300,
+		skip = 9
+	},
+	death = {
+		frame = 1,
+		start = 0,
+		ftime = 300,
+		skip = 9
+	}
+}
+def.MA46 = {
+	stand = {
+		frame = 20,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA47 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 250,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 100,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 110,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 340,
+		ftime = 150,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 120,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 90,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 420,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA48 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 250,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 100,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 110,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 340,
+		ftime = 300,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 120,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 90,
+		skip = 0
+	},
+	death = {
+		frame = 6,
+		start = 420,
+		ftime = 140,
+		skip = 4
+	}
+}
+def.MA50 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 30,
+		ftime = 150,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA51 = {
+	stand = {
+		frame = 4,
+		start = 20,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 100,
+		ftime = 120,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 180,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 20,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 280,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA52 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 120,
+		skip = 0
+	},
+	attack = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA53 = {
+	stand = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 120,
+		skip = 0
+	},
+	attack = {
+		frame = 5,
+		start = 10,
+		ftime = 100,
+		skip = 5
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 20,
+		start = 40,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA54 = {
+	stand = {
+		frame = 1,
+		start = 1,
+		ftime = 200,
+		skip = 9
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 120,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 10,
+		ftime = 200,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 1,
+		start = 1,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA55 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 120,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 10,
+		ftime = 200,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA56 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 120,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 340,
+		ftime = 170,
+		skip = 0
+	}
+}
+def.MA57 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 30,
+		ftime = 150,
+		skip = 0
+	},
+	critical = {
+		frame = 80,
+		start = 0,
+		ftime = 95,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA58 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA59 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 20,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA60 = {
+	stand = {
+		frame = 10,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 160,
+		skip = 0
+	}
+}
+def.MA61 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 10,
+		start = 160,
+		ftime = 100,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 9,
+		start = 260,
+		ftime = 140,
+		skip = 1
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA62 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 8,
+		start = 260,
+		ftime = 140,
+		skip = 2
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA63 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA64 = {
+	stand = {
+		frame = 2,
+		start = 0,
+		ftime = 200,
+		skip = 8
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 10,
+		ftime = 100,
+		skip = 8
+	},
+	die = {
+		frame = 6,
+		start = 20,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA65 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 9
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA66 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 8,
+		start = 260,
+		ftime = 140,
+		skip = 2
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA67 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 7,
+		start = 260,
+		ftime = 140,
+		skip = 3
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA68 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 120,
+		skip = 4
+	},
+	attack = {
+		frame = 4,
+		start = 160,
+		ftime = 150,
+		skip = 6
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 260,
+		ftime = 140,
+		skip = 6
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA69 = {
+	stand = {
+		frame = 2,
+		start = 0,
+		ftime = 200,
+		skip = 8
+	},
+	walk = {
+		frame = 1,
+		start = 1,
+		ftime = 120,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 150,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 10,
+		ftime = 100,
+		skip = 8
+	},
+	die = {
+		frame = 7,
+		start = 20,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA70 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 4,
+		start = 0,
+		ftime = 120,
+		skip = 6
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 10,
+		ftime = 500,
+		skip = 6
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA71 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA72 = {
+	stand = {
+		frame = 12,
+		start = 0,
+		ftime = 200,
+		skip = 8
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA74 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		Skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		Skip = 0
+	},
+	attack = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 80,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 100,
+		ftime = 130,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 109,
+		ftime = 200,
+		skip = 10
+	}
+}
+def.MA73 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		Skip = 0
+	},
+	attack = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 1,
+		start = 1,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA75 = {
+	stand = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		Skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	critical = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	struck = {
+		frame = 10,
+		start = 1,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA76 = {
+	stand = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	attack = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA77 = {
+	stand = {
+		frame = 4,
+		start = 12000,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 8,
+		start = 64,
+		ftime = 200,
+		Skip = 2
+	},
+	attack = {
+		frame = 6,
+		start = 12392,
+		ftime = 100,
+		skip = 2
+	},
+	critical = {
+		frame = 8,
+		start = 12328,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 4,
+		start = 12536,
+		ftime = 200,
+		skip = 4
+	},
+	death = {
+		frame = 1,
+		start = 12539,
+		ftime = 200,
+		skip = 7
+	}
+}
+def.MA78 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 150,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 269,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA79 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 269,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA80 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 269,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA81 = {
+	stand = {
+		frame = 4,
+		start = 60,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 4,
+		start = 70,
+		ftime = 200,
+		skip = 6
+	},
+	critical = {
+		frame = 4,
+		start = 75,
+		ftime = 200,
+		skip = 6
+	},
+	struck = {
+		frame = 4,
+		start = 70,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 40,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 49,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA82 = {
+	stand = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		Skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 20,
+		ftime = 150,
+		skip = 0
+	},
+	struck = {
+		frame = 4,
+		start = 30,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 40,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 49,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA83 = {
+	stand = {
+		frame = 20,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 20,
+		start = 0,
+		ftime = 200,
+		Skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 20,
+		ftime = 150,
+		skip = 0
+	},
+	struck = {
+		frame = 4,
+		start = 30,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 40,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 49,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA84 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 269,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA85 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 269,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA86 = {
+	stand = {
+		frame = 20,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 20,
+		start = 0,
+		ftime = 200,
+		Skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 20,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 18,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 18,
+		ftime = 100,
+		skip = 9
+	}
+}
+def.MA87 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 160,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 140,
+		skip = 0
+	}
+}
+def.MA88 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	struck = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 13,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA89 = {
+	stand = {
+		frame = 4,
+		start = 20,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 100,
+		ftime = 120,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 180,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 0,
+		start = 20,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 6,
+		start = 280,
+		ftime = 140,
+		skip = 4
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA90 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 120,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 10,
+		start = 340,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 140,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 340,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA91 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 13,
+		start = 40,
+		ftime = 100,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA92 = {
+	stand = {
+		frame = 10,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 200,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 269,
+		ftime = 100,
+		skip = 9
+	}
+}
+def.MA93 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 340,
+		ftime = 200,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 8,
+		start = 260,
+		ftime = 150,
+		skip = 2
+	},
+	death = {
+		frame = 1,
+		start = 267,
+		ftime = 100,
+		skip = 9
+	}
+}
+def.MA94 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	attack = {
+		frame = 10,
+		start = 30,
+		ftime = 100,
+		skip = 0
+	},
+	critical = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	struck = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	}
+}
+def.MA95 = {
+	stand = {
+		frame = 14,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 20,
+		ftime = 150,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 29,
+		ftime = 100,
+		skip = 0
+	}
+}
+def.MA96 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	critical = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 8
+	},
+	die = {
+		frame = 10,
+		start = 320,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 6,
+		start = 400,
+		ftime = 200,
+		skip = 4
+	}
+}
+def.MA97 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 10,
+		start = 160,
+		ftime = 100,
+		skip = 0
+	},
+	critical = {
+		frame = 10,
+		start = 160,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 8
+	},
+	die = {
+		frame = 10,
+		start = 320,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 6,
+		start = 400,
+		ftime = 200,
+		skip = 4
+	}
+}
+def.MA98 = {
+	stand = {
+		frame = 9,
+		start = 0,
+		ftime = 200,
+		skip = 1
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 7,
+		start = 240,
+		ftime = 100,
+		skip = 3
+	},
+	critical = {
+		frame = 7,
+		start = 320,
+		ftime = 100,
+		skip = 3
+	},
+	struck = {
+		frame = 4,
+		start = 400,
+		ftime = 200,
+		skip = 6
+	},
+	die = {
+		frame = 7,
+		start = 480,
+		ftime = 200,
+		skip = 3
+	},
+	death = {
+		frame = 1,
+		start = 487,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA99 = {
+	stand = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 9,
+		start = 160,
+		ftime = 100,
+		skip = 1
+	},
+	critical = {
+		frame = 9,
+		start = 160,
+		ftime = 100,
+		skip = 1
+	},
+	struck = {
+		frame = 3,
+		start = 240,
+		ftime = 200,
+		skip = 7
+	},
+	die = {
+		frame = 9,
+		start = 320,
+		ftime = 200,
+		skip = 1
+	},
+	death = {
+		frame = 1,
+		start = 328,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA100 = {
+	stand = {
+		frame = 9,
+		start = 0,
+		ftime = 200,
+		skip = 1
+	},
+	walk = {
+		frame = 7,
+		start = 80,
+		ftime = 200,
+		Skip = 3
+	},
+	attack = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	critical = {
+		frame = 10,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 3,
+		start = 400,
+		ftime = 200,
+		skip = 7
+	},
+	die = {
+		frame = 10,
+		start = 480,
+		ftime = 200,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 489,
+		ftime = 200,
+		skip = 10
+	}
+}
+def.MA101 = {
+	stand = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	critical = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	struck = {
+		frame = 3,
+		start = 240,
+		ftime = 200,
+		skip = 7
+	},
+	die = {
+		frame = 8,
+		start = 320,
+		ftime = 200,
+		skip = 2
+	},
+	death = {
+		frame = 1,
+		start = 327,
+		ftime = 200,
+		skip = 8
+	}
+}
+def.MA102 = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 9
+	},
+	walk = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		Skip = 9
+	},
+	attack = {
+		frame = 1,
+		start = 0,
+		ftime = 100,
+		skip = 9
+	},
+	critical = {
+		frame = 1,
+		start = 0,
+		ftime = 100,
+		skip = 9
+	},
+	struck = {
+		frame = 1,
+		start = 0,
+		ftime = 200,
+		skip = 9
+	},
+	die = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	death = {
+		frame = 1,
+		start = 6,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA103 = {
+	stand = {
+		frame = 5,
+		start = 0,
+		ftime = 200,
+		skip = 5
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	critical = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	struck = {
+		frame = 3,
+		start = 240,
+		ftime = 200,
+		skip = 7
+	},
+	die = {
+		frame = 7,
+		start = 320,
+		ftime = 200,
+		skip = 3
+	},
+	death = {
+		frame = 1,
+		start = 326,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA104 = {
+	stand = {
+		frame = 7,
+		start = 0,
+		ftime = 200,
+		skip = 3
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 7,
+		start = 160,
+		ftime = 100,
+		skip = 3
+	},
+	critical = {
+		frame = 7,
+		start = 160,
+		ftime = 100,
+		skip = 3
+	},
+	struck = {
+		frame = 3,
+		start = 240,
+		ftime = 200,
+		skip = 7
+	},
+	die = {
+		frame = 7,
+		start = 320,
+		ftime = 200,
+		skip = 3
+	},
+	death = {
+		frame = 1,
+		start = 326,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA105 = {
+	stand = {
+		frame = 6,
+		start = 0,
+		ftime = 200,
+		skip = 4
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 10,
+		start = 160,
+		ftime = 100,
+		skip = 0
+	},
+	critical = {
+		frame = 10,
+		start = 240,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 10,
+		start = 320,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 400,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA106 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	hit = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	heavyHit = {
+		frame = 10,
+		start = 420,
+		ftime = 100,
+		skip = 0
+	},
+	bigHit = {
+		frame = 8,
+		start = 500,
+		ftime = 100,
+		skip = 2
+	},
+	fireHitReady = {
+		frame = 8,
+		start = 580,
+		ftime = 100,
+		skip = 2
+	},
+	spell = {
+		frame = 8,
+		start = 160,
+		ftime = 100,
+		skip = 2
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 16,
+		start = 260,
+		ftime = 100,
+		skip = 4
+	}
+}
+def.MA107 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	hit = {
+		frame = 10,
+		start = 160,
+		ftime = 100,
+		skip = 0
+	},
+	heavyHit = {
+		frame = 10,
+		start = 420,
+		ftime = 100,
+		skip = 0
+	},
+	bigHit = {
+		frame = 8,
+		start = 500,
+		ftime = 100,
+		skip = 2
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 14,
+		start = 260,
+		ftime = 100,
+		skip = 6
+	}
+}
+def.MA108 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 6
+	},
+	walk = {
+		frame = 6,
+		start = 80,
+		ftime = 200,
+		Skip = 4
+	},
+	attack = {
+		frame = 6,
+		start = 160,
+		ftime = 100,
+		skip = 4
+	},
+	struck = {
+		frame = 2,
+		start = 240,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 260,
+		ftime = 100,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 260,
+		ftime = 200,
+		skip = 9
+	}
+}
+def.MA109 = {
+	stand = {
+		frame = 1,
+		start = 3008,
+		ftime = 200,
+		skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 3016,
+		ftime = 100,
+		skip = 0
+	},
+	struck = {
+		frame = 5,
+		start = 3024,
+		ftime = 200,
+		skip = 0
+	}
+}
+def.MA110 = {
+	stand = {
+		frame = 4,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	walk = {
+		frame = 6,
+		start = 40,
+		ftime = 200,
+		Skip = 0
+	},
+	attack = {
+		frame = 6,
+		start = 90,
+		ftime = 100,
+		skip = 0
+	}
+}
+local monConfig = {}
+monConfig[9] = def.MA09
+monConfig[10] = def.MA10
+monConfig[11] = def.MA11
+monConfig["12-24"] = def.MA12
+monConfig[13] = def.MA13
+monConfig["14-17-18-23"] = def.MA14
+monConfig["15-22"] = def.MA15
+monConfig[16] = def.MA16
+monConfig["30-31"] = def.MA17
+monConfig[28] = def.MA11
+monConfig["19-20-21-37-40-45-52-53-64-65-66-67-68-69"] = def.MA19
+monConfig[32] = def.MA24
+monConfig[33] = def.MA25
+monConfig["34-90"] = def.MA30
+monConfig[35] = def.MA31
+monConfig["36-38"] = def.MA32
+monConfig["41-42"] = def.MA20
+monConfig[43] = def.MA21
+monConfig[46] = def.MA36
+monConfig[47] = def.MA22
+monConfig[48] = def.MA48
+monConfig[49] = def.MA23
+monConfig["54-57"] = def.MA28
+monConfig["55-58"] = def.MA29
+monConfig[56] = def.MA51
+monConfig["60-61-62-70-71-72"] = def.MA36
+monConfig[63] = def.MA37
+monConfig[73] = def.MA19
+monConfig[74] = def.MA19
+monConfig[75] = def.MA39
+monConfig[76] = def.MA38
+monConfig[77] = def.MA39
+monConfig[78] = def.MA40
+monConfig[79] = def.MA19
+monConfig[80] = def.MA42
+monConfig[81] = def.MA43
+monConfig[83] = def.MA44
+monConfig["84-85-86-87-88-89"] = def.MA45
+monConfig["91-92-93-94"] = def.MA47
+monConfig[98] = def.MA27
+monConfig[99] = def.MA26
+monConfig[100] = def.MA56
+monConfig[101] = def.MA56
+monConfig[102] = def.MA56
+monConfig[103] = def.MA56
+monConfig.cBigFireDragonRace = def.MA53
+monConfig[106] = def.MA19
+monConfig[107] = def.MA56
+monConfig.cFireDragonStatueRace = def.MA54
+monConfig[109] = def.MA19
+monConfig[110] = def.MA61
+monConfig[111] = def.MA66
+monConfig[112] = def.MA66
+monConfig[113] = def.MA66
+monConfig[114] = def.MA62
+monConfig["300-115"] = def.MA63
+monConfig["116-301"] = def.MA64
+monConfig[117] = def.MA67
+monConfig[118] = def.MA63
+monConfig[119] = def.MA63
+monConfig[120] = def.MA68
+monConfig[121] = def.MA69
+monConfig[122] = def.MA70
+monConfig[123] = def.MA70
+monConfig[124] = def.MA71
+monConfig[134] = def.MA73
+monConfig[135] = def.MA74
+monConfig[136] = def.MA77
+monConfig[137] = def.MA11
+monConfig[138] = def.MA78
+monConfig[139] = def.MA79
+monConfig[140] = def.MA80
+monConfig[142] = def.MA81
+monConfig[143] = def.MA84
+monConfig[144] = def.MA85
+monConfig[145] = def.MA82
+monConfig[147] = def.MA83
+monConfig[148] = def.MA86
+monConfig[149] = def.MA87
+monConfig[150] = def.MA88
+monConfig[151] = def.MA89
+monConfig[152] = def.MA90
+monConfig[153] = {
+	stand = {
+		frame = 1,
+		start = 0,
+		ftime = 0,
+		skip = 0
+	},
+	die = {
+		frame = 5,
+		start = 0,
+		ftime = 120,
+		skip = 0
+	},
+	death = {
+		frame = 1,
+		start = 4,
+		ftime = 0,
+		skip = 0
+	}
+}
+monConfig["154-155-156-157"] = def.MA81
+monConfig[158] = def.MA93
+monConfig[159] = def.MA92
+monConfig["160-161"] = def.MA95
+monConfig[162] = def.MA92
+monConfig[176] = {
+	check_appr = true,
+	default = def.MA98,
+	[370] = def.MA98,
+	[371] = def.MA99,
+	[372] = def.MA100,
+	[373] = def.MA101,
+	[374] = def.MA102,
+	[375] = def.MA103,
+	[376] = def.MA104
+}
+monConfig[178] = def.MA106
+monConfig[179] = def.MA107
+monConfig[180] = def.MA108
+monConfig[181] = {
+	check_appr = true,
+	[337] = def.MA108
+}
+monConfig["183-184"] = def.MA110
+local monConfigWithAppr = {}
+monConfigWithAppr[142] = def.MA29
+
+--- END OF BLOCK #0 ---
+
+for k, v in pairs(monConfig)
+
+LOOP BLOCK #1
+GO OUT TO BLOCK #8
+
+
+--- BLOCK #1 2030-2034, warpins: 1 ---
+--- END OF BLOCK #1 ---
+
+if type(k)
+
+ == "string" then
+JUMP TO BLOCK #2
+else
+JUMP TO BLOCK #7
+end
+
+
+--- BLOCK #2 2035-2044, warpins: 1 ---
+local keys = string.split(k, "-")
+
+--- END OF BLOCK #2 ---
+
+for i, v2 in ipairs(keys)
+
+
+LOOP BLOCK #3
+GO OUT TO BLOCK #7
+
+
+--- BLOCK #3 2045-2052, warpins: 1 ---
+local v2 = string.trim(v2)
+--- END OF BLOCK #3 ---
+
+if v2 ~= "" then
+JUMP TO BLOCK #4
+else
+JUMP TO BLOCK #6
+end
+
+
+--- BLOCK #4 2053-2058, warpins: 1 ---
+v2 = tonumber(v2)
+--- END OF BLOCK #4 ---
+
+slot13 = if v2 then
+JUMP TO BLOCK #5
+else
+JUMP TO BLOCK #6
+end
+
+
+--- BLOCK #5 2059-2059, warpins: 1 ---
+monConfig[v2] = v
+
+--- END OF BLOCK #5 ---
+
+FLOW; TARGET BLOCK #6
+
+
+--- BLOCK #6 2060-2061, warpins: 4 ---
+--- END OF BLOCK #6 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #2
+
+
+--- BLOCK #7 2062-2063, warpins: 3 ---
+--- END OF BLOCK #7 ---
+
+UNCONDITIONAL JUMP; TARGET BLOCK #0
+
+
+--- BLOCK #8 2064-2085, warpins: 1 ---
+local function getNpcFrame(appr)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if appr == 23 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-7, warpins: 1 ---
+	return def.MA34, true
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #2 8-16, warpins: 1 ---
+	--- END OF BLOCK #2 ---
+
+	slot1 = if checkExist(appr, 24, 25, 27, 32)
+
+	 then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 17-21, warpins: 1 ---
+	return def.MA35, true
+
+	--- END OF BLOCK #3 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #4 22-28, warpins: 1 ---
+	--- END OF BLOCK #4 ---
+
+	slot1 = if not checkIn(appr, 33, 34)
+
+	 then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #5 29-30, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	if appr ~= 130 then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #7
+	end
+
+
+	--- BLOCK #6 31-32, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	if appr == 131 then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 33-37, warpins: 3 ---
+	return def.MA33, false
+
+	--- END OF BLOCK #7 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #8 38-44, warpins: 1 ---
+	--- END OF BLOCK #8 ---
+
+	slot1 = if not checkIn(appr, 35, 41)
+	 then
+	JUMP TO BLOCK #9
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #9 45-51, warpins: 1 ---
+	--- END OF BLOCK #9 ---
+
+	slot1 = if not checkIn(appr, 48, 50)
+
+	 then
+	JUMP TO BLOCK #10
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #10 52-53, warpins: 1 ---
+	--- END OF BLOCK #10 ---
+
+	if appr ~= 52 then
+	JUMP TO BLOCK #11
+	else
+	JUMP TO BLOCK #12
+	end
+
+
+	--- BLOCK #11 54-55, warpins: 1 ---
+	--- END OF BLOCK #11 ---
+
+	if appr == 53 then
+	JUMP TO BLOCK #12
+	else
+	JUMP TO BLOCK #13
+	end
+
+
+	--- BLOCK #12 56-60, warpins: 4 ---
+	return def.MA41, false
+
+	--- END OF BLOCK #12 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #13 61-67, warpins: 1 ---
+	--- END OF BLOCK #13 ---
+
+	slot1 = if checkIn(appr, 35, 41)
+
+	 then
+	JUMP TO BLOCK #14
+	else
+	JUMP TO BLOCK #15
+	end
+
+
+	--- BLOCK #14 68-72, warpins: 1 ---
+	return def.MA46, false
+	--- END OF BLOCK #14 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #15 73-74, warpins: 1 ---
+	--- END OF BLOCK #15 ---
+
+	if appr == 54 then
+	JUMP TO BLOCK #16
+	else
+	JUMP TO BLOCK #17
+	end
+
+
+	--- BLOCK #16 75-79, warpins: 1 ---
+	return def.MA34, false
+
+	--- END OF BLOCK #16 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #17 80-86, warpins: 1 ---
+	--- END OF BLOCK #17 ---
+
+	slot1 = if not checkIn(appr, 70, 75)
+	 then
+	JUMP TO BLOCK #18
+	else
+	JUMP TO BLOCK #19
+	end
+
+
+	--- BLOCK #18 87-93, warpins: 1 ---
+	--- END OF BLOCK #18 ---
+
+	slot1 = if checkIn(appr, 80, 85)
+
+	 then
+	JUMP TO BLOCK #19
+	else
+	JUMP TO BLOCK #20
+	end
+
+
+	--- BLOCK #19 94-98, warpins: 2 ---
+	return def.MA52, false
+
+	--- END OF BLOCK #19 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #20 99-105, warpins: 1 ---
+	--- END OF BLOCK #20 ---
+
+	slot1 = if checkIn(appr, 90, 92)
+
+	 then
+	JUMP TO BLOCK #21
+	else
+	JUMP TO BLOCK #22
+	end
+
+
+	--- BLOCK #21 106-110, warpins: 1 ---
+	return def.MA52, false
+	--- END OF BLOCK #21 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #22 111-112, warpins: 1 ---
+	--- END OF BLOCK #22 ---
+
+	if appr == 94 then
+	JUMP TO BLOCK #23
+	else
+	JUMP TO BLOCK #24
+	end
+
+
+	--- BLOCK #23 113-117, warpins: 1 ---
+	return def.MA57, false
+
+	--- END OF BLOCK #23 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #24 118-124, warpins: 1 ---
+	--- END OF BLOCK #24 ---
+
+	slot1 = if checkIn(appr, 95, 97)
+
+	 then
+	JUMP TO BLOCK #25
+	else
+	JUMP TO BLOCK #26
+	end
+
+
+	--- BLOCK #25 125-129, warpins: 1 ---
+	return def.MA55, false
+
+	--- END OF BLOCK #25 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #26 130-136, warpins: 1 ---
+	--- END OF BLOCK #26 ---
+
+	slot1 = if checkIn(appr, 98, 99)
+
+	 then
+	JUMP TO BLOCK #27
+	else
+	JUMP TO BLOCK #28
+	end
+
+
+	--- BLOCK #27 137-141, warpins: 1 ---
+	return def.MA57, true
+	--- END OF BLOCK #27 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #28 142-143, warpins: 1 ---
+	--- END OF BLOCK #28 ---
+
+	if appr == 100 then
+	JUMP TO BLOCK #29
+	else
+	JUMP TO BLOCK #30
+	end
+
+
+	--- BLOCK #29 144-148, warpins: 1 ---
+	return def.MA57, true
+	--- END OF BLOCK #29 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #30 149-150, warpins: 1 ---
+	--- END OF BLOCK #30 ---
+
+	if appr == 101 then
+	JUMP TO BLOCK #31
+	else
+	JUMP TO BLOCK #32
+	end
+
+
+	--- BLOCK #31 151-155, warpins: 1 ---
+	return def.MA58, false
+
+	--- END OF BLOCK #31 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #32 156-162, warpins: 1 ---
+	--- END OF BLOCK #32 ---
+
+	slot1 = if checkIn(appr, 102, 106)
+
+	 then
+	JUMP TO BLOCK #33
+	else
+	JUMP TO BLOCK #34
+	end
+
+
+	--- BLOCK #33 163-167, warpins: 1 ---
+	return def.MA60, false
+	--- END OF BLOCK #33 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #34 168-169, warpins: 1 ---
+	--- END OF BLOCK #34 ---
+
+	if appr == 107 then
+	JUMP TO BLOCK #35
+	else
+	JUMP TO BLOCK #36
+	end
+
+
+	--- BLOCK #35 170-174, warpins: 1 ---
+	return def.MA65, true
+	--- END OF BLOCK #35 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #36 175-176, warpins: 1 ---
+	--- END OF BLOCK #36 ---
+
+	if appr == 108 then
+	JUMP TO BLOCK #37
+	else
+	JUMP TO BLOCK #38
+	end
+
+
+	--- BLOCK #37 177-181, warpins: 1 ---
+	return def.MA72, true
+
+	--- END OF BLOCK #37 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #38 182-188, warpins: 1 ---
+	--- END OF BLOCK #38 ---
+
+	slot1 = if checkIn(appr, 109, 119)
+
+	 then
+	JUMP TO BLOCK #39
+	else
+	JUMP TO BLOCK #40
+	end
+
+
+	--- BLOCK #39 189-193, warpins: 1 ---
+	return def.MA75, false
+	--- END OF BLOCK #39 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #40 194-195, warpins: 1 ---
+	--- END OF BLOCK #40 ---
+
+	if appr == 146 then
+	JUMP TO BLOCK #41
+	else
+	JUMP TO BLOCK #42
+	end
+
+
+	--- BLOCK #41 196-200, warpins: 1 ---
+	return def.MA41, true
+	--- END OF BLOCK #41 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #42 201-202, warpins: 1 ---
+	--- END OF BLOCK #42 ---
+
+	if appr == 153 then
+	JUMP TO BLOCK #43
+	else
+	JUMP TO BLOCK #44
+	end
+
+
+	--- BLOCK #43 203-207, warpins: 1 ---
+	return def.MA91, true
+	--- END OF BLOCK #43 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #46
+
+
+	--- BLOCK #44 208-209, warpins: 1 ---
+	--- END OF BLOCK #44 ---
+
+	if appr == 169 then
+	JUMP TO BLOCK #45
+	else
+	JUMP TO BLOCK #46
+	end
+
+
+	--- BLOCK #45 210-213, warpins: 1 ---
+	return def.MA94, true
+	--- END OF BLOCK #45 ---
+
+	FLOW; TARGET BLOCK #46
+
+
+	--- BLOCK #46 214-217, warpins: 21 ---
+	return def.MA33, true
+	--- END OF BLOCK #46 ---
+
+
+
+end
+
+def.getFrame = function (race, appr)
+	--- BLOCK #0 1-2, warpins: 1 ---
+	--- END OF BLOCK #0 ---
+
+	if race == 50 then
+	JUMP TO BLOCK #1
+	else
+	JUMP TO BLOCK #2
+	end
+
+
+	--- BLOCK #1 3-6, warpins: 1 ---
+	return getNpcFrame(appr)
+
+	--- END OF BLOCK #1 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #2 7-10, warpins: 1 ---
+	local data = monConfigWithAppr[appr]
+
+	--- END OF BLOCK #2 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #3
+	else
+	JUMP TO BLOCK #4
+	end
+
+
+	--- BLOCK #3 11-11, warpins: 1 ---
+	return data
+
+	--- END OF BLOCK #3 ---
+
+	FLOW; TARGET BLOCK #4
+
+
+	--- BLOCK #4 12-15, warpins: 2 ---
+	data = monConfig[race]
+	--- END OF BLOCK #4 ---
+
+	slot2 = if data then
+	JUMP TO BLOCK #5
+	else
+	JUMP TO BLOCK #10
+	end
+
+
+	--- BLOCK #5 16-18, warpins: 1 ---
+	--- END OF BLOCK #5 ---
+
+	slot3 = if data.check_appr then
+	JUMP TO BLOCK #6
+	else
+	JUMP TO BLOCK #9
+	end
+
+
+	--- BLOCK #6 19-21, warpins: 1 ---
+	--- END OF BLOCK #6 ---
+
+	slot3 = if not data[appr] then
+	JUMP TO BLOCK #7
+	else
+	JUMP TO BLOCK #8
+	end
+
+
+	--- BLOCK #7 22-22, warpins: 1 ---
+	slot3 = data.default
+
+	--- END OF BLOCK #7 ---
+
+	FLOW; TARGET BLOCK #8
+
+
+	--- BLOCK #8 23-24, warpins: 2 ---
+	return slot3
+	--- END OF BLOCK #8 ---
+
+	UNCONDITIONAL JUMP; TARGET BLOCK #10
+
+
+	--- BLOCK #9 25-25, warpins: 1 ---
+	return data
+	--- END OF BLOCK #9 ---
+
+	FLOW; TARGET BLOCK #10
+
+
+	--- BLOCK #10 26-26, warpins: 4 ---
+	return 
+	--- END OF BLOCK #10 ---
+
+
+
+end
+local monSpcConfig = {}
+monSpcConfig[98] = {
+	stand = {
+		frame = 1,
+		start = 7,
+		ftime = 200,
+		skip = 7
+	},
+	die = {
+		frame = 4,
+		start = 8,
+		ftime = 120,
+		skip = 0
+	}
+}
+monSpcConfig[99] = {
+	stand = {
+		frame = 0,
+		start = 0,
+		ftime = 200,
+		skip = 0
+	},
+	die = {
+		frame = 10,
+		start = 40,
+		ftime = 120,
+		skip = 0
+	}
+}
+def.getSpecialFrame = function (race, appr)
+	--- BLOCK #0 1-3, warpins: 1 ---
+	return monSpcConfig[race]
+	--- END OF BLOCK #0 ---
+
+
+
+end
+
+return def
+--- END OF BLOCK #8 ---
+
+
+
